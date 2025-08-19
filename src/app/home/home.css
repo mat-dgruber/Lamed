@@ -1,0 +1,22 @@
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh; /* Ocupa 90% da altura da tela */
+  text-align: center;
+  background-color: #f9f9f9; /* Um fundo cinza bem claro */
+  padding: 2rem;
+}
+
+.home-texto h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--text-color-headings); /* <-- Usando sua variável global! */
+  margin: 0;
+}
+
+.home-texto p {
+  font-size: 1.8rem;
+  color: var(--color-principal); /* <-- E outra! */
+  margin-top: 0.5rem;
+}

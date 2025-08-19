@@ -1,11 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Header } from './header/header'; // <-- PASSO 1: Adicione esta linha
+import { Header } from './header/header'; 
+import { Footer } from './footer/footer';
+
 
 @Component({
   selector: 'app-root',
   // PASSO 2: Adicione o HeaderComponent aqui
-  imports: [RouterOutlet, Header],
+  imports: [RouterOutlet, Header, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
