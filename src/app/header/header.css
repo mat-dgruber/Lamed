@@ -1,0 +1,59 @@
+
+ 
+
+/* Header principal */
+.site-header,
+.cabecalho {
+  background-color: #ffffff; /* White background for header */
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: -30px; /* Space below header */
+  border-top: 1px solid #e7e7e7; /* Subtle border at the top */
+  border-bottom: 1px solid #e7e7e7; /* Subtle border */
+  box-shadow: 0 20px 14px rgba(0, 0, 0, 0.308);
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  position: sticky; /* Make header sticky */
+  top: 0; /* Stick to the top of the viewport */
+  z-index: 1000; /* Ensure it stays above other content */
+  transition: top 0.4s;
+}
+
+/* Container do header */
+.site-header .container,
+.navegacao {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     max-width: none;
+     padding-left: 20px;
+     padding-right: 20px;
+}
+
+/* Logo */
+.logo a {
+     font-size: 1.5rem;
+     font-weight: bold;
+     color: var(--color-principal);
+     text-decoration: none;
+}
+
+/* Menu de navegação */
+.menu-lista {
+     display: flex;
+     list-style-type: none;
+     margin: 0;
+     padding: 0;
+     gap: 1.5rem;
+}
+
+/* Links */
+a {
+     color: rgb(26, 26, 26);
+     text-decoration: none;
+     transition: color 0.3s;
+}
+
+a:hover {
+     color: var(--color-destaque);
+}
