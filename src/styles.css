@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-principal: #F8941B;
+  --color-destaque: #940312;
+  --color-paleta-1: #A12E05;
+  --color-paleta-2: #AB1805;
+  --color-paleta-5: #FA761F;
+
+  --main-color: var(--color-principal);
+  --main-color-hover: #F8941B; /* Darker shade of F8941B */
+  --highlight-color: var(--color-destaque);
+
+  --text-color: #4A4A4A; /* Adjusted for better readability */
+  --text-color-headings: #333333; /* Slightly darker for headings */
+  --link-color-footer: var(--color-paleta-5); /* Using a lighter orange for footer links on dark background */
+  --link-color-footer-hover: #ffffff;
+  --footer-bg-color: #2c1e10; /* Dark brown derived from palette */
+
+  /* Dark Mode Colors */
+  --dark-bg: #2c1e10; /* Dark brown from the original footer */
+  --dark-surface: #41301f; /* A slightly lighter brown for surfaces */
+  --dark-text: #e8d9c7; /* A warm, off-white for text */
+  --dark-text-headings: #fffaf2; /* The original light background color for headings */
+  --dark-main-color: #F8941B; /* Orange can stay vibrant */
+  --dark-highlight-color: #fa8a94; /* A slightly softer red for dark mode */
+}
