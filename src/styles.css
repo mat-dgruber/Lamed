@@ -24,3 +24,9 @@
   --dark-main-color: #F8941B; /* Orange can stay vibrant */
   --dark-highlight-color: #fa8a94; /* A slightly softer red for dark mode */
 }
+
+
+/* Garante que todos os links do Angular pareçam clicáveis */
+a[routerLink] {
+  cursor: pointer;
+}
