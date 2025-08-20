@@ -1,21 +1,22 @@
-<header class="cabecalho">
-  <nav class="navegacao">
-    <div class="logo">
-      <a href="#">LAMED</a>
+<header class="site-header">
+    <div class="container">
+      <div class="logo-area">
+        <a href="index.html" class="logo-link">
+          <img src="src/assets/Imagens/lamed-logo.png" alt="Lamed Logo" class="logo-img" loading="lazy">
+          <span class="logo-text">LAMED</span>
+        </a>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a routerLink="/">Início</a></li>
+          <li><a routerLink="/videos">Vídeos</a></li>
+          <li><a routerLink="/artigos">Artigos</a></li>
+          <li><a routerLink="/apoie">Apoie</a></li>
+          <li><a routerLink="/sobre">Sobre</a></li>
+        </ul>
+      </nav>
+      <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+        <lucide-icon name="menu"></lucide-icon>
+      </button>
     </div>
-    <ul class="menu-lista">
-      <li><a routerLink="/">Início</a></li>
-      <li><a href="#">Vídeos</a></li>
-      <li><a href="#">Artigos</a></li>
-      <li><a href="#">Apoie</a></li>
-      <li><a routerLink="/sobre">Sobre</a></li>
-      -------
-
-      <li><a routerLink="/habilidades">habilidades</a></li>
-       <li><a routerLink="/projetos">Projetos</a></li>
-       <li><a routerLink="/contato">Contato</a></li>
-
-
-    </ul>
-  </nav>
-</header>
+  </header>

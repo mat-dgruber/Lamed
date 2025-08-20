@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { NgIconComponent } from '@ng-icons/core';
+import { RouterLink } from '@angular/router'; // <-- Import RouterLink
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-footer',
-  imports: [NgIconComponent],
+  standalone: true,
+  // Update the imports array
+  imports: [RouterLink, LucideAngularModule],
   templateUrl: './footer.html',
   styleUrl: './footer.css'
 })
-export class Footer {
-
+// Rename the class
+export class Footer { 
+  currentYear = new Date().getFullYear();
 }
