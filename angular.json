@@ -57,8 +57,7 @@
               "buildTarget": "angular-lamed:build:production"
             },
             "development": {
-              "buildTarget": "angular-lamed:build:development",
-              "proxyConfig": "proxy.conf.json" 
+              "buildTarget": "angular-lamed:build:development"
             }
           },
           "defaultConfiguration": "development"
