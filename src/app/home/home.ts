@@ -16,9 +16,9 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Home implements OnInit {
-  latestVideo$: Observable<any>;
-  latestArticle$: Observable<any>;
-  featuredVideoUrl$: Observable<SafeResourceUrl | undefined>;
+  latestVideo$!: Observable<any>;
+  latestArticle$!: Observable<any>;
+  featuredVideoUrl$!: Observable<SafeResourceUrl | undefined>;
 
   constructor(
     private videoService: VideoService,

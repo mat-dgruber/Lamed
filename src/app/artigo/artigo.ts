@@ -16,8 +16,8 @@ import { switchMap, map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Artigo implements OnInit {
-  article$: Observable<any>;
-  articleContent$: Observable<SafeHtml>;
+  article$!: Observable<any>;
+  articleContent$!: Observable<SafeHtml>;
 
   constructor(
     private route: ActivatedRoute,
