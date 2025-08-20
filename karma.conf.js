@@ -4,6 +4,7 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-puppeteer-launcher',
     ],
-    browsers: ['Puppeteer']
+    browsers: ['Puppeteer'],
+    singleRun: true
   });
 };
