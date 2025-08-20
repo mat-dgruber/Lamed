@@ -40,9 +40,19 @@ export class Artigo implements OnInit {
     this.articleContent$ = this.article$.pipe(
       switchMap(article => {
         if (article && article.contentPath) {
-          return this.http.get(`assets/${article.contentPath}`, { responseType: 'text' });
+          // Assuming contentPath is now the full path from the assets root
+          return this.http.get(article.contentPath, { responseType: 'text' });
         }
         return of('');
+      }),
+      map(htmlContent => {
+        if (htmlContent) {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(htmlContent, 'text/html');
+          const articleContent = doc.querySelector('div.article-content');
+          return articleContent ? articleContent.innerHTML : 'Conteúdo do artigo não encontrado.';
+        }
+        return 'Artigo não encontrado.';
       }),
       map(htmlContent => this.sanitizer.bypassSecurityTrustHtml(htmlContent))
     );
