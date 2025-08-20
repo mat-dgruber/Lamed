@@ -1,0 +1,138 @@
+<!--404.html-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.typekit.net/wub6ikz.css">
+    <title>Página Não Encontrada - Lamed</title>
+
+    <style media="screen">
+      :root {
+        --cor-principal: #F8941B;
+        --cor-destaque: #940312;
+        --cor-fundo: #fffaf2;
+        --cor-texto: #4A4A4A;
+      }
+
+      body { 
+        background: var(--cor-fundo); 
+        color: var(--cor-texto); 
+                /* Isso é uma "Pilha de Fontes" (Font Stack). 
+          O navegador tenta usar a primeira fonte da lista. Se não a encontrar, 
+          passa para a próxima, e assim por diante, até encontrar uma que funcione.
+          Isso garante que o site tenha uma aparência consistente e legível em qualquer dispositivo.
+        */
+        font-family: 
+          caecilia, sans-serif, /* 1. A FONTE PRINCIPAL (WEB FONT): Tenta primeiro carregar a fonte 'Caecilia' que configuramos no Adobe Fonts. O nome deve ser exato. */
+          
+          /* 2. A PILHA DE FONTES DE SISTEMA (SYSTEM FONT STACK): Se a Caecilia falhar por algum motivo, em vez de usar uma fonte genérica, pedimos ao navegador para usar a fonte padrão do sistema operacional do usuário. Isso é moderno, super rápido (não precisa de download) e faz o site parecer "nativo" do dispositivo. */
+          -apple-system,      /* Para Safari no macOS e iOS (ex: fonte San Francisco) */
+          BlinkMacSystemFont, /* Para Chrome no macOS */
+          "Segoe UI",        /* Para Windows */
+          Roboto,             /* Para Android e Chrome OS */
+          Helvetica,          /* Fallback clássico para macOS/iOS mais antigos */
+          Arial,              /* Fallback universal, presente em quase todos os sistemas */
+          
+          /* 3. A OPÇÃO GENÉRICA FINAL */
+          sans-serif,         /* Se NENHUMA das anteriores funcionar, o navegador usará qualquer fonte sem serifa que tiver disponível. É a garantia final. */
+
+          /* 4. FONTES PARA EMOJIS: Estas garantem que os emojis sejam exibidos corretamente em diferentes sistemas. */
+          "Apple Color Emoji", 
+          "Segoe UI Emoji", 
+          "Segoe UI Symbol";  
+        margin: 0; 
+        padding: 0; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      #container {
+        background: white;
+        max-width: 500px;
+        margin: 20px;
+        padding: 40px;
+        border-radius: 25px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      }
+      
+      #container .logo {
+        max-width: 120px;
+        margin-bottom: 25px;
+      }
+
+      #container h1 {
+        font-size: 2em;
+        font-weight: bold;
+        color: var(--cor-destaque);
+        margin: 0 0 10px;
+      }
+      
+      #container h2 {
+        color: #888;
+        font-weight: normal;
+        font-size: 1.2em;
+        margin: 0 0 25px;
+      }
+      
+      #container p {
+        line-height: 1.6;
+        margin: 0 0 30px;
+        font-size: 1.1em;
+      }
+      
+      #container .links-uteis a {
+        display: inline-block;
+        margin: 5px;
+        background: var(--cor-principal);
+        text-decoration: none;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      }
+      
+      #container .links-uteis a:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+          background-color: #d47e10; /* Tom mais escuro da cor principal */
+      }
+      
+      @media (max-width: 600px) {
+        body {
+          align-items: flex-start;
+        }
+        #container {
+          margin: 0;
+          border-radius: 0;
+          box-shadow: none;
+          padding: 40px 20px;
+          min-height: calc(100vh - 80px); /* Ajuste para preencher a tela */
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <img src="/Imagens/lamed logo.png" alt="Logo Lamed" class="logo">
+      <h1>Página Não Encontrada</h1>
+      <h2>Erro 404</h2>
+
+      <p>Parece que você encontrou um caminho que não existe...<br>Que tal aproveitar esse tempo para ler a Bíblia e estudar a sua lição?<br>Você pode tentar novamente nas opções abaixo:</p>
+      
+      <div class="links-uteis">
+        <a href="/index.html">Página Inicial</a>
+        <a href="/artigos.html">Ver Artigos</a>
+        <a href="/videos.html">Ver Vídeos</a>
+      </div>
+    </div>
+  </body>
+</html>
