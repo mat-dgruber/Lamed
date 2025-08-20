@@ -5,6 +5,7 @@ import { Sobre } from './sobre/sobre';
 import { Videos } from './videos/videos';
 import { Artigos } from './artigos/artigos';
 import { Apoie } from './apoie/apoie';
+import { Artigo } from './artigo/artigo';
 
 
 
@@ -13,6 +14,7 @@ export const routes: Routes = [
      {path: 'sobre', component: Sobre},
      {path: 'videos', component: Videos},
      {path: 'artigos', component: Artigos},
+     {path: 'artigo/:id', component: Artigo},
      {path: 'apoie', component: Apoie},
 
 ];
