@@ -5,26 +5,17 @@
         <p>Explore nossa coleção completa de vídeos do último trimestre. O mais recente está em destaque abaixo.</p>
 
         
-        <!--
-          YOUTUBE VIDEO INTEGRATION POINT:
-          The section below is where the latest 13 videos from the YouTube channel should be displayed.
-          The first video is styled to be larger (highlighted).
-          This container will be populated by script.js using YouTube Data API.
-          -->
-          <div id="youtube-videos-container" class="video-grid thirteen-videos">
-            <!-- Vídeos do YouTube serão inseridos aqui pelo script.js -->
-            <!-- Exemplo de como um item de vídeo destacado pode parecer (será gerado dinamicamente):
-            <div class="video-item video-item-highlighted">
-              <iframe src="https://www.youtube.com/embed/VIDEO_ID_MAIS_RECENTE" title="Video Title" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              <p>Título do Vídeo Mais Recente</p>
+          <div id="youtube-videos-container" class="video-grid thirteen-videos" *ngIf="videos$ | async as videos">
+            <div *ngFor="let video of videos; let i = index"
+                 [ngClass]="{'video-item': true, 'video-item-highlighted': i === 0}">
+              <iframe [src]="getSafeUrl(video.id.videoId)"
+                      [title]="video.snippet.title"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowfullscreen>
+              </iframe>
+              <p>{{ video.snippet.title }}</p>
             </div>
-            -->
-            <!-- Exemplo de como outros itens de vídeo podem parecer (serão gerados dinamicamente):
-            <div class="video-item">
-              <iframe src="https://www.youtube.com/embed/VIDEO_ID_OUTRO" title="Video Title" frameborder="0" allowfullscreen></iframe>
-              <p>Título do Outro Vídeo</p>
-            </div>
-            -->
           </div>
 
             <!-- YouTube and Instagram Buttons -->

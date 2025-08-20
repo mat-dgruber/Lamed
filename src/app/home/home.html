@@ -12,13 +12,12 @@
       </div>
     </section>
 
-    <section id="featured-videos" class="content-section">
+    <section id="featured-videos" class="content-section" *ngIf="latestVideo$ | async as latestVideo">
       <div class="container">
         <h2>Vídeo em Destaque</h2>
         <div class="video-list single-featured-video">
-          <!-- Single Featured Video - Larger Size -->
           <div class="video-item">
-            <iframe id="featured-video-iframe" src="https://www.youtube.com/embed/VIDEO_ID_FEATURED" title="Vídeo em Destaque do YouTube"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe id="featured-video-iframe" [src]="featuredVideoUrl$ | async" [title]="latestVideo.snippet.title" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
         <div class="text-center">
@@ -27,21 +26,21 @@
       </div>
     </section>
 
-    <section id="featured-articles" class="content-section background-light">
+    <section id="featured-articles" class="content-section background-light" *ngIf="latestArticle$ | async as latestArticle">
       <div class="container">
         <h2>Artigo em Destaque</h2>
         <article class="featured-article-summary">
           <div class="article-image-placeholder">
-            <a id="featured-article-image-link" aria-label="Leia o artigo em destaque">
-              <img id="featured-article-image" src="Assets/placeholder-article-thumb.jpg" alt="Artigo em destaque" loading="lazy">
+            <a [routerLink]="['/artigo', latestArticle.id]" aria-label="Leia o artigo em destaque">
+              <img id="featured-article-image" [src]="'assets/' + latestArticle.bannerImage" [alt]="latestArticle.title" loading="lazy">
             </a>
           </div>
           <div class="featured-article-title-h3">
-            <h3><a id="featured-article-title-link"><span id="featured-article-title">Carregando artigo...</span></a></h3>
+            <h3><a [routerLink]="['/artigo', latestArticle.id]"><span id="featured-article-title">{{ latestArticle.title }}</span></a></h3>
           </div>
-          <p id="featured-article-summary">Carregando resumo...</p>
+          <p id="featured-article-summary">{{ latestArticle.description }}</p>
           <div class="readmore-article-link">
-            <a id="featured-article-readmore" href="#">Leia mais...</a>
+            <a id="featured-article-readmore" [routerLink]="['/artigo', latestArticle.id]">Leia mais...</a>
           </div>
         </article>
         <div class="text-center">
