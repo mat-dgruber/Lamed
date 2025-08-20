@@ -3434,7 +3434,7 @@ margin-bottom: -5px;
 
 /* Hero Section (index.html) */
 .hero-section {
-  background-image: url('assets/Imagens/Fundo_Lamed.png'); /* User requested background image */
+  background-image: url('Imagens/Fundo_Lamed.png'); /* User requested background image */
   background-size: cover; /* Cover the entire section */
   background-attachment: fixed; /* Parallax effect */
   background-color: #2c1e10; /* Fallback color, dark brown from palette */
