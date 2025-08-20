@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { DonationChartsComponent } from '../components/donation-charts/donation-charts.component'; // <-- LINHA DE IMPORT
 
 @Component({
   selector: 'app-apoie',
-  imports: [],
+  standalone: true,
+  imports: [DonationChartsComponent], // <-- IMPORT AQUI DENTRO
   templateUrl: './apoie.html',
-  styleUrl: './apoie.css'
 })
 export class Apoie {
 
