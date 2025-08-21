@@ -60,7 +60,7 @@ export class Sobre implements AfterViewInit {
   }
 
   onCardClick(event: MouseEvent, card: HTMLElement) {
-    if (this.swiper && this.swiper.isDragging) {
+    if (this.swiper && this.swiper.touches.diff !== 0) {
       return;
     }
 
