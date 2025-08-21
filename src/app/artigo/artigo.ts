@@ -12,7 +12,7 @@ import { switchMap, map } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './artigo.html',
-  styleUrls: [],
+  styleUrls: ['./artigo.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Artigo implements OnInit {
@@ -47,10 +47,7 @@ export class Artigo implements OnInit {
       }),
       map(htmlContent => {
         if (htmlContent) {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(htmlContent, 'text/html');
-          const articleContent = doc.querySelector('div.article-content');
-          return articleContent ? articleContent.innerHTML : 'Conteúdo do artigo não encontrado.';
+          return htmlContent;
         }
         return 'Artigo não encontrado.';
       }),

@@ -1,4 +1,4 @@
- <main class="site-main">
+<main class="site-main">
     <section class="content-section">
       <div class="container">
         <h1>Artigos Bíblicos</h1>
@@ -9,7 +9,7 @@
             <div class="last-article">
               <div class="article-banner-image">
                 <a [routerLink]="['/artigo', latestArticle.id]">
-                  <img [src]="'assets/' + latestArticle.bannerImage" [alt]="latestArticle.title" loading="lazy">
+                  <img [src]="latestArticle.bannerImage" [alt]="latestArticle.title" loading="lazy">
                 </a>
               </div>
               <h3><a [routerLink]="['/artigo', latestArticle.id]">{{ latestArticle.title }}</a></h3>
