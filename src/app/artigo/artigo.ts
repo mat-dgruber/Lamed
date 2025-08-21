@@ -47,7 +47,26 @@ export class Artigo implements OnInit {
       }),
       map(htmlContent => {
         if (htmlContent) {
-          return htmlContent;
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(htmlContent, 'text/html');
+          const mainContent = doc.querySelector('main.site-main');
+          
+          if (mainContent) {
+            // Correct image paths before returning the content
+            const images = mainContent.querySelectorAll('img');
+            images.forEach(img => {
+              const src = img.getAttribute('src');
+              if (src && src.startsWith('../')) {
+                // The static files are in assets/Artigos, images in assets/Imagens.
+                // The path from an article is ../Imagens/foo.png.
+                // When injecting into angular, the base is the app root.
+                // The path needs to become assets/Imagens/foo.png
+                img.src = 'assets/' + src.substring(3);
+              }
+            });
+            return mainContent.innerHTML;
+          }
+          return htmlContent; // Fallback
         }
         return 'Artigo não encontrado.';
       }),
