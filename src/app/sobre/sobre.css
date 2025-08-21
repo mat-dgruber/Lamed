@@ -4,15 +4,20 @@
   background-color: #ffffff; /* Fundo branco para alternar com o cinza da Home */
 }
 
+
+
 /* Team Section Flip Card and Modal Styles */
 .team-swiper .swiper-slide {
   perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
 .team-member-card {
   position: relative;
   transition: transform 1s;
   transform-style: preserve-3d;
+  max-width: 350px;
+  margin: 0 auto;
 }
 .team-member-card.is-flipped {
   transform: rotateY(180deg);
@@ -53,7 +58,11 @@
   margin-top: 0;
   color: white;
 }
-
+.card-back p {
+  color: #f0f0f0; /* Lighter text for better contrast */
+  font-size: 0.9em;
+  line-height: 1.5;
+}
 /* Modal Styles */
 .modal {
   display: flex;
@@ -212,14 +221,14 @@
 }
 
 /* Custom Swiper Navigation Styles */
-:host ::ng-deep .swiper-button-next,
-:host ::ng-deep .swiper-button-prev {
-  color: #F8941B; /* --main-color */
+app-sobre .team-swiper .swiper-button-next,
+app-sobre .team-swiper .swiper-button-prev {
+  color: #940312 !important; /* --highlight-color */
 }
 
-:host ::ng-deep .swiper-button-next:hover,
-:host ::ng-deep .swiper-button-prev:hover {
-  color: #940312; /* --highlight-color */
+app-sobre .team-swiper .swiper-button-next:hover,
+app-sobre .team-swiper .swiper-button-prev:hover {
+  color: #F8941B !important; /* --main-color */
 }
 
 h2 {

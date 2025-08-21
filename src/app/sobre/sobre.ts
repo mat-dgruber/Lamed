@@ -2,8 +2,6 @@ import { Component, AfterViewInit, ElementRef, HostListener, ViewEncapsulation }
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 
-Swiper.use([Navigation]);
-
 @Component({
   selector: 'app-sobre',
   templateUrl: './sobre.html',
@@ -18,6 +16,7 @@ export class Sobre implements AfterViewInit {
 
   ngAfterViewInit() {
     this.swiper = new Swiper('.team-swiper', {
+      modules: [Navigation],
       loop: false,
       rewind: true,
       slidesPerView: 1,
