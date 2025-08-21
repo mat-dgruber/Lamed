@@ -1,11 +1,116 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
+import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
+
+Swiper.use([Navigation]);
 
 @Component({
   selector: 'app-sobre',
-  imports: [],
   templateUrl: './sobre.html',
-  styleUrl: './sobre.css'
+  styleUrls: ['./sobre.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class Sobre {
+export class Sobre implements AfterViewInit {
+  private swiper: Swiper | undefined;
+  public activeModal: HTMLElement | null = null;
 
+  constructor(private el: ElementRef) {}
+
+  ngAfterViewInit() {
+    this.swiper = new Swiper('.team-swiper', {
+      loop: false,
+      rewind: true,
+      slidesPerView: 1,
+      spaceBetween: 10,
+      breakpoints: {
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      watchSlidesProgress: true,
+    });
+
+    this.setupEventListeners();
+  }
+
+  setupEventListeners() {
+    const teamCards = this.el.nativeElement.querySelectorAll('.team-member-card');
+    teamCards.forEach((card: HTMLElement) => {
+      card.addEventListener('click', (event) => this.onCardClick(event, card));
+    });
+
+    const closeButtons = this.el.nativeElement.querySelectorAll('.close-button');
+    closeButtons.forEach((button: HTMLElement) => {
+      button.addEventListener('click', () => this.closeModal());
+    });
+
+    const modals = this.el.nativeElement.querySelectorAll('.modal');
+    modals.forEach((modal: HTMLElement) => {
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          this.closeModal();
+        }
+      });
+    });
+  }
+
+  onCardClick(event: MouseEvent, card: HTMLElement) {
+    if (this.swiper && this.swiper.isDragging) {
+      return;
+    }
+
+    if ((event.target as HTMLElement).closest('.card-back')) {
+      if (card.classList.contains('is-flipped')) {
+        const memberId = card.dataset['memberId'];
+        if (memberId) {
+          this.openModal(memberId);
+        }
+      }
+    } else {
+      card.classList.toggle('is-flipped');
+      if (card.classList.contains('is-flipped')) {
+        const allCards = this.el.nativeElement.querySelectorAll('.team-member-card');
+        allCards.forEach((otherCard: HTMLElement) => {
+          if (otherCard !== card) {
+            otherCard.classList.remove('is-flipped');
+          }
+        });
+      }
+    }
+  }
+
+  openModal(memberId: string) {
+    const modal = this.el.nativeElement.querySelector(`#modal-${memberId}`);
+    if (!modal) return;
+
+    this.activeModal = modal;
+    this.activeModal!.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeModal() {
+    if (!this.activeModal) return;
+
+    const memberId = this.activeModal.id.split('-')[1];
+    const card = this.el.nativeElement.querySelector(`.team-member-card[data-member-id="${memberId}"]`);
+    if (card) {
+      card.classList.remove('is-flipped');
+    }
+
+    this.activeModal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    this.activeModal = null;
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Escape' && this.activeModal) {
+      this.closeModal();
+    }
+  }
 }
