@@ -16,12 +16,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Install dependencies
         run: |
           npm cache verify
-          npm install --prefix ./scripts
+          npm install --prefix ./scripts --verbose
 
       - name: Fetch latest videos
         run: node fetch-videos.js
