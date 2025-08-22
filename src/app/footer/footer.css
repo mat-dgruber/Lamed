@@ -1,0 +1,25 @@
+.footer-legal {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.footer-legal p {
+  margin: 5px 0;
+  color: #b0b0b0; /* Slightly darker than main footer text for less emphasis */
+}
+
+.footer-legal a {
+  color: var(--link-color-footer); /* Ensure legal links also use footer link color */
+}
+.footer-legal a:hover {
+  color: var(--link-color-footer-hover);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
+  gap: 20px; /* Space between columns */
+  align-items: start; /* Align items to the start of their grid cell */
+  margin-bottom: 30px; /* Space before footer-legal */
+  padding: 20px 0; /* Padding top and bottom */
+}
