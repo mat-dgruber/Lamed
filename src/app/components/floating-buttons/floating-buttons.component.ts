@@ -1,8 +1,10 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { LucideAngularModule } from 'lucide-angular';
+import { HeaderVisibilityService } from '../../services/header-visibility.service';
 
 @Component({
   selector: 'app-floating-buttons',
@@ -11,33 +13,45 @@ import { LucideAngularModule } from 'lucide-angular';
   templateUrl: './floating-buttons.component.html',
   styleUrls: ['./floating-buttons.component.css']
 })
-export class FloatingButtonsComponent {
+export class FloatingButtonsComponent implements OnDestroy {
   showBackToTopButton = false;
   showBackToArticlesButton = false;
-  private isArticlePage = false;
 
-  constructor(private router: Router) {
-    this.router.events.pipe(
+  private isArticlePage = false;
+  private isHeaderVisible = true;
+  private subscriptions = new Subscription();
+
+  constructor(
+    private router: Router,
+    private headerVisibilityService: HeaderVisibilityService
+  ) {
+    const routerSubscription = this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       this.isArticlePage = event.urlAfterRedirects.includes('/artigo/');
       this.updateButtonsVisibility();
     });
-  }
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this.updateButtonsVisibility();
+    const headerSubscription = this.headerVisibilityService.headerVisible$.subscribe(isVisible => {
+      this.isHeaderVisible = isVisible;
+      this.updateButtonsVisibility();
+    });
+
+    this.subscriptions.add(routerSubscription);
+    this.subscriptions.add(headerSubscription);
   }
 
   private updateButtonsVisibility() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-    this.showBackToTopButton = scrollPosition > 300;
-    this.showBackToArticlesButton = this.isArticlePage;
+    const isHeaderHidden = !this.isHeaderVisible;
+    this.showBackToTopButton = isHeaderHidden;
+    this.showBackToArticlesButton = isHeaderHidden && this.isArticlePage;
   }
 
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }
