@@ -5,6 +5,7 @@ module.exports = function (config) {
       'karma-puppeteer-launcher',
     ],
     browsers: ['Puppeteer'],
-    singleRun: true
+    singleRun: true,
+    browserNoActivityTimeout: 100000
   });
 };

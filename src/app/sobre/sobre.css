@@ -240,10 +240,14 @@ h2 {
 
 p {
   max-width: 700px;
-  margin: 0 auto 2rem auto; /* Centraliza o parágrafo e adiciona margem inferior */
+  margin: 0 auto 1rem auto;
   font-size: 1.1rem;
   line-height: 1.6;
   color: var(--text-color);
+}
+
+#history p {
+  margin-bottom: 1.5rem;
 }
 
 .btn-cv {
@@ -258,4 +262,14 @@ p {
 
 .btn-cv:hover {
   background-color: var(--color-destaque);
+}
+
+.expandable-content {
+  max-height: 500px;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+}
+
+.expandable-content.expanded {
+  max-height: 2000px;
 }
