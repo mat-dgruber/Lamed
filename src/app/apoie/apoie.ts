@@ -1,12 +1,18 @@
 import { Component } from '@angular/core';
-import { DonationChartsComponent } from '../components/donation-charts/donation-charts.component'; // <-- LINHA DE IMPORT
+import { Router } from '@angular/router'; // Import Router
+import { DonationChartsComponent } from '../components/donation-charts/donation-charts.component';
 
 @Component({
   selector: 'app-apoie',
   standalone: true,
-  imports: [DonationChartsComponent], // <-- IMPORT AQUI DENTRO
+  imports: [DonationChartsComponent],
   templateUrl: './apoie.html',
 })
 export class Apoie {
 
+  constructor(private router: Router) {} // Inject Router
+
+  navigateToSobre(): void {
+    this.router.navigate(['/sobre']); // Navigate to /sobre
+  }
 }
