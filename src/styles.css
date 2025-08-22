@@ -1017,6 +1017,11 @@ margin-bottom: -5px;
 .footer-legal {
   grid-column: 1 / -1;
   text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .footer-legal p {
@@ -1265,7 +1270,7 @@ margin-bottom: -5px;
 .social-btn-footer svg {
   width: 20px;
   height: 20px;
-  stroke: var();
+  stroke: var(--link-color-footer-hover);
   transition: stroke 0.3s ease;
   flex-shrink: 0;
 }
@@ -1304,17 +1309,18 @@ margin-bottom: -5px;
 
 /* Cores específicas (Desktop) */
 .social-btn-footer.youtube {
-  border-color: #FF0000;
+  border-color: var(--main-color);
 }
 .social-btn-footer.youtube:hover {
-  background-color: #FF0000;
+  background-color: var(--color-destaque);
+  border-color: transparent;
 }
 
 .social-btn-footer.instagram {
-  border-color: #C13584;
+  border-color: var(--main-color-hover);
 }
 .social-btn-footer.instagram:hover {
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  background: var(--main-color-hover);
   border-color: transparent;
 }
 
@@ -4382,17 +4388,17 @@ margin-bottom: -5px;
 
 /* Cores específicas (Desktop) */
 .social-btn-footer.youtube {
-  border-color: #FF0000;
+  border-color: var(--color-destaque);
 }
 .social-btn-footer.youtube:hover {
-  background-color: #FF0000;
+  background-color: var(--color-destaque);
 }
 
 .social-btn-footer.instagram {
-  border-color: #C13584;
+  border-color: var(--color-principal);
 }
 .social-btn-footer.instagram:hover {
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  background: var(--color-principal);
   border-color: transparent;
 }
 
