@@ -6,6 +6,7 @@ import { VideoService } from '../services/video.service';
 import { ArticleService } from '../services/article.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -20,11 +21,18 @@ export class Home implements OnInit {
   latestArticle$!: Observable<any>;
   featuredVideoUrl$!: Observable<SafeResourceUrl | undefined>;
 
+  
   constructor(
     private videoService: VideoService,
     private articleService: ArticleService,
-    private sanitizer: DomSanitizer
-  ) { }
+    private sanitizer: DomSanitizer,
+      private router: Router
+    ) { }
+  
+    navigateToApoie(): void {
+      this.router.navigate(['/apoie']);
+    }
+    
 
   ngOnInit(): void {
     this.latestVideo$ = this.videoService.getLatestVideo();
