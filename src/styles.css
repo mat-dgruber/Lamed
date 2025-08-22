@@ -1016,6 +1016,7 @@ margin-bottom: -5px;
 
 .footer-legal {
   grid-column: 1 / -1;
+  text-align: center;
 }
 
 .footer-legal p {
@@ -2085,6 +2086,12 @@ margin-bottom: -5px;
   margin-top: 0; /* Remove top margin if it's the first element */
   color: var(--highlight-color);
   font-size: 1.5em;
+}
+
+.history-image-container img {
+  max-width: 500px; /* Adjust as needed */
+  margin: 20px auto; /* Center the image container */
+  display: block;
 }
 
 .history-text-container strong {
