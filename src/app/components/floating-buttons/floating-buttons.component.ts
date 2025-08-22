@@ -45,6 +45,7 @@ export class FloatingButtonsComponent implements OnDestroy {
     const isHeaderHidden = !this.isHeaderVisible;
     this.showBackToTopButton = isHeaderHidden;
     this.showBackToArticlesButton = isHeaderHidden && this.isArticlePage;
+    console.log(`[Buttons] Header hidden: ${isHeaderHidden}, Is article page: ${this.isArticlePage}, Show back-to-top: ${this.showBackToTopButton}, Show back-to-articles: ${this.showBackToArticlesButton}`);
   }
 
   scrollToTop() {
