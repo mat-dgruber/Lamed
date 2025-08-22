@@ -1,8 +1,9 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { Router, NavigationEnd, RouterLink } from '@angular/router';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
-import { filter } from 'rxjs/operators';
+import { HeaderVisibilityService } from '../../services/header-visibility.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -11,41 +12,30 @@ import { filter } from 'rxjs/operators';
   templateUrl: './header.html',
   styleUrls: ['./header.css']
 })
-export class Header implements OnInit {
+export class Header implements OnInit, OnDestroy {
   isHeaderHidden = false;
-  private scrollThreshold = 400;
+  private scrollThreshold = 200; // Consistent threshold for all pages
+  private visibilitySubscription: Subscription;
 
-  constructor(private router: Router) {}
+  constructor(private headerVisibilityService: HeaderVisibilityService) {}
 
   ngOnInit() {
-    this.router.events.pipe(
-      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      const path = event.urlAfterRedirects;
-      if (path.endsWith('/videos')) {
-        this.scrollThreshold = 90;
-      } else if (path.endsWith('/apoie')) {
-        this.scrollThreshold = 80;
-      } else if (path.endsWith('/artigos')) {
-        this.scrollThreshold = 50;
-      } else if (path.endsWith('/sobre')) {
-        this.scrollThreshold = 100;
-      } else if (path.endsWith('/politica-de-privacidade') || path.endsWith('/termos-de-uso')) {
-        this.scrollThreshold = 150;
-      } else if (path === '/' || path.endsWith('/inicio')) {
-        this.scrollThreshold = 200;
-      } else {
-        this.scrollThreshold = 400; // Default
+    this.visibilitySubscription = this.headerVisibilityService.headerVisible$.subscribe(
+      isVisible => {
+        this.isHeaderHidden = !isVisible;
       }
-    });
+    );
   }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    if (window.scrollY > this.scrollThreshold) {
-      this.isHeaderHidden = true;
-    } else {
-      this.isHeaderHidden = false;
+    const isVisible = window.scrollY <= this.scrollThreshold;
+    this.headerVisibilityService.setHeaderVisibility(isVisible);
+  }
+
+  ngOnDestroy() {
+    if (this.visibilitySubscription) {
+      this.visibilitySubscription.unsubscribe();
     }
   }
 }
