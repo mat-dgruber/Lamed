@@ -2,7 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
-import { HeaderVisibilityService } from '../../services/header-visibility.service';
+import { HeaderVisibilityService } from '../services/header-visibility.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -15,13 +15,13 @@ import { Subscription } from 'rxjs';
 export class Header implements OnInit, OnDestroy {
   isHeaderHidden = false;
   private scrollThreshold = 200; // Consistent threshold for all pages
-  private visibilitySubscription: Subscription;
+  private visibilitySubscription!: Subscription;
 
   constructor(private headerVisibilityService: HeaderVisibilityService) {}
 
   ngOnInit() {
     this.visibilitySubscription = this.headerVisibilityService.headerVisible$.subscribe(
-      isVisible => {
+      (isVisible: boolean) => {
         this.isHeaderHidden = !isVisible;
       }
     );
