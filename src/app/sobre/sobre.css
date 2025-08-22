@@ -265,11 +265,11 @@ p {
 }
 
 .expandable-content {
-  max-height: 500px;
+  max-height: 60px;
   overflow: hidden;
   transition: max-height 0.5s ease-in-out;
 }
 
 .expandable-content.expanded {
-  max-height: 2000px;
+  max-height: 5500px;
 }
