@@ -2898,6 +2898,12 @@ margin-bottom: -5px;
   stroke: white;
 }
 
+.header-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 /* Team Section Flip Card and Modal Styles */
 .team-swiper .swiper-slide {
   perspective: 1000px;
