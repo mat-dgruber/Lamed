@@ -1206,6 +1206,10 @@ margin-bottom: -5px;
   transition: max-width 0.5s ease-in-out, opacity 0.4s ease-in-out;
 }
 
+.text-default {
+  color: #ffffff; /* Cor do texto padrão */
+}
+
 
 /* --- ESTADO DE HOVER --- */
 
@@ -1259,6 +1263,12 @@ margin-bottom: -5px;
   overflow: hidden;
   /* A transição agora inclui 'max-width' para o botão em si */
   transition: all 0.5s ease-in-out;
+}
+
+.social-btn-footer p {
+  margin: 0;
+  font-size: 0.9em;
+  color: var(--link-color-footer-hover);
 }
 
 .social-btn-footer:hover,
