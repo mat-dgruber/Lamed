@@ -1014,6 +1014,10 @@ margin-bottom: -5px;
   text-decoration: underline;
 }
 
+.footer-legal {
+  grid-column: 1 / -1;
+}
+
 .footer-legal p {
   margin: 5px 0;
   color: #b0b0b0; /* Slightly darker than main footer text for less emphasis */
@@ -1585,7 +1589,7 @@ margin-bottom: -5px;
 }
 
 .expandable-content {
-  max-height: 100px; /* Adjust this value to show roughly 3 paragraphs + part of 1st image */
+  max-height:205px; /* Adjust this value to show roughly 3 paragraphs + part of 1st image */
   overflow: hidden;
   position: relative; /* For the fade pseudo-element */
   transition: max-height 0.7s ease-in-out;
@@ -1597,7 +1601,7 @@ margin-bottom: -5px;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 150px; /* Adjust height of the fade effect */
+  height: 1000px; /* Adjust height of the fade effect */
   background: linear-gradient(to bottom, transparent, #fffaf2 90%); /* Match page background */
   pointer-events: none; /* Allows clicks to pass through */
   transition: opacity 0.5s ease-in-out;
@@ -1605,6 +1609,7 @@ margin-bottom: -5px;
 
 .expandable-content.expanded {
   max-height: 10000px; /* A large enough value to show all content */
+  padding-bottom: 30px;
 }
 
 .expandable-content.expanded::after {
