@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
-import { LucideAngularModule, Menu, Mail, BadgeDollarSign, Youtube, Instagram, ArrowUpFromDot, Send } from 'lucide-angular';
+import { LucideAngularModule, Menu, Mail, BadgeDollarSign, Youtube, Instagram, ArrowUpFromDot, Send, CircleArrowLeft } from 'lucide-angular';
 
 
 export const appConfig: ApplicationConfig = {
@@ -19,7 +19,8 @@ export const appConfig: ApplicationConfig = {
       Youtube, 
       Instagram, 
       ArrowUpFromDot,
-      Send, 
+      Send,
+      CircleArrowLeft
     }))
   ]
 };
