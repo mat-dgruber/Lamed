@@ -227,6 +227,7 @@ img {
 
 /* Header */
 .site-header {
+  transition: opacity 0.5s, visibility 0.5s;
   background-color: #ffffff; /* White background for header */
   padding-top: 15px;
   padding-bottom: 15px;

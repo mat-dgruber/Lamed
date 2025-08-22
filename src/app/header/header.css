@@ -16,7 +16,6 @@
   position: sticky; /* Make header sticky */
   top: 0; /* Stick to the top of the viewport */
   z-index: 1000; /* Ensure it stays above other content */
-  transition: opacity 0.5s, visibility 0.5s;
 }
 
 /* Container do header */
