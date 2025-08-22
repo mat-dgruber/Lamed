@@ -40,6 +40,7 @@ export class App {
       } else {
         this.scrollThreshold = 200; // Default for index and others
       }
+      console.log(`[App] Route changed to: ${path}, scrollThreshold set to: ${this.scrollThreshold}`);
     });
   }
 
@@ -47,8 +48,10 @@ export class App {
   onWindowScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     const shouldHide = scrollPosition > this.scrollThreshold;
+    // console.log(`[App] Scroll position: ${scrollPosition}, Threshold: ${this.scrollThreshold}, Should hide: ${shouldHide}`);
 
     if (shouldHide !== this.isHeaderHidden) {
+      console.log(`[App] Header visibility changing to: ${!shouldHide}`);
       this.isHeaderHidden = shouldHide;
       this.headerVisibilityService.setHeaderVisibility(!this.isHeaderHidden);
     }
