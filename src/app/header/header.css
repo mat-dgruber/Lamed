@@ -19,12 +19,6 @@
   transition: opacity 0.5s, visibility 0.5s;
 }
 
-.header-hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
 /* Container do header */
 .site-header .container,
 .navegacao {
