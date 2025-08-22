@@ -1,9 +1,8 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
-import { HeaderVisibilityService } from '../services/header-visibility.service';
-import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -12,30 +11,47 @@ import { Subscription } from 'rxjs';
   templateUrl: './header.html',
   styleUrls: ['./header.css']
 })
-export class Header implements OnInit, OnDestroy {
+export class Header implements OnInit {
   isHeaderHidden = false;
-  private scrollThreshold = 200; // Consistent threshold for all pages
-  private visibilitySubscription!: Subscription;
+  private scrollThreshold = 400;
+  private lastScrollY = 0;
 
-  constructor(private headerVisibilityService: HeaderVisibilityService) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    this.visibilitySubscription = this.headerVisibilityService.headerVisible$.subscribe(
-      (isVisible: boolean) => {
-        this.isHeaderHidden = !isVisible;
-      }
-    );
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.setScrollThreshold(event.urlAfterRedirects);
+    });
+    this.setScrollThreshold(this.router.url);
+  }
+
+  private setScrollThreshold(url: string) {
+    if (url.includes('/videos')) {
+      this.scrollThreshold = 90;
+    } else if (url.includes('/doacao')) {
+      this.scrollThreshold = 80;
+    } else if (url.includes('/artigos')) {
+      this.scrollThreshold = 50;
+    } else if (url.includes('/sobre')) {
+      this.scrollThreshold = 100;
+    } else if (url.includes('/politica') || url.includes('/termos')) {
+      this.scrollThreshold = 150;
+    } else { // Index page
+      this.scrollThreshold = 200;
+    }
   }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    const isVisible = window.scrollY <= this.scrollThreshold;
-    this.headerVisibilityService.setHeaderVisibility(isVisible);
-  }
+    const currentScrollY = window.scrollY;
 
-  ngOnDestroy() {
-    if (this.visibilitySubscription) {
-      this.visibilitySubscription.unsubscribe();
+    if (currentScrollY > this.scrollThreshold) {
+      this.isHeaderHidden = true;
+    } else {
+      this.isHeaderHidden = false;
     }
+    this.lastScrollY = currentScrollY;
   }
 }
