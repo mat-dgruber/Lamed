@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 
@@ -12,7 +13,11 @@ export class Sobre implements AfterViewInit {
   private swiper: Swiper | undefined;
   public activeModal: HTMLElement | null = null;
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef, private router: Router) {}
+
+  navigateToApoie(): void {
+    this.router.navigate(['/apoie']);
+  }
 
   ngAfterViewInit() {
     this.swiper = new Swiper('.team-swiper', {
@@ -56,6 +61,21 @@ export class Sobre implements AfterViewInit {
         }
       });
     });
+
+    const readMoreButton = this.el.nativeElement.querySelector('#read-more-history');
+    if (readMoreButton) {
+      readMoreButton.addEventListener('click', () => {
+        const expandableContent = this.el.nativeElement.querySelector('.expandable-content');
+        if (expandableContent) {
+          expandableContent.classList.toggle('expanded');
+          if (expandableContent.classList.contains('expanded')) {
+            readMoreButton.textContent = 'Ler menos';
+          } else {
+            readMoreButton.textContent = 'Ler mais';
+          }
+        }
+      });
+    }
   }
 
   onCardClick(event: MouseEvent, card: HTMLElement) {
