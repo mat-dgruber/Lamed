@@ -1,0 +1,10 @@
+<!-- Botão Voltar ao Topo -->
+<button *ngIf="showBackToTopButton" (click)="scrollToTop()" id="back-to-top" type="button" title="Voltar ao topo">
+  <lucide-icon name="arrow-up-from-dot"></lucide-icon>
+</button>
+
+<!-- Botão Voltar para Artigos -->
+<a *ngIf="showBackToArticlesButton" routerLink="/artigos" class="floating-back-button" id="back-to-articles-button" title="Voltar para Artigos">
+  <lucide-icon name="circle-arrow-left"></lucide-icon>
+  <span class="button-text-artigos">Voltar para Artigos</span>
+</a>
