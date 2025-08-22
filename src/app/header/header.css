@@ -16,7 +16,13 @@
   position: sticky; /* Make header sticky */
   top: 0; /* Stick to the top of the viewport */
   z-index: 1000; /* Ensure it stays above other content */
-  transition: top 0.4s;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+.header-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* Container do header */
