@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # Nome do serviço, pode ser qualquer um. 'app' é comum.
+  app:
+    # Instrui o Docker Compose a construir uma imagem a partir do Dockerfile
+    # localizado no diretório atual ('.').
+    build: .
+
+    # Nome do container que será criado.
+    container_name: lamed_angular_app
+
+    # Mapeia a porta 4200 do container para a porta 4200 da sua máquina.
+    # Isso permite que você acesse http://localhost:4200 no seu navegador.
+    ports:
+      - "4200:4200"
+
+    # Mapeamento de volumes. Essencial para o desenvolvimento.
+    # O que ele faz:
+    # 1. Mapeia o diretório atual ('.') da sua máquina para '/usr/src/app' no container.
+    #    Assim, qualquer alteração que você fizer no código-fonte na sua máquina
+    #    será refletida imediatamente dentro do container.
+    # 2. Cria um "volume anônimo" para '/usr/src/app/node_modules'. Isso "esconde"
+    #    a pasta node_modules da sua máquina (que pode nem existir) e garante que
+    #    o container use a pasta node_modules que foi instalada durante o build da imagem.
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+    # Sobrescreve o comando CMD do Dockerfile se necessário.
+    # Adicionamos '--poll 1000' para garantir que o Angular detecte as mudanças
+    # nos arquivos em todos os sistemas operacionais, já que o monitoramento de
+    # arquivos via volumes pode ser inconsistente.
+    command: ng serve --host 0.0.0.0 --poll 1000
