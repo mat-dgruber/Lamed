@@ -97,6 +97,7 @@
 .article-content ul, .article-content ol {
   margin-bottom: 1.5em;
   padding-left: 25px;
+  text-align: left; /* Ensure list items are left-aligned */
 }
 
 .highlight-points {

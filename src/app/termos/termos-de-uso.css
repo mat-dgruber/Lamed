@@ -97,6 +97,12 @@
 .article-content ul, .article-content ol {
   margin-bottom: 1.5em;
   padding-left: 25px;
+  text-align: left; /* Ensure list items are left-aligned */
+}
+
+.abc  {
+  list-style-type: none; /* Remove default list styling */
+  counter-reset: abc-counter; /* Initialize counter */
 }
 
 .highlight-points {
