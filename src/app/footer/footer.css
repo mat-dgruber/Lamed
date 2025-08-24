@@ -55,13 +55,10 @@
   opacity: 1;
 }
 
-.social-btn-footer  {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  
-  color: var(--link-color-footer);
-  text-decoration: none;
+/* Padroniza o tamanho dos ícones do rodapé */
+.btn-footer lucide-icon,
+.social-btn-footer lucide-icon {
+  width: 24px;
+  height: 24px;
 }
-
 
