@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Politica } from './politica';
+import { Politica } from './politica-de-privacidade';
 
 describe('Politica', () => {
   let component: Politica;
