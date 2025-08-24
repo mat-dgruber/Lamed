@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ArticleService } from '../services/article.service';
@@ -10,7 +10,7 @@ import { switchMap, map } from 'rxjs/operators';
 @Component({
   selector: 'app-artigo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './artigo.html',
   styleUrls: ['./artigo.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
