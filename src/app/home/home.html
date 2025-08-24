@@ -1,11 +1,11 @@
  <main class="site-main">
     <section id="hero" class="hero-section">
       <div class="container">
-        <div id="hero-text-1">
+        <div id="hero-text-1" *ngIf="showHeroText1" [style.opacity]="heroText1Opacity" class="hero-text">
             <h1>Bem-vindo ao LAMED</h1>
             <p>Onde você estuda a Bíblia de um jeito diferenciado.</p>
         </div>
-        <div id="hero-text-2" style="display: none; opacity: 0;">
+        <div id="hero-text-2" *ngIf="showHeroText2" [style.opacity]="heroText2Opacity" class="hero-text">
             <h1>Estude a Bíblia de um jeito diferenciado</h1>
             <p>O Lamed é o seu portal para um estudo bíblico aprofundado e transformador.<br>Explore nossos vídeos, artigos e materiais de estudo.</p>
         </div>

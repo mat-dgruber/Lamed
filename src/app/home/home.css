@@ -20,3 +20,7 @@
   color: var(--color-principal); /* <-- E outra! */
   margin-top: 0.5rem;
 }
+
+.hero-text {
+  transition: opacity 0.5s ease-in-out;
+}

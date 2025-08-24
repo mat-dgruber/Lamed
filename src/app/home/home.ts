@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -21,19 +21,23 @@ export class Home implements OnInit {
   latestArticle$!: Observable<any>;
   featuredVideoUrl$!: Observable<SafeResourceUrl | undefined>;
 
-  
+  showHeroText1 = true;
+  heroText1Opacity = 1;
+  showHeroText2 = false;
+  heroText2Opacity = 0;
+
   constructor(
     private videoService: VideoService,
     private articleService: ArticleService,
     private sanitizer: DomSanitizer,
-      private router: Router
-    ) { }
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) { }
   
-    navigateToApoie(): void {
-      this.router.navigate(['/apoie']);
-    }
+  navigateToApoie(): void {
+    this.router.navigate(['/apoie']);
+  }
     
-
   ngOnInit(): void {
     this.latestVideo$ = this.videoService.getLatestVideo();
     this.latestArticle$ = this.articleService.getLatestArticle();
@@ -47,5 +51,21 @@ export class Home implements OnInit {
         return undefined;
       })
     );
+
+    // Hero text animation logic
+    setTimeout(() => {
+      this.heroText1Opacity = 0;
+      this.cdr.markForCheck();
+      setTimeout(() => {
+        this.showHeroText1 = false;
+        this.showHeroText2 = true;
+        this.cdr.markForCheck();
+        // A small delay to ensure the element is in the DOM before animating opacity
+        setTimeout(() => {
+          this.heroText2Opacity = 1;
+          this.cdr.markForCheck();
+        }, 100);
+      }, 500); // This should match the CSS transition duration for the fade-out
+    }, 3000); // 3-second initial delay
   }
 }
