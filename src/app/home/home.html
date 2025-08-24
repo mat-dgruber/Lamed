@@ -15,9 +15,9 @@
     <section id="featured-videos" class="content-section" *ngIf="latestVideo$ | async as latestVideo">
       <div class="container">
         <h2>Vídeo em Destaque</h2>
-        <div class="video-list single-featured-video">
+        <div class="video-list single-featured-video" *ngIf="featuredVideoUrl$ | async as featuredVideoUrl">
           <div class="video-item">
-            <iframe id="featured-video-iframe" [src]="featuredVideoUrl$ | async" [title]="latestVideo.snippet.title" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe id="featured-video-iframe" [src]="featuredVideoUrl" [title]="latestVideo.snippet.title" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
         <div class="text-center">
