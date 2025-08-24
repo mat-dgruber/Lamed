@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, HostListener, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ArticleService } from '../services/article.service';
@@ -10,7 +10,7 @@ import { switchMap, map } from 'rxjs/operators';
 @Component({
   selector: 'app-artigo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './artigo.html',
   styleUrls: ['./artigo.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -18,12 +18,23 @@ import { switchMap, map } from 'rxjs/operators';
 export class Artigo implements OnInit {
   article$!: Observable<any>;
   articleContent$!: Observable<SafeHtml>;
+  isButtonVisible = false;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const shouldBeVisible = window.scrollY > 200;
+    if (shouldBeVisible !== this.isButtonVisible) {
+      this.isButtonVisible = shouldBeVisible;
+      this.cdr.markForCheck();
+    }
+  }
 
   constructor(
     private route: ActivatedRoute,
     private articleService: ArticleService,
     private http: HttpClient,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
