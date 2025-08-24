@@ -1,8 +1,54 @@
 # AngularLamed
 
+## Como Executar com Docker (Método Recomendado)
+
+Esta é a maneira mais simples e recomendada de executar o projeto para desenvolvimento. Você não precisa instalar Node.js ou qualquer outra dependência diretamente na sua máquina. Tudo é executado dentro de containers Docker, garantindo um ambiente consistente para todos os desenvolvedores.
+
+### Pré-requisitos
+
+- **Docker Desktop**: Certifique-se de que você tem o Docker Desktop instalado e em execução na sua máquina. Ele inclui tanto o Docker quanto o Docker Compose.
+  - [Faça o download aqui](https://www.docker.com/products/docker-desktop/)
+
+### Passos para Iniciar o Ambiente
+
+1.  **Clone o Repositório**: Se você ainda não o fez, clone este projeto para a sua máquina local.
+
+2.  **Inicie o Ambiente**: Abra um terminal na raiz do projeto (onde o arquivo `docker-compose.yml` está localizado) e execute o seguinte comando:
+
+    ```bash
+    docker-compose up -d
+    ```
+    - O Docker irá construir a imagem da aplicação (isso pode levar alguns minutos na primeira vez).
+    - Após o build, ele iniciará o container em modo "detached" (`-d`), ou seja, rodando em segundo plano.
+
+3.  **Acesse a Aplicação**: Abra seu navegador e acesse [http://localhost:4200/](http://localhost:4200/). A aplicação estará rodando.
+
+### Desenvolvimento
+
+Com o container em execução, você pode simplesmente editar os arquivos do projeto (na pasta `src/`, por exemplo) no seu editor de código preferido (VS Code, etc.). O servidor de desenvolvimento do Angular dentro do Docker detectará as alterações automaticamente e recarregará a página no seu navegador.
+
+### Como Parar o Ambiente
+
+Para parar os containers, execute o seguinte comando no seu terminal (na mesma pasta):
+
+```bash
+docker-compose down
+```
+
+### Executando Outros Comandos (Testes, etc.)
+
+Se precisar executar outros comandos `ng` ou `npm` (como os testes), você pode fazê-lo dentro do container em execução com o comando `docker-compose exec`.
+
+Por exemplo, para rodar os testes unitários:
+```bash
+docker-compose exec app npm test
+```
+
+---
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.6.
 
-## Development server
+## Development server (Método Antigo/Local)
 
 To start a local development server, run:
 
