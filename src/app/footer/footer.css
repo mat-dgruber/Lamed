@@ -54,3 +54,14 @@
 #back-to-top:hover {
   opacity: 1;
 }
+
+.social-btn-footer  {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  color: var(--link-color-footer);
+  text-decoration: none;
+}
+
+
