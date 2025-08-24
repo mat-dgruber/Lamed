@@ -1286,6 +1286,20 @@ margin-bottom: -5px;
   flex-shrink: 0;
 }
 
+/* Aumenta o tamanho do ícone do YouTube */
+.social-btn-footer.youtube svg {
+  width: 23px; /* Tamanho aumentado */
+  height: 23px; /* Tamanho aumentado */
+  stroke-width: 2px; /* Linha um pouco mais grossa para melhor visibilidade */
+}
+
+/* Garante o alinhamento vertical de todos os ícones com o texto */
+.social-btn-footer {
+  display: inline-flex;
+  align-items: center; /* Alinha verticalmente o ícone e o texto */
+  vertical-align: middle; /* Alinhamento adicional para consistência */
+}
+
 .social-btn-footer:hover svg {
   stroke: #ffffff;
 }
