@@ -66,6 +66,6 @@ export class Home implements OnInit {
           this.cdr.markForCheck();
         }, 100);
       }, 500); // This should match the CSS transition duration for the fade-out
-    }, 3000); // 3-second initial delay
+    }, 1800); // 3-second initial delay
   }
 }
