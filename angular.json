@@ -19,9 +19,9 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "src/assets/Favicon/favicon.ico",
               "src/assets"
-            ],  
+            ],
             "styles": [
               "src/styles.css",
               "node_modules/swiper/swiper-bundle.min.css"
