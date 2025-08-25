@@ -72,6 +72,10 @@ export class Sobre implements AfterViewInit {
             readMoreButton.textContent = 'Ler menos';
           } else {
             readMoreButton.textContent = 'Ler mais';
+            const historySection = this.el.nativeElement.querySelector('#history');
+            if (historySection) {
+              historySection.scrollIntoView({ behavior: 'smooth' });
+            }
           }
         }
       });
