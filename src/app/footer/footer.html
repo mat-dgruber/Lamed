@@ -1,60 +1,58 @@
 <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
+        <div class="footer-social-media footer-contact-info">
+          <h3>Contato</h3>
+            <div class="social-links-footer-email">
+
+              <a href="mailto:lamedchanel@gmail.com" target="_blank" class="btn-footer btn-email-footer footer-email-btn-grid" (click)="handleEmailClick($event)">
+                <lucide-icon name="mail" class="lucide-icon icon-default"></lucide-icon>
+                
+                <lucide-icon name="send" class="lucide-icon icon-hover"> </lucide-icon>
+
+                  <span class="button-text-container">
+                  <span class="text-default">E-mail</span>
+                  <span class="text-hover">lamedchanel@gmail.com</span>
+                </span>
+              </a>
+              <div class="copy-status-message" *ngIf="copyStatusMessage">
+                <span>{{ copyStatusMessage }}</span>
+              </div>
+
+          <a routerLink="/apoie" class="btn-footer btn-doe-footer footer-doe-btn-grid">
+               <lucide-icon name="badge-dollar-sign"></lucide-icon>
+               <span class="button-text-container">
+                    <span class="text-default">Doe</span>
+                    <span class="text-hover">Quero apoiar</span>
+               </span>
+          </a>
+            </div>
+        </div>
         <div class="footer-logo-tagline">
             <a routerLink="/">
             <img src="assets/Imagens/lamed-logo.png" alt="Lamed Logo" class="footer-logo-img" loading="lazy">
           </a>
           <p>Onde você estuda a Bíblia de um jeito diferenciado.</p>
         </div>
-        <div class="footer-buttons-container">
-            <div class="footer-social-media footer-contact-info">
-              <h3>Contato</h3>
-                <div class="social-links-footer-email">
-    
-                  <a href="mailto:lamedchanel@gmail.com" target="_blank" class="btn-footer btn-email-footer footer-email-btn-grid" (click)="handleEmailClick($event)">
-                    <lucide-icon name="mail" class="lucide-icon icon-default"></lucide-icon>
-                    
-                    <lucide-icon name="send" class="lucide-icon icon-hover"> </lucide-icon>
-    
-                      <span class="button-text-container">
-                      <span class="text-default">E-mail</span>
-                      <span class="text-hover">lamedchanel@gmail.com</span>
-                    </span>
-                  </a>
-                  <div class="copy-status-message" *ngIf="copyStatusMessage">
-                    <span>{{ copyStatusMessage }}</span>
-                  </div>
-    
-              <a routerLink="/apoie" class="btn-footer btn-doe-footer footer-doe-btn-grid">
-                   <lucide-icon name="badge-dollar-sign"></lucide-icon>
-                   <span class="button-text-container">
-                        <span class="text-default">Doe</span>
-                        <span class="text-hover">Quero apoiar</span>
-                   </span>
-              </a>
-                </div>
-            </div>
-            <div class="footer-social-media footer-social-media-buttons">
-              <h3>Redes Sociais</h3>
-              <div class="social-links-footer">
-                <a href="https://www.youtube.com/@Lamed148" target="_blank" class="social-btn-footer youtube">
-                  <lucide-icon name="youtube"></lucide-icon>
-                  <span class="button-text-container">
-                    <span class="text-default">YouTube</span>
-                    <span class="text-hover">youtube.com/@Lamed148</span>
-                  </span>
-                </a>
-    
-                <a href="https://www.instagram.com/lamed148/" target="_blank" class="social-btn-footer instagram">
-                  <lucide-icon name="instagram"></lucide-icon>
-                  <span class="button-text-container">
-                    <span class="text-default">Instagram</span>
-                    <span class="text-hover">instagram.com/@lamed148</span>
-                  </span>
-                </a>
-              </div>
-            </div>
+        <div class="footer-social-media footer-social-media-buttons">
+          <h3>Redes Sociais</h3>
+          <div class="social-links-footer">
+            <a href="https://www.youtube.com/@Lamed148" target="_blank" class="social-btn-footer youtube">
+              <lucide-icon name="youtube"></lucide-icon>
+              <span class="button-text-container">
+                <span class="text-default">YouTube</span>
+                <span class="text-hover">youtube.com/@Lamed148</span>
+              </span>
+            </a>
+
+            <a href="https://www.instagram.com/lamed148/" target="_blank" class="social-btn-footer instagram">
+              <lucide-icon name="instagram"></lucide-icon>
+              <span class="button-text-container">
+                <span class="text-default">Instagram</span>
+                <span class="text-hover">instagram.com/@lamed148</span>
+              </span>
+            </a>
+          </div>
         </div>
         <div class="footer-legal">
           <p>© {{ currentYear }} Lamed. Todos os direitos reservados.</p>
