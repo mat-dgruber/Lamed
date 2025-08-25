@@ -8,6 +8,7 @@ import { Apoie } from './apoie/apoie';
 import { Artigo } from './artigo/artigo';
 import { Politica } from './politica/politica-de-privacidade';
 import { Termos } from './termos/termos-de-uso';
+import { Contato } from './contato/contato';
 
 
 
@@ -19,6 +20,7 @@ export const routes: Routes = [
      {path: 'artigo/:id', component: Artigo},
      {path: 'apoie', component: Apoie},
      {path: 'politica-de-privacidade', component: Politica},
-     {path: 'termos-de-uso', component: Termos}
+     {path: 'termos-de-uso', component: Termos},
+     {path: 'contato', component: Contato}
 
 ];
