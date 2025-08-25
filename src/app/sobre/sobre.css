@@ -238,9 +238,13 @@ h2 {
   font-weight: 700;
 }
 
+h3 {
+   color: var(--text-color-headings);
+}
+
 p {
-  max-width: 700px;
-  margin: 0 auto 1rem auto;
+  max-width: 900px; /* Aumente a largura máxima do texto */
+  margin: 0 auto 0.5rem auto;
   font-size: 1.1rem;
   line-height: 1.6;
   color: var(--text-color);
@@ -296,29 +300,26 @@ p {
 .history-regular-section,
 .history-inverted-section {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  align-items: center;
-  margin-bottom: 2rem;
+  flex-direction: column;
+  align-items: center; /* Centraliza o conteúdo */
+  margin-bottom: 5px;
 }
 
-.history-regular-section .history-image-container,
-.history-inverted-section .history-image-container {
-  flex: 1 1 300px;
+.history-text-container {
+  /* Remova esta regra para permitir que o texto ocupe mais espaço */
+  /* max-width: 1200px; */ 
+  width: 100%; /* Garante que o contêiner de texto ocupe a largura total */
 }
 
-.history-regular-section .history-text-container,
-.history-inverted-section .history-text-container {
-  flex: 2 1 400px;
-}
-
-@media (max-width: 767px) {
-  .history-regular-section,
-  .history-inverted-section {
-    flex-direction: column;
-  }
-
-  .history-inverted-section .history-image-container {
-    order: -1;
-  }
+@media (min-width: 768px) {
+    /* Adicione estas regras para um layout de duas colunas em telas maiores */
+    .history-regular-section,
+    .history-inverted-section {
+        flex-direction: row;
+        gap: 30px; /* Adiciona espaçamento entre a imagem e o texto */
+        align-items: center;
+    }
+    .history-inverted-section .history-text-container {
+        order: 1; /* Para alinhar o texto depois da imagem no layout invertido */
+    }
 }
