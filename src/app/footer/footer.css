@@ -62,3 +62,17 @@
   height: 24px;
 }
 
+.social-links-footer-email {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.copy-status-message {
+  color: var(--color-principal);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: -5px;
+  transition: opacity 0.3s;
+}
+

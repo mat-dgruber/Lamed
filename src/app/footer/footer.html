@@ -5,7 +5,7 @@
           <h3>Contato</h3>
             <div class="social-links-footer-email">
 
-              <a href="mailto:lamedchanel@gmail.com" target="_blank" class="btn-footer btn-email-footer footer-email-btn-grid">
+              <a href="mailto:lamedchanel@gmail.com" target="_blank" class="btn-footer btn-email-footer footer-email-btn-grid" (click)="handleEmailClick($event)">
                 <lucide-icon name="mail" class="lucide-icon icon-default"></lucide-icon>
                 
                 <lucide-icon name="send" class="lucide-icon icon-hover"> </lucide-icon>
@@ -15,6 +15,9 @@
                   <span class="text-hover">lamedchanel@gmail.com</span>
                 </span>
               </a>
+              <div class="copy-status-message" *ngIf="copyStatusMessage">
+                <span>{{ copyStatusMessage }}</span>
+              </div>
 
           <a routerLink="/apoie" class="btn-footer btn-doe-footer footer-doe-btn-grid">
                <lucide-icon name="badge-dollar-sign"></lucide-icon>
