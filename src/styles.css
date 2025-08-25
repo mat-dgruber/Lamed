@@ -339,7 +339,6 @@ margin-bottom: -5px;
   background-position: center center;
   background-repeat: no-repeat;
   color: #ffffff; /* Ensure text is readable */
-  padding: 80px 0; /* Increased padding for better visual with background */
   margin-bottom: -35px;
   text-align: center;
   position: relative; /* For pseudo-element overlay if needed */
@@ -365,12 +364,73 @@ margin-bottom: -5px;
   position: relative;
   z-index: 2;
 }
+@media screen and (max-width: 600px) {
+  .hero-section {
+    height: 200px; /* Adjust height for smaller screens */
+    padding: 0 10px; /* Add some horizontal padding */
+  }
+
+  .hero-section h1 {
+    font-size: 2em; /* Adjust font size for smaller screens */
+    margin-top: 120px; /* Push title down for better visual balance */
+  
+  }
+
+  .hero-section p {
+    font-size: 1em; /* Adjust font size for smaller screens */
+  }
+  
+}
+
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+  .hero-section {
+    height: 250px; /* Adjust height for medium screens */
+    padding: 0 20px; /* Add some horizontal padding */
+  }
+
+  .hero-section h1 {
+    font-size: 2.5em; /* Adjust font size for medium screens */
+    margin-top: 60px; /* Push title down for better visual balance */
+  
+  }
+
+  .hero-section p {
+    font-size: 1.1em; /* Adjust font size for medium screens */
+  }
+  
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* Remove padding on mobile */
+  }
+
+  .hero-section .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 769px) {
+  .hero-section {
+    padding: 80px 0; /* Increased padding for better visual with background */
+  }
+  
+}
+
+
 
 .hero-section h1 {
   color: #ffffff;
   font-size: 3em;
   margin-bottom: 0.5em;
-  text-shadow: 0 5px 10px rgba(0, 0, 0, 0.212);;
+  text-shadow: 0 5px 10px rgba(0, 0, 0, 0.212);
+  
   
 }
 
