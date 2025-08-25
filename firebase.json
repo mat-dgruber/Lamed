@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/angular-lamed",
+    "public": "dist/angular-lamed/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
