@@ -1040,16 +1040,11 @@ margin-bottom: -5px;
 /* Footer Styling for new structure */
 .footer-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
   gap: 20px; /* Space between columns */
-  align-items: center; /* Align items to the start of their grid cell */
+  align-items: start; /* Align items to the start of their grid cell */
   margin-bottom: 30px; /* Space before footer-legal */
   padding: 20px 0; /* Padding top and bottom */
-}
-
-.footer-buttons-container {
-    display: flex;
-    gap: 20px;
 }
 
 .footer-contact-info,
@@ -1355,16 +1350,28 @@ margin-bottom: -5px;
 }
 
 
-@media (min-width: 769px) {
-  .footer-grid {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
 /* 2. Regras para Telas Pequenas (Mobile) */
 @media (max-width: 768px) {
-  .footer-buttons-container {
-    flex-direction: column;
+  /* Esconde o container de texto inteiro no mobile */
+  .social-btn-footer .button-text-container {
+    display: none;
+  }
+
+  /* Ajusta o padding e o alinhamento para o botão "só ícone" */
+  .social-btn-footer {
+    padding: 8px 10px;
+    justify-content: center;
+  }
+  
+  /* Remove a margem do ícone, já que não há mais texto */
+  .social-btn-footer svg {
+    margin-right: 0;
+  }
+
+  /* Opcional, mas recomendado: desativa o efeito de "saltar" no mobile,
+     pois não há expansão para acompanhá-lo */
+  .social-btn-footer:hover {
+    transform: none;
   }
 }
 
