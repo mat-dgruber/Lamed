@@ -6,17 +6,17 @@
           <span class="logo-text">LAMED</span>
         </a>
       </div>
-      <nav class="main-nav">
+      <nav class="main-nav" [ngClass]="{ 'active': isMenuOpen }">
         <ul>
-          <li><a routerLink="/">Início</a></li>
-          <li><a routerLink="/videos">Vídeos</a></li>
-          <li><a routerLink="/artigos">Artigos</a></li>
-          <li><a routerLink="/apoie">Apoie</a></li>
-          <li><a routerLink="/sobre">Sobre</a></li>
+          <li><a routerLink="/" (click)="toggleMenu()">Início</a></li>
+          <li><a routerLink="/videos" (click)="toggleMenu()">Vídeos</a></li>
+          <li><a routerLink="/artigos" (click)="toggleMenu()">Artigos</a></li>
+          <li><a routerLink="/apoie" (click)="toggleMenu()">Apoie</a></li>
+          <li><a routerLink="/sobre" (click)="toggleMenu()">Sobre</a></li>
         </ul>
       </nav>
-      <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+      <button class="menu-toggle" (click)="toggleMenu()" aria-label="Abrir menu" [attr.aria-expanded]="isMenuOpen">
         <lucide-icon name="menu"></lucide-icon>
       </button>
     </div>
-  </header>
+</header>
