@@ -15,8 +15,13 @@ export class Header implements OnInit {
   isHeaderHidden = false;
   private scrollThreshold = 400;
   private lastScrollY = 0;
+  public isMenuOpen = false;
 
   constructor(private router: Router) {}
+
+  public toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 
   ngOnInit() {
     this.router.events.pipe(
