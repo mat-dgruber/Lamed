@@ -27,7 +27,13 @@
       </div>
     </div>
 
-    <button type="submit" [disabled]="contactForm.invalid">Enviar</button>
+    <button type="submit" [disabled]="contactForm.invalid || isSubmitting">
+      {{ isSubmitting ? 'Enviando...' : 'Enviar' }}
+    </button>
+
+    <div *ngIf="submissionMessage" class="submission-message">
+      {{ submissionMessage }}
+    </div>
 
   </form>
 </div>
