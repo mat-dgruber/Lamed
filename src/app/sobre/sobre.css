@@ -168,7 +168,7 @@
   stroke-width: 2;
 }
 
-.team-member-card-container:hover .click-icon {
+.team-member-card:hover .click-icon {
   animation: two-quick-one-slow-pulse 2s infinite;
 }
 
