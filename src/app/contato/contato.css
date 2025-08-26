@@ -1,12 +1,19 @@
 /* contato.component.css */
 
+h2 {
+  text-align: center;
+  color: var(--highlight-color);
+  font-size: 2.2em;
+  margin-bottom: 30px;
+}
+
 .contact-form-container {
   max-width: 600px;
   margin: 4rem auto;
   padding: 2rem;
-  background-color: #f9f9f9;
+  background-color: #fffaf2;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.179);
 }
 
 .form-group {
@@ -17,25 +24,29 @@ label {
   display: block;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  color: var(--text-color-headings);
 }
 
 input,
 textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 1rem;
+  background-color: #ffffff;
+  color: var(--text-color);
 }
 
 input:focus,
 textarea:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: var(--main-color);
+  box-shadow: 0 0 0 2px rgba(248, 148, 27, 0.4);
 }
 
 .error-message {
-  color: #dc3545;
+  color: var(--highlight-color);
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
@@ -43,20 +54,22 @@ textarea:focus {
 button {
   width: 100%;
   padding: 1rem;
-  background-color: #007bff;
+  background-color: var(--main-color);
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 1.1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 button:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: var(--main-color-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 button:disabled {
-  background-color: #cccccc;
+  background-color: #e0e0e0;
   cursor: not-allowed;
 }
