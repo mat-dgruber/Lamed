@@ -1,0 +1,54 @@
+name: Update Content and Deploy
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/assets/Artigos/**'
+      - 'src/assets/videos.json'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: 1. Checkout code
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: 3. Install dependencies
+        run: |
+          npm install
+          npm install --prefix scripts
+
+      - name: 4. Fetch videos
+        run: node scripts/fetch-videos.js
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+
+      - name: 5. Commit data files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: Update content data files'
+          file_pattern: 'src/assets/articles.json src/assets/videos.json'
+
+      - name: 6. Build Angular App
+        run: npm run build:prod
+
+      - name: 7. Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
