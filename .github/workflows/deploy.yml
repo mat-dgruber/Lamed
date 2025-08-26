@@ -38,10 +38,18 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
       - name: 5. Commit data files
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: 'chore: Update content data files'
-          file_pattern: 'src/assets/articles.json src/assets/videos.json'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git pull --rebase
+          git add src/assets/articles.json src/assets/videos.json
+          # Commit only if there are changes
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: Update content data files"
+            git push
+          else
+            echo "No changes to commit."
+          fi
 
       - name: 6. Build Angular App
         run: npm run build:prod
