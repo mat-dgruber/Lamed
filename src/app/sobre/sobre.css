@@ -18,6 +18,7 @@
   transform-style: preserve-3d;
   max-width: 350px;
   margin: 0 auto;
+  cursor: pointer;
 }
 .team-member-card.is-flipped {
   transform: rotateY(180deg);
