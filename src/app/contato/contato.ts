@@ -2,7 +2,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-contato',
@@ -12,8 +12,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class Contato implements OnInit {
   contactForm!: FormGroup;
+  isSubmitting = false;
+  submissionMessage = '';
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.contactForm = this.fb.group({
@@ -25,12 +27,24 @@ export class Contato implements OnInit {
 
   onSubmit(): void {
     if (this.contactForm.valid) {
-      console.log('Formulário enviado:', this.contactForm.value);
-      // Aqui você pode adicionar a lógica para enviar o formulário, como uma chamada HTTP
-      this.contactForm.reset();
+      this.isSubmitting = true;
+      this.submissionMessage = '';
+      const formData = this.contactForm.value;
+      const formspreeUrl = 'https://formspree.io/f/mjkevknj';
+
+      this.http.post(formspreeUrl, formData).subscribe(
+        (response) => {
+          this.submissionMessage = 'Mensagem enviada com sucesso!';
+          this.isSubmitting = false;
+          this.contactForm.reset();
+        },
+        (error) => {
+          this.submissionMessage = 'Ocorreu um erro ao enviar a mensagem. Tente novamente mais tarde.';
+          this.isSubmitting = false;
+        }
+      );
     } else {
-      console.log('Formulário inválido. Por favor, preencha todos os campos corretamente.');
+      this.submissionMessage = 'Por favor, preencha todos os campos corretamente.';
     }
   }
-
 }
