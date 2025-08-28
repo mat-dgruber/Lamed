@@ -38,17 +38,17 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
       - name: 5. Commit data files
-          run: |
-            git config --global user.name 'github-actions[bot]'
-            git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-            if ! git diff --quiet; then
-              git add src/assets/articles.json src/assets/videos.json
-              git commit -m "chore: Update content data files"
-              git pull --rebase
-              git push
-            else
-              echo "No changes to commit."
-            fi
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          if ! git diff --quiet; then
+            git add src/assets/articles.json src/assets/videos.json
+            git commit -m "chore: Update content data files"
+            git pull --rebase
+            git push
+          else
+            echo "No changes to commit."
+          fi
 
       - name: 6. Build Angular App
         run: npm run build:prod
