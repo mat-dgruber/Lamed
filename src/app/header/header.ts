@@ -30,7 +30,10 @@ export class Header implements OnInit {
 
   public toggleDropdown(event: MouseEvent): void {
     event.stopPropagation();
-    this.isDropdownOpen = !this.isDropdownOpen;
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      this.isDropdownOpen = !this.isDropdownOpen;
+    }
   }
 
   onMouseEnter() {
