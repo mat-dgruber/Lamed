@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="title">Guia de Estudos</h1>
   <p class="description">
-    Aqui você encontrará os materiais de estudo semanais, organizados por trimestre.
+    Aqui você encontrará os materiais de estudo semanais, organizados por trimestre. Esses materias foram pensados para ser uma boa base para estudos em PGs e classes de Estudos Biblico.
   </p>
 
   <div class="trimester" *ngIf="getLessonsWithDownloads('1').length > 0">
@@ -12,9 +12,14 @@
     <ul class="week-list" *ngIf="trimesterState['1']">
       <li *ngFor="let lesson of getLessonsWithDownloads('1')">
         <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
-        <a [href]="lesson.downloadUrl" download>
-          <button class="download-button">Baixar</button>
-        </a>
+        <div class="button-group">
+          <a [href]="lesson.downloadUrl" target="_blank" class="view-button">
+            <button>Visualizar</button>
+          </a>
+          <a [href]="lesson.downloadUrl" download class="download-button">
+            <button>Baixar</button>
+          </a>
+        </div>
       </li>
     </ul>
   </div>
@@ -27,9 +32,14 @@
     <ul class="week-list" *ngIf="trimesterState['2']">
       <li *ngFor="let lesson of getLessonsWithDownloads('2')">
         <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
-        <a [href]="lesson.downloadUrl" download>
-          <button class="download-button">Baixar</button>
-        </a>
+        <div class="button-group">
+          <a [href]="lesson.downloadUrl" target="_blank" class="view-button">
+            <button>Visualizar</button>
+          </a>
+          <a [href]="lesson.downloadUrl" download class="download-button">
+            <button>Baixar</button>
+          </a>
+        </div>
       </li>
     </ul>
   </div>
@@ -42,9 +52,14 @@
     <ul class="week-list" *ngIf="trimesterState['3']">
       <li *ngFor="let lesson of getLessonsWithDownloads('3')">
         <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
-        <a [href]="lesson.downloadUrl" download>
-          <button class="download-button">Baixar</button>
-        </a>
+        <div class="button-group">
+          <a [href]="lesson.downloadUrl" target="_blank" class="view-button">
+            <button>Visualizar</button>
+          </a>
+          <a [href]="lesson.downloadUrl" download class="download-button">
+            <button>Baixar</button>
+          </a>
+        </div>
       </li>
     </ul>
   </div>
@@ -57,9 +72,14 @@
     <ul class="week-list" *ngIf="trimesterState['4']">
       <li *ngFor="let lesson of getLessonsWithDownloads('4')">
         <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
-        <a [href]="lesson.downloadUrl" download>
-          <button class="download-button">Baixar</button>
-        </a>
+        <div class="button-group">
+          <a [href]="lesson.downloadUrl" target="_blank" class="view-button">
+            <button>Visualizar</button>
+          </a>
+          <a [href]="lesson.downloadUrl" download class="download-button">
+            <button>Baixar</button>
+          </a>
+        </div>
       </li>
     </ul>
   </div>

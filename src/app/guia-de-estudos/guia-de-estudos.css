@@ -55,16 +55,40 @@
   border-radius: 5px;
 }
 
-.download-button {
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.view-button button,
+.download-button button {
   padding: 8px 12px;
-  background-color: var(--color-principal);
   color: white;
   border: none;
   border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 100px;
 }
 
-.download-button:hover {
+.view-button button {
+  background-color: var(--color-destaque); /* A neutral color for view */
+}
+
+.view-button:hover button {
+  background-color: var(--color-principal);
+}
+
+.download-button button {
+  background-color: var(--color-principal);
+}
+
+.download-button:hover button {
   background-color: var(--color-destaque);
+}
+
+/* Remove default link styles */
+.view-button,
+.download-button {
+  text-decoration: none;
 }
