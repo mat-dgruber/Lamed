@@ -11,9 +11,9 @@
           <li><a routerLink="/" (click)="toggleMenu()">Início</a></li>
           <li><a routerLink="/videos" (click)="toggleMenu()">Vídeos</a></li>
           <li><a routerLink="/artigos" (click)="toggleMenu()">Artigos</a></li>
-          <li class="dropdown" [ngClass]="{ 'open': isDropdownOpen }">
+          <li class="dropdown" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" [ngClass]="{ 'open': isDropdownOpen }" #dropdown>
             <a (click)="toggleDropdown($event)">Materiais Extras</a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" #dropdownMenu>
               <li><a routerLink="/guia-de-estudos" (click)="toggleMenu()">Guia de Estudos</a></li>
               <li><a routerLink="/contato" (click)="toggleMenu()">Contato</a></li>  
             </ul>
