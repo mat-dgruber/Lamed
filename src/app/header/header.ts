@@ -16,11 +16,17 @@ export class Header implements OnInit {
   private scrollThreshold = 400;
   private lastScrollY = 0;
   public isMenuOpen = false;
+  public isDropdownOpen = false;
 
   constructor(private router: Router) {}
 
   public toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  public toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation();
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   ngOnInit() {
