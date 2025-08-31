@@ -4,54 +4,63 @@
     Aqui você encontrará os materiais de estudo semanais, organizados por trimestre.
   </p>
 
-  <div class="trimester">
+  <div class="trimester" *ngIf="getLessonsWithDownloads('1').length > 0">
     <h2 class="trimester-title" (click)="toggleTrimester('1')">
       1º Trimestre
       <span class="toggle-icon">{{ trimesterState['1'] ? '-' : '+' }}</span>
     </h2>
     <ul class="week-list" *ngIf="trimesterState['1']">
-      <li *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]">
-        <span>Lição {{ i }}</span>
-        <button class="download-button" download>Baixar</button>
+      <li *ngFor="let lesson of getLessonsWithDownloads('1')">
+        <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
+        <a [href]="lesson.downloadUrl" download>
+          <button class="download-button">Baixar</button>
+        </a>
       </li>
     </ul>
   </div>
 
-  <div class="trimester">
+  <div class="trimester" *ngIf="getLessonsWithDownloads('2').length > 0">
     <h2 class="trimester-title" (click)="toggleTrimester('2')">
       2º Trimestre
       <span class="toggle-icon">{{ trimesterState['2'] ? '-' : '+' }}</span>
     </h2>
     <ul class="week-list" *ngIf="trimesterState['2']">
-      <li *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]">
-        <span>Lição {{ i }}</span>
-        <button class="download-button" download>Baixar</button>
+      <li *ngFor="let lesson of getLessonsWithDownloads('2')">
+        <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
+        <a [href]="lesson.downloadUrl" download>
+          <button class="download-button">Baixar</button>
+        </a>
       </li>
     </ul>
   </div>
 
-  <div class="trimester">
+  <div class="trimester" *ngIf="getLessonsWithDownloads('3').length > 0">
     <h2 class="trimester-title" (click)="toggleTrimester('3')">
       3º Trimestre
       <span class="toggle-icon">{{ trimesterState['3'] ? '-' : '+' }}</span>
     </h2>
     <ul class="week-list" *ngIf="trimesterState['3']">
-      <li *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]">
-        <span>Lição {{ i }}</span>
-        <button class="download-button" download>Baixar</button>
+      <li *ngFor="let lesson of getLessonsWithDownloads('3')">
+        <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
+        <a [href]="lesson.downloadUrl" download>
+          <button class="download-button">Baixar</button>
+        </a>
       </li>
     </ul>
   </div>
 
-  <div class="trimester">
+  <div class="trimester" *ngIf="getLessonsWithDownloads('4').length > 0">
     <h2 class="trimester-title" (click)="toggleTrimester('4')">
       4º Trimestre
       <span class="toggle-icon">{{ trimesterState['4'] ? '-' : '+' }}</span>
     </h2>
     <ul class="week-list" *ngIf="trimesterState['4']">
-      <li *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]">
-        <span>Lição {{ i }}</span>
-        <button class="download-button" download>Baixar</button>
+      <li *ngFor="let lesson of getLessonsWithDownloads('4')">
+        <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
+        <a [href]="lesson.downloadUrl" download>
+          <button class="download-button">Baixar</button>
+        </a>
       </li>
     </ul>
+  </div>
 </div>
