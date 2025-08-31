@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
@@ -17,6 +17,10 @@ export class Header implements OnInit {
   private lastScrollY = 0;
   public isMenuOpen = false;
   public isDropdownOpen = false;
+  private dropdownTimer: any;
+
+  @ViewChild('dropdown') dropdownRef!: ElementRef;
+  @ViewChild('dropdownMenu') dropdownMenuRef!: ElementRef;
 
   constructor(private router: Router) {}
 
@@ -27,6 +31,36 @@ export class Header implements OnInit {
   public toggleDropdown(event: MouseEvent): void {
     event.stopPropagation();
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  onMouseEnter() {
+    clearTimeout(this.dropdownTimer);
+    this.isDropdownOpen = true;
+  }
+
+  onMouseLeave() {
+    this.dropdownTimer = setTimeout(() => {
+      this.isDropdownOpen = false;
+    }, 4000);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (
+      this.dropdownRef &&
+      this.dropdownRef.nativeElement.contains(event.target)
+    ) {
+      // Click is inside the dropdown toggle, let toggleDropdown handle it
+      return;
+    }
+    
+    if (
+      this.dropdownMenuRef &&
+      !this.dropdownMenuRef.nativeElement.contains(event.target)
+    ) {
+      // Click is outside the dropdown menu, close it
+      this.isDropdownOpen = false;
+    }
   }
 
   ngOnInit() {
