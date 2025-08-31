@@ -11,8 +11,16 @@
           <li><a routerLink="/" (click)="toggleMenu()">Início</a></li>
           <li><a routerLink="/videos" (click)="toggleMenu()">Vídeos</a></li>
           <li><a routerLink="/artigos" (click)="toggleMenu()">Artigos</a></li>
+          <li class="dropdown" [ngClass]="{ 'open': isDropdownOpen }">
+            <a (click)="toggleDropdown($event)">Materiais Extras</a>
+            <ul class="dropdown-menu">
+              <li><a routerLink="/guia-de-estudos" (click)="toggleMenu()">Guia de Estudos</a></li>
+              <li><a routerLink="/contato" (click)="toggleMenu()">Contato</a></li>  
+            </ul>
+          </li>
           <li><a routerLink="/apoie" (click)="toggleMenu()">Apoie</a></li>
           <li><a routerLink="/sobre" (click)="toggleMenu()">Sobre</a></li>
+          
         </ul>
       </nav>
       <button class="menu-toggle" (click)="toggleMenu()" aria-label="Abrir menu" [attr.aria-expanded]="isMenuOpen">
