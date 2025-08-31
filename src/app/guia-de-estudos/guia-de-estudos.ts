@@ -27,10 +27,11 @@ export class GuiaDeEstudos {
     '1': [],
     '2': [],
     '3': [
-      { id: 9, title: 'COMO CRIANÇAS', downloadUrl: 'assets/Downloads/GuiaDeEstudo/3Tri25/L9.pdf' },
-      { id: 10, title: 'ACORDE!', downloadUrl: 'assets/Downloads/GuiaDeEstudo/3Tri25/L10.pdf' },
+      { id: 9, title: 'COMO CRIANÇAS', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L9.pdf' },
+      { id: 10, title: 'ACORDE!', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L10.pdf' },
     ],
-    '4': [],
+    '4': [
+    ],
   };
 
   toggleTrimester(trimester: string): void {
