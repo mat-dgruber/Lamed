@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 
+interface Lesson {
+  id: number;
+  title: string;
+  downloadUrl: string;
+}
+
 @Component({
   selector: 'app-guia-de-estudos',
   standalone: true,
@@ -17,7 +23,21 @@ export class GuiaDeEstudos {
     '4': false,
   };
 
+  Licoes: { [key: string]: Lesson[] } = {
+    '1': [],
+    '2': [],
+    '3': [
+      { id: 9, title: 'COMO CRIANÇAS', downloadUrl: 'assets/Downloads/GuiaDeEstudo/3Tri25/L9.pdf' },
+      { id: 10, title: 'ACORDE!', downloadUrl: 'assets/Downloads/GuiaDeEstudo/3Tri25/L10.pdf' },
+    ],
+    '4': [],
+  };
+
   toggleTrimester(trimester: string): void {
     this.trimesterState[trimester] = !this.trimesterState[trimester];
+  }
+
+  getLessonsWithDownloads(trimester: string): Lesson[] {
+    return this.Licoes[trimester].filter((lesson: Lesson) => lesson.downloadUrl);
   }
 }
