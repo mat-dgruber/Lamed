@@ -41,16 +41,13 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git pull --rebase
-          git add src/assets/articles.json src/assets/videos.json
+          git add src/assets/articles.json src/assets/videos.json package-lock.json scripts/package-lock.json || echo "No changes to stage"
           # Commit only if there are changes
           if ! git diff --staged --quiet; then
             git commit -m "chore: Update content data files"
-            git pull --rebase
-            git push
-          else
-            echo "No changes to commit."
           fi
+          git pull --rebase
+          git push
 
       - name: 6. Build Angular App
         run: npm run build:prod
