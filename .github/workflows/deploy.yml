@@ -41,8 +41,10 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          if ! git diff --quiet; then
-            git add src/assets/articles.json src/assets/videos.json
+          git pull --rebase
+          git add src/assets/articles.json src/assets/videos.json
+          # Commit only if there are changes
+          if ! git diff --staged --quiet; then
             git commit -m "chore: Update content data files"
             git pull --rebase
             git push
