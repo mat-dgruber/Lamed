@@ -6,6 +6,10 @@ a[routerLink] {
 
 /* File: public/style.css */
 /* General Styles */
+html {
+  height: 100%;
+}
+
 body {
   /* Isso é uma "Pilha de Fontes" (Font Stack). 
     O navegador tenta usar a primeira fonte da lista. Se não a encontrar, 
@@ -37,6 +41,19 @@ body {
   color: #4A4A4A;
   line-height: 1.6;
   font-size: 16px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
 }
 
 .container {

@@ -9,6 +9,7 @@ import { Artigo } from './artigo/artigo';
 import { Politica } from './politica/politica-de-privacidade';
 import { Termos } from './termos/termos-de-uso';
 import { Contato } from './contato/contato';
+import { GuiaDeEstudos } from './guia-de-estudos/guia-de-estudos';
 
 
 
@@ -21,6 +22,7 @@ export const routes: Routes = [
      {path: 'apoie', component: Apoie},
      {path: 'politica-de-privacidade', component: Politica},
      {path: 'termos-de-uso', component: Termos},
-     {path: 'contato', component: Contato}
+     {path: 'contato', component: Contato},
+     {path: 'guia-de-estudos', component: GuiaDeEstudos}
 
 ];
