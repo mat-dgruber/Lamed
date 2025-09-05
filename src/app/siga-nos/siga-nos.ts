@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-siga-nos',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './siga-nos.html',
   styleUrl: './siga-nos.css'
 })

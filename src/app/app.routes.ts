@@ -10,6 +10,7 @@ import { Politica } from './politica/politica-de-privacidade';
 import { Termos } from './termos/termos-de-uso';
 import { Contato } from './contato/contato';
 import { GuiaDeEstudos } from './guia-de-estudos/guia-de-estudos';
+import { SigaNos } from './siga-nos/siga-nos';
 
 
 
@@ -23,6 +24,7 @@ export const routes: Routes = [
      {path: 'politica-de-privacidade', component: Politica},
      {path: 'termos-de-uso', component: Termos},
      {path: 'contato', component: Contato},
-     {path: 'guia-de-estudos', component: GuiaDeEstudos}
+     {path: 'guia-de-estudos', component: GuiaDeEstudos},
+     {path: 'siga-nos', component: SigaNos}
 
 ];
