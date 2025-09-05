@@ -1,5 +1,17 @@
 [
   {
+    "id": "acorde-a-historia-de-lazaro-e-o-poder-de-jesus",
+    "title": "Acorde! A História de Lázaro e o Poder de Jesus",
+    "dateISO": "2025-09-04",
+    "displayDate": "04 de Setembro, 2025",
+    "link": "artigo.html?id=acorde-a-historia-de-lazaro-e-o-poder-de-jesus",
+    "contentPath": "assets/Artigos/artigo12.html",
+    "bannerImage": "assets/Artigos/Imagens-artigos/amizade-jesus-lazaro-irmas.png",
+    "description": "Descubra como Jesus tem o poder de transformar qualquer situação, através da história da ressurreição de Lázaro.",
+    "author": "Lamed",
+    "tags": ["Jesus", "Lázaro", "ressurreição", "fé", "milagre", "Betânia", "Marta", "Maria", "poder de Deus", "vida nova", "esperança", "Bíblia", "Lamed", "reflexão", "espiritualidade"]
+  },
+  {
     "id": "a-importancia-de-crescer-mas-continuar-a-ser-como-crianca",
     "title": "A Importância de Crescer, mas Continuar a Ser como Criança",
     "dateISO": "2025-08-28",
