@@ -44,7 +44,7 @@ export class Header implements OnInit {
   onMouseLeave() {
     this.dropdownTimer = setTimeout(() => {
       this.isDropdownOpen = false;
-    }, 4000);
+    }, 2000);
   }
 
   @HostListener('document:click', ['$event'])
