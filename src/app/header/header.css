@@ -13,8 +13,6 @@
   box-shadow: 0 20px 14px rgba(0, 0, 0, 0.308);
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
-  position: sticky; /* Make header sticky */
-  top: 0; /* Stick to the top of the viewport */
   z-index: 1000; /* Ensure it stays above other content */
   transition: opacity 0.5s, visibility 0s linear 0s;
 }
@@ -24,13 +22,6 @@
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.5s, visibility 0.5s linear 0.5s;
-}
-
-.sticky {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: 1020;
 }
 
 /* Container do header */
