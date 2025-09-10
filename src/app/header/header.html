@@ -11,11 +11,11 @@
           <li><a routerLink="/" (click)="toggleMenu()">Início</a></li>
           <li><a routerLink="/videos" (click)="toggleMenu()">Vídeos</a></li>
           <li><a routerLink="/artigos" (click)="toggleMenu()">Artigos</a></li>
-          <li class="dropdown" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" [ngClass]="{ 'open': isDropdownOpen }" #dropdown>
+          <li class="dropdown" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" #dropdown>
             <a (click)="toggleDropdown($event)" class="dropdown-toggle">Materiais Extras</a>
             <ul class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen }" #dropdownMenu>
-              <li><a routerLink="/guia-de-estudos" (click)="toggleMenu()">Guia de Estudos</a></li>
-              <li><a routerLink="/contato" (click)="toggleMenu()">Contato</a></li>
+              <li><a routerLink="/guia-de-estudos" (click)="closeMenu()">Guia de Estudos</a></li>
+              <li><a routerLink="/contato" (click)="closeMenu()">Contato</a></li>
             </ul>
           </li>
           <li><a routerLink="/apoie" (click)="toggleMenu()">Apoie</a></li>

@@ -9,7 +9,7 @@
       1º Trimestre
       <span class="toggle-icon">{{ trimesterState['1'] ? '-' : '+' }}</span>
     </h2>
-    <ul class="week-list" *ngIf="trimesterState['1']">
+    <ul class="week-list" [ngClass]="{ 'expanded': trimesterState['1'] }">
       <li *ngFor="let lesson of getLessonsWithDownloads('1')">
         <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
         <div class="button-group">
@@ -29,7 +29,7 @@
       2º Trimestre
       <span class="toggle-icon">{{ trimesterState['2'] ? '-' : '+' }}</span>
     </h2>
-    <ul class="week-list" *ngIf="trimesterState['2']">
+    <ul class="week-list" [ngClass]="{ 'expanded': trimesterState['2'] }">
       <li *ngFor="let lesson of getLessonsWithDownloads('2')">
         <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
         <div class="button-group">
@@ -49,7 +49,7 @@
       3º Trimestre
       <span class="toggle-icon">{{ trimesterState['3'] ? '-' : '+' }}</span>
     </h2>
-    <ul class="week-list" *ngIf="trimesterState['3']">
+    <ul class="week-list" [ngClass]="{ 'expanded': trimesterState['3'] }">
       <li *ngFor="let lesson of getLessonsWithDownloads('3')">
         <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
         <div class="button-group">
@@ -69,7 +69,7 @@
       4º Trimestre
       <span class="toggle-icon">{{ trimesterState['4'] ? '-' : '+' }}</span>
     </h2>
-    <ul class="week-list" *ngIf="trimesterState['4']">
+    <ul class="week-list" [ngClass]="{ 'expanded': trimesterState['4'] }">
       <li *ngFor="let lesson of getLessonsWithDownloads('4')">
         <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
         <div class="button-group">
