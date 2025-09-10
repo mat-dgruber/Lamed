@@ -70,7 +70,7 @@ a:hover {
     }
 
     .dropdown-menu {
-        display: none;
+        display: block;
         position: absolute;
         top: 100%;
         left: -15px;
@@ -82,10 +82,22 @@ a:hover {
         padding: 0;
         margin: 0;
         min-width: 160px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
+    }
+
+    .dropdown-menu.show {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
     }
 
     .dropdown.open .dropdown-menu {
-        display: block;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
     }
 }
 

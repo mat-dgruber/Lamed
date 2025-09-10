@@ -43,6 +43,15 @@
   list-style: none;
   padding: 0;
   margin-top: 15px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.week-list.expanded {
+  max-height: 1000px; /* Adjust as needed */
+  opacity: 1;
 }
 
 .week-list li {

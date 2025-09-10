@@ -28,6 +28,11 @@ export class Header implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  public closeMenu(): void {
+    this.isMenuOpen = false;
+    this.isDropdownOpen = false;
+  }
+
   public toggleDropdown(event: MouseEvent): void {
     event.stopPropagation();
     const isMobile = window.innerWidth < 768;
@@ -44,7 +49,7 @@ export class Header implements OnInit {
   onMouseLeave() {
     this.dropdownTimer = setTimeout(() => {
       this.isDropdownOpen = false;
-    }, 2000);
+    }, 300);
   }
 
   @HostListener('document:click', ['$event'])
