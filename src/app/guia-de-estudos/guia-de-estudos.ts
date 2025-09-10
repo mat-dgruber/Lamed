@@ -31,6 +31,7 @@ export class GuiaDeEstudos {
       { id: 10, title: 'ACORDE!', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L10.pdf' },
       { id: 11, title: 'EM CIMA DA ÁRVORE', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L11.pdf' },
       { id: 12, title: 'O VASO DE ALABASTRO', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L12.pdf' },
+      { id: 13, title: 'O PRIMEIRO LUGAR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L13.pdf' },
     ],
     '4': [
     ],
