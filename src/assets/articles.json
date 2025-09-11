@@ -1,5 +1,17 @@
 [
   {
+    "id": "enxergando-alem-do-olhar-humano",
+    "title": "Enxergando Além do Olhar Humano",
+    "dateISO": "2025-09-10",
+    "displayDate": "10 de Setembro, 2025",
+    "link": "artigo.html?id=enxergando-alem-do-olhar-humano",
+    "contentPath": "assets/Artigos/artigo13.html",
+    "bannerImage": "assets/Artigos/Imagens-artigos/Gemini_Generated_Image_z853l8z853l8z853.png",
+    "description": "Uma reflexão sobre como Jesus vê além de nossas falhas e como devemos nos esforçar para ver os outros com a mesma compaixão.",
+    "author": "Maria Izabela",
+    "tags": ["Jesus", "Zaqueu", "salvação", "arrependimento", "compaixão", "transformação", "fé", "Bíblia", "Lamed", "reflexão", "espiritualidade"]
+  },
+  {
     "id": "acorde-a-historia-de-lazaro-e-o-poder-de-jesus",
     "title": "Acorde! A História de Lázaro e o Poder de Jesus",
     "dateISO": "2025-09-04",
