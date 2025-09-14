@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { MetaTagService } from '../services/meta-tag.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contato',
@@ -15,9 +17,20 @@ export class Contato implements OnInit {
   isSubmitting = false;
   submissionMessage = '';
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private metaTagService: MetaTagService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.metaTagService.updateTags(
+      'Contato',
+      'Entre em contato com a equipe do Lamed. Envie suas dúvidas, sugestões ou pedidos de oração.',
+      'assets/Imagens/Fundo_Lamed-total.png',
+      this.router.url
+    );
     this.contactForm = this.fb.group({
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],

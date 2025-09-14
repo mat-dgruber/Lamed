@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy, HostListener, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ArticleService } from '../services/article.service';
 import { Observable, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
+import { MetaTagService } from '../services/meta-tag.service';
 
 @Component({
   selector: 'app-artigo',
@@ -31,10 +32,12 @@ export class Artigo implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private articleService: ArticleService,
     private http: HttpClient,
     private sanitizer: DomSanitizer,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private metaTagService: MetaTagService
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +48,16 @@ export class Artigo implements OnInit {
           return this.articleService.getArticleById(id);
         }
         return of(null);
+      }),
+      tap(article => {
+        if (article) {
+          this.metaTagService.updateTags(
+            article.title,
+            article.description,
+            article.bannerImage,
+            this.router.url
+          );
+        }
       })
     );
 
