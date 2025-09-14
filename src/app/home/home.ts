@@ -7,6 +7,7 @@ import { ArticleService } from '../services/article.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { MetaTagService } from '../services/meta-tag.service';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,8 @@ export class Home implements OnInit {
     private articleService: ArticleService,
     private sanitizer: DomSanitizer,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private metaTagService: MetaTagService
   ) { }
   
   navigateToApoie(): void {
@@ -39,6 +41,7 @@ export class Home implements OnInit {
   }
     
   ngOnInit(): void {
+    this.metaTagService.updateDefaultTags();
     this.latestVideo$ = this.videoService.getLatestVideo();
     this.latestArticle$ = this.articleService.getLatestArticle();
 
