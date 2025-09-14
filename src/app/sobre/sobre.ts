@@ -1,7 +1,8 @@
-import { Component, AfterViewInit, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, HostListener, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
+import { MetaTagService } from '../services/meta-tag.service';
 
 @Component({
   selector: 'app-sobre',
@@ -9,11 +10,20 @@ import { Navigation } from 'swiper/modules';
   styleUrls: ['./sobre.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class Sobre implements AfterViewInit {
+export class Sobre implements AfterViewInit, OnInit {
   private swiper: Swiper | undefined;
   public activeModal: HTMLElement | null = null;
 
-  constructor(private el: ElementRef, private router: Router) {}
+  constructor(private el: ElementRef, private router: Router, private metaTagService: MetaTagService) {}
+
+  ngOnInit(): void {
+    this.metaTagService.updateTags(
+      'Sobre Nós',
+      'Conheça a equipe e a história do Lamed, um ministério dedicado a criar recursos de estudo da Bíblia para adolescentes e jovens.',
+      'assets/Imagens/Fundo_Lamed-total.png',
+      this.router.url
+    );
+  }
 
   navigateToApoie(): void {
     this.router.navigate(['/apoie']);

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MetaTagService } from '../services/meta-tag.service';
+import { Router } from '@angular/router';
 
 
 interface Lesson {
@@ -15,7 +17,21 @@ interface Lesson {
   templateUrl: './guia-de-estudos.html',
   styleUrls: ['./guia-de-estudos.css']
 })
-export class GuiaDeEstudos {
+export class GuiaDeEstudos implements OnInit {
+  constructor(
+    private metaTagService: MetaTagService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.metaTagService.updateTags(
+      'Guia de Estudos',
+      'Baixe nossos guias de estudo semanais para aprofundar seu conhecimento da Lição da Escola Sabatina.',
+      'assets/Imagens/Fundo_Lamed-total.png',
+      this.router.url
+    );
+  }
+
   trimesterState: { [key: string]: boolean } = {
     '1': false,
     '2': false,
