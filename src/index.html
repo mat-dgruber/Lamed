@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Lamed | Estudo da Bíblia para Adolescentes e Jovens</title>
-    <meta name="description" content="Aprofunde seu estudo da Lição da Escola Sabatina! O Lamed oferece vídeos semanais, artigos e guias de estudo para adolescentes e professores. Explore nossos recursos.">
-
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="assets/Favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/Favicon/favicon-96x96.png">
@@ -15,16 +12,36 @@
     <link rel="manifest" href="assets/Favicon/site.webmanifest">
     <meta name="theme-color" content="#F8941B">
 
-    <meta property="og:title" content="Lamed | Estudo da Bíblia para Adolescentes">
-    <meta property="og:description" content="O Lamed oferece vídeos semanais, artigos e guias de estudo para adolescentes e professores. Explore nossos recursos.">
-    <meta property="og:image" content="https://lamed148.com.br/Imagens/Fundo_Lamed-total.jpg">
-    <meta property="og:url" content="https://lamed148.com.br">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="pt_BR">
 
     <link rel="canonical" href="https://lamed148.com.br/index.html">
 
     <link rel="stylesheet" href="https://use.typekit.net/wub6ikz.css">
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyA-O5OuinkLc_Jjh2H66SAMvASSMLjn-Ew",
+        authDomain: "lamed-148.firebaseapp.com",
+        projectId: "lamed-148",
+        storageBucket: "lamed-148.firebasestorage.app",
+        messagingSenderId: "957958728332",
+        appId: "1:957958728332:web:54e2654652c944048729a9",
+        measurementId: "G-6XRD5FCRNY"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
 </head>
 <body>
   <app-root></app-root>

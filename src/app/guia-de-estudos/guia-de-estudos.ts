@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MetaTagService } from '../services/meta-tag.service';
+import { Router } from '@angular/router';
 
 
 interface Lesson {
@@ -15,7 +17,21 @@ interface Lesson {
   templateUrl: './guia-de-estudos.html',
   styleUrls: ['./guia-de-estudos.css']
 })
-export class GuiaDeEstudos {
+export class GuiaDeEstudos implements OnInit {
+  constructor(
+    private metaTagService: MetaTagService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.metaTagService.updateTags(
+      'Guia de Estudos',
+      'Baixe nossos guias de estudo semanais para aprofundar seu conhecimento da Lição da Escola Sabatina.',
+      'assets/Imagens/Fundo_Lamed-total.png',
+      this.router.url
+    );
+  }
+
   trimesterState: { [key: string]: boolean } = {
     '1': false,
     '2': false,
@@ -31,9 +47,10 @@ export class GuiaDeEstudos {
       { id: 10, title: 'ACORDE!', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L10.pdf' },
       { id: 11, title: 'EM CIMA DA ÁRVORE', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L11.pdf' },
       { id: 12, title: 'O VASO DE ALABASTRO', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L12.pdf' },
-      { id: 13, title: 'O PRIMEIRO LUGAR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L13.pdf' },
+      { id: 13, title: 'O PRIMEIRO LUGAR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L13.pdf'},
     ],
     '4': [
+      { id: 1, title: 'REALIDADE OU FACHADA', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/Guia_Estudo_L1_4Tri25.pdf'}
     ],
   };
 
