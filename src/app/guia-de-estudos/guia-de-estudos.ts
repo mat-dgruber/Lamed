@@ -50,7 +50,8 @@ export class GuiaDeEstudos implements OnInit {
       { id: 13, title: 'O PRIMEIRO LUGAR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L13.pdf'},
     ],
     '4': [
-      { id: 1, title: 'REALIDADE OU FACHADA', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/Guia_Estudo_L1_4Tri25.pdf'}
+      { id: 1, title: 'REALIDADE OU FACHADA', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/Guia_Estudo_L1_4Tri25.pdf'},
+      { id: 2, title: 'DUAS CARAS, UM CORAÇÃO', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L2.pdf' }
     ],
   };
 
