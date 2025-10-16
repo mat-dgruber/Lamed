@@ -1,5 +1,17 @@
 [
   {
+    "id": "preparacao-passado-presente-futuro",
+    "title": "Preparação - Entendendo o passado, preparando-me no presente e estando pronto para o futuro.",
+    "dateISO": "2025-10-16",
+    "displayDate": "16 de Outubro, 2025",
+    "link": "artigo.html?id=preparacao-passado-presente-futuro",
+    "contentPath": "assets/Artigos/artigo18.html",
+    "bannerImage": "assets/Artigos/Imagens-artigos/SEMENTE.png",
+    "description": "No estudo dessa semana, vamos refletir sobre o Sacrifício de Jesus e sua volta.",
+    "author": "Maria Izabela",
+    "tags": ["Jesus", "sacrifício", "volta de Jesus", "preparação", "fé", "Bíblia", "Lamed", "reflexão", "espiritualidade", "salvação", "evangelho", "fim dos tempos", "amor", "esperança", "redenção", "vida eterna", "cristianismo prático", "valores cristãos", "ética cristã", "inspiração", "crescimento espiritual", "relacionamento com Deus", "propósito de vida", "adoração verdadeira", "perdão", "misericórdia", "bondade", "generosidade", "paciência", "mansidão", "domínio próprio", "frutos do Espírito", "santidade", "justiça", "verdade", "paz", "alegria", "esperança", "João 12", "Mateus 24", "Marcos 13", "Lucas 21", "O Libertador", "vida cristã", "exemplo de Cristo", "sabedoria divina", "amor ao próximo", "fé", "devoção", "entrega", "obediência", "valores cristãos", "ética cristã", "inspiração", "discipulado"]
+  },
+  {
     "id": "duas-caras-um-coracao",
     "title": "Duas Caras, Um Coração",
     "dateISO": "2025-10-09",
