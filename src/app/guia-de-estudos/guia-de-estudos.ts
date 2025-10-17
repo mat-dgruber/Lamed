@@ -53,7 +53,7 @@ export class GuiaDeEstudos implements OnInit {
       { id: 1, title: 'REALIDADE OU FACHADA', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L1.pdf'},
       { id: 2, title: 'DUAS CARAS, UM CORAÇÃO', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L2.pdf' },
       { id: 3, title: 'PREPARANDO-SE PARA O AMANHÃ... HOJE', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L3.pdf' },
-      { id: 4, title: 'vIVENDO PARA SERVIR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L4.pdf' },
+      { id: 4, title: 'VIVENDO PARA SERVIR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L4.pdf' },
     ],
   };
 
