@@ -1,4 +1,5 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { Header } from './header/header';
 import { Footer } from "./footer/footer";
@@ -16,9 +17,8 @@ declare let gtag: Function;
   standalone: true,
 })
 export class App implements OnInit {
-  protected readonly title = signal('angular-lamed');
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private titleService: Title) {}
 
   ngOnInit(): void {
     this.router.events.pipe(
@@ -26,7 +26,7 @@ export class App implements OnInit {
     ).subscribe((event: NavigationEnd) => {
       // Envia um evento de page_view para o Google Analytics
       gtag('event', 'page_view', {
-        page_title: this.title(), // ou um título mais dinâmico se disponível
+        page_title: this.titleService.getTitle(),
         page_location: event.urlAfterRedirects,
         page_path: event.urlAfterRedirects
       });
