@@ -54,6 +54,8 @@ export class GuiaDeEstudos implements OnInit {
       { id: 2, title: 'DUAS CARAS, UM CORAÇÃO', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L2.pdf' },
       { id: 3, title: 'PREPARANDO-SE PARA O AMANHÃ... HOJE', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L3.pdf' },
       { id: 4, title: 'VIVENDO PARA SERVIR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L4.pdf' },
+      { id: 5, title: 'O TRAIDOR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L5.pdf' },
+      { id: 6, title: 'A ESCOLHA', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L6.pdf' },
     ],
   };
 
