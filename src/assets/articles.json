@@ -1,4 +1,28 @@
 [
+   {
+    "id": "a-escolha-do-getsemani",
+    "title": "A Escolha do Getsêmani: Onde o Amor Venceu o Medo",
+    "dateISO": "2025-11-04",
+    "displayDate": "04 de Novembro, 2025",
+    "link": "artigo.html?id=a-escolha-do-getsemani",
+    "contentPath": "assets/Artigos/artigo19.html",
+    "bannerImage": "assets/Artigos/Imagens-artigos/getsemani.png",
+    "description": "Uma reflexão sobre a angústia de Jesus no Getsêmani e a escolha que garantiu nossa salvação.",
+    "author": "Jules",
+    "tags": ["Getsêmani", "Jesus", "oração", "angústia", "salvação", "amor", "medo", "discípulos", "vigiar", "escolha", "cruz", "sacrifício", "fé", "Bíblia", "Lamed", "reflexão", "espiritualidade"]
+  },
+  {
+    "id": "o-verdadeiro-amor-em-acao",
+    "title": "O Verdadeiro Amor em Ação",
+    "dateISO": "2025-10-23",
+    "displayDate": "23 de Outubro, 2025",
+    "link": "artigo.html?id=o-verdadeiro-amor-em-acao",
+    "contentPath": "assets/Artigos/artigo19.html",
+    "bannerImage": "assets/Artigos/Imagens-artigos/amor-em-acao.png",
+    "description": "Uma reflexão sobre como o verdadeiro amor se manifesta em serviço e humildade, seguindo o exemplo de Jesus.",
+    "author": "Lamed",
+    "tags": ["Jesus", "amor", "serviço", "humildade", "juízo", "compaixão", "Bíblia", "Lamed", "reflexão", "espiritualidade", "fé", "obediência", "lava-pés", "discípulos", "Reino de Deus", "cristianismo prático", "ajuda ao próximo"]
+  },
   {
     "id": "preparacao-passado-presente-futuro",
     "title": "Preparação - Entendendo o passado, preparando-me no presente e estando pronto para o futuro.",
