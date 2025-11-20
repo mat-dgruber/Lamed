@@ -56,6 +56,8 @@ export class GuiaDeEstudos implements OnInit {
       { id: 4, title: 'VIVENDO PARA SERVIR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L4.pdf' },
       { id: 5, title: 'O TRAIDOR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L5.pdf' },
       { id: 6, title: 'A ESCOLHA', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L6.pdf' },
+      { id: 7, title: 'JULGAMENTO ILEGAL', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L7.pdf' },
+      { id: 8, title: 'CONTEMPLANDO A CRUZ', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L8.pdf' },
     ],
   };
 
