@@ -1,11 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { ArticleService } from '../services/article.service';
+import { ArticleService } from '../../services/article.service';
 import { Observable, combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MetaTagService } from '../services/meta-tag.service';
+import { MetaTagService } from '../../services/meta-tag.service';
 
 @Component({
   selector: 'app-artigos',

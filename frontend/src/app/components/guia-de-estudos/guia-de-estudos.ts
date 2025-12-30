@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MetaTagService } from '../services/meta-tag.service';
+import { MetaTagService } from '../../services/meta-tag.service';
 import { Router } from '@angular/router';
 
 

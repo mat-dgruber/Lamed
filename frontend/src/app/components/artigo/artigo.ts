@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ArticleService } from '../services/article.service';
+import { ArticleService } from '../../services/article.service';
 import { Observable, of } from 'rxjs';
 import { switchMap, map, tap } from 'rxjs/operators';
-import { MetaTagService } from '../services/meta-tag.service';
+import { MetaTagService } from '../../services/meta-tag.service';
 
 @Component({
   selector: 'app-artigo',
@@ -74,7 +74,7 @@ export class Artigo implements OnInit {
           const parser = new DOMParser();
           const doc = parser.parseFromString(htmlContent, 'text/html');
           const mainContent = doc.querySelector('main.site-main');
-          
+
           if (mainContent) {
             // Correct image paths before returning the content
             const images = mainContent.querySelectorAll('img');

@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VideoService } from '../services/video.service';
+import { VideoService } from '../../services/video.service';
 import { Observable } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { MetaTagService } from '../services/meta-tag.service';
+import { MetaTagService } from '../../services/meta-tag.service';
 import { Router } from '@angular/router';
 
 @Component({

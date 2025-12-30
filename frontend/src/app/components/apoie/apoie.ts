@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; // Import Router
-import { DonationChartsComponent } from '../components/donation-charts/donation-charts.component';
-import { MetaTagService } from '../services/meta-tag.service';
+import { DonationChartsComponent } from '../donation-charts/donation-charts.component';
+import { MetaTagService } from '../../services/meta-tag.service';
 
 @Component({
   selector: 'app-apoie',

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { MetaTagService } from '../services/meta-tag.service';
+import { MetaTagService } from '../../services/meta-tag.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-politica',
+  selector: 'app-termos',
   imports: [],
-  templateUrl: './politica-de-privacidade.html',
-  styleUrl: './politica-de-privacidade.css'
+  templateUrl: './termos-de-uso.html',
+  styleUrl: './termos-de-uso.css'
 })
-export class Politica implements OnInit {
+export class Termos implements OnInit {
   constructor(
     private metaTagService: MetaTagService,
     private router: Router
@@ -16,8 +16,8 @@ export class Politica implements OnInit {
 
   ngOnInit(): void {
     this.metaTagService.updateTags(
-      'Política de Privacidade',
-      'Consulte a política de privacidade do Lamed para entender como lidamos com seus dados.',
+      'Termos de Uso',
+      'Leia os termos de uso do site e dos materiais produzidos pelo Lamed.',
       'assets/Imagens/Fundo_Lamed-total.png',
       this.router.url
     );

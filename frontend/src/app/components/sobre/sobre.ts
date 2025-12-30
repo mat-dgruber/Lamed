@@ -2,7 +2,7 @@ import { Component, AfterViewInit, ElementRef, HostListener, ViewEncapsulation, 
 import { Router } from '@angular/router';
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
-import { MetaTagService } from '../services/meta-tag.service';
+import { MetaTagService } from '../../services/meta-tag.service';
 
 @Component({
   selector: 'app-sobre',

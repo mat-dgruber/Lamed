@@ -1,16 +1,16 @@
 import { Routes } from '@angular/router';
-import { Header } from './header/header';
-import { Home } from './home/home';
-import { Sobre } from './sobre/sobre';
-import { Videos } from './videos/videos';
-import { Artigos } from './artigos/artigos';
-import { Apoie } from './apoie/apoie';
-import { Artigo } from './artigo/artigo';
-import { Politica } from './politica/politica-de-privacidade';
-import { Termos } from './termos/termos-de-uso';
-import { Contato } from './contato/contato';
-import { GuiaDeEstudos } from './guia-de-estudos/guia-de-estudos';
-import { SigaNos } from './siga-nos/siga-nos';
+import { Header } from './components/header/header';
+import { Home } from './components/home/home';
+import { Sobre } from './components/sobre/sobre';
+import { Videos } from './components/videos/videos';
+import { Artigos } from './components/artigos/artigos';
+import { Apoie } from './components/apoie/apoie';
+import { Artigo } from './components/artigo/artigo';
+import { Politica } from './components/politica/politica-de-privacidade';
+import { Termos } from './components/termos/termos-de-uso';
+import { Contato } from './components/contato/contato';
+import { GuiaDeEstudos } from './components/guia-de-estudos/guia-de-estudos';
+import { SigaNos } from './components/siga-nos/siga-nos';
 
 
 

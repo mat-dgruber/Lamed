@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
-import { Header } from './header/header';
-import { Footer } from "./footer/footer";
+import { Header } from './components/header/header';
+import { Footer } from "./components/footer/footer";
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
 

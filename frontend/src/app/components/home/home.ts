@@ -2,12 +2,12 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { VideoService } from '../services/video.service';
-import { ArticleService } from '../services/article.service';
+import { VideoService } from '../../services/video.service';
+import { ArticleService } from '../../services/article.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { MetaTagService } from '../services/meta-tag.service';
+import { MetaTagService } from '../../services/meta-tag.service';
 
 @Component({
   selector: 'app-home',
@@ -35,11 +35,11 @@ export class Home implements OnInit {
     private cdr: ChangeDetectorRef,
     private metaTagService: MetaTagService
   ) { }
-  
+
   navigateToApoie(): void {
     this.router.navigate(['/apoie']);
   }
-    
+
   ngOnInit(): void {
     this.metaTagService.updateDefaultTags();
     this.latestVideo$ = this.videoService.getLatestVideo();
