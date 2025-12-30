@@ -1,4 +1,16 @@
 [
+  {
+    "id": "da-espera-a-acao",
+    "title": "Da Espera à Ação: Quando o \"Olhar para Cima\" vira \"Olhar para Fora\"",
+    "dateISO": "2026-01-01",
+    "displayDate": "01 de Janeiro, 2026",
+    "link": "artigo.html?id=da-espera-a-acao",
+    "contentPath": "assets/Artigos/da-espera-a-acao.html",
+    "bannerImage": "assets/Artigos/Imagens-artigos/olhando-para-jesus.png",
+    "description": "Se você acha que a vida cristã é apenas ficar parado esperando Jesus voltar, este estudo vai mudar sua perspectiva.",
+    "author": "Lamed",
+    "tags": ["Ascensão", "Atos", "Espírito Santo", "Missão", "Jesus", "Igreja", "Lamed", "reflexão", "espiritualidade", "evangelho"]
+  },
    {
     "id": "a-escolha-do-getsemani",
     "title": "A Escolha do Getsêmani: Onde o Amor Venceu o Medo",
