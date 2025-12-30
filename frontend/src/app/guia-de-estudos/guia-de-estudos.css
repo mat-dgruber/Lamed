@@ -1,0 +1,104 @@
+.container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.trimester {
+  margin-bottom: 30px;
+}
+
+.trimester-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggle-icon {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.week-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.week-list.expanded {
+  max-height: 1000px; /* Adjust as needed */
+  opacity: 1;
+}
+
+.week-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f8951b31;
+  border-radius: 17.5px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.view-button button,
+.download-button button {
+  padding: 8px 12px;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100px;
+  font-family: caecilia, sans-serif;
+}
+
+.view-button button {
+  background-color: var(--color-destaque); /* A neutral color for view */
+}
+
+.view-button:hover button {
+  background-color: var(--color-principal);
+}
+
+.download-button button {
+  background-color: var(--color-principal);
+}
+
+.download-button:hover button {
+  background-color: var(--color-destaque);
+}
+
+/* Remove default link styles */
+.view-button,
+.download-button {
+  text-decoration: none;
+}

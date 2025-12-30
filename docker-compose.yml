@@ -5,7 +5,7 @@ services:
   app:
     # Instrui o Docker Compose a construir uma imagem a partir do Dockerfile
     # localizado no diretório atual ('.').
-    build: .
+    build: ./frontend
 
     # Nome do container que será criado.
     container_name: lamed_angular_app
@@ -24,7 +24,7 @@ services:
     #    a pasta node_modules da sua máquina (que pode nem existir) e garante que
     #    o container use a pasta node_modules que foi instalada durante o build da imagem.
     volumes:
-      - .:/usr/src/app
+      - ./frontend:/usr/src/app
       - /usr/src/app/node_modules
 
     # Sobrescreve o comando CMD do Dockerfile se necessário.

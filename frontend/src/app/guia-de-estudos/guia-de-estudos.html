@@ -1,0 +1,86 @@
+<div class="container">
+  <h1 class="title">Guia de Estudos</h1>
+  <p class="description">
+    Aqui você encontrará os materiais de estudo semanais, organizados por trimestre. Esses materias foram pensados para ser uma boa base para estudos em PGs e classes de Estudos Biblico.
+  </p>
+
+  <div class="trimester" *ngIf="getLessonsWithDownloads('1').length > 0">
+    <h2 class="trimester-title" (click)="toggleTrimester('1')">
+      1º Trimestre
+      <span class="toggle-icon">{{ trimesterState['1'] ? '-' : '+' }}</span>
+    </h2>
+    <ul class="week-list" [ngClass]="{ 'expanded': trimesterState['1'] }">
+      <li *ngFor="let lesson of getLessonsWithDownloads('1')">
+        <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
+        <div class="button-group">
+          <a [href]="lesson.downloadUrl" target="_blank" class="view-button">
+            <button>Visualizar</button>
+          </a>
+          <a [href]="lesson.downloadUrl" download class="download-button">
+            <button>Baixar</button>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="trimester" *ngIf="getLessonsWithDownloads('2').length > 0">
+    <h2 class="trimester-title" (click)="toggleTrimester('2')">
+      2º Trimestre
+      <span class="toggle-icon">{{ trimesterState['2'] ? '-' : '+' }}</span>
+    </h2>
+    <ul class="week-list" [ngClass]="{ 'expanded': trimesterState['2'] }">
+      <li *ngFor="let lesson of getLessonsWithDownloads('2')">
+        <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
+        <div class="button-group">
+          <a [href]="lesson.downloadUrl" target="_blank" class="view-button">
+            <button>Visualizar</button>
+          </a>
+          <a [href]="lesson.downloadUrl" download class="download-button">
+            <button>Baixar</button>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="trimester" *ngIf="getLessonsWithDownloads('3').length > 0">
+    <h2 class="trimester-title" (click)="toggleTrimester('3')">
+      3º Trimestre
+      <span class="toggle-icon">{{ trimesterState['3'] ? '-' : '+' }}</span>
+    </h2>
+    <ul class="week-list" [ngClass]="{ 'expanded': trimesterState['3'] }">
+      <li *ngFor="let lesson of getLessonsWithDownloads('3')">
+        <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
+        <div class="button-group">
+          <a [href]="lesson.downloadUrl" target="_blank" class="view-button">
+            <button>Visualizar</button>
+          </a>
+          <a [href]="lesson.downloadUrl" download class="download-button">
+            <button>Baixar</button>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="trimester" *ngIf="getLessonsWithDownloads('4').length > 0">
+    <h2 class="trimester-title" (click)="toggleTrimester('4')">
+      4º Trimestre
+      <span class="toggle-icon">{{ trimesterState['4'] ? '-' : '+' }}</span>
+    </h2>
+    <ul class="week-list" [ngClass]="{ 'expanded': trimesterState['4'] }">
+      <li *ngFor="let lesson of getLessonsWithDownloads('4')">
+        <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
+        <div class="button-group">
+          <a [href]="lesson.downloadUrl" target="_blank" class="view-button">
+            <button>Visualizar</button>
+          </a>
+          <a [href]="lesson.downloadUrl" download class="download-button">
+            <button>Baixar</button>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
