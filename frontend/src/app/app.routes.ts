@@ -12,7 +12,12 @@ import { Contato } from './components/contato/contato';
 import { GuiaDeEstudos } from './components/guia-de-estudos/guia-de-estudos';
 import { SigaNos } from './components/siga-nos/siga-nos';
 
-
+import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
+import { AdminArticleListComponent } from './components/admin/admin-article-list/admin-article-list.component';
+import { AdminArticleEditComponent } from './components/admin/admin-article-edit/admin-article-edit.component';
+import { AdminGuideListComponent } from './components/admin/admin-guide-list/admin-guide-list.component';
+import { AdminGuideEditComponent } from './components/admin/admin-guide-edit/admin-guide-edit.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
      {path: '', component: Home},
@@ -25,6 +30,23 @@ export const routes: Routes = [
      {path: 'termos-de-uso', component: Termos},
      {path: 'contato', component: Contato},
      {path: 'guia-de-estudos', component: GuiaDeEstudos},
-     {path: 'siga-nos', component: SigaNos}
-
+     {path: 'siga-nos', component: SigaNos},
+     
+     // Admin Routes
+     {
+        path: 'admin',
+        component: AdminLayoutComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: 'articles', component: AdminArticleListComponent },
+            { path: 'articles/new', component: AdminArticleEditComponent },
+            { path: 'articles/:slug', component: AdminArticleEditComponent },
+            
+            { path: 'guides', component: AdminGuideListComponent },
+            { path: 'guides/new', component: AdminGuideEditComponent },
+            { path: 'guides/:id', component: AdminGuideEditComponent },
+            
+            { path: '', redirectTo: 'articles', pathMatch: 'full' }
+        ]
+     }
 ];

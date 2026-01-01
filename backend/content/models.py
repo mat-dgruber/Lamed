@@ -9,9 +9,10 @@ class Artigo(models.Model):
      slug = models.SlugField(max_length=255, unique=True)
      conteudo = models.TextField()
      resumo = models.TextField(blank=True)
-     imagem_capa = models.ImageField(upload_to='imagens/artigos', blank=True, null=True)
+     banner_path = models.CharField(max_length=500, blank=True, null=True)
+     tags = models.JSONField(default=list, blank=True)
      data_publicado = models.DateTimeField(default=timezone.now)
-     autor = models.ForeignKey(User, on_delete=models.CASCADE, default="Lamed")
+     autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
      publicado = models.BooleanField(default=False)
 
      def __str__(self):
@@ -25,14 +26,19 @@ class Categoria(models.Model):
      def __str__(self):
           return self.nome
 
-class MaterialEstudo(model.Model):
+class MaterialEstudo(models.Model):
      titulo = models.CharField(max_length=255)
-     slug = modelds.CharField(max_length=255, unique=True)
-     descricao = models.TextField()
+     # slug not strictly needed if we list by trimester, but good to have
+     slug = models.CharField(max_length=255, unique=True, blank=True, null=True) 
+     descricao = models.TextField(blank=True)
      data_publicado = models.DateTimeField(default=timezone.now)
      arquivo_url = models.URLField(verbose_name="Link de Download")
      publicado = models.BooleanField(default=False)
-     cateogoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, null=True, blank=True)
+     
+     # New fields
+     trimestre = models.CharField(max_length=20, help_text="Ex: 3Tri25")
+     licao_numero = models.IntegerField(help_text="Número da lição (1-13)")
 
      class Meta:
           verbose_name = "Guia de Estudo"

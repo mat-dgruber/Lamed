@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class ArticleService {
 
-  private articlesUrl = 'assets/articles.json';
+  private articlesUrl = '/api/articles'; // Use Proxy or Absolute URL if needed
 
   constructor(private http: HttpClient) { }
 
@@ -22,9 +22,21 @@ export class ArticleService {
     );
   }
 
-  getArticleById(id: string): Observable<any> {
-    return this.getArticles().pipe(
-      map(articles => articles.find(article => article.id === id))
-    );
+  getArticleById(slug: string): Observable<any> {
+     // API supports get by slug directly
+    return this.http.get<any>(`${this.articlesUrl}/${slug}`);
+  }
+
+  // New Methods
+  deleteArticle(slug: string): Observable<any> {
+      return this.http.delete(`${this.articlesUrl}/${slug}`);
+  }
+  
+  createArticle(article: any): Observable<any> {
+      return this.http.post(this.articlesUrl, article);
+  }
+
+  updateArticle(slug: string, article: any): Observable<any> {
+      return this.http.put(`${this.articlesUrl}/${slug}`, article);
   }
 }

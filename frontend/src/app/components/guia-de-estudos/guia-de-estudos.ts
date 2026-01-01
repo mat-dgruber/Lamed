@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MetaTagService } from '../../services/meta-tag.service';
 import { Router } from '@angular/router';
-
+import { GuideService } from '../../services/guide.service';
 
 interface Lesson {
   id: number;
   title: string;
   downloadUrl: string;
+  trimester?: string;
 }
 
 @Component({
@@ -18,10 +19,20 @@ interface Lesson {
   styleUrls: ['./guia-de-estudos.css']
 })
 export class GuiaDeEstudos implements OnInit {
-  constructor(
-    private metaTagService: MetaTagService,
-    private router: Router
-  ) {}
+  private metaTagService = inject(MetaTagService);
+  private router = inject(Router);
+  private guideService = inject(GuideService);
+
+  trimesterState: { [key: string]: boolean } = {
+    '3Tri25': true, // Open default
+    '4Tri25': false
+  };
+  
+  // Grouped lessons
+  Licoes: { [key: string]: Lesson[] } = {};
+  
+  // Available trimesters keys
+  trimesters: string[] = [];
 
   ngOnInit(): void {
     this.metaTagService.updateTags(
@@ -30,40 +41,49 @@ export class GuiaDeEstudos implements OnInit {
       'assets/Imagens/Fundo_Lamed-total.png',
       this.router.url
     );
+    
+    this.loadGuides();
   }
 
-  trimesterState: { [key: string]: boolean } = {
-    '1': false,
-    '2': false,
-    '3': false,
-    '4': false,
-  };
+  loadGuides() {
+      this.guideService.getGuides().subscribe((data: any[]) => {
+          // Group by trimester
+          const grouped: { [key: string]: Lesson[] } = {};
+          
+          data.forEach(guide => {
+              const tri = guide.trimester || 'Outros';
+              if (!grouped[tri]) {
+                  grouped[tri] = [];
+              }
+              grouped[tri].push({
+                  id: guide.lesson_number,
+                  title: guide.title,
+                  downloadUrl: guide.download_url
+              });
+          });
+          
+          // Sort lessons by ID within trimester
+          Object.keys(grouped).forEach(key => {
+              grouped[key].sort((a, b) => a.id - b.id);
+          });
 
-  Licoes: { [key: string]: Lesson[] } = {
-    '1': [],
-    '2': [],
-    '3': [
-      { id: 9, title: 'COMO CRIANÇAS', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L9.pdf' },
-      { id: 10, title: 'ACORDE!', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L10.pdf' },
-      { id: 11, title: 'EM CIMA DA ÁRVORE', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L11.pdf' },
-      { id: 12, title: 'O VASO DE ALABASTRO', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L12.pdf' },
-      { id: 13, title: 'O PRIMEIRO LUGAR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L13.pdf'},
-    ],
-    '4': [
-      { id: 1, title: 'REALIDADE OU FACHADA', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L1.pdf'},
-      { id: 2, title: 'DUAS CARAS, UM CORAÇÃO', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L2.pdf' },
-      { id: 3, title: 'PREPARANDO-SE PARA O AMANHÃ... HOJE', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L3.pdf' },
-      { id: 4, title: 'VIVENDO PARA SERVIR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L4.pdf' },
-      { id: 5, title: 'O TRAIDOR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L5.pdf' },
-      { id: 6, title: 'A ESCOLHA', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L6.pdf' },
-    ],
-  };
+          this.Licoes = grouped;
+          this.trimesters = Object.keys(grouped).sort().reverse(); // Show latest first
+          
+          // Initialize state
+          this.trimesters.forEach(t => {
+              if (this.trimesterState[t] === undefined) {
+                  this.trimesterState[t] = false;
+              }
+          });
+      });
+  }
 
   toggleTrimester(trimester: string): void {
     this.trimesterState[trimester] = !this.trimesterState[trimester];
   }
 
   getLessonsWithDownloads(trimester: string): Lesson[] {
-    return this.Licoes[trimester].filter((lesson: Lesson) => lesson.downloadUrl);
+    return this.Licoes[trimester] || [];
   }
 }

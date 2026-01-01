@@ -12,7 +12,10 @@ django.setup()
 app = FastAPI(title="Lamed API", version="1.0.0")
 django_app = get_asgi_application()
 
-# 3. Rotas da API (Importar de api/routes.py futuramente)
+# 3. Rotas da API
+from api.router import router as api_router
+app.include_router(api_router, prefix="/api")
+
 @app.get("/api/health")
 def health_check():
     return {"status": "ok", "frameworks": "FastAPI + Django"}
