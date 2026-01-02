@@ -3,54 +3,56 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { ArticleService } from '../../../services/article.service';
+import { BundleService } from '../../../services/bundle.service';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-admin-article-list',
+  selector: 'app-admin-bundle-list',
   standalone: true,
   imports: [CommonModule, RouterModule, TableModule, ButtonModule],
   template: `
     <div class="admin-page">
         <div class="header-section mb-5">
             <div>
-                <h1 class="text-3xl font-bold text-white mb-2">Gerenciar Artigos</h1>
-                <p class="text-gray-400">Visualize e gerencie todos os artigos publicados.</p>
+                <h1 class="text-3xl font-bold text-white mb-2">Gerenciar Bundles</h1>
+                <p class="text-gray-400">Organize os materiais de estudo semanais.</p>
             </div>
-            <button pButton label="Novo Artigo" icon="pi pi-plus" routerLink="new" class="custom-button-primary"></button>
+            <div class="flex gap-2">
+                <button pButton label="Novo Bundle" icon="pi pi-plus" routerLink="/admin/bundles/new" class="custom-button-primary"></button>
+            </div>
         </div>
         
         <div class="card p-0 overflow-hidden bg-dark-card border-gray-700">
-            <p-table [value]="(articles$ | async) || []" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm custom-table">
+            <p-table [value]="(bundles$ | async) || []" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm custom-table">
                 <ng-template pTemplate="header">
                     <tr>
                         <th class="text-gold">Título</th>
-                        <th class="text-gold">Data Publicação</th>
-                        <th class="text-gold">Status</th>
+                        <th class="text-gold">Trimestre</th>
+                        <th class="text-gold">Lição #</th>
+                        <th class="text-gold">Links</th>
                         <th class="text-gold text-right">Ações</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-article>
+                <ng-template pTemplate="body" let-bundle>
                     <tr class="hover:bg-gray-800 transition-colors">
-                        <td class="text-white font-medium">{{ article.title }}</td>
-                        <td class="text-gray-300">{{ article.published_date | date:'dd/MM/yyyy' }}</td>
-                        <td>
-                            <span [class]="'status-badge ' + (article.published ? 'published' : 'draft')">
-                                <i [class]="article.published ? 'pi pi-check-circle' : 'pi pi-file'"></i>
-                                {{ article.published ? 'Publicado' : 'Rascunho' }}
-                            </span>
+                        <td class="text-white font-medium">{{ bundle.title }}</td>
+                        <td class="text-gray-300">{{ bundle.trimester }}</td>
+                        <td class="text-gray-300">{{ bundle.lesson_number }}</td>
+                        <td class="text-gray-300">
+                             <a *ngIf="bundle.youtube_link" [href]="bundle.youtube_link" target="_blank" class="text-gold mr-2"><i class="pi pi-youtube"></i></a>
+                             <a *ngIf="bundle.article_link" [href]="bundle.article_link" target="_blank" class="text-blue-400"><i class="pi pi-link"></i></a>
                         </td>
                         <td class="text-right">
-                            <button pButton icon="pi pi-pencil" class="p-button-text p-button-rounded text-gold hover:bg-gray-700" [routerLink]="[article.slug]" pTooltip="Editar"></button>
-                            <button pButton icon="pi pi-trash" class="p-button-text p-button-rounded text-red-400 hover:bg-gray-700" (click)="deleteArticle(article.slug)" pTooltip="Excluir"></button>
+                            <button pButton icon="pi pi-pencil" class="p-button-text p-button-rounded text-gold hover:bg-gray-700" [routerLink]="['/admin/bundles', bundle.id]" pTooltip="Editar"></button>
+                            <button pButton icon="pi pi-trash" class="p-button-text p-button-rounded text-red-400 hover:bg-gray-700" (click)="deleteBundle(bundle.id)" pTooltip="Excluir"></button>
                         </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                        <td colspan="4" class="text-center p-4 text-gray-400">
-                            Nenhum artigo encontrado. Clique em "Novo Artigo" para começar.
+                        <td colspan="5" class="text-center p-4 text-gray-400">
+                            Nenhum bundle encontrado. Clique em "Novo Bundle" para começar.
                             <div *ngIf="error" class="text-red-400 mt-2">Erro ao carregar: {{error}}</div>
                         </td>
                     </tr>
@@ -68,6 +70,7 @@ import { catchError, tap } from 'rxjs/operators';
     .text-gray-300 { color: #d1d5db; }
     .text-gray-400 { color: #9ca3af; }
     .text-red-400 { color: #f87171; }
+    .text-blue-400 { color: #60a5fa; }
     
     .custom-button-primary {
         background: #ffd700 !important;
@@ -97,33 +100,15 @@ import { catchError, tap } from 'rxjs/operators';
         background: #2a2a2a !important;
     }
 
-    .status-badge {
-        padding: 0.35rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-    .published {
-        background: rgba(16, 185, 129, 0.2);
-        color: #34d399;
-        border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-    .draft {
-        background: rgba(156, 163, 175, 0.2);
-        color: #9ca3af;
-        border: 1px solid rgba(156, 163, 175, 0.3);
-    }
-
     .header-section {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-    
+
     .flex { display: flex; }
+    .gap-2 { gap: 0.5rem; }
+    .mr-2 { margin-right: 0.5rem; }
     .mb-2 { margin-bottom: 0.5rem; }
     .mb-5 { margin-bottom: 2rem; }
     .text-3xl { font-size: 1.75rem; }
@@ -133,30 +118,30 @@ import { catchError, tap } from 'rxjs/operators';
     .text-center { text-align: center; }
   `]
 })
-export class AdminArticleListComponent implements OnInit {
-  articleService = inject(ArticleService);
-  articles$: Observable<any[]> | undefined;
+export class AdminBundleListComponent implements OnInit {
+  bundleService = inject(BundleService);
+  bundles$: Observable<any[]> | undefined;
   error = '';
 
   ngOnInit() {
-    this.loadArticles();
+    this.loadBundles();
   }
 
-  loadArticles() {
-    this.articles$ = this.articleService.getArticles().pipe(
-        tap(data => console.log('Articles loaded:', data)),
+  loadBundles() {
+    this.bundles$ = this.bundleService.getBundles().pipe(
+        tap(data => console.log('Bundles loaded:', data)),
         catchError(err => {
-            console.error('Error loading articles:', err);
+            console.error('Error loading bundles:', err);
             this.error = 'Falha ao conectar ao servidor.';
             return of([]);
         })
     );
   }
 
-  deleteArticle(slug: string) {
-      if(confirm('Tem certeza que deseja deletar este artigo?')) {
-          this.articleService.deleteArticle(slug).subscribe(() => {
-              this.loadArticles();
+  deleteBundle(id: number) {
+      if(confirm('Tem certeza que deseja deletar este bundle?')) {
+          this.bundleService.deleteBundle(id).subscribe(() => {
+              this.loadBundles();
           });
       }
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { Header } from './components/header/header';
@@ -17,6 +17,7 @@ declare let gtag: Function;
   standalone: true,
 })
 export class App implements OnInit {
+  isAdminRoute = signal(false);
 
   constructor(private router: Router, private titleService: Title) {}
 
@@ -24,12 +25,17 @@ export class App implements OnInit {
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
+      // Check if it's an admin route
+      this.isAdminRoute.set(event.urlAfterRedirects.startsWith('/admin'));
+
       // Envia um evento de page_view para o Google Analytics
-      gtag('event', 'page_view', {
-        page_title: this.titleService.getTitle(),
-        page_location: event.urlAfterRedirects,
-        page_path: event.urlAfterRedirects
-      });
+      if (typeof gtag === 'function') {
+        gtag('event', 'page_view', {
+          page_title: this.titleService.getTitle(),
+          page_location: event.urlAfterRedirects,
+          page_path: event.urlAfterRedirects
+        });
+      }
     });
   }
 }

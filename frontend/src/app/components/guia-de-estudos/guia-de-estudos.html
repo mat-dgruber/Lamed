@@ -1,31 +1,113 @@
-<div class="container">
-  <h1 class="title">Guia de Estudos</h1>
-  <p class="description">
-    Aqui você encontrará os materiais de estudo semanais, organizados por trimestre. Esses materias
-    foram pensados para ser uma boa base para estudos em PGs e classes de Estudos Biblico.
-  </p>
+<div class="container fade-in">
+  <div class="header-section text-center mb-6">
+    <h1 class="text-4xl font-bold mb-2">Materiais Extras</h1>
+    <p class="text-gray-400">
+      Baixe os kits completos de estudo para sua classe ou estudo pessoal.
+    </p>
+  </div>
 
-  @for (tri of trimesters; track tri) {
-  <div class="trimester">
-    <h2 class="trimester-title" (click)="toggleTrimester(tri)">
-      {{ tri }}
-      <span class="toggle-icon">{{ trimesterState[tri] ? '-' : '+' }}</span>
-    </h2>
-    <ul class="week-list" [ngClass]="{ expanded: trimesterState[tri] }">
-      @for (lesson of getLessonsWithDownloads(tri); track lesson.id) {
-      <li>
-        <span>Lição {{ lesson.id }} - {{ lesson.title }}</span>
-        <div class="button-group">
-          <a [href]="lesson.downloadUrl" target="_blank" class="view-button">
-            <button>Visualizar</button>
-          </a>
-          <a [href]="lesson.downloadUrl" download class="download-button">
-            <button>Baixar</button>
-          </a>
+  <!-- Latest Bundle (Hero) -->
+  @if (latestBundle) {
+  <div
+    class="hero-bundle mb-8 p-4 border-round-xl surface-card shadow-4 flex flex-column md:flex-row gap-4"
+  >
+    <div class="md:w-6 w-full relative h-[300px]">
+      <img
+        [src]="getThumbnail(latestBundle.youtube_link)"
+        class="w-full h-full object-cover border-round-lg shadow-2 absolute inset-0"
+        alt="Thumbnail"
+      />
+      <div class="absolute top-0 right-0 m-2 bg-primary text-white px-3 py-1 border-round">
+        Destaque
+      </div>
+    </div>
+    <div class="md:w-6 w-full flex flex-column justify-content-center">
+      <span class="text-primary font-semibold text-xl mb-2"
+        >{{ latestBundle.trimester }} | Lição {{ latestBundle.lesson_number }}</span
+      >
+      <h2 class="text-3xl font-bold mb-3">{{ latestBundle.title }}</h2>
+      <p class="text-gray-300 mb-4">
+        O kit completo desta semana já está disponível. Inclui slides, mapa mental e muito mais.
+      </p>
+
+      <div class="features grid mb-4">
+        <div class="col-6 flex align-items-center gap-2 text-sm">
+          <i class="pi pi-file-pdf text-red-400"></i> Guia de Estudo
         </div>
-      </li>
-      }
-    </ul>
+        <div class="col-6 flex align-items-center gap-2 text-sm">
+          <i class="pi pi-desktop text-blue-400"></i> Slides PPT
+        </div>
+        <div class="col-6 flex align-items-center gap-2 text-sm">
+          <i class="pi pi-sitemap text-green-400"></i> Mapa Mental
+        </div>
+        <div class="col-6 flex align-items-center gap-2 text-sm">
+          <i class="pi pi-images text-purple-400"></i> Infográfico
+        </div>
+      </div>
+
+      <div class="actions flex gap-3">
+        <a
+          [href]="'/api/bundles/' + latestBundle.id + '/download'"
+          class="p-button font-bold px-4 py-3 no-underline bg-primary text-white border-round hover:bg-primary-reverse transition-colors w-full md:w-auto text-center"
+        >
+          <i class="pi pi-download mr-2"></i> Baixar Kit Completo (ZIP)
+        </a>
+        <a
+          *ngIf="latestBundle.article_link"
+          [href]="latestBundle.article_link"
+          class="p-button p-button-outlined font-bold px-4 py-3 no-underline border-round w-full md:w-auto text-center text-white border-white hover:bg-white hover:text-black"
+        >
+          Ler Artigo
+        </a>
+      </div>
+    </div>
   </div>
   }
+
+  <!-- Previous Bundles Grid -->
+  <h3 class="text-2xl font-bold mb-4 border-left-3 border-primary pl-3">Materiais Anteriores</h3>
+  <div class="grid">
+    @for (bundle of previousBundles; track bundle.id) {
+    <div class="col-12 md:col-6 lg:col-4 p-2">
+      <div
+        class="bundle-card surface-card border-round-xl shadow-2 overflow-hidden h-full flex flex-column"
+      >
+        <div class="relative h-14rem">
+          <img
+            [src]="getThumbnail(bundle.youtube_link)"
+            class="w-full h-full object-cover transition-transform hover:scale-105"
+            alt="Thumbnail"
+          />
+          <div
+            class="absolute bottom-0 left-0 bg-black-alpha-70 text-white px-3 py-1 border-top-right-round"
+          >
+            Lição {{ bundle.lesson_number }}
+          </div>
+        </div>
+        <div class="p-4 flex flex-column flex-grow-1">
+          <span class="text-sm text-gray-400 mb-1">{{ bundle.trimester }}</span>
+          <h4 class="text-xl font-bold mb-3 mt-0">{{ bundle.title }}</h4>
+
+          <div class="flex gap-2 mb-4 text-gray-400">
+            <i class="pi pi-file-pdf" pTooltip="Guia" tooltipPosition="top"></i>
+            <i class="pi pi-desktop" pTooltip="Slides" tooltipPosition="top"></i>
+            <i class="pi pi-image" pTooltip="Imagens" tooltipPosition="top"></i>
+          </div>
+
+          <div
+            class="mt-auto pt-3 border-top-1 border-gray-700 flex justify-content-between align-items-center"
+          >
+            <a
+              [href]="'/api/bundles/' + bundle.id + '/download'"
+              class="text-primary font-bold no-underline hover:underline"
+            >
+              <i class="pi pi-download"></i> Baixar ZIP
+            </a>
+            <!-- Could add a 'View Details' modal trigger here -->
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
 </div>

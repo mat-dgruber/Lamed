@@ -10,6 +10,17 @@ django.setup()
 
 # 2. Inicializar Apps
 app = FastAPI(title="Lamed API", version="1.0.0")
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 django_app = get_asgi_application()
 
 # 3. Rotas da API
@@ -23,5 +34,13 @@ def health_check():
 
 # 4. Montar o Django (Admin e Arquivos Estáticos)
 # Necessário configurar STATIC_ROOT e STATIC_URL no settings.py do Django
-app.mount("/static", StaticFiles(directory="static"), name="static")
+from pathlib import Path
+
+# ... (existing imports)
+
+# Ensure static directory exists
+static_path = Path(__file__).parent / "static"
+static_path.mkdir(parents=True, exist_ok=True)
+
+app.mount("/static", StaticFiles(directory=str(static_path)), name="static")
 app.mount("/", django_app) 

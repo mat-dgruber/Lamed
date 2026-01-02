@@ -1,11 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException
-from typing import List
+from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, Form, Response
+from typing import List, Optional
 from asgiref.sync import sync_to_async
-from content.models import Artigo, MaterialEstudo
+from content.models import Artigo, MaterialEstudo, LessonBundle
+from content.utils import create_bundle_zip
+from . import schemas
 from .schemas import ArticleOut, ArticleCreate, ArticleUpdate, GuideOut, GuideCreate, GuideUpdate
 from .dependencies import get_current_user
 from django.utils import timezone
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 router = APIRouter()
 
@@ -161,3 +164,132 @@ async def list_guides():
     ]
 
 # Implement methods for Create/Update/Delete guides similarly as needed
+
+# ... (Previous Article Routes)
+
+# === STUDY GUIDES (LESSON BUNDLES) ===
+
+@router.get("/bundles", response_model=List[schemas.BundleOut])
+def list_bundles():
+    bundles = LessonBundle.objects.all().order_by('-published_date')
+    # Manually map file URLs if needed, or rely on serializer if field names match
+    results = []
+    for b in bundles:
+        # Helper to get URL or None
+        def get_url(field):
+            return field.url if field else None
+            
+        data = schemas.BundleOut.model_validate(b)
+        data.file_guide_url = get_url(b.file_guide)
+        data.file_slides_url = get_url(b.file_slides)
+        data.file_map_url = get_url(b.file_map)
+        data.file_infographic_url = get_url(b.file_infographic)
+        data.file_flashcards_url = get_url(b.file_flashcards)
+        results.append(data)
+    return results
+
+@router.get("/bundles/{id}", response_model=schemas.BundleOut)
+def get_bundle(id: int):
+    try:
+        b = LessonBundle.objects.get(id=id)
+        def get_url(field):
+            return field.url if field else None
+        
+        data = schemas.BundleOut.model_validate(b)
+        data.file_guide_url = get_url(b.file_guide)
+        data.file_slides_url = get_url(b.file_slides)
+        data.file_map_url = get_url(b.file_map)
+        data.file_infographic_url = get_url(b.file_infographic)
+        data.file_flashcards_url = get_url(b.file_flashcards)
+        return data
+    except LessonBundle.DoesNotExist:
+        raise HTTPException(status_code=404, detail="Bundle not found")
+
+@router.post("/bundles", response_model=schemas.BundleOut)
+def create_bundle(
+    title: str = Form(...),
+    trimester: str = Form(...),
+    lesson_number: int = Form(...),
+    youtube_link: Optional[str] = Form(None),
+    article_link: Optional[str] = Form(None),
+    file_guide: Optional[UploadFile] = File(None),
+    file_slides: Optional[UploadFile] = File(None),
+    file_map: Optional[UploadFile] = File(None),
+    file_infographic: Optional[UploadFile] = File(None),
+    file_flashcards: Optional[UploadFile] = File(None),
+    current_user: User = Depends(get_current_user)
+):
+    # Manual creation to handle files
+    bundle = LessonBundle(
+        title=title,
+        trimester=trimester,
+        lesson_number=lesson_number,
+        youtube_link=youtube_link,
+        article_link=article_link
+    )
+    if file_guide: bundle.file_guide.save(file_guide.filename, file_guide.file)
+    if file_slides: bundle.file_slides.save(file_slides.filename, file_slides.file)
+    if file_map: bundle.file_map.save(file_map.filename, file_map.file)
+    if file_infographic: bundle.file_infographic.save(file_infographic.filename, file_infographic.file)
+    if file_flashcards: bundle.file_flashcards.save(file_flashcards.filename, file_flashcards.file)
+    
+    bundle.save()
+    return get_bundle(bundle.id) # Re-use get logic for formatting
+
+@router.put("/bundles/{id}", response_model=schemas.BundleOut)
+def update_bundle(
+    id: int,
+    title: Optional[str] = Form(None),
+    trimester: Optional[str] = Form(None),
+    lesson_number: Optional[int] = Form(None),
+    youtube_link: Optional[str] = Form(None),
+    article_link: Optional[str] = Form(None),
+    file_guide: Optional[UploadFile] = File(None),
+    file_slides: Optional[UploadFile] = File(None),
+    file_map: Optional[UploadFile] = File(None),
+    file_infographic: Optional[UploadFile] = File(None),
+    file_flashcards: Optional[UploadFile] = File(None),
+    current_user: User = Depends(get_current_user)
+):
+    try:
+        bundle = LessonBundle.objects.get(id=id)
+        if title: bundle.title = title
+        if trimester: bundle.trimester = trimester
+        if lesson_number: bundle.lesson_number = lesson_number
+        if youtube_link: bundle.youtube_link = youtube_link
+        if article_link: bundle.article_link = article_link
+        
+        if file_guide: bundle.file_guide.save(file_guide.filename, file_guide.file)
+        if file_slides: bundle.file_slides.save(file_slides.filename, file_slides.file)
+        if file_map: bundle.file_map.save(file_map.filename, file_map.file)
+        if file_infographic: bundle.file_infographic.save(file_infographic.filename, file_infographic.file)
+        if file_flashcards: bundle.file_flashcards.save(file_flashcards.filename, file_flashcards.file)
+        
+        bundle.save()
+        return get_bundle(bundle.id)
+    except LessonBundle.DoesNotExist:
+        raise HTTPException(status_code=404, detail="Bundle not found")
+
+@router.delete("/bundles/{id}")
+def delete_bundle(id: int, current_user: User = Depends(get_current_user)):
+    try:
+        bundle = LessonBundle.objects.get(id=id)
+        bundle.delete()
+        return {"success": True}
+    except LessonBundle.DoesNotExist:
+        raise HTTPException(status_code=404, detail="Bundle not found")
+
+@router.get("/bundles/{id}/download")
+def download_bundle_zip(id: int):
+    try:
+        bundle = LessonBundle.objects.get(id=id)
+        zip_buffer = create_bundle_zip(bundle)
+        filename = f"Kit_Lamed_{bundle.trimester}_Licao_{bundle.lesson_number}.zip"
+        
+        return Response(
+            content=zip_buffer.getvalue(),
+            media_type="application/zip",
+            headers={"Content-Disposition": f"attachment; filename={filename}"}
+        )
+    except LessonBundle.DoesNotExist:
+        raise HTTPException(status_code=404, detail="Bundle not found")

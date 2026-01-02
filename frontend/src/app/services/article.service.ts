@@ -8,12 +8,12 @@ import { map } from 'rxjs/operators';
 })
 export class ArticleService {
 
-  private articlesUrl = '/api/articles'; // Use Proxy or Absolute URL if needed
+  private apiUrl = '/api/articles'; // Relative path for Proxy
 
   constructor(private http: HttpClient) { }
 
   getArticles(): Observable<any[]> {
-    return this.http.get<any[]>(this.articlesUrl);
+    return this.http.get<any[]>(this.apiUrl);
   }
 
   getLatestArticle(): Observable<any> {
@@ -24,19 +24,19 @@ export class ArticleService {
 
   getArticleById(slug: string): Observable<any> {
      // API supports get by slug directly
-    return this.http.get<any>(`${this.articlesUrl}/${slug}`);
+    return this.http.get<any>(`${this.apiUrl}/${slug}`);
   }
 
   // New Methods
   deleteArticle(slug: string): Observable<any> {
-      return this.http.delete(`${this.articlesUrl}/${slug}`);
+      return this.http.delete(`${this.apiUrl}/${slug}`);
   }
   
   createArticle(article: any): Observable<any> {
-      return this.http.post(this.articlesUrl, article);
+      return this.http.post(this.apiUrl, article);
   }
 
   updateArticle(slug: string, article: any): Observable<any> {
-      return this.http.put(`${this.articlesUrl}/${slug}`, article);
+      return this.http.put(`${this.apiUrl}/${slug}`, article);
   }
 }

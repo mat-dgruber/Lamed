@@ -11,16 +11,19 @@ import { Termos } from './components/termos/termos-de-uso';
 import { Contato } from './components/contato/contato';
 import { GuiaDeEstudos } from './components/guia-de-estudos/guia-de-estudos';
 import { SigaNos } from './components/siga-nos/siga-nos';
+import { LoginComponent } from './components/login/login.component';
 
 import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
 import { AdminArticleListComponent } from './components/admin/admin-article-list/admin-article-list.component';
 import { AdminArticleEditComponent } from './components/admin/admin-article-edit/admin-article-edit.component';
-import { AdminGuideListComponent } from './components/admin/admin-guide-list/admin-guide-list.component';
-import { AdminGuideEditComponent } from './components/admin/admin-guide-edit/admin-guide-edit.component';
+import { AdminBundleEditComponent } from './components/admin/admin-bundle-edit/admin-bundle-edit.component';
+import { AdminBundleListComponent } from './components/admin/admin-bundle-list/admin-bundle-list.component';
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
      {path: '', component: Home},
+     {path: 'login', component: LoginComponent},
+     {path: 'sobre', component: Sobre},
      {path: 'sobre', component: Sobre},
      {path: 'videos', component: Videos},
      {path: 'artigos', component: Artigos},
@@ -42,9 +45,12 @@ export const routes: Routes = [
             { path: 'articles/new', component: AdminArticleEditComponent },
             { path: 'articles/:slug', component: AdminArticleEditComponent },
             
-            { path: 'guides', component: AdminGuideListComponent },
-            { path: 'guides/new', component: AdminGuideEditComponent },
-            { path: 'guides/:id', component: AdminGuideEditComponent },
+            { path: 'bundles', component: AdminBundleListComponent },
+            { path: 'bundles/new', component: AdminBundleEditComponent },
+            { path: 'bundles/:id', component: AdminBundleEditComponent },
+            
+            // Redirect guides to bundles or remove
+            { path: 'guides', redirectTo: 'bundles', pathMatch: 'full' }, 
             
             { path: '', redirectTo: 'articles', pathMatch: 'full' }
         ]

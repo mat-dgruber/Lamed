@@ -16,7 +16,7 @@ import { inject } from '@angular/core';
         </div>
         <ul class="nav-links">
           <li><a routerLink="/admin/articles" routerLinkActive="active">Artigos</a></li>
-          <li><a routerLink="/admin/guides" routerLinkActive="active">Guias de Estudo</a></li>
+          <li><a routerLink="/admin/bundles" routerLinkActive="active">Bundles (Lições)</a></li>
           <li><a (click)="logout()" class="logout-btn">Sair</a></li>
         </ul>
       </nav>

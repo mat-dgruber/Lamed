@@ -8,9 +8,13 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { LucideAngularModule, Menu, Mail, BadgeDollarSign, Youtube, Instagram, ArrowUpFromDot, Send, CircleArrowLeft } from 'lucide-angular';
 
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { providePrimeNG } from 'primeng/config';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+    importProvidersFrom(BrowserAnimationsModule),
+    providePrimeNG(),
     provideRouter(
       routes,
       withInMemoryScrolling({
@@ -21,12 +25,13 @@ export const appConfig: ApplicationConfig = {
     
     // Firebase Config - USER MUST UPDATE THESE VALUES
     provideFirebaseApp(() => initializeApp({
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT_ID.appspot.com",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
+        apiKey: "AIzaSyA-O5OuinkLc_Jjh2H66SAMvASSMLjn-Ew",
+        authDomain: "lamed-148.firebaseapp.com",
+        projectId: "lamed-148",
+        storageBucket: "lamed-148.firebasestorage.app",
+        messagingSenderId: "957958728332",
+        appId: "1:957958728332:web:54e2654652c944048729a9",
+        measurementId: "G-6XRD5FCRNY"
     })),
     provideAuth(() => getAuth()),
 

@@ -41,3 +41,10 @@ testem.log
 .DS_Store
 Thumbs.db
 /.angular/cache
+
+# Backend Secrets
+backend/certs/
+backend/.env
+backend/db.sqlite3
+__pycache__/
+*.py[cod]

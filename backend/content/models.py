@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 from django.utils import timezone
 from django.contrib.auth.models import User
 
@@ -26,7 +27,35 @@ class Categoria(models.Model):
      def __str__(self):
           return self.nome
 
+
+class LessonBundle(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
+    trimester = models.CharField(max_length=10)  # e.g., "3Tri25"
+    lesson_number = models.IntegerField()
+    published_date = models.DateTimeField(auto_now_add=True)
+    
+    # External Links
+    youtube_link = models.URLField(blank=True, null=True)
+    article_link = models.URLField(blank=True, null=True)
+    
+    # Files
+    file_guide = models.FileField(upload_to='bundles/guides/', blank=True, null=True)
+    file_slides = models.FileField(upload_to='bundles/slides/', blank=True, null=True)
+    file_map = models.FileField(upload_to='bundles/maps/', blank=True, null=True)
+    file_infographic = models.FileField(upload_to='bundles/infographics/', blank=True, null=True)
+    file_flashcards = models.FileField(upload_to='bundles/flashcards/', blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(f"{self.trimester}-L{self.lesson_number}-{self.title}")
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.trimester} - Lição {self.lesson_number}: {self.title}"
+
 class MaterialEstudo(models.Model):
+
      titulo = models.CharField(max_length=255)
      # slug not strictly needed if we list by trimester, but good to have
      slug = models.CharField(max_length=255, unique=True, blank=True, null=True) 

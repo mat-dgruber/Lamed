@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
         if (!loggedIn) {
           console.log('Access denied. Redirecting to login.');
           // Redirect to login or home, assuming login modal or page exists
-          this.router.navigate(['/']); 
+          this.router.navigate(['/login']); 
         }
       })
     );

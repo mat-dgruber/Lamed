@@ -2,88 +2,55 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MetaTagService } from '../../services/meta-tag.service';
 import { Router } from '@angular/router';
-import { GuideService } from '../../services/guide.service';
-
-interface Lesson {
-  id: number;
-  title: string;
-  downloadUrl: string;
-  trimester?: string;
-}
+import { BundleService, LessonBundle } from '../../services/bundle.service';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-guia-de-estudos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CardModule, ButtonModule, TooltipModule],
   templateUrl: './guia-de-estudos.html',
   styleUrls: ['./guia-de-estudos.css']
 })
 export class GuiaDeEstudos implements OnInit {
   private metaTagService = inject(MetaTagService);
   private router = inject(Router);
-  private guideService = inject(GuideService);
+  private bundleService = inject(BundleService);
 
-  trimesterState: { [key: string]: boolean } = {
-    '3Tri25': true, // Open default
-    '4Tri25': false
-  };
-  
-  // Grouped lessons
-  Licoes: { [key: string]: Lesson[] } = {};
-  
-  // Available trimesters keys
-  trimesters: string[] = [];
+  bundles: LessonBundle[] = [];
+  latestBundle: LessonBundle | null = null;
+  previousBundles: LessonBundle[] = [];
 
   ngOnInit(): void {
     this.metaTagService.updateTags(
-      'Guia de Estudos',
-      'Baixe nossos guias de estudo semanais para aprofundar seu conhecimento da Lição da Escola Sabatina.',
+      'Materiais Extras',
+      'Baixe os kits completos de estudo semanal.',
       'assets/Imagens/Fundo_Lamed-total.png',
       this.router.url
     );
     
-    this.loadGuides();
+    this.loadBundles();
   }
 
-  loadGuides() {
-      this.guideService.getGuides().subscribe((data: any[]) => {
-          // Group by trimester
-          const grouped: { [key: string]: Lesson[] } = {};
-          
-          data.forEach(guide => {
-              const tri = guide.trimester || 'Outros';
-              if (!grouped[tri]) {
-                  grouped[tri] = [];
-              }
-              grouped[tri].push({
-                  id: guide.lesson_number,
-                  title: guide.title,
-                  downloadUrl: guide.download_url
-              });
-          });
-          
-          // Sort lessons by ID within trimester
-          Object.keys(grouped).forEach(key => {
-              grouped[key].sort((a, b) => a.id - b.id);
-          });
-
-          this.Licoes = grouped;
-          this.trimesters = Object.keys(grouped).sort().reverse(); // Show latest first
-          
-          // Initialize state
-          this.trimesters.forEach(t => {
-              if (this.trimesterState[t] === undefined) {
-                  this.trimesterState[t] = false;
-              }
-          });
+  loadBundles() {
+      this.bundleService.getBundles().subscribe(data => {
+          this.bundles = data; // backend sorts by date desc
+          if (this.bundles.length > 0) {
+              this.latestBundle = this.bundles[0];
+              this.previousBundles = this.bundles.slice(1);
+          }
       });
   }
 
-  toggleTrimester(trimester: string): void {
-    this.trimesterState[trimester] = !this.trimesterState[trimester];
-  }
-
-  getLessonsWithDownloads(trimester: string): Lesson[] {
-    return this.Licoes[trimester] || [];
+  getThumbnail(url?: string): string {
+      if (!url) return 'assets/Imagens/Fundo_Lamed-total.png';
+      // Extract Video ID
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11)
+        ? `https://img.youtube.com/vi/${match[2]}/maxresdefault.jpg`
+        : 'assets/Imagens/Fundo_Lamed-total.png';
   }
 }

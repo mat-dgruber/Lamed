@@ -46,3 +46,31 @@ class GuideOut(GuideBase):
 
     class Config:
         from_attributes = True
+
+class BundleBase(BaseModel):
+    title: str
+    trimester: str
+    lesson_number: int
+    youtube_link: Optional[str] = None
+    article_link: Optional[str] = None
+
+class BundleCreate(BundleBase):
+    pass
+
+class BundleUpdate(BundleBase):
+    pass
+
+class BundleOut(BundleBase):
+    id: int
+    slug: str
+    published_date: datetime
+    # File URLs - populated manually in router or via property if available
+    file_guide_url: Optional[str] = None
+    file_slides_url: Optional[str] = None
+    file_map_url: Optional[str] = None
+    file_infographic_url: Optional[str] = None
+    file_flashcards_url: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
