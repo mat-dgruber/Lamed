@@ -49,11 +49,11 @@ export class AdminBundleEditComponent implements OnInit {
   currentBundle: any = {};
 
   fileTypes = [
-      { key: 'file_guide', label: 'Guia de Estudo (PDF)', urlKey: 'file_guide_url' },
-      { key: 'file_slides', label: 'Slides (PPTX/PDF)', urlKey: 'file_slides_url' },
-      { key: 'file_map', label: 'Mapa Mental (IMG)', urlKey: 'file_map_url' },
-      { key: 'file_infographic', label: 'Infográfico (IMG)', urlKey: 'file_infographic_url' },
-      { key: 'file_flashcards', label: 'Flashcards (PDF)', urlKey: 'file_flashcards_url' },
+      { key: 'file_guide', label: 'Guia de Estudo (PDF)', urlKey: 'file_guide_url', accept: '.pdf' },
+      { key: 'file_slides', label: 'Slides (PPTX/PDF)', urlKey: 'file_slides_url', accept: '.pptx,.pdf,.ppt' },
+      { key: 'file_map', label: 'Mapa Mental (IMG)', urlKey: 'file_map_url', accept: 'image/*' },
+      { key: 'file_infographic', label: 'Infográfico (IMG)', urlKey: 'file_infographic_url', accept: 'image/*' },
+      { key: 'file_flashcards', label: 'Flashcards (PDF)', urlKey: 'file_flashcards_url', accept: '.pdf' },
   ];
 
   selectedFiles: { [key: string]: File } = {};

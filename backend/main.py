@@ -11,6 +11,18 @@ django.setup()
 # 2. Inicializar Apps
 app = FastAPI(title="Lamed API", version="1.0.0")
 
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+import json
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    print(f"VALIDATION ERROR: {json.dumps(exc.errors(), indent=2)}")
+    return JSONResponse(
+        status_code=422,
+        content={"detail": exc.errors()},
+    )
+
 from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
