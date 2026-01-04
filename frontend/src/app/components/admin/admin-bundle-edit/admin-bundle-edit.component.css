@@ -1,0 +1,74 @@
+.admin-page { padding: 0; }
+.bg-dark-card { background-color: #1e1e1e; border-radius: 12px; border: 1px solid #333; }
+.text-white { color: #ffffff; }
+.text-gold { color: #ffd700; }
+.text-gray-300 { color: #d1d5db; }
+.text-gray-400 { color: #9ca3af; }
+.text-green-400 { color: #34d399; }
+.border-gray-700 { border-color: #374151 !important; }
+
+/* Custom Inputs */
+::ng-deep .custom-input, ::ng-deep .p-inputtext {
+    background: #2a2a2a !important;
+    border: 1px solid #444 !important;
+    color: #fff !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 8px !important;
+}
+::ng-deep .custom-input:focus, ::ng-deep .p-inputtext:focus {
+    border-color: #ffd700 !important;
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2) !important;
+}
+
+/* Primary Button */
+::ng-deep .custom-button-primary {
+    background: #ffd700 !important;
+    border: none !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+}
+::ng-deep .custom-button-primary:hover {
+    background: #ffed4a !important;
+    transform: translateY(-2px);
+}
+::ng-deep .custom-button-primary:disabled {
+    background: #4b4b4b !important;
+    color: #888 !important;
+}
+
+/* Secondary Button */
+::ng-deep .custom-button-secondary {
+    background: transparent !important;
+    border: 1px solid #555 !important;
+    color: #ccc !important;
+    border-radius: 8px !important;
+}
+::ng-deep .custom-button-secondary:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: #777 !important;
+    color: #fff !important;
+}
+
+.w-full { width: 100%; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.mb-5 { margin-bottom: 2rem; }
+.mt-5 { margin-top: 2rem; }
+.pt-4 { padding-top: 1.5rem; }
+.block { display: block; }
+.mr-2 { margin-right: 0.5rem; }
+
+.grid { display: flex; flex-wrap: wrap; margin-right: -1rem; margin-left: -1rem;}
+.col-12 { width: 100%; padding: 0 1rem; box-sizing: border-box; }
+@media (min-width: 768px) {
+    .md\:col-6 { width: 50%; }
+    .md\:col-4 { width: 33.3333%; }
+}
+.flex { display: flex; }
+.justify-content-between { justify-content: space-between; }
+.justify-content-end { justify-content: flex-end; }
+.align-items-center { align-items: center; }
+.font-bold { font-weight: 700; }
+.text-3xl { font-size: 1.75rem; }
+.text-2xl { font-size: 1.5rem; }

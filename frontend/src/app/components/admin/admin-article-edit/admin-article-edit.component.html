@@ -1,0 +1,124 @@
+<div class="admin-page">
+  <div class="header-section mb-5">
+    <div>
+      <h2 class="text-3xl font-bold text-white mb-2">
+        {{ isEditing ? 'Editar Artigo' : 'Novo Artigo' }}
+      </h2>
+      <p class="text-gray-400">Preencha os detalhes do artigo abaixo.</p>
+    </div>
+    <button
+      pButton
+      label="Voltar"
+      icon="pi pi-arrow-left"
+      class="p-button-secondary custom-button-secondary"
+      routerLink="/admin/articles"
+    ></button>
+  </div>
+
+  <div class="card p-5 bg-dark-card border-gray-700">
+    <form [formGroup]="articleForm" (ngSubmit)="saveArticle()">
+      <div class="grid">
+        <div class="col-12 md:col-8">
+          <div class="field mb-4">
+            <label for="title" class="block mb-2 font-bold text-gray-300">Título</label>
+            <input
+              id="title"
+              type="text"
+              pInputText
+              formControlName="title"
+              class="w-full custom-input"
+            />
+          </div>
+
+          <div class="field mb-4">
+            <label for="slug" class="block mb-2 font-bold text-gray-300">Slug (URL)</label>
+            <input
+              id="slug"
+              type="text"
+              pInputText
+              formControlName="slug"
+              class="w-full custom-input"
+            />
+          </div>
+
+          <div class="field mb-4">
+            <label for="content" class="block mb-2 font-bold text-gray-300">Conteúdo</label>
+            <p-editor
+              formControlName="content"
+              [style]="{ height: '400px' }"
+              styleClass="custom-editor"
+            ></p-editor>
+          </div>
+        </div>
+
+        <div class="col-12 md:col-4">
+          <div class="field mb-4">
+            <label for="published_date" class="block mb-2 font-bold text-gray-300"
+              >Data de Publicação</label
+            >
+            <p-datepicker
+              formControlName="published_date"
+              [showTime]="true"
+              dateFormat="dd/mm/yy"
+              class="w-full custom-input-date"
+            ></p-datepicker>
+          </div>
+
+          <div class="field mb-4">
+            <label for="tags" class="block mb-2 font-bold text-gray-300">Tags</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="tagsInput"
+              class="w-full custom-input"
+              placeholder="Ex: Escola Sabatina, Lição"
+            />
+          </div>
+
+          <div class="field mb-4">
+            <label for="author_id" class="block mb-2 font-bold text-gray-300">Autor</label>
+            <p-select
+              [options]="authors"
+              formControlName="author_id"
+              optionLabel="username"
+              optionValue="id"
+              placeholder="Selecione um autor"
+              class="w-full custom-input-select"
+            ></p-select>
+          </div>
+
+          <div class="field mb-4">
+            <label class="block mb-2 font-bold text-gray-300">Banner (URL)</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="banner_path"
+              class="w-full custom-input"
+            />
+          </div>
+
+          <div class="field mb-4 flex align-items-center gap-2">
+            <input
+              type="checkbox"
+              formControlName="published"
+              id="published"
+              class="custom-checkbox"
+            />
+            <label for="published" class="font-bold text-gray-300 cursor-pointer">Publicado</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-content-end mt-5 border-top-1 border-gray-700 pt-4">
+        <button
+          pButton
+          type="submit"
+          [label]="isEditing ? 'Atualizar Artigo' : 'Criar Artigo'"
+          icon="pi pi-check"
+          [disabled]="articleForm.invalid"
+          class="custom-button-primary p-button-lg"
+        ></button>
+      </div>
+    </form>
+  </div>
+</div>

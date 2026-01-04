@@ -1,0 +1,15 @@
+<div class="admin-container">
+  <nav class="admin-sidebar">
+    <div class="sidebar-header">
+      <h2>Lamed Admin</h2>
+    </div>
+    <ul class="nav-links">
+      <li><a routerLink="/admin/articles" routerLinkActive="active">Artigos</a></li>
+      <li><a routerLink="/admin/bundles" routerLinkActive="active">Bundles (Lições)</a></li>
+      <li><a (click)="logout()" class="logout-btn">Sair</a></li>
+    </ul>
+  </nav>
+  <main class="admin-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

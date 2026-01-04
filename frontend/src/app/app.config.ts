@@ -8,12 +8,12 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { LucideAngularModule, Menu, Mail, BadgeDollarSign, Youtube, Instagram, ArrowUpFromDot, Send, CircleArrowLeft } from 'lucide-angular';
 
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { providePrimeNG } from 'primeng/config';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    importProvidersFrom(BrowserAnimationsModule),
+    provideAnimations(),
     providePrimeNG(),
     provideRouter(
       routes,

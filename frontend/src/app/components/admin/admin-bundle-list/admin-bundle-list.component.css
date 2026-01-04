@@ -1,0 +1,54 @@
+.admin-page { padding: 0; }
+
+.bg-dark-card { background-color: #1e1e1e; border-radius: 12px; border: 1px solid #333; }
+.text-gold { color: #ffd700 !important; }
+.text-white { color: #ffffff; }
+.text-gray-300 { color: #d1d5db; }
+.text-gray-400 { color: #9ca3af; }
+.text-red-400 { color: #f87171; }
+.text-blue-400 { color: #60a5fa; }
+
+.custom-button-primary {
+    background: #ffd700 !important;
+    border: none !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+}
+.custom-button-primary:hover {
+    background: #ffed4a !important;
+    transform: translateY(-2px);
+}
+
+/* Table Styles */
+::ng-deep .custom-table .p-datatable-header,
+::ng-deep .custom-table .p-datatable-thead > tr > th {
+    background: #1e1e1e !important;
+    color: #ffd700 !important;
+    border-bottom: 1px solid #333 !important;
+}
+::ng-deep .custom-table .p-datatable-tbody > tr > td {
+    background: #1e1e1e !important;
+    color: #eee !important;
+    border-bottom: 1px solid #2a2a2a !important;
+}
+::ng-deep .custom-table .p-datatable-tbody > tr:hover > td {
+    background: #2a2a2a !important;
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex { display: flex; }
+.gap-2 { gap: 0.5rem; }
+.mr-2 { margin-right: 0.5rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-5 { margin-bottom: 2rem; }
+.text-3xl { font-size: 1.75rem; }
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 500; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }

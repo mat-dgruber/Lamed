@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
@@ -11,146 +11,29 @@ import { catchError, tap } from 'rxjs/operators';
   selector: 'app-admin-article-list',
   standalone: true,
   imports: [CommonModule, RouterModule, TableModule, ButtonModule],
-  template: `
-    <div class="admin-page">
-        <div class="header-section mb-5">
-            <div>
-                <h1 class="text-3xl font-bold text-white mb-2">Gerenciar Artigos</h1>
-                <p class="text-gray-400">Visualize e gerencie todos os artigos publicados.</p>
-            </div>
-            <button pButton label="Novo Artigo" icon="pi pi-plus" routerLink="new" class="custom-button-primary"></button>
-        </div>
-        
-        <div class="card p-0 overflow-hidden bg-dark-card border-gray-700">
-            <p-table [value]="(articles$ | async) || []" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm custom-table">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th class="text-gold">Título</th>
-                        <th class="text-gold">Data Publicação</th>
-                        <th class="text-gold">Status</th>
-                        <th class="text-gold text-right">Ações</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-article>
-                    <tr class="hover:bg-gray-800 transition-colors">
-                        <td class="text-white font-medium">{{ article.title }}</td>
-                        <td class="text-gray-300">{{ article.published_date | date:'dd/MM/yyyy' }}</td>
-                        <td>
-                            <span [class]="'status-badge ' + (article.published ? 'published' : 'draft')">
-                                <i [class]="article.published ? 'pi pi-check-circle' : 'pi pi-file'"></i>
-                                {{ article.published ? 'Publicado' : 'Rascunho' }}
-                            </span>
-                        </td>
-                        <td class="text-right">
-                            <button pButton icon="pi pi-pencil" class="p-button-text p-button-rounded text-gold hover:bg-gray-700" [routerLink]="[article.slug]" pTooltip="Editar"></button>
-                            <button pButton icon="pi pi-trash" class="p-button-text p-button-rounded text-red-400 hover:bg-gray-700" (click)="deleteArticle(article.slug)" pTooltip="Excluir"></button>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="4" class="text-center p-4 text-gray-400">
-                            Nenhum artigo encontrado. Clique em "Novo Artigo" para começar.
-                            <div *ngIf="error" class="text-red-400 mt-2">Erro ao carregar: {{error}}</div>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-    </div>
-  `,
-  styles: [`
-    .admin-page { padding: 0; }
-    
-    .bg-dark-card { background-color: #1e1e1e; border-radius: 12px; border: 1px solid #333; }
-    .text-gold { color: #ffd700 !important; }
-    .text-white { color: #ffffff; }
-    .text-gray-300 { color: #d1d5db; }
-    .text-gray-400 { color: #9ca3af; }
-    .text-red-400 { color: #f87171; }
-    
-    .custom-button-primary {
-        background: #ffd700 !important;
-        border: none !important;
-        color: #000 !important;
-        font-weight: 700 !important;
-        border-radius: 8px !important;
-    }
-    .custom-button-primary:hover {
-        background: #ffed4a !important;
-        transform: translateY(-2px);
-    }
-
-    /* Table Styles */
-    ::ng-deep .custom-table .p-datatable-header,
-    ::ng-deep .custom-table .p-datatable-thead > tr > th {
-        background: #1e1e1e !important;
-        color: #ffd700 !important;
-        border-bottom: 1px solid #333 !important;
-    }
-    ::ng-deep .custom-table .p-datatable-tbody > tr > td {
-        background: #1e1e1e !important;
-        color: #eee !important;
-        border-bottom: 1px solid #2a2a2a !important;
-    }
-    ::ng-deep .custom-table .p-datatable-tbody > tr:hover > td {
-        background: #2a2a2a !important;
-    }
-
-    .status-badge {
-        padding: 0.35rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-    .published {
-        background: rgba(16, 185, 129, 0.2);
-        color: #34d399;
-        border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-    .draft {
-        background: rgba(156, 163, 175, 0.2);
-        color: #9ca3af;
-        border: 1px solid rgba(156, 163, 175, 0.3);
-    }
-
-    .header-section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .flex { display: flex; }
-    .mb-2 { margin-bottom: 0.5rem; }
-    .mb-5 { margin-bottom: 2rem; }
-    .text-3xl { font-size: 1.75rem; }
-    .font-bold { font-weight: 700; }
-    .font-medium { font-weight: 500; }
-    .text-right { text-align: right; }
-    .text-center { text-align: center; }
-  `]
+  templateUrl: './admin-article-list.component.html',
+  styleUrls: ['./admin-article-list.component.css']
 })
 export class AdminArticleListComponent implements OnInit {
   articleService = inject(ArticleService);
-  articles$: Observable<any[]> | undefined;
-  error = '';
+  articles = signal<any[]>([]);
+  error = signal<string>('');
 
   ngOnInit() {
     this.loadArticles();
   }
 
   loadArticles() {
-    this.articles$ = this.articleService.getArticles().pipe(
+    this.articleService.getArticles().pipe(
         tap(data => console.log('Articles loaded:', data)),
         catchError(err => {
             console.error('Error loading articles:', err);
-            this.error = 'Falha ao conectar ao servidor.';
+            this.error.set('Falha ao conectar ao servidor.');
             return of([]);
         })
-    );
+    ).subscribe(data => {
+        this.articles.set(data);
+    });
   }
 
   deleteArticle(slug: string) {
