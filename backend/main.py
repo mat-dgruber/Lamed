@@ -55,4 +55,11 @@ static_path = Path(__file__).parent / "static"
 static_path.mkdir(parents=True, exist_ok=True)
 
 app.mount("/static", StaticFiles(directory=str(static_path)), name="static")
+
+# Mount Media Files
+from config import settings
+media_path = settings.MEDIA_ROOT
+media_path.mkdir(parents=True, exist_ok=True)
+app.mount("/media", StaticFiles(directory=str(media_path)), name="media")
+
 app.mount("/", django_app) 

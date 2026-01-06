@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Garante que todos os links do Angular pareçam clicáveis */
 a[routerLink] {

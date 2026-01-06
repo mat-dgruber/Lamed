@@ -21,7 +21,11 @@ export class GuiaDeEstudos implements OnInit {
 
   bundles: LessonBundle[] = [];
   latestBundle: LessonBundle | null = null;
-  previousBundles: LessonBundle[] = [];
+  
+  // Pagination
+  allPreviousBundles: LessonBundle[] = [];
+  visibleBundles: LessonBundle[] = [];
+  itemsToShow = 3;
 
   ngOnInit(): void {
     this.metaTagService.updateTags(
@@ -36,12 +40,22 @@ export class GuiaDeEstudos implements OnInit {
 
   loadBundles() {
       this.bundleService.getBundles().subscribe(data => {
-          this.bundles = data; // backend sorts by date desc
+          this.bundles = data; 
           if (this.bundles.length > 0) {
               this.latestBundle = this.bundles[0];
-              this.previousBundles = this.bundles.slice(1);
+              this.allPreviousBundles = this.bundles.slice(1);
+              this.updateVisibleBundles();
           }
       });
+  }
+
+  updateVisibleBundles() {
+      this.visibleBundles = this.allPreviousBundles.slice(0, this.itemsToShow);
+  }
+
+  loadMore() {
+      this.itemsToShow += 3;
+      this.updateVisibleBundles();
   }
 
   getThumbnail(url?: string): string {

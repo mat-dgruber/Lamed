@@ -1,63 +1,103 @@
 <div class="container fade-in">
   <div class="header-section text-center mb-6">
-    <h1 class="text-4xl font-bold mb-2">Materiais Extras</h1>
-    <p class="text-gray-400">
-      Baixe os kits completos de estudo para sua classe ou estudo pessoal.
-    </p>
+    <h1 class="text-4xl font-bold mb-2 text-900">Materiais Extras</h1>
+    <p class="text-600">Baixe os kits completos de estudo para sua classe ou estudo pessoal.</p>
   </div>
 
   <!-- Latest Bundle (Hero) -->
   @if (latestBundle) {
-  <div
-    class="hero-bundle mb-8 p-4 border-round-xl surface-card shadow-4 flex flex-column md:flex-row gap-4"
-  >
-    <div class="md:w-6 w-full relative h-[300px]">
+  <div class="hero-bundle mb-8 p-0 flex flex-column md:flex-row overflow-hidden">
+    <div class="md:w-5 w-full relative h-[300px] md:h-auto p-3">
       <img
         [src]="getThumbnail(latestBundle.youtube_link)"
-        class="w-full h-full object-cover border-round-lg shadow-2 absolute inset-0"
+        class="w-full h-full object-cover border-round-2xl shadow-1"
         alt="Thumbnail"
       />
-      <div class="absolute top-0 right-0 m-2 bg-primary text-white px-3 py-1 border-round">
+      <div
+        class="absolute top-0 left-0 m-4 bg-primary text-white px-3 py-1 border-round-2xl font-bold shadow-2 text-sm"
+      >
         Destaque
       </div>
     </div>
-    <div class="md:w-6 w-full flex flex-column justify-content-center">
-      <span class="text-primary font-semibold text-xl mb-2"
-        >{{ latestBundle.trimester }} | Lição {{ latestBundle.lesson_number }}</span
-      >
-      <h2 class="text-3xl font-bold mb-3">{{ latestBundle.title }}</h2>
-      <p class="text-gray-300 mb-4">
-        O kit completo desta semana já está disponível. Inclui slides, mapa mental e muito mais.
-      </p>
-
-      <div class="features grid mb-4">
-        <div class="col-6 flex align-items-center gap-2 text-sm">
-          <i class="pi pi-file-pdf text-red-400"></i> Guia de Estudo
-        </div>
-        <div class="col-6 flex align-items-center gap-2 text-sm">
-          <i class="pi pi-desktop text-blue-400"></i> Slides PPT
-        </div>
-        <div class="col-6 flex align-items-center gap-2 text-sm">
-          <i class="pi pi-sitemap text-green-400"></i> Mapa Mental
-        </div>
-        <div class="col-6 flex align-items-center gap-2 text-sm">
-          <i class="pi pi-images text-purple-400"></i> Infográfico
-        </div>
+    <div class="md:w-7 w-full p-5 flex flex-column justify-content-center">
+      <div class="mb-3">
+        <span class="text-primary font-bold text-lg block mb-1">
+          {{ latestBundle.trimester }} | Lição {{ latestBundle.lesson_number }}
+        </span>
+        <h2 class="text-4xl font-bold m-0 text-900">{{ latestBundle.title }}</h2>
       </div>
 
-      <div class="actions flex gap-3">
+      <p class="text-600 mb-5 line-height-3 text-lg">
+        O kit completo desta semana já está disponível para download. Acesse os materiais
+        individuais ou baixe o pacote completo.
+      </p>
+
+      <div class="grid mb-5">
+        <!-- Individual Download Buttons -->
+        <ng-container *ngIf="latestBundle.file_guide_url">
+          <div class="col-6 md:col-4">
+            <a [href]="latestBundle.file_guide_url" target="_blank" class="no-underline">
+              <div
+                class="surface-hover p-3 border-round-2xl cursor-pointer text-center border-1 border-200 hover:border-primary transition-all"
+              >
+                <i class="pi pi-file-pdf text-red-500 text-2xl mb-2 block"></i>
+                <span class="text-700 text-sm font-bold">Guia PDF</span>
+              </div>
+            </a>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="latestBundle.file_slides_url">
+          <div class="col-6 md:col-4">
+            <a [href]="latestBundle.file_slides_url" target="_blank" class="no-underline">
+              <div
+                class="surface-hover p-3 border-round-2xl cursor-pointer text-center border-1 border-200 hover:border-primary transition-all"
+              >
+                <i class="pi pi-desktop text-orange-500 text-2xl mb-2 block"></i>
+                <span class="text-700 text-sm font-bold">Slides</span>
+              </div>
+            </a>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="latestBundle.file_map_url">
+          <div class="col-6 md:col-4">
+            <a [href]="latestBundle.file_map_url" target="_blank" class="no-underline">
+              <div
+                class="surface-hover p-3 border-round-2xl cursor-pointer text-center border-1 border-200 hover:border-primary transition-all"
+              >
+                <i class="pi pi-image text-green-500 text-2xl mb-2 block"></i>
+                <span class="text-700 text-sm font-bold">Mapa</span>
+              </div>
+            </a>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
         <a
           [href]="'/api/bundles/' + latestBundle.id + '/download'"
-          class="p-button font-bold px-4 py-3 no-underline bg-primary text-white border-round hover:bg-primary-reverse transition-colors w-full md:w-auto text-center"
+          class="btn-primary no-underline"
         >
-          <i class="pi pi-download mr-2"></i> Baixar Kit Completo (ZIP)
+          <i class="pi pi-download mr-2"></i> Baixar ZIP Completo
         </a>
+
         <a
           *ngIf="latestBundle.article_link"
           [href]="latestBundle.article_link"
-          class="p-button p-button-outlined font-bold px-4 py-3 no-underline border-round w-full md:w-auto text-center text-white border-white hover:bg-white hover:text-black"
+          target="_blank"
+          class="btn-secondary no-underline"
         >
-          Ler Artigo
+          <i class="pi pi-book mr-2"></i> Ler Artigo
+        </a>
+
+        <a
+          *ngIf="latestBundle.youtube_link"
+          [href]="latestBundle.youtube_link"
+          target="_blank"
+          class="btn-secondary no-underline"
+        >
+          <i class="pi pi-youtube mr-2"></i> Assistir
         </a>
       </div>
     </div>
@@ -65,49 +105,114 @@
   }
 
   <!-- Previous Bundles Grid -->
-  <h3 class="text-2xl font-bold mb-4 border-left-3 border-primary pl-3">Materiais Anteriores</h3>
+  <div class="flex justify-content-between align-items-center mb-4">
+    <h3 class="text-2xl font-bold m-0 border-left-3 border-primary pl-3 text-900">
+      Materiais Anteriores
+    </h3>
+  </div>
+
   <div class="grid">
-    @for (bundle of previousBundles; track bundle.id) {
+    @for (bundle of visibleBundles; track bundle.id) {
     <div class="col-12 md:col-6 lg:col-4 p-2">
-      <div
-        class="bundle-card surface-card border-round-xl shadow-2 overflow-hidden h-full flex flex-column"
-      >
-        <div class="relative h-14rem">
+      <div class="bundle-card h-full flex flex-column relative group">
+        <!-- Card Image -->
+        <div class="relative h-15rem overflow-hidden">
           <img
             [src]="getThumbnail(bundle.youtube_link)"
-            class="w-full h-full object-cover transition-transform hover:scale-105"
+            class="w-full h-full object-cover"
             alt="Thumbnail"
           />
-          <div
-            class="absolute bottom-0 left-0 bg-black-alpha-70 text-white px-3 py-1 border-top-right-round"
-          >
-            Lição {{ bundle.lesson_number }}
+          <div class="absolute top-0 right-0 m-3">
+            <span
+              class="bg-white-alpha-90 text-900 text-xs px-2 py-1 border-round-xl font-bold backdrop-blur-sm shadow-1"
+            >
+              {{ bundle.trimester }} | #{{ bundle.lesson_number }}
+            </span>
           </div>
         </div>
-        <div class="p-4 flex flex-column flex-grow-1">
-          <span class="text-sm text-gray-400 mb-1">{{ bundle.trimester }}</span>
-          <h4 class="text-xl font-bold mb-3 mt-0">{{ bundle.title }}</h4>
 
-          <div class="flex gap-2 mb-4 text-gray-400">
-            <i class="pi pi-file-pdf" pTooltip="Guia" tooltipPosition="top"></i>
-            <i class="pi pi-desktop" pTooltip="Slides" tooltipPosition="top"></i>
-            <i class="pi pi-image" pTooltip="Imagens" tooltipPosition="top"></i>
+        <!-- Card Body -->
+        <div class="p-4 flex flex-column flex-grow-1">
+          <h4 class="text-xl font-bold mb-3 mt-2 line-height-3 text-900">{{ bundle.title }}</h4>
+
+          <!-- Quick Downloads Row -->
+          <div class="flex gap-2 mb-4 border-bottom-1 border-100 pb-3">
+            <a
+              *ngIf="bundle.file_guide_url"
+              [href]="bundle.file_guide_url"
+              target="_blank"
+              pTooltip="Baixar Guia (PDF)"
+              tooltipPosition="top"
+              class="w-2rem h-2rem flex align-items-center justify-content-center border-round-circle bg-gray-100 hover:bg-primary text-600 hover:text-white transition-colors cursor-pointer no-underline"
+            >
+              <i class="pi pi-file-pdf"></i>
+            </a>
+            <a
+              *ngIf="bundle.file_slides_url"
+              [href]="bundle.file_slides_url"
+              target="_blank"
+              pTooltip="Baixar Slides"
+              tooltipPosition="top"
+              class="w-2rem h-2rem flex align-items-center justify-content-center border-round-circle bg-gray-100 hover:bg-primary text-600 hover:text-white transition-colors cursor-pointer no-underline"
+            >
+              <i class="pi pi-desktop"></i>
+            </a>
+            <a
+              *ngIf="bundle.file_map_url"
+              [href]="bundle.file_map_url"
+              target="_blank"
+              pTooltip="Baixar Mapa"
+              tooltipPosition="top"
+              class="w-2rem h-2rem flex align-items-center justify-content-center border-round-circle bg-gray-100 hover:bg-primary text-600 hover:text-white transition-colors cursor-pointer no-underline"
+            >
+              <i class="pi pi-image"></i>
+            </a>
           </div>
 
-          <div
-            class="mt-auto pt-3 border-top-1 border-gray-700 flex justify-content-between align-items-center"
-          >
+          <!-- Main Actions -->
+          <div class="mt-auto flex flex-column gap-2">
+            <div class="flex gap-2">
+              <a
+                *ngIf="bundle.article_link"
+                [href]="bundle.article_link"
+                target="_blank"
+                class="flex-1 btn-secondary text-sm px-3 py-2 no-underline flex align-items-center justify-content-center"
+              >
+                <i class="pi pi-book mr-2"></i> Ler
+              </a>
+              <a
+                *ngIf="bundle.youtube_link"
+                [href]="bundle.youtube_link"
+                target="_blank"
+                class="flex-1 btn-secondary text-sm px-3 py-2 no-underline flex align-items-center justify-content-center"
+              >
+                <i class="pi pi-youtube mr-2"></i> Ver
+              </a>
+            </div>
+
             <a
               [href]="'/api/bundles/' + bundle.id + '/download'"
-              class="text-primary font-bold no-underline hover:underline"
+              class="btn-primary text-sm w-full mt-1 no-underline block"
             >
-              <i class="pi pi-download"></i> Baixar ZIP
+              <i class="pi pi-download mr-2"></i> Baixar Kit (ZIP)
             </a>
-            <!-- Could add a 'View Details' modal trigger here -->
           </div>
         </div>
       </div>
     </div>
     }
   </div>
+
+  <!-- Load More Button -->
+  @if (visibleBundles.length < allPreviousBundles.length) {
+  <div class="text-center mt-6">
+    <button
+      pButton
+      label="Ver Mais Materiais"
+      icon="pi pi-angle-down"
+      (click)="loadMore()"
+      class="p-button-outlined p-button-rounded px-5 py-3 border-300 text-600 hover:text-900 hover:bg-gray-50 transition-all font-bold"
+    ></button>
+  </div>
+  }
 </div>
