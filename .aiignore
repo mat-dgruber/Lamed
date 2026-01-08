@@ -1,0 +1,15 @@
+# Arquivos e pastas a serem ignorados pela IA
+
+# Dependências
+node_modules/
+.venv/
+dist/
+.angular/
+
+# Logs
+*.log
+
+# Outros
+.git/
+.vscode/
+__pycache__/

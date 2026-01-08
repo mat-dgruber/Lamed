@@ -1,42 +1,25 @@
+/* Hero Bundle - Premium Logic */
 .hero-bundle {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 25px;
-  overflow: hidden;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.212);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hero-bundle:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
 }
 
-.surface-hover {
-    background-color: var(--surface-ground);
-}
-.surface-hover:hover {
-    background-color: var(--surface-100);
+/* Gradients */
+/* Gradients */
+/* Note: .btn-primary-gradient is redefined below with !important to ensure override */
+
+/* Container optimizations */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-/* Matching .video-item styles from styles.css */
-.bundle-card {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 25px;
-  overflow: hidden;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.212);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
-}
-
-.bundle-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Slightly stronger on hover */
-  border-color: var(--primary-color);
-}
-
-.backdrop-blur-sm {
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-}
-
+/* Animations */
 .fade-in {
-  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
 @keyframes fadeIn {
@@ -48,4 +31,40 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Button Gradients */
+.btn-primary-gradient {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-600) 100%) !important;
+  border: none !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(var(--primary-color-rgb), 0.4);
+}
+
+/* Card Hover Effects */
+.bundle-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bundle-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Custom Scrollbar for chips if needed */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+:host ::ng-deep .p-chip-secondary {
+    background-color: var(--surface-100);
+    color: var(--surface-700);
+    font-weight: 600;
 }

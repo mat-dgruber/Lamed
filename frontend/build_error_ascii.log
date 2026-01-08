@@ -1,0 +1,85 @@
+Application bundle generation failed. [4.239 seconds]
+
+node.exe : 
+[1m[31m[31mX 
+[41;31m[[41;97mE
+RROR[41;31m][0m
+ [1mTS2322: 
+Type '"warning"' 
+is not 
+assignable to 
+type '"success" 
+| "secondary" | 
+"info" | "warn" 
+| "danger" | 
+"contrast" | 
+null | 
+undefined'.[0m 
+[1m[35m[plugin 
+angular-compiler]
+[0m
+No C:\Users\PC Ca
+buloso\AppData\Ro
+aming\npm\ng.ps1:
+24 caractere:5
++     & 
+"node$exe"  "$bas
+edir/node_modules
+/@angular/cli/bin
+/ng.js" $arg ...
++     ~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+~~~
+    + CategoryIn 
+   fo            
+  : NotSpecifi   
+ ed: ([1m[3    
+1m[31mX...r    
+-compiler][    
+0m:String) [    
+], RemoteExc    
+eption
+    + FullyQuali 
+   fiedErrorId   
+  : NativeComm   
+ andError
+ 
+
+    src/app/compo
+nents/guia-de-est
+udos/guia-de-estu
+dos.html:79:48:
+[37m      79 
+??? ... 
+value="Destaque 
+da Semana" [32ms
+everity[37m="war
+ning" [rounded]="
+true"...
+         ???     
+                 
+          
+[32m~~~~~~~~[0m
+
+  Error occurs 
+in the template 
+of component 
+GuiaDeEstudos.
+
+    src/app/compo
+nents/guia-de-est
+udos/guia-de-estu
+dos.ts:19:15:
+[37m      19 
+???   
+templateUrl: [32
+m'./guia-de-estud
+os.html'[37m,
+         ???     
+           [32m~
+~~~~~~~~~~~~~~~~~
+~~~~~~[0m
+
+[39m[22m
