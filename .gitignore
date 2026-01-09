@@ -40,3 +40,10 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+/frontend/node_modules
+/frontend/.angular
+/backend/content
+/backend/__pycache__
+/backend/api/__pycache__
+/backend/certs
+/backend/config/__pycache__
