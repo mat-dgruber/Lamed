@@ -40,25 +40,12 @@ export class GuiaDeEstudos implements OnInit {
   };
 
   Licoes: { [key: string]: Lesson[] } = {
-    '1': [],
+    '1': [ { id: 1, title: 'Quem Receberá o Espírito Santo?', downloadUrl: 'assets/Downloads/GuiasDeEstudo/1Tri26/L1.pdf'},
+      { id: 2, title: 'Quem Receberá o Espírito Santo?', downloadUrl: 'assets/Downloads/GuiasDeEstudo/1Tri26/L2.pdf'},
+    ],
     '2': [],
-    '3': [
-      { id: 9, title: 'COMO CRIANÇAS', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L9.pdf' },
-      { id: 10, title: 'ACORDE!', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L10.pdf' },
-      { id: 11, title: 'EM CIMA DA ÁRVORE', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L11.pdf' },
-      { id: 12, title: 'O VASO DE ALABASTRO', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L12.pdf' },
-      { id: 13, title: 'O PRIMEIRO LUGAR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/3Tri25/L13.pdf'},
-    ],
-    '4': [
-      { id: 1, title: 'REALIDADE OU FACHADA', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L1.pdf'},
-      { id: 2, title: 'DUAS CARAS, UM CORAÇÃO', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L2.pdf' },
-      { id: 3, title: 'PREPARANDO-SE PARA O AMANHÃ... HOJE', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L3.pdf' },
-      { id: 4, title: 'VIVENDO PARA SERVIR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L4.pdf' },
-      { id: 5, title: 'O TRAIDOR', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L5.pdf' },
-      { id: 6, title: 'A ESCOLHA', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L6.pdf' },
-      { id: 7, title: 'JULGAMENTO ILEGAL', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L7.pdf' },
-      { id: 8, title: 'CONTEMPLANDO A CRUZ', downloadUrl: 'assets/Downloads/GuiasDeEstudo/4Tri25/L8.pdf' },
-    ],
+    '3': [],
+    '4': [],
   };
 
   toggleTrimester(trimester: string): void {

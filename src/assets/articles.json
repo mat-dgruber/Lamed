@@ -1,5 +1,17 @@
 [
   {
+    "id": "do-fracasso-a-vitoria",
+    "title": "Do Fracasso à Vitória: O Dia que Mudou a História dos Discípulos (e a Sua)",
+    "dateISO": "2026-01-08",
+    "displayDate": "08 de Janeiro, 2026",
+    "link": "artigo.html?id=do-fracasso-a-vitoria",
+    "contentPath": "assets/Artigos/do-fracasso-a-vitoria.html",
+    "bannerImage": "assets/Artigos/Imagens-artigos/fracasso-vitoria.png",
+    "description": "O que transformou aquele grupo de seguidores amedrontados nos corajosos apóstolos? A resposta está em um evento único: o Pentecostes.",
+    "author": "Matheus Diniz",
+    "tags": ["Pentecostes", "Espírito Santo", "Atos 2", "Vitória", "Fracasso", "Discípulos", "Lamed", "Lição 02", "Matheus Diniz"]
+  },
+  {
     "id": "da-espera-a-acao",
     "title": "Da Espera à Ação: Quando o \"Olhar para Cima\" vira \"Olhar para Fora\"",
     "dateISO": "2026-01-01",
