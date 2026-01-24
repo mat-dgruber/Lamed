@@ -1,0 +1,45 @@
+<div class="contact-form-container">
+  <h2>Entre em Contato</h2>
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" formControlName="nome" />
+      @if (contactForm.get('nome')?.invalid && contactForm.get('nome')?.touched) {
+        <div class="error-message">O nome é obrigatório.</div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" formControlName="email" />
+      @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
+        <div class="error-message">
+          @if (contactForm.get('email')?.errors?.['required']) {
+            <div>O e-mail é obrigatório.</div>
+          }
+          @if (contactForm.get('email')?.errors?.['email']) {
+            <div>Por favor, insira um e-mail válido.</div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="mensagem">Mensagem:</label>
+      <textarea id="mensagem" formControlName="mensagem" rows="5"></textarea>
+      @if (contactForm.get('mensagem')?.invalid && contactForm.get('mensagem')?.touched) {
+        <div class="error-message">A mensagem é obrigatória.</div>
+      }
+    </div>
+
+    <button type="submit" [disabled]="contactForm.invalid || isSubmitting">
+      {{ isSubmitting ? 'Enviando...' : 'Enviar' }}
+    </button>
+
+    @if (submissionMessage) {
+      <div class="submission-message">
+        {{ submissionMessage }}
+      </div>
+    }
+  </form>
+</div>

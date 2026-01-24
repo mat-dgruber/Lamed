@@ -1,0 +1,32 @@
+# FIRESTORE SCHEMA
+
+## Collections
+
+### `bundles`
+
+Representa um pacote semanal de conteúdo de estudo.
+
+- **id** (Document ID): Auto-generated string.
+- **title** (string): Título do bundle (ex: "Semana 1: Introdução à Torá").
+- **description** (string): Breve resumo do conteúdo.
+- **week_number** (number): Número sequencial da semana (para ordenação).
+- **author** (string): Nome do autor do artigo/estudo.
+- **published_at** (timestamp): Data de publicação exibida no artigo.
+- **video_data** (map):
+  - **url** (string): Link do YouTube ou Storage.
+  - **provider** (string): 'youtube' | 'storage'.
+  - **duration** (number, optional): Duração em segundos.
+- **thumbnail_url** (string): Capa do vídeo/bundle.
+- **article_content** (string): Conteúdo do artigo em HTML (suporta tags `<img>`).
+- **resources** (array of maps):
+  - **title** (string): Nome do recurso (ex: "Mapa Mental").
+  - **type** (string): 'pdf' | 'pptx' | 'infographic' | 'doc'.
+  - **url** (string): Link para download (Firebase Storage).
+- **is_active** (boolean): Se o bundle está visível.
+- **created_at** (timestamp): Data de criação sistema.
+- **updated_at** (timestamp): Última atualização.
+
+### `users`
+
+- **uid** (string): Firebase Auth UID.
+- **subscription_status** (string): 'active' | 'inactive'.

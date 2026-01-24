@@ -1,0 +1,136 @@
+<main class="site-main">
+  <section id="hero" class="hero-section">
+    <div class="container">
+      @if (showHeroText1()) {
+        <div id="hero-text-1" [style.opacity]="heroText1Opacity()" class="hero-text">
+          <h1>Bem-vindo ao LAMED</h1>
+          <p>Onde você estuda a Bíblia de um jeito diferenciado.</p>
+        </div>
+      }
+      @if (showHeroText2()) {
+        <div id="hero-text-2" [style.opacity]="heroText2Opacity()" class="hero-text">
+          <h1>Estude a Bíblia de um jeito diferenciado</h1>
+          <p>
+            O Lamed é o seu portal para um estudo bíblico aprofundado e transformador.<br />Explore
+            nossos vídeos, artigos e materiais de estudo.
+          </p>
+        </div>
+      }
+    </div>
+  </section>
+
+  @if (latestBundle(); as bundle) {
+    <section id="featured-videos" class="content-section">
+      <div class="container">
+        <h2>Estudo da Semana</h2>
+        <!-- Renamed from Vídeo em Destaque to reflect 'Bundle' -->
+
+        @if (featuredVideoUrl()) {
+          <div class="video-list single-featured-video">
+            <div class="video-item">
+              <iframe
+                id="featured-video-iframe"
+                [src]="featuredVideoUrl()"
+                [title]="bundle.title"
+                allow="
+                  accelerometer;
+                  autoplay;
+                  clipboard-write;
+                  encrypted-media;
+                  gyroscope;
+                  picture-in-picture;
+                "
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        }
+
+        <div class="text-center">
+          <!-- Adjusted route to /videos which is the list of bundles -->
+          <a routerLink="/videos" class="btn-primary-apoio">Ver todos os estudos</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Only show article section if there is separate article content? 
+             For now, showing it as 'Destaque' pointing to the same bundle context. -->
+    <section id="featured-articles" class="content-section background-light">
+      <div class="container">
+        <h2>Artigo em Destaque</h2>
+        <article class="featured-article-summary">
+          @if (bundle.thumbnail_url) {
+            <div class="article-image-placeholder">
+              <a [routerLink]="['/bundle', bundle.id]" aria-label="Leia o estudo em destaque">
+                <img
+                  id="featured-article-image"
+                  [src]="bundle.thumbnail_url"
+                  [alt]="bundle.title"
+                  loading="lazy"
+                />
+              </a>
+            </div>
+          }
+
+          <div class="featured-article-title-h3">
+            <h3>
+              <a [routerLink]="['/bundle', bundle.id]"
+                ><span id="featured-article-title">{{ bundle.title }}</span></a
+              >
+            </h3>
+          </div>
+          <!-- Using description as summary since we don't have separate summary field -->
+          <p id="featured-article-summary">{{ bundle.description }}</p>
+          <div class="readmore-article-link">
+            <a id="featured-article-readmore" [routerLink]="['/bundle', bundle.id]"
+              >Acessar Material Completo...</a
+            >
+          </div>
+        </article>
+        <div class="text-center">
+          <a routerLink="/videos" class="btn-secondary">Ver todos os artigos</a>
+        </div>
+      </div>
+    </section>
+  }
+
+  <section id="call-to-action-study" class="content-section">
+    <div class="container">
+      <h2>Explore Nossos Materiais de Estudo</h2>
+      <p>
+        Descubra uma variedade de recursos para aprofundar seu conhecimento bíblico, incluindo guias
+        de estudo semanais, artigos e vídeos.
+      </p>
+      <div class="text-center">
+        <!-- Route adjusted to main bundle list -->
+        <a routerLink="/videos" class="btn-primary-apoio">Acessar o Guia de Estudos</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="call-to-action-donate" class="content-section background-light">
+    <div class="container">
+      <h2>Apoie Nossa Missão</h2>
+      <p>
+        O Lamed é uma associação sem fins lucrativos dedicada a compartilhar o conhecimento bíblico
+        de forma acessível e transformadora.
+      </p>
+      <div class="text-center">
+        <a routerLink="/apoie" class="btn-secondary">Fazer uma Doação</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about-short" class="content-section">
+    <div class="container">
+      <h2>Sobre Nós</h2>
+      <p>
+        Nossa missão é equipar e inspirar pessoas a experimentar a Bíblia, promovendo transformação
+        pessoal e comunitária através do estudo das Escrituras.
+      </p>
+      <div class="text-center">
+        <a routerLink="/sobre" class="btn-destaque">Saiba Mais</a>
+      </div>
+    </div>
+  </section>
+</main>

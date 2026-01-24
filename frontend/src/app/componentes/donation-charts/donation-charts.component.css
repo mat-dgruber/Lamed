@@ -1,0 +1,95 @@
+.donation-details-cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Force 4 columns on larger screens */
+  gap: 20px;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+.detail-card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+  border: 1px solid #eee;
+}
+
+.detail-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.detail-card h5 {
+  color: var(--color-destaque);
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  font-family: caecilia, sans-serif;
+}
+
+.detail-card p {
+  font-size: 0.9em;
+  line-height: 1.4;
+  color: var(--text-color);
+}
+
+.detail-card strong {
+  color: var(--color-principal);
+  font-size: 1.2em;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .donation-details-cards-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+  }
+}
+
+@media (max-width: 600px) {
+  .donation-details-cards-container {
+    grid-template-columns: 1fr; /* 1 column on mobile */
+  }
+}
+
+/* Chart Container Styles to ensure visibility */
+.charts-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 40px; /* Space below the chart */
+}
+
+.chart-block {
+  width: 100%;
+  max-width: 500px; /* Limit width so pie chart isn't massive */
+  min-height: 350px; /* Reserve vertical space to prevent collapse */
+  position: relative;
+  margin: 0 auto;
+}
+
+.chart-block h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-color-headings);
+  font-family: caecilia, sans-serif;
+}
+
+/* Ensure canvas takes available space */
+canvas {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+.top-border {
+  border-top: 5px solid;
+}
+
+.border-color-destaque {
+  border-color: var(--color-principal);
+}

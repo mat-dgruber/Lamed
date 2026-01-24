@@ -1,0 +1,95 @@
+<main class="siga-nos-page">
+  <!-- Hero Section -->
+  <section class="hero-section" id="siga-nos-hero">
+    <div class="container">
+      <h1>Siga-nos</h1>
+      <p>Conecte-se conosco em outras plataformas e faça parte da nossa comunidade.</p>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section class="content-section">
+    <div class="container">
+      <h2>Nossas Plataformas</h2>
+      <div class="siga-nos-grid">
+        <!-- Card Site Principal -->
+        <div class="siga-nos-card">
+          <div class="siga-nos-card-icon">
+            <img
+              src="assets/Imagens/lamed-logo.png"
+              alt="Logo Lamed"
+              onerror="this.style.display = 'none'"
+            />
+            <!-- Fallback icon if image fails or just as generic site icon -->
+            @if (false) {
+              <lucide-icon [img]="icons.Globe" size="48"></lucide-icon>
+            }
+          </div>
+          <h3>Nosso Site Principal</h3>
+          <p>
+            Explore nosso site principal para encontrar artigos, estudos bíblicos, e muito mais
+            sobre a palavra de Deus.
+          </p>
+          <a href="https://lamed148.com.br" class="btn-primary" target="_blank">Visitar Site</a>
+        </div>
+
+        <!-- Card YouTube -->
+        <div class="siga-nos-card">
+          <div class="siga-nos-card-icon">
+            <lucide-icon [img]="icons.Youtube" size="48"></lucide-icon>
+          </div>
+          <h3>YouTube</h3>
+          <p>
+            Assista a vídeos, sermões e estudos bíblicos em nosso canal do YouTube. Inscreva-se para
+            não perder nenhum conteúdo!
+          </p>
+          <a href="https://www.youtube.com/@lamed148" class="btn-primary" target="_blank"
+            >Acessar Canal</a
+          >
+        </div>
+
+        <!-- Card Instagram -->
+        <div class="siga-nos-card">
+          <div class="siga-nos-card-icon">
+            <lucide-icon [img]="icons.Instagram" size="48"></lucide-icon>
+          </div>
+          <h3>Instagram</h3>
+          <p>
+            Siga-nos no Instagram para mensagens diárias, bastidores e atualizações sobre nossos
+            projetos.
+          </p>
+          <a href="https://www.instagram.com/lamed148/" class="btn-primary" target="_blank"
+            >Seguir no Instagram</a
+          >
+        </div>
+
+        <!-- Card Apoie -->
+        <div class="siga-nos-card">
+          <div class="siga-nos-card-icon">
+            <lucide-icon [img]="icons.HeartHandshake" size="48"></lucide-icon>
+          </div>
+          <h3>Apoie Nosso Ministério</h3>
+          <p>
+            Sua contribuição nos ajuda a continuar espalhando a palavra de Deus. Saiba como você
+            pode apoiar.
+          </p>
+          <a routerLink="/apoie" class="btn-secondary">Quero Apoiar</a>
+        </div>
+      </div>
+
+      <!-- Seção de Contato por Email -->
+      <div class="contato-section">
+        <h2>Entre em Contato</h2>
+        <p>Tem alguma dúvida, sugestão ou pedido de oração? Envie-nos um e-mail!</p>
+        <a routerLink="/contato" class="btn-primary">
+          <lucide-icon
+            [img]="icons.Mail"
+            size="18"
+            style="margin-right: 8px; vertical-align: middle"
+          ></lucide-icon>
+          Enviar E-mail
+        </a>
+      </div>
+    </div>
+  </section>
+</main>

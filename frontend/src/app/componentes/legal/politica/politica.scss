@@ -1,0 +1,194 @@
+/* Global Page Layout */
+.legal-page {
+    background-color: var(--color-bg); /* Use project bg variable */
+    color: var(--color-texto);
+    padding-bottom: 4rem;
+}
+
+/* Hero Header */
+.hero-header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); /* Blue gradient similar to reference */
+    color: white;
+    padding: 3rem 1rem;
+    text-align: center;
+    border-radius: 0 0 2rem 2rem; /* Organic feel curve */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: -2rem; /* Overlap effect */
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.last-updated {
+    opacity: 0.9;
+    font-size: 0.9rem;
+}
+
+/* Container */
+.main-content-wrapper {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Cards */
+.content-card {
+    background: var(--color-card-bg, white); /* Default to white if var missing */
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.05); /* Subtle border */
+    transition: transform 0.2s ease;
+}
+
+.content-card:hover {
+    transform: translateY(-2px);
+}
+
+.card-icon {
+    background: #eff6ff;
+    color: #3b82f6;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+/* Typography */
+h2 {
+    font-size: 1.5rem;
+    color: var(--color-titulo, #111);
+    margin-bottom: 1rem;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--color-destaque);
+}
+
+.highlight-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+/* Info Grid (Icon + Text) */
+.info-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .info-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.info-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.info-item lucide-icon {
+    color: var(--color-destaque);
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.info-item h3 {
+    font-size: 1.1rem;
+    margin: 0 0 0.25rem 0;
+    font-weight: 600;
+}
+
+.info-item p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Tech Grid (Cookies) */
+.tech-grid {
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+@media (min-width: 768px) {
+    .tech-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.tech-card {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+}
+
+.tech-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    color: #334155;
+}
+
+.tech-card p {
+    font-size: 0.9rem;
+    margin: 0;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.note-box {
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    color: #92400e;
+}
+
+/* Grid 2 Column */
+.grid-2-col {
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .grid-2-col {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-header {
+        padding: 2rem 1rem 3rem 1rem;
+    }
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    .main-content-wrapper {
+        width: 95%;
+    }
+}

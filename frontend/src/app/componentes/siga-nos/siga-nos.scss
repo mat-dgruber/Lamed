@@ -1,0 +1,93 @@
+/* Grid para os cards de "Siga-nos" */
+.siga-nos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+/* Estilo individual para cada card */
+.siga-nos-card {
+  background-color: var(--color-card-bg, #ffffff);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 25px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.siga-nos-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Ícone dentro do card */
+.siga-nos-card-icon {
+  margin-bottom: 15px;
+  color: var(--main-color, #F8951B); /* Default backup color if variable missing */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.siga-nos-card-icon img {
+  max-height: 50px;
+  width: auto;
+}
+
+/* Título, parágrafo e botão dentro do card */
+.siga-nos-card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.6em;
+  color: var(--highlight-color, #940311);
+  font-family: caecilia, sans-serif;
+}
+
+.siga-nos-card p {
+  margin-bottom: 20px;
+  flex-grow: 1; /* Garante que o botão fique na parte inferior */
+  font-size: 1rem;
+  font-family: caecilia, sans-serif;
+}
+
+.siga-nos-card .btn-primary,
+.siga-nos-card .btn-secondary {
+  margin-top: auto; /* Empurra o botão para o final do card */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: caecilia, sans-serif;
+}
+
+/* Seção de contato */
+.contato-section {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.contato-section h2 {
+    color: var(--color-titulo);
+    font-family: caecilia, sans-serif;
+}
+
+/* Ajustes para o Hero Section específico da página */
+#siga-nos-hero {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  background-color: var(--color-fundo-hero, #fffaf2);
+  text-align: center;
+}
+
+#siga-nos-hero h1 {
+    color: var(--color-destaque);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-family: caecilia, sans-serif;
+}

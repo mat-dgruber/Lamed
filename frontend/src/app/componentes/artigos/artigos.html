@@ -1,0 +1,79 @@
+<main class="site-main">
+  <section class="content-section">
+    <div class="container">
+      <h1>Artigos Bíblicos</h1>
+      <p>
+        Explore nossos artigos para um estudo aprofundado da Bíblia, com reflexões sobre teologia e
+        vida cristã.
+      </p>
+
+      @if (latestArticle(); as latest) {
+        <section id="destaque">
+          <h2>Último artigo em destaque</h2>
+          <article>
+            <div class="last-article">
+              @if (latest.thumbnail_url) {
+                <div class="article-banner-image">
+                  <a [routerLink]="['/bundle', latest.id]">
+                    <img [src]="latest.thumbnail_url" [alt]="latest.title" loading="lazy" />
+                  </a>
+                </div>
+              }
+              <h3>
+                <a [routerLink]="['/bundle', latest.id]">{{ latest.title }}</a>
+              </h3>
+              <p>{{ latest.description }}</p>
+            </div>
+          </article>
+        </section>
+      }
+
+      <section id="search-section" class="search-section">
+        <div class="search-container">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Pesquisar artigos por título ou palavra-chave..."
+            [formControl]="searchControl"
+          />
+          <button id="search-button" aria-label="Pesquisar">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-search"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <section id="lista-artigos">
+        <h2>Mais artigos</h2>
+        <ul id="articles-list-ul">
+          @for (article of filteredArticles(); track article.id) {
+            <li>
+              <a [routerLink]="['/bundle', article.id]">
+                <strong>{{ article.title }}</strong>
+                <span class="article-list-item-meta"
+                  >Por: {{ article.author || 'Lamed' }} - Publicado em:
+                  {{ article.published_at | date: 'dd/MM/yyyy' }}</span
+                >
+              </a>
+            </li>
+          } @empty {
+            <li>Nenhum artigo encontrado.</li>
+          }
+        </ul>
+      </section>
+    </div>
+  </section>
+</main>
