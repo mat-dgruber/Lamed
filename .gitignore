@@ -47,3 +47,5 @@ Thumbs.db
 /backend/api/__pycache__
 /backend/certs
 /backend/config/__pycache__
+*.cache
+/.firebase
