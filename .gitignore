@@ -38,6 +38,12 @@ firebase-debug.log*
 firestore-debug.log*
 ui-debug.log*
 
+# Large Media Files (Ignored to save space)
+*.mp4
+*.pdf
+frontend/public/assets/Imagens-artigos/*.png
+backend/media/bundles/
+
 # IDE / OS
 .DS_Store
 Thumbs.db
