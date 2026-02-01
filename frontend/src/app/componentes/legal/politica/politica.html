@@ -2,7 +2,7 @@
   <header class="hero-header">
     <div class="hero-content">
       <h1>Política de Privacidade</h1>
-      <p class="last-updated">Última atualização: 11 de Julho de 2025</p>
+      <p class="last-updated">Última atualização: 28 de Janeiro de 2026</p>
     </div>
   </header>
 
@@ -14,16 +14,19 @@
       </div>
       <h2>Sua privacidade é nossa prioridade</h2>
       <p class="highlight-text">
-        É política do <strong>Lamed</strong> respeitar a sua privacidade em relação a qualquer
-        informação sua que possamos coletar no site Lamed e outros sites que possuímos e operamos.
+        No <strong>Lamed</strong>, acessível a partir de nosso website, uma de nossas principais
+        prioridades é a privacidade de nossos visitantes. Esta Política de Privacidade contém tipos
+        de informações que são coletadas e registradas pelo Lamed e como as utilizamos, em estrita
+        observância à Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018).
       </p>
       <div class="info-grid">
         <div class="info-item">
           <lucide-icon [img]="icons.Eye"></lucide-icon>
           <div>
-            <h3>Transparência</h3>
+            <h3>Coleta de Dados</h3>
             <p>
-              Coletamos dados por meios justos e legais, com o seu conhecimento e consentimento.
+              Coletamos apenas as informações necessárias para fornecer nossos serviços de forma
+              eficiente.
             </p>
           </div>
         </div>
@@ -31,10 +34,57 @@
           <lucide-icon [img]="icons.Lock"></lucide-icon>
           <div>
             <h3>Segurança</h3>
-            <p>Protegemos seus dados perdas e roubos, bem como acesso não autorizado.</p>
+            <p>
+              Adotamos medidas de segurança técnicas e administrativas para proteger seus dados
+              pessoais.
+            </p>
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- Data Collection -->
+    <section class="content-card">
+      <div class="section-header">
+        <lucide-icon [img]="icons.Database"></lucide-icon>
+        <h2>Informações que Coletamos</h2>
+      </div>
+      <p>Podemos coletar as seguintes informações:</p>
+      <ul class="check-list">
+        <li>
+          <strong>Informações Pessoais:</strong> Nome, endereço de e-mail, número de telefone,
+          quando você se registra ou entra em contato conosco.
+        </li>
+        <li>
+          <strong>Dados de Navegação:</strong> Endereço IP, tipo de navegador, provedor de serviços
+          de Internet (ISP), carimbo de data/hora, páginas de referência/saída.
+        </li>
+        <li>
+          <strong>Pagamentos:</strong> Detalhes de transação para processamento de pagamentos
+          (gerenciados por terceiros seguros, como Stripe). Não armazenamos detalhes completos do
+          cartão de crédito.
+        </li>
+      </ul>
+    </section>
+
+    <!-- Usage of Information -->
+    <section class="content-card">
+      <div class="section-header">
+        <lucide-icon [img]="icons.ExternalLink"></lucide-icon>
+        <h2>Como Usamos Suas Informações</h2>
+      </div>
+      <p>Utilizamos as informações que coletamos de várias formas, incluindo para:</p>
+      <ul class="check-list">
+        <li>Fornecer, operar e manter nosso site;</li>
+        <li>Melhorar, personalizar e expandir nosso site;</li>
+        <li>Entender e analisar como você usa nosso site;</li>
+        <li>Desenvolver novos produtos, serviços, recursos e funcionalidades;</li>
+        <li>Processar suas transações e gerenciar sua assinatura;</li>
+        <li>
+          Enviar e-mails, incluindo para atendimento ao cliente, atualizações e fins de marketing
+          (com seu consentimento).
+        </li>
+      </ul>
     </section>
 
     <!-- Cookies Section -->
@@ -43,45 +93,67 @@
         <lucide-icon [img]="icons.Cookie"></lucide-icon>
         <h2>Cookies e Rastreamento</h2>
       </div>
-      <p>Utilizamos tecnologias para melhorar sua experiência. Veja como:</p>
+      <p>Utilizamos cookies e tecnologias similares para melhorar sua experiência:</p>
 
       <div class="tech-grid">
         <div class="tech-card">
           <div class="tech-header">
-            <strong>Google Analytics</strong>
+            <strong>Essenciais</strong>
+            <lucide-icon [img]="icons.Lock" size="16"></lucide-icon>
           </div>
-          <p>
-            Usamos para entender como você interage com o site. Coleta dados anônimos para melhorar
-            nosso conteúdo.
-          </p>
+          <p>Necessários para o funcionamento do site, como manter você logado e seguro.</p>
         </div>
 
         <div class="tech-card">
           <div class="tech-header">
-            <strong>Vídeos YouTube</strong>
+            <strong>Analíticos</strong>
+            <lucide-icon [img]="icons.Eye" size="16"></lucide-icon>
           </div>
-          <p>
-            Vídeos incorporados podem instalar cookies do YouTube para preferências e recomendações.
-          </p>
+          <p>Nos ajudam a entender como os visitantes interagem com o site (Google Analytics).</p>
         </div>
 
         <div class="tech-card">
           <div class="tech-header">
-            <strong>LocalStorage</strong>
+            <strong>Funcionais</strong>
             <lucide-icon [img]="icons.Database" size="16"></lucide-icon>
           </div>
-          <p>
-            Usado para guardar temporariamente dados locais (como vídeos recentes) para o site
-            carregar mais rápido.
-          </p>
+          <p>Lembram suas preferências e escolhas para uma experiência personalizada.</p>
         </div>
       </div>
+    </section>
 
-      <div class="note-box">
-        <p>
-          Você é livre para recusar a nossa solicitação de informações pessoais e configurar seu
-          navegador para recusar cookies.
-        </p>
+    <!-- LGPD Rights -->
+    <section class="content-card">
+      <div class="section-header">
+        <lucide-icon [img]="icons.Shield"></lucide-icon>
+        <h2>Seus Direitos (LGPD)</h2>
+      </div>
+      <p>Sob a Lei Geral de Proteção de Dados (LGPD), você tem direitos, incluindo:</p>
+      <div class="grid-2-col" style="margin-top: 1rem">
+        <div class="info-item">
+          <div style="font-weight: 600">Direito de Acesso</div>
+          <p>Você tem o direito de solicitar cópias de seus dados pessoais.</p>
+        </div>
+        <div class="info-item">
+          <div style="font-weight: 600">Direito de Retificação</div>
+          <p>
+            Você tem o direito de solicitar que corrijamos qualquer informação que acredite estar
+            imprecisa.
+          </p>
+        </div>
+        <div class="info-item">
+          <div style="font-weight: 600">Direito de Exclusão</div>
+          <p>
+            Você tem o direito de solicitar que apaguemos seus dados pessoais, sob certas condições.
+          </p>
+        </div>
+        <div class="info-item">
+          <div style="font-weight: 600">Direito de Portabilidade</div>
+          <p>
+            Você tem o direito de solicitar a transferência dos dados que coletamos para outra
+            organização.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -102,11 +174,14 @@
       <section class="content-card">
         <div class="section-header">
           <lucide-icon [img]="icons.Mail"></lucide-icon>
-          <h2>Contato</h2>
+          <h2>Contato e DPO</h2>
         </div>
         <p>
-          Se tiver dúvidas sobre como lidamos com seus dados, entre em contato conosco. O uso
-          continuado de nosso site será considerado como aceitação de nossas práticas.
+          Se tiver dúvidas sobre nossa Política de Privacidade ou desejar exercer seus direitos,
+          entre em contato conosco.
+        </p>
+        <p style="margin-top: 1rem; font-weight: 600; color: var(--color-destaque)">
+          suporte&#64;lamed.com.br
         </p>
       </section>
     </div>

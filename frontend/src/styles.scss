@@ -6,7 +6,6 @@
 @import 'swiper/css/navigation';
 @import 'swiper/css/pagination';
 
-
 /* Garante que todos os links do Angular pareçam clicáveis */
 a[routerLink] {
   cursor: pointer;
@@ -24,29 +23,28 @@ body {
     passa para a próxima, e assim por diante, até encontrar uma que funcione.
     Isso garante que o site tenha uma aparência consistente e legível em qualquer dispositivo.
   */
-  font-family: 
-    caecilia, sans-serif, /* 1. A FONTE PRINCIPAL (WEB FONT): Tenta primeiro carregar a fonte 'Caecilia' que configuramos no Adobe Fonts. O nome deve ser exato. */
-    
-    /* 2. A PILHA DE FONTES DE SISTEMA (SYSTEM FONT STACK): Se a Caecilia falhar por algum motivo, em vez de usar uma fonte genérica, pedimos ao navegador para usar a fonte padrão do sistema operacional do usuário. Isso é moderno, super rápido (não precisa de download) e faz o site parecer "nativo" do dispositivo. */
-    -apple-system,      /* Para Safari no macOS e iOS (ex: fonte San Francisco) */
-    BlinkMacSystemFont, /* Para Chrome no macOS */
-    "Segoe UI",        /* Para Windows */
-    Roboto,             /* Para Android e Chrome OS */
-    Helvetica,          /* Fallback clássico para macOS/iOS mais antigos */
-    Arial,              /* Fallback universal, presente em quase todos os sistemas */
-    
-    /* 3. A OPÇÃO GENÉRICA FINAL */
-    sans-serif,         /* Se NENHUMA das anteriores funcionar, o navegador usará qualquer fonte sem serifa que tiver disponível. É a garantia final. */
-
+  font-family:
+    caecilia,
+    sans-serif,
+    /* 1. A FONTE PRINCIPAL (WEB FONT): Tenta primeiro carregar a fonte 'Caecilia' que configuramos no Adobe Fonts. O nome deve ser exato. */
+    /* 2. A PILHA DE FONTES DE SISTEMA (SYSTEM FONT STACK): Se a Caecilia falhar por algum motivo, em vez de usar uma fonte genérica, pedimos ao navegador para usar a fonte padrão do sistema operacional do usuário. Isso é moderno, super rápido (não precisa de download) e faz o site parecer "nativo" do dispositivo. */ -apple-system,
+    /* Para Safari no macOS e iOS (ex: fonte San Francisco) */ BlinkMacSystemFont,
+    /* Para Chrome no macOS */ 'Segoe UI',
+    /* Para Windows */ Roboto,
+    /* Para Android e Chrome OS */ Helvetica,
+    /* Fallback clássico para macOS/iOS mais antigos */ Arial,
+    /* Fallback universal, presente em quase todos os sistemas */ /* 3. A OPÇÃO GENÉRICA FINAL */
+    sans-serif,
+    /* Se NENHUMA das anteriores funcionar, o navegador usará qualquer fonte sem serifa que tiver disponível. É a garantia final. */
     /* 4. FONTES PARA EMOJIS: Estas garantem que os emojis sejam exibidos corretamente em diferentes sistemas. */
-    "Apple Color Emoji", 
-    "Segoe UI Emoji", 
-    "Segoe UI Symbol";
-  
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol';
+
   /* ... (outras propriedades do body) ... */
   margin: 0;
   background-color: #fffaf2;
-  color: #4A4A4A;
+  color: #4a4a4a;
   line-height: 1.6;
   font-size: 16px;
   min-height: 100%;
@@ -72,19 +70,21 @@ main {
 }
 
 :root {
-  --color-principal: #F8941B;
+  --color-principal: #f8941b;
   --color-destaque: #940312;
-  --color-paleta-1: #A12E05;
-  --color-paleta-2: #AB1805;
-  --color-paleta-5: #FA761F;
+  --color-paleta-1: #a12e05;
+  --color-paleta-2: #ab1805;
+  --color-paleta-5: #fa761f;
 
   --main-color: var(--color-principal);
-  --main-color-hover: #F8941B; /* Darker shade of F8941B */
+  --main-color-hover: #f8941b; /* Darker shade of F8941B */
   --highlight-color: var(--color-destaque);
 
-  --text-color: #4A4A4A; /* Adjusted for better readability */
+  --text-color: #4a4a4a; /* Adjusted for better readability */
   --text-color-headings: #333333; /* Slightly darker for headings */
-  --link-color-footer: var(--color-paleta-5); /* Using a lighter orange for footer links on dark background */
+  --link-color-footer: var(
+    --color-paleta-5
+  ); /* Using a lighter orange for footer links on dark background */
   --link-color-footer-hover: #ffffff;
   --footer-bg-color: #2c1e10; /* Dark brown derived from palette */
 
@@ -93,7 +93,7 @@ main {
   --dark-surface: #41301f; /* A slightly lighter brown for surfaces */
   --dark-text: #e8d9c7; /* A warm, off-white for text */
   --dark-text-headings: #fffaf2; /* The original light background color for headings */
-  --dark-main-color: #F8941B; /* Orange can stay vibrant */
+  --dark-main-color: #f8941b; /* Orange can stay vibrant */
   --dark-highlight-color: #fa8a94; /* A slightly softer red for dark mode */
 }
 
@@ -124,7 +124,12 @@ body.dark-mode .main-nav a.active {
   border-bottom-color: var(--dark-main-color);
 }
 
-body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 {
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
   color: var(--dark-text-headings);
 }
 
@@ -137,7 +142,8 @@ body.dark-mode .content-section.background-light {
   background-color: #5a452e; /* A contrasting darker brown */
 }
 
-body.dark-mode .btn-primary, body.dark-mode .btn-primary-apoio {
+body.dark-mode .btn-primary,
+body.dark-mode .btn-primary-apoio {
   background-color: var(--dark-main-color);
   color: #2c1e10; /* Using the dark background color for text for better contrast */
   font-weight: bold;
@@ -176,7 +182,9 @@ body.dark-mode .site-footer {
   width: 20px;
   height: 20px;
   color: var(--text-color);
-  transition: opacity 0.3s, transform 0.3s;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
 }
 
 .theme-toggle-button .moon-icon {
@@ -211,7 +219,6 @@ body.dark-mode .theme-toggle-button .moon-icon {
   transform: translateX(0);
 }
 
-
 a {
   color: var(--main-color);
   text-decoration: none;
@@ -222,8 +229,9 @@ a:hover {
   text-decoration: underline;
 }
 
-h1, h2, h3{
-  
+h1,
+h2,
+h3 {
   font-family: caecilia, sans-serif;
   font-weight: 800;
   font-style: normal; /* Using Caecilia for headings */
@@ -232,7 +240,9 @@ h1, h2, h3{
   margin-bottom: 0.5em;
 }
 
-   h4, h5, h6 {
+h4,
+h5,
+h6 {
   font-family: caecilia, sans-serif;
   font-weight: 700;
   font-style: normal; /* Using Caecilia for headings */
@@ -241,9 +251,15 @@ h1, h2, h3{
   margin-bottom: 0.5em;
 }
 
-h1 { font-size: 3em; }
-h2 { font-size: 2em; }
-h3 { font-size: 1.85em; }
+h1 {
+  font-size: 3em;
+}
+h2 {
+  font-size: 2em;
+}
+h3 {
+  font-size: 1.85em;
+}
 
 img {
   max-width: 100%;
@@ -252,7 +268,9 @@ img {
 
 /* Header */
 .site-header {
-  transition: opacity 0.5s, visibility 0.5s;
+  transition:
+    opacity 0.5s,
+    visibility 0.5s;
   background-color: #ffffff; /* White background for header */
   padding-top: 15px;
   padding-bottom: 15px;
@@ -264,8 +282,6 @@ img {
   border-bottom-right-radius: 25px;
   z-index: 1000; /* Ensure it stays above other content */
   transition: top 0.4s;
-
- 
 }
 
 .site-header .container {
@@ -275,20 +291,20 @@ img {
   /* Make header elements spread to the ends */
   justify-content: space-between;
   /* Optional: If you want the content to truly hit the edges of the viewport for the header only */
-     max-width: none;
-     padding-left: 20px;
-     padding-right: 20px; 
+  max-width: none;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .footer-logo-area img {
-  max-width:80px;
-  display:block;
-  margin:0 auto;
+  max-width: 80px;
+  display: block;
+  margin: 0 auto;
 }
 .footer-logo-area p {
-text-align:center;
-margin-top:8px; 
-font-size:1rem;
-margin-bottom: -5px;
+  text-align: center;
+  margin-top: 8px;
+  font-size: 1rem;
+  margin-bottom: -5px;
 }
 
 .logo-area {
@@ -320,7 +336,6 @@ margin-bottom: -5px;
 
 /* Removendo as regras de .header-social-icons a e svg que não terão efeito se o container pai está none */
 
-
 .main-nav ul {
   list-style: none;
   padding: 0;
@@ -338,12 +353,15 @@ margin-bottom: -5px;
   font-weight: 500;
   padding: 5px 0;
   border-bottom: 2px solid transparent;
-  transition: color 0.3s ease, border-bottom-color 0.3s ease;
+  transition:
+    color 0.3s ease,
+    border-bottom-color 0.3s ease;
 }
 
 .main-nav a:hover,
 .main-nav a:focus,
-.main-nav a.active { /* Add .active class with JS for current page */
+.main-nav a.active {
+  /* Add .active class with JS for current page */
   color: var(--main-color);
   border-bottom-color: var(--main-color);
 }
@@ -383,7 +401,8 @@ margin-bottom: -5px;
   z-index: 1;
 }
 
-.hero-section .container { /* Ensure content is above the overlay */
+.hero-section .container {
+  /* Ensure content is above the overlay */
   position: relative;
   z-index: 2;
 }
@@ -396,13 +415,11 @@ margin-bottom: -5px;
   .hero-section h1 {
     font-size: 2em; /* Adjust font size for smaller screens */
     margin-top: 120px; /* Push title down for better visual balance */
-  
   }
 
   .hero-section p {
     font-size: 1em; /* Adjust font size for smaller screens */
   }
-  
 }
 
 @media screen and (min-width: 601px) and (max-width: 1024px) {
@@ -414,13 +431,11 @@ margin-bottom: -5px;
   .hero-section h1 {
     font-size: 2.5em; /* Adjust font size for medium screens */
     margin-top: 60px; /* Push title down for better visual balance */
-  
   }
 
   .hero-section p {
     font-size: 1.1em; /* Adjust font size for medium screens */
   }
-  
 }
 
 @media (max-width: 768px) {
@@ -443,18 +458,13 @@ margin-bottom: -5px;
   .hero-section {
     padding: 80px 0; /* Increased padding for better visual with background */
   }
-  
 }
-
-
 
 .hero-section h1 {
   color: #ffffff;
   font-size: 3em;
   margin-bottom: 0.5em;
   text-shadow: 0 5px 10px rgba(0, 0, 0, 0.212);
-  
-  
 }
 
 .hero-section p {
@@ -464,8 +474,9 @@ margin-bottom: -5px;
   color: #ffffff;
 }
 
-#hero-text-1, #hero-text-2 {
-    transition: opacity 0.8s ease-in-out;
+#hero-text-1,
+#hero-text-2 {
+  transition: opacity 0.8s ease-in-out;
 }
 
 /* Content Sections */
@@ -478,17 +489,15 @@ margin-bottom: -5px;
 }
 
 .content-section.background-light {
-    background-color: #ffb618b6; /* Very light orange, derived from main color */
+  background-color: #ffb618b6; /* Very light orange, derived from main color */
   border-radius: 25px;
-  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.129) ; /* Slightly stronger shadow for contrast */
-  
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.129); /* Slightly stronger shadow for contrast */
 }
 
 .content-section-background-light-text {
   margin-left: 120px;
   margin-right: 120px;
 }
-
 
 .content-section h2 {
   text-align: center;
@@ -498,9 +507,9 @@ margin-bottom: -5px;
   color: var(--highlight-color); /* Using highlight color for section titles */
 }
 
-
 /* Video List / Grid */
-.video-list, .video-grid {
+.video-list,
+.video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
   gap: 20px;
@@ -521,7 +530,8 @@ margin-bottom: -5px;
   border: none; /* Remove iframe border */
 }
 
-.video-item p { /* For optional titles below videos */
+.video-item p {
+  /* For optional titles below videos */
   padding: 10px;
   margin: 0;
   font-weight: bold;
@@ -530,7 +540,9 @@ margin-bottom: -5px;
 }
 
 /* Buttons */
-.btn-primary, .btn-secondary, .btn-primary-apoio{
+.btn-primary,
+.btn-secondary,
+.btn-primary-apoio {
   display: inline-block;
   padding: 12px 25px;
   border-radius: 25px;
@@ -538,7 +550,11 @@ margin-bottom: -5px;
   font-weight: bold;
   font-size: 1.1em;
   text-align: center;
-  transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
   border: none;
   cursor: pointer;
   font-family: caecilia, sans-serif;
@@ -552,36 +568,45 @@ margin-bottom: -5px;
   font-weight: bold;
   font-size: 1.1em;
   text-align: center;
-  transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
   border: none;
   cursor: pointer;
 }
-.btn-primary, .btn-primary-apoio{
+.btn-primary,
+.btn-primary-apoio {
   background-color: var(--main-color);
   color: #ffffff;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.278);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary-apoio:hover, .btn-primary-apoio:focus {
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary-apoio:hover,
+.btn-primary-apoio:focus {
   background-color: var(--main-color-hover);
   color: #ffffff;
   text-decoration: none;
-  transform: translateY(-4px) scale(1.08);
-  box-shadow: 0 10px 20px rgba(242, 153, 29, 0.543);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 12px rgba(242, 153, 29, 0.4);
 }
 
 .btn-secondary {
   background-color: var(--highlight-color);
   color: #ffffff;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.278);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.btn-secondary:hover, .btn-secondary:focus {
+.btn-secondary:hover,
+.btn-secondary:focus {
   background-color: var(--color-paleta-1); /* Darker red from palette */
   color: #ffffff;
   text-decoration: none;
-  transform: translateY(-4px) scale(1.08);
-  box-shadow: 0 5px 20px rgba(186, 7, 7, 0.621);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 12px rgba(186, 7, 7, 0.4);
 }
 
 /* Articles Page - Grid Layout */
@@ -595,9 +620,11 @@ margin-bottom: -5px;
 .article-card {
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   display: flex; /* helps footer stick to bottom if content is short */
   flex-direction: column;
 }
@@ -605,7 +632,7 @@ margin-bottom: -5px;
 .article-card:hover,
 .article-card:focus-within {
   transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .article-card-link {
@@ -663,7 +690,7 @@ margin-bottom: -5px;
 
 .inline-image img {
   border-radius: 800px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin: 10px 0; /* Space around inline images */
 }
 
@@ -687,10 +714,10 @@ margin-bottom: -5px;
     scale: 1.4; /* Scale down the image on smaller screens */
     transform: translateY(0px); /* Adjust vertical position for smaller screens */
   }
-  
 }
 
-.article-page h1 { /* Article Title */
+.article-page h1 {
+  /* Article Title */
   font-size: 2.8em;
   margin-bottom: 0.2em;
   color: var(--text-color-headings);
@@ -706,8 +733,6 @@ margin-bottom: -5px;
   font-size: 1.1em; /* Slightly larger font for readability */
   line-height: 1.7;
 }
-
-
 
 .article-content h3 {
   font-size: 1.5em;
@@ -728,7 +753,6 @@ margin-bottom: -5px;
   .article-page h1 {
     font-size: 1.8em; /* Smaller title on mobile */
   }
-  
 }
 
 @media screen and (max-width: 768px) {
@@ -744,7 +768,8 @@ margin-bottom: -5px;
   margin-bottom: 1.5em;
 }
 
-.article-content ul, .article-content ol {
+.article-content ul,
+.article-content ol {
   margin-bottom: 1.5em;
   padding-left: 25px;
 }
@@ -767,18 +792,43 @@ margin-bottom: -5px;
 
 .article-content blockquote {
   border-left: 8px solid var(--main-color);
-  margin: 40px 0 40px 0px; /* No left margin for blockquote itself */
-  padding: 10px 20px;
-  background-color: #ffecd4; /* Light orange, consistent with .background-light */
+  margin: 40px 0;
+  padding: 1.5rem 2rem;
+  background-color: #ffecd4; /* Light orange */
   font-style: italic;
-  color: var(--text-color); /* Ensure text color is readable */
-  /*border-radius: 17.5px;*/
-  border-top-right-radius: 17.5px;
-  border-bottom-right-radius: 17.5px;
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  position: relative; /* For pseudo-element if needed */
+  color: var(--text-color);
+  text-align: left; /* Enforce left align */
+  border-radius: 0 16px 16px 0; /* Modern touch */
+}
+
+/* Enforce left alignment for all paragraphs in article content to override global center */
+.article-content p {
+  text-align: left !important;
+  margin-bottom: 1.5em;
+  line-height: 1.8;
+  color: #333;
+}
+
+/* Fix Image Styling within Articles */
+.article-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2.5rem auto; /* Center image with vertical space */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* List styling */
+.article-content ul, 
+.article-content ol {
+    text-align: left;
+    margin-bottom: 1.5em;
+    padding-left: 2rem;
+}
+
+.article-content li {
+    margin-bottom: 0.5em;
 }
 
 .article-content blockquote p {
@@ -801,7 +851,7 @@ margin-bottom: -5px;
   max-width: 100%;
   height: auto;
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .article-content figure figcaption {
@@ -847,7 +897,7 @@ margin-bottom: -5px;
   margin: 0 auto; /* Centering the video container */
   border-radius: 25px;
   overflow: hidden; /* To clip iframe corners if needed */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .featured-donation-video iframe {
@@ -878,19 +928,19 @@ margin-bottom: -5px;
   margin: 10px auto 50px auto;
   border-radius: 17.5px;
   max-width: 450px;
-  
+
   /* PONTO-CHAVE: Esconde as bordas retas do vídeo que "vazam" */
   overflow: hidden;
 
   /* Efeito visual adicional para o container */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Garante que o vídeo preencha 100% do seu "envelope" */
 .valeu-video video {
   display: block; /* Remove espaços extras */
   width: 100%;
-  height: auto;   /* Mantém a proporção */
+  height: auto; /* Mantém a proporção */
 }
 
 /* Regra para telas mobile */
@@ -900,9 +950,6 @@ margin-bottom: -5px;
     margin-bottom: 30px;
   }
 }
-
-
-
 
 .donation-methods {
   display: grid;
@@ -915,7 +962,7 @@ margin-bottom: -5px;
   background-color: #fff;
   padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   text-align: center;
   border: 1px solid #e0e0e0;
 }
@@ -942,9 +989,8 @@ margin-bottom: -5px;
 }
 
 #donation-transparency strong {
-    color: var(--text-color-headings);
+  color: var(--text-color-headings);
 }
-
 
 /* Articles Page Specifics */
 /* CSS para o Card de Artigo Clicável */
@@ -955,9 +1001,12 @@ margin-bottom: -5px;
   padding: 20px;
   background-color: #faf7f2; /* Light cream background */
   border-radius: 25px;
-  box-shadow: 0 8px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
-  transition: transform 0.4s, box-shadow 0.4s, background-color 0.4s; 
+  transition:
+    transform 0.4s,
+    box-shadow 0.4s,
+    background-color 0.4s;
   position: relative;
 }
 
@@ -974,25 +1023,24 @@ margin-bottom: -5px;
 
 /* 3. Garante que a imagem não fique "embaixo" do link (opcional, mas bom para consistência) */
 .last-article .article-banner-image {
-    position: relative;
-    z-index: 0;
+  position: relative;
+  z-index: 0;
 }
 .last-article:hover {
-  box-shadow: 0 12px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 12px 15px rgba(0, 0, 0, 0.15);
   background-color: #fff7c9;
   transform: translateY(-8px);
 }
 
-.article-banner-image  {
+.article-banner-image {
   width: 1500px;
   max-height: 500px; /* Max height for banner */
   overflow: hidden;
   max-width: 100%;
   height: auto;
   border-radius: 50px;
-  box-shadow: 0 10px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
   transform: translateY(-10px); /* Slightly raised effect */
-
 }
 
 #lista-artigos ul {
@@ -1006,13 +1054,16 @@ margin-bottom: -5px;
   border-radius: 17.5px;
   border: 1px solid #e0e0e0;
   transition: box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.4s, box-shadow 0.4s, background-color 0.4s; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.4s,
+    box-shadow 0.4s,
+    background-color 0.4s;
 }
 #lista-artigos li:hover {
   clip-path: inset(0 round 17.5px); /* Makes the shadow follow the border radius */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transform: translateY(-8px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
 }
 
 #lista-artigos a {
@@ -1022,7 +1073,7 @@ margin-bottom: -5px;
   padding: 15px;
 }
 #lista-artigos a:hover {
-  background-color:#fff7c9; /* Subtle hover for the whole item */
+  background-color: #fff7c9; /* Subtle hover for the whole item */
 }
 #lista-artigos strong {
   display: block;
@@ -1037,22 +1088,22 @@ margin-bottom: -5px;
 
 /* Donation Page Specifics */
 #doacao h3 {
-    margin-top: 30px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
 }
 #doacao ul {
-    list-style: disc;
-    margin-left: 20px;
+  list-style: disc;
+  margin-left: 20px;
 }
 #doacao li {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 #doacao a {
-    color: var(--color-destaque);
-    text-decoration: none;
+  color: var(--color-destaque);
+  text-decoration: none;
 }
 
 /* Footer */
@@ -1066,18 +1117,19 @@ margin-bottom: -5px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   box-shadow: 0 -15px 50px rgba(0, 0, 0, 0.199);
-
 }
 
 .site-footer .container {
-    flex: auto;/* If using multiple columns in footer, can use flex here */
+  flex: auto; /* If using multiple columns in footer, can use flex here */
 }
 
 .social-links {
   margin-bottom: 15px;
 }
 
-.social-links a, .social-links img { /* Added img for potential icon styling */
+.social-links a,
+.social-links img {
+  /* Added img for potential icon styling */
   color: var(--link-color-footer);
   margin: 0 10px;
   font-size: 1.1em; /* Slightly larger for better clickability */
@@ -1089,7 +1141,8 @@ margin-bottom: -5px;
   text-decoration: underline;
 }
 
-.site-footer a { /* General links in footer if any others are added */
+.site-footer a {
+  /* General links in footer if any others are added */
   color: var(--link-color-footer);
 }
 
@@ -1166,7 +1219,6 @@ margin-bottom: -5px;
 
 .footer-logo-img:hover {
   transform: scale(1.25); /* Slight zoom effect on hover */
-  
 }
 
 .footer-logo-tagline p {
@@ -1217,16 +1269,19 @@ margin-bottom: -5px;
 .footer-doe-btn-grid .text-hover {
   max-width: 0;
   opacity: 0;
-  transition: max-width 0.5s ease-in-out 0.1s, opacity 0.2s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out 0.1s,
+    opacity 0.2s ease-in-out;
 }
 
 /* Texto padrão (visível por padrão) */
 .footer-doe-btn-grid .text-default {
   max-width: 100px; /* Espaço para "Doe" */
   opacity: 1;
-  transition: max-width 0.5s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out,
+    opacity 0.3s ease-in-out;
 }
-
 
 /* --- ESTADO DE HOVER --- */
 
@@ -1281,20 +1336,23 @@ margin-bottom: -5px;
 .button-text-container .text-hover {
   max-width: 0;
   opacity: 0;
-  transition: max-width 0.5s ease-in-out, opacity 0.2s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out,
+    opacity 0.2s ease-in-out;
 }
 
 /* Texto padrão visível */
 .button-text-container .text-default {
   max-width: 100px; /* Espaço suficiente para "e-mail" */
   opacity: 1;
-  transition: max-width 0.5s ease-in-out, opacity 0.4s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out,
+    opacity 0.4s ease-in-out;
 }
 
 .text-default {
   color: #ffffff; /* Cor do texto padrão */
 }
-
 
 /* --- ESTADO DE HOVER --- */
 
@@ -1325,7 +1383,8 @@ margin-bottom: -5px;
   opacity: 0;
 }
 
-.social-links-footer, .social-links-footer-email {
+.social-links-footer,
+.social-links-footer-email {
   display: flex;
   flex-direction: column; /* Stack social links vertically */
   align-items: center; /* Center social links */
@@ -1397,13 +1456,17 @@ margin-bottom: -5px;
 .social-btn-footer .text-hover {
   max-width: 0;
   opacity: 0;
-  transition: max-width 0.5s ease-in-out, opacity 0.2s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out,
+    opacity 0.2s ease-in-out;
 }
 
 .social-btn-footer .text-default {
   max-width: 100px;
   opacity: 1;
-  transition: max-width 0.5s ease-in-out, opacity 0.3s ease-in-out 0.1s;
+  transition:
+    max-width 0.5s ease-in-out,
+    opacity 0.3s ease-in-out 0.1s;
 }
 
 .social-btn-footer:hover .text-hover {
@@ -1433,7 +1496,6 @@ margin-bottom: -5px;
   border-color: transparent;
 }
 
-
 /* 2. Regras para Telas Pequenas (Mobile) */
 @media (max-width: 768px) {
   /* Esconde o container de texto inteiro no mobile */
@@ -1446,7 +1508,7 @@ margin-bottom: -5px;
     padding: 8px 10px;
     justify-content: center;
   }
-  
+
   /* Remove a margem do ícone, já que não há mais texto */
   .social-btn-footer svg {
     margin-right: 0;
@@ -1466,12 +1528,10 @@ margin-bottom: -5px;
 .footer-buttons, /* If this was only for the old doe button */
 .footer-row-contact-social,
 .footer-contact, /* If this was only for the old contact layout */
-.social-links /* If this was the old general social links container */
-{
+.social-links /* If this was the old general social links container */ {
   display: none !important; /* Effectively remove them for now */
 }
 /* Keep .btn-footer and .btn-doe-footer if they are used elsewhere, or integrate into .footer-doe-btn-grid */
-
 
 #back-to-top {
   position: fixed;
@@ -1487,15 +1547,19 @@ margin-bottom: -5px;
   text-align: center;
   line-height: 1; /* Adjust line-height for SVG centering */
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   display: none; /* Initially hidden, JS will show it */
   z-index: 1001;
-  transition: background-color 0.3s ease, opacity 0.5s ease, visibility 0.5s ease, bottom 0.3s ease, transform 0.5s ease;
+  transition:
+    background-color 0.3s ease,
+    opacity 0.5s ease,
+    visibility 0.5s ease,
+    bottom 0.3s ease,
+    transform 0.5s ease;
   padding: 0; /* Remove padding if icon is precisely sized */
   display: flex; /* For centering SVG inside */
   align-items: center;
   justify-content: center;
-  
 }
 
 /* Ícone dentro do botão */
@@ -1508,7 +1572,9 @@ margin-bottom: -5px;
 
 /* Animação do ícone ao passar o mouse no botão */
 #back-to-top:hover svg {
-  animation: back-to-top-bounce 1.3s cubic-bezier(0.4,0,0.6,1) infinite, ease-in-out;
+  animation:
+    back-to-top-bounce 1.3s cubic-bezier(0.4, 0, 0.6, 1) infinite,
+    ease-in-out;
 }
 
 @keyframes back-to-top-bounce {
@@ -1536,9 +1602,9 @@ margin-bottom: -5px;
 
 /* Ensure the button is not displayed by JS until scroll, then opacity transition works */
 #back-to-top {
-    display: none; /* Start hidden, JS controls display:block/none */
-    opacity: 0; /* Start transparent for fade-in */
-    visibility: hidden; /* Start not visible for transition */
+  display: none; /* Start hidden, JS controls display:block/none */
+  opacity: 0; /* Start transparent for fade-in */
+  visibility: hidden; /* Start not visible for transition */
 }
 
 /* About Page Specifics (from previous round, ensure they are present) */
@@ -1558,14 +1624,16 @@ margin-bottom: -5px;
   background-color: #ffffff;
   padding: 25px;
   border-radius: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   text-align: center;
-  transition: transform 0.5s, box-shadow 0.5s; 
-  
+  transition:
+    transform 0.5s,
+    box-shadow 0.5s;
+
   /* Adições importantes */
   position: relative; /* Para posicionar o pseudo-elemento dentro do card */
-  z-index: 1;         /* Garante que o conteúdo do card fique acima do fundo animado */
-  overflow: hidden;   /* Esconde o pseudo-elemento antes da animação */
+  z-index: 1; /* Garante que o conteúdo do card fique acima do fundo animado */
+  overflow: hidden; /* Esconde o pseudo-elemento antes da animação */
 }
 
 /* Cria a camada de cor que ficará escondida */
@@ -1581,11 +1649,11 @@ margin-bottom: -5px;
   /* PONTO-CHAVE: Coloca a camada de cor atrás do conteúdo do card
   
   /* Defina a cor que você quer que apareça no hover */
-  background-color: var(--main-color-hover); 
-  
+  background-color: var(--main-color-hover);
+
   /* Esconde o conteúdo e o posiciona fora da pilha de renderização normal */
   z-index: -1;
-  
+
   /* Começa "espremido" (invisível) e prepara a transição */
   transform: scaleX(0);
   transform-origin: top; /* A animação virá da esquerda */
@@ -1594,7 +1662,7 @@ margin-bottom: -5px;
 
 /* Animação no hover */
 .focus-item:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   transform: translateY(-10px);
 }
 
@@ -1602,14 +1670,16 @@ margin-bottom: -5px;
   /* Faz a camada de cor se expandir para preencher todo o card */
   transform: scaleX(1);
 }
-.focus-item:hover h3 { /* Adicionado para o título */
+.focus-item:hover h3 {
+  /* Adicionado para o título */
   color: var(--color-destaque); /* White text on hover */
   transition: color 0.4s ease-in-out;
 }
 
-.focus-item:hover p { /* Adicionado para o parágrafo, se houver */
+.focus-item:hover p {
+  /* Adicionado para o parágrafo, se houver */
   /* Garante que o texto mude de cor para ser legível sobre o novo fundo */
-  color: white; /* White text on hover */; 
+  color: white; /* White text on hover */
   transition: color 0.4s ease-in-out;
 }
 .focus-item h3 {
@@ -1619,7 +1689,8 @@ margin-bottom: -5px;
 
 /* REMOVED: .team-carousel-wrapper styles */
 
-.team-grid { /* Adjusted for simple grid layout */
+.team-grid {
+  /* Adjusted for simple grid layout */
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 columns by default */
   gap: 30px; /* Gap between team members */
@@ -1645,13 +1716,18 @@ margin-bottom: -5px;
     scroll-behavior: smooth;
     gap: 15px;
     /* Padding to ensure cards don't touch the edges */
-    padding: 0 15px; 
+    padding: 0 15px;
     align-items: stretch;
   }
 
   /* Hide scrollbar across browsers */
-  .team-grid::-webkit-scrollbar { display: none; }
-  .team-grid { -ms-overflow-style: none; scrollbar-width: none; }
+  .team-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .team-grid {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 
   .team-member-card-container {
     flex: 0 0 85%;
@@ -1705,7 +1781,7 @@ margin-bottom: -5px;
 }
 
 .expandable-content {
-  max-height:205px; /* Adjust this value to show roughly 3 paragraphs + part of 1st image */
+  max-height: 205px; /* Adjust this value to show roughly 3 paragraphs + part of 1st image */
   overflow: hidden;
   position: relative; /* For the fade pseudo-element */
   transition: max-height 0.7s ease-in-out;
@@ -1738,7 +1814,6 @@ margin-bottom: -5px;
   /* Using .btn-secondary styles by default, can customize if needed */
 }
 
-
 /* Team Carousel Controls - Hidden globally */
 .team-carousel-controls {
   display: none;
@@ -1759,24 +1834,25 @@ margin-bottom: -5px;
   background-color: var(--main-color-hover);
 }
 
-
 .team-member-card {
   background-color: #ffffff;
   border-radius: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
   padding: 20px;
-  transition: transform 0.5s ease, box-shadow 0.5s ease, padding 1s ease, margin 1s ease; /* REMOVED: opacity transition */
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease,
+    padding 1s ease,
+    margin 1s ease; /* REMOVED: opacity transition */
   /* REMOVED: min-width (handled by grid item size) */
   /* REMOVED: scroll-snap-align */
   opacity: 1; /* Ensure full opacity */
 }
 @media (min-width: 769px) {
- 
 }
 
 /* REMOVED: .team-member-card.active-slide styles */
-
 
 .team-member-photo {
   width: 150px;
@@ -1817,7 +1893,6 @@ margin-bottom: -5px;
     font-family: 'Caecilia LT Std', serif; 
 } */
 
-
 /* Utility Classes */
 .text-center {
   text-align: center;
@@ -1826,7 +1901,8 @@ margin-bottom: -5px;
 
 /* Homepage Specifics */
 /* Estilo para o vídeo em destaque na INDEX.HTML */
-#hero + .content-section .single-featured-video .video-item { /* Mais específico para index */
+#hero + .content-section .single-featured-video .video-item {
+  /* Mais específico para index */
   max-width: 100vw;
   width: 70vw; /* Aumentado um pouco para melhor visualização, mas ainda relativo à viewport */
   margin-left: 50%;
@@ -1843,34 +1919,32 @@ margin-bottom: -5px;
   border-radius: 25px; /* Arredondar o próprio iframe */
 }
 
-
 /* Videos Page Specifics */
 /* Contêiner para o vídeo em destaque na PÁGINA DE VÍDEOS */
 #video-gallery .video-item-highlighted {
-    max-width: 900px; /* Largura máxima para o vídeo em destaque */
-    margin: 20px auto 40px auto; /* Centralizar e adicionar margem inferior */
-    border-radius: 25px; /* Bordas arredondadas para o contêiner do vídeo */
-    overflow: hidden; /* Para garantir que o iframe com bordas arredondadas funcione bem */
+  max-width: 900px; /* Largura máxima para o vídeo em destaque */
+  margin: 20px auto 40px auto; /* Centralizar e adicionar margem inferior */
+  border-radius: 25px; /* Bordas arredondadas para o contêiner do vídeo */
+  overflow: hidden; /* Para garantir que o iframe com bordas arredondadas funcione bem */
 }
 
 /* O .video-item dentro do .video-item-highlighted na PÁGINA DE VÍDEOS */
 #video-gallery .video-item-highlighted .video-item {
-    width: 100%; /* Ocupa toda a largura do .video-item-highlighted */
-    margin-left: 0;
-    transform: none;
-    border-radius: 0; /* Remove o radius do .video-item para não conflitar com o pai */
+  width: 100%; /* Ocupa toda a largura do .video-item-highlighted */
+  margin-left: 0;
+  transform: none;
+  border-radius: 0; /* Remove o radius do .video-item para não conflitar com o pai */
 }
 
 /* Iframe do vídeo em destaque na PÁGINA DE VÍDEOS */
 #video-gallery .video-item-highlighted .video-item iframe {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    height: auto !important;
-    border: none;
-    border-radius: 25px; /* Bordas arredondadas para o iframe */
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  border: none;
+  border-radius: 25px; /* Bordas arredondadas para o iframe */
 }
-
 
 .external-video-links {
   margin-bottom: 35px;
@@ -1941,11 +2015,11 @@ margin-bottom: -5px;
 }
 
 .placeholder-article {
-  width:100%; 
-  height:200px; 
-  background:#ccc; 
-  text-align:center; 
-  line-height:200px;
+  width: 100%;
+  height: 200px;
+  background: #ccc;
+  text-align: center;
+  line-height: 200px;
 }
 .featured-article-summary {
   background-color: #fffaf2;
@@ -1976,7 +2050,6 @@ margin-bottom: -5px;
 .featured-article-summary h3 a {
   text-decoration: none;
   color: var(--text-color-headings);
-  
 }
 .featured-article-summary h3 a:hover {
   color: var(--main-color);
@@ -2017,9 +2090,9 @@ margin-bottom: -5px;
 /* Ensure the container itself is centered if it's not full width, and text within is centered */
 #call-to-action-donate .container,
 #about-short .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Donation Charts Styling */
@@ -2044,13 +2117,11 @@ margin-bottom: -5px;
   align-items: flex-start; /* Align items to the top if they have different heights */
 }
 
-
-
 .chart-block {
   background-color: #fff;
   padding: 25px; /* Increased padding */
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   width: 100%;
   height: auto;
   display: flex;
@@ -2076,7 +2147,8 @@ margin-bottom: -5px;
 
 /* For medium to larger screens: try to put them side-by-side */
 @media (min-width: 960px) {
-  .charts-container, .charts-container-geral  {
+  .charts-container,
+  .charts-container-geral {
     flex-wrap: nowrap; /* Prevent wrapping if we want them strictly side-by-side */
   }
   .chart-block {
@@ -2097,7 +2169,8 @@ margin-bottom: -5px;
 }
 */
 
-.chart-block h3, .chart-block h4 {
+.chart-block h3,
+.chart-block h4 {
   text-align: center;
   margin-top: 0;
   margin-bottom: 15px;
@@ -2127,11 +2200,13 @@ margin-bottom: -5px;
 .detail-card {
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
-  border-left:8px solid var(--main-color); /* Accent border */
+  border-left: 8px solid var(--main-color); /* Accent border */
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.07);
-  transition: transform 0.8s ease, box-shadow 0.8s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+  transition:
+    transform 0.8s ease,
+    box-shadow 0.8s ease;
 }
 
 .detail-card:hover {
@@ -2155,8 +2230,6 @@ margin-bottom: -5px;
 .detail-card p strong {
   color: var(--text-color-headings); /* Make percentage stand out a bit */
 }
-
-
 
 /* Responsive adjustments for charts if needed */
 @media (min-width: 769px) {
@@ -2212,9 +2285,9 @@ margin-bottom: -5px;
 .history-text-container strong {
   color: var(--text-color-headings);
   font-weight: bold;
-  
+
   margin-bottom: 10px; /* Space below the strong text */
-  }
+}
 
 .history-text-container em {
   font-style: italic;
@@ -2226,7 +2299,6 @@ margin-bottom: -5px;
   font-style: italic; /* Italicize the strong text */
   color: var(--text-color-headings); /* Use heading color for emphasis */
   margin-bottom: 15px; /* Space below italicized strong text */
-
 }
 
 /* Responsive adjustments for history-inverted-section */
@@ -2248,7 +2320,6 @@ margin-bottom: -5px;
   }
 }
 
-
 /* About Page - Lamed Symbolism Grid */
 .lamed-symbolism-grid {
   display: grid;
@@ -2268,7 +2339,9 @@ margin-bottom: -5px;
   align-items: center; /* Center items horizontally */
   text-align: center; /* Center text */
   border-top: 10px solid var(--main-color); /* Accent color on top */
-  transition: transform 0.5s ease, box-shadow 0.5s ease; /* Smooth transition for hover effects */
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease; /* Smooth transition for hover effects */
 }
 
 .lamed-symbolism-card:hover {
@@ -2285,13 +2358,10 @@ margin-bottom: -5px;
   color: var(--main-color);
 }
 
-
-
 .lamed-symbolism-icon svg {
   width: 48px; /* Icon size */
   height: 48px;
 }
-
 
 /* CSS para a Animação do Ícone Trending Up */
 
@@ -2302,10 +2372,10 @@ margin-bottom: -5px;
   fill: none;
   stroke-width: 2; /* Mantendo a espessura do HTML */
   cursor: pointer;
-  
+
   /* Prepara o ícone para a animação */
   stroke-dasharray: 100; /* Um valor que cobre todo o comprimento do caminho */
-  stroke-dashoffset: 0;  /* Começa totalmente desenhado */
+  stroke-dashoffset: 0; /* Começa totalmente desenhado */
 }
 
 .lucide-trending-up.is-animating {
@@ -2328,7 +2398,7 @@ margin-bottom: -5px;
   /* Etapa 2: Redesenhar de Baixo para Cima (de 15% a 60%) */
   /* Mantemos o ícone invisível por um instante e depois o redesenhamos.
      Como invertemos o caminho no SVG, ele agora será desenhado de baixo para cima. */
-  
+
   70% {
     stroke-dashoffset: 0;
   }
@@ -2341,64 +2411,63 @@ margin-bottom: -5px;
   }
 }
 
-
-
 .lucide-heart {
-    width: 24px; /* Icon size */
-    height: 24px;
-    stroke: var(--main-color);
-    fill: none; /* Ensure no fill color */
-    stroke-width: 2; /* Adjust stroke width */
-    cursor: pointer; /* Pointer cursor for interactivity */
-    
-  }
-
-  .lamed-symbolism-card:hover .lucide-heart {
-    stroke: var(--main-color);
-    animation: pulse-heart 0.6s cubic-bezier(0.4,0,0.6,1) infinite;
-  }
-
- .lucide-heart.is-animating {
-  /* Aumentando a duração para tornar o efeito mais notável */
-  animation: pulse-heart 3s cubic-bezier(0.4,0,0.6,1) infinite;
+  width: 24px; /* Icon size */
+  height: 24px;
+  stroke: var(--main-color);
+  fill: none; /* Ensure no fill color */
+  stroke-width: 2; /* Adjust stroke width */
+  cursor: pointer; /* Pointer cursor for interactivity */
 }
 
-  @keyframes pulse-heart {
-    0% {
-      transform: scale(1);
-    }
-    30% {
-      transform: scale(1.18);
-    }
-    50% {
-      transform: scale(1.12);
-    }
-    70% {
-      transform: scale(1.18);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
+.lamed-symbolism-card:hover .lucide-heart {
+  stroke: var(--main-color);
+  animation: pulse-heart 0.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
 
-  .lucide-move-right {
-    width: 24px; /* Icon size */
-    height: 24px;
-    stroke: var(--main-color);
-    fill: none; /* Ensure no fill color */
-    stroke-width: 2; /* Adjust stroke width */
-    cursor: pointer; /* Pointer cursor for interactivity */
-    transition: stroke 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+.lucide-heart.is-animating {
+  /* Aumentando a duração para tornar o efeito mais notável */
+  animation: pulse-heart 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-heart {
+  0% {
+    transform: scale(1);
   }
+  30% {
+    transform: scale(1.18);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+  70% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.lucide-move-right {
+  width: 24px; /* Icon size */
+  height: 24px;
+  stroke: var(--main-color);
+  fill: none; /* Ensure no fill color */
+  stroke-width: 2; /* Adjust stroke width */
+  cursor: pointer; /* Pointer cursor for interactivity */
+  transition:
+    stroke 0.3s ease,
+    transform 0.3s ease; /* Smooth transition for hover effects */
+}
 
 .lamed-symbolism-card:hover .lucide-move-right {
-  animation: move-right-point 1.3s cubic-bezier(0.4,0,0.6,1) infinite;
+  animation: move-right-point 1.3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   stroke: var(--main-color);
 }
 
 .lucide-move-right.is-animating {
   /* Aumentando ligeiramente a duração */
-  animation: move-right-point 3s cubic-bezier(0.4,0,0.6,1) infinite;
+  animation: move-right-point 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes move-right-point {
@@ -2429,9 +2498,9 @@ margin-bottom: -5px;
   stroke-width: 1.5; /* Ajustado para corresponder ao SVG original */
   cursor: pointer;
   animation: 0.5s ease-in-out; /* Animação inicial para preparar o ícone */
-  
+
   /* PONTO-CHAVE: Define o eixo da transformação na base do ícone */
-  transform-origin: center bottom; 
+  transform-origin: center bottom;
 }
 
 .lamed-symbolism-card:hover .lucide-signpost-big-icon {
@@ -2455,18 +2524,17 @@ margin-bottom: -5px;
   }
   50% {
     /* Ao completar o primeiro giro, inclina para o outro lado */
-    transform: rotateY(360deg) rotate(5deg); 
+    transform: rotateY(360deg) rotate(5deg);
   }
   75% {
     /* No meio do segundo giro, inclina novamente */
-    transform:  rotateY(540deg) rotate(5deg);
+    transform: rotateY(540deg) rotate(5deg);
   }
   100% {
     /* Termina o segundo giro, voltando à posição original */
-    transform:  rotateY(720deg) rotate(0deg);
+    transform: rotateY(720deg) rotate(0deg);
   }
 }
-  
 
 .lamed-symbolism-text h5 {
   margin-top: 0;
@@ -2482,7 +2550,6 @@ margin-bottom: -5px;
   margin-bottom: 10px;
   /* padding-left: -120px; */ /* Removido - padding negativo é inválido */
 }
-
 
 /* Styling for Symbolism Section with Icons (sobre.html) - OLD - Kept for reference if needed, but new grid replaces it */
 /*
@@ -2529,7 +2596,8 @@ margin-bottom: -5px;
   text-align: center;
 }
 */
-.meaning-summary { /* Specific class for the summary parai */
+.meaning-summary {
+  /* Specific class for the summary parai */
   margin-top: 25px;
   font-size: 1.05em;
   line-height: 1.7;
@@ -2537,14 +2605,16 @@ margin-bottom: -5px;
   margin-right: 120px;
 }
 
-@media (max-width: 768px) { /* Using 768px breakpoint for consistency */
+@media (max-width: 768px) {
+  /* Using 768px breakpoint for consistency */
   .meaning-summary {
     margin-left: 20px;
     margin-right: 20px;
   }
 }
 
-@media (max-width: 600px) { /* Responsive adjustments for OLD symbolism items */
+@media (max-width: 600px) {
+  /* Responsive adjustments for OLD symbolism items */
   /*
   .symbolism-item {
     flex-direction: column;
@@ -2565,7 +2635,7 @@ margin-bottom: -5px;
 }
 
 .gemini-list li {
- margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 /* Botão Flutuante Voltar para Artigos */
@@ -2582,7 +2652,7 @@ margin-bottom: -5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   text-decoration: none;
   transition: all 0.3s ease; /* Transição para todas as propriedades */
   overflow: hidden; /* Para esconder o texto inicialmente */
@@ -2603,7 +2673,10 @@ margin-bottom: -5px;
   max-width: 0;
   opacity: 0;
   visibility: hidden;
-  transition: max-width 0.3s ease, opacity 0.3s ease 0.1s, margin-left 0.3s ease; /* Atraso na opacidade para melhor efeito */
+  transition:
+    max-width 0.3s ease,
+    opacity 0.3s ease 0.1s,
+    margin-left 0.3s ease; /* Atraso na opacidade para melhor efeito */
 }
 
 .floating-back-button:hover {
@@ -2625,7 +2698,9 @@ margin-bottom: -5px;
 .button-text-artigos {
   font-size: 0.9em; /* Tamanho do texto */
   color: white; /* Cor do texto */
-  transition: opacity 0.3s ease, margin-left 0.3s ease; /* Transição suave para opacidade e margem */
+  transition:
+    opacity 0.3s ease,
+    margin-left 0.3s ease; /* Transição suave para opacidade e margem */
 }
 
 /* Visibilidade controlada por JS */
@@ -2660,7 +2735,11 @@ margin-bottom: -5px;
   font-weight: bold;
   font-size: 1.1em;
   text-align: center;
-  transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
   border: none;
   cursor: pointer;
   background-color: var(--main-color);
@@ -2686,16 +2765,18 @@ margin-bottom: -5px;
 .plano-card {
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .plano-card:hover,
 .plano-card:focus-within {
   transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .plano-card h3 {
@@ -2718,14 +2799,16 @@ margin-bottom: -5px;
   width: 100%;
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .wallpaper-item a:hover img,
 .wallpaper-item a:focus img {
   transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive Design */
@@ -2809,19 +2892,18 @@ margin-bottom: -5px;
     flex-grow: 1;
   }
   /* As regras para .nav-social-item-mobile podem ser removidas, pois não serão mais adicionadas pelo JS */
-  }
+}
 
-  @media (max-width: 768px) {
-    /* ... outros estilos mobile ... */
+@media (max-width: 768px) {
+  /* ... outros estilos mobile ... */
 
-    /* A regra .logo-area .header-social-icons { display: none; } já foi tornada global,
+  /* A regra .logo-area .header-social-icons { display: none; } já foi tornada global,
        então não é mais necessária especificamente aqui. */
 
-    /* Remover estilos para .main-nav ul .nav-social-item-mobile e seus filhos,
+  /* Remover estilos para .main-nav ul .nav-social-item-mobile e seus filhos,
        pois esses elementos não serão mais criados. */
 
   /* End Team Carousel for Mobile */
-
 
   .main-nav {
     opacity: 0;
@@ -2831,10 +2913,13 @@ margin-bottom: -5px;
     left: 0;
     right: 0;
     background-color: #ffffff;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     z-index: -999;
     transform: translateY(-10px);
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transition:
+      opacity 0.3s ease-in-out,
+      visibility 0.3s ease-in-out,
+      transform 0.3s ease-in-out;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     padding-top: 25px; /* Add padding to push content down */
@@ -2870,7 +2955,8 @@ margin-bottom: -5px;
     border-bottom: none;
   }
 
-  .main-nav a:hover, .main-nav a.active {
+  .main-nav a:hover,
+  .main-nav a.active {
     background-color: #f8f8f8;
     border-bottom-color: #f0f0f0; /* Keep separator consistent on hover */
     color: var(--main-color);
@@ -2884,13 +2970,12 @@ margin-bottom: -5px;
     cursor: pointer;
     padding: 10px;
   }
-  .menu-toggle svg { /* Style for the Lucide Menu icon */
+  .menu-toggle svg {
+    /* Style for the Lucide Menu icon */
     width: 28px;
     height: 28px;
     stroke: var(--text-color-headings);
   }
-  
-
 
   .hero-section h1 {
     font-size: 2.5em;
@@ -2899,10 +2984,15 @@ margin-bottom: -5px;
     font-size: 1em;
   }
 
-  h1 { font-size: 2em; }
-  h2 { font-size: 1.8em; }
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.8em;
+  }
 
-  .video-list, .video-grid {
+  .video-list,
+  .video-grid {
     grid-template-columns: 1fr; /* Stack videos on smaller screens */
   }
 
@@ -2910,7 +3000,6 @@ margin-bottom: -5px;
     height: 300px; /* Adjust height for mobile if aspect-ratio trick is not enough */
   }
 }
-
 
 /* Old styles to remove or integrate if still needed - for now, mostly superseded */
 /*
@@ -2965,7 +3054,7 @@ margin-bottom: -5px;
   border: 1px solid #e0e0e0;
   border-radius: 25px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #search-input {
@@ -3018,7 +3107,8 @@ margin-bottom: -5px;
   transform: rotateY(180deg);
 }
 
-.card-front, .card-back {
+.card-front,
+.card-back {
   /* Common styles */
   backface-visibility: hidden;
   display: flex;
@@ -3034,7 +3124,7 @@ margin-bottom: -5px;
 .card-front {
   /* Stays in the normal document flow to define the container's height */
   background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .card-back {
@@ -3047,7 +3137,7 @@ margin-bottom: -5px;
   background-color: var(--highlight-color);
   color: white;
   transform: rotateY(180deg);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow-y: auto !important;
   word-wrap: break-word !important;
 }
@@ -3062,7 +3152,6 @@ body.team-member-hovered .team-member-card-container:not(:hover) {
   color: white;
 }
 
-
 /* Modal Styles */
 .modal {
   display: flex; /* Use flex for centering */
@@ -3074,18 +3163,16 @@ body.team-member-hovered .team-member-card-container:not(:hover) {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
-  
 }
 
 .modal.is-open {
   z-index: 1001; /* Bring to front when open */
   opacity: 1;
   pointer-events: auto;
-  
 }
 
 .modal-content {
@@ -3105,7 +3192,9 @@ body.team-member-hovered .team-member-card-container:not(:hover) {
   opacity: 0;
   transform: scale(0.95);
   /* Transition opacity and transform together with the modal backdrop */
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
 }
 
 .modal.is-open .modal-content {
@@ -3141,8 +3230,6 @@ body.team-member-hovered .team-member-card-container:not(:hover) {
   margin-left: auto;
   margin-right: auto;
 }
-
-
 
 @media (max-width: 768px) {
   .hero-section {
@@ -3183,13 +3270,27 @@ body.team-member-hovered .team-member-card-container:not(:hover) {
 }
 
 @keyframes two-quick-one-slow-pulse {
-  0% { transform: scale(1); }
-  10% { transform: scale(1.15); }
-  20% { transform: scale(1); }
-  30% { transform: scale(1.15); }
-  40% { transform: scale(1); }
-  70% { transform: scale(1.3); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.15);
+  }
+  20% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.15);
+  }
+  40% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Modal Content Hierarchy */
@@ -3250,29 +3351,28 @@ body {
     passa para a próxima, e assim por diante, até encontrar uma que funcione.
     Isso garante que o site tenha uma aparência consistente e legível em qualquer dispositivo.
   */
-  font-family: 
-    caecilia, sans-serif, /* 1. A FONTE PRINCIPAL (WEB FONT): Tenta primeiro carregar a fonte 'Caecilia' que configuramos no Adobe Fonts. O nome deve ser exato. */
-    
-    /* 2. A PILHA DE FONTES DE SISTEMA (SYSTEM FONT STACK): Se a Caecilia falhar por algum motivo, em vez de usar uma fonte genérica, pedimos ao navegador para usar a fonte padrão do sistema operacional do usuário. Isso é moderno, super rápido (não precisa de download) e faz o site parecer "nativo" do dispositivo. */
-    -apple-system,      /* Para Safari no macOS e iOS (ex: fonte San Francisco) */
-    BlinkMacSystemFont, /* Para Chrome no macOS */
-    "Segoe UI",        /* Para Windows */
-    Roboto,             /* Para Android e Chrome OS */
-    Helvetica,          /* Fallback clássico para macOS/iOS mais antigos */
-    Arial,              /* Fallback universal, presente em quase todos os sistemas */
-    
-    /* 3. A OPÇÃO GENÉRICA FINAL */
-    sans-serif,         /* Se NENHUMA das anteriores funcionar, o navegador usará qualquer fonte sem serifa que tiver disponível. É a garantia final. */
-
+  font-family:
+    caecilia,
+    sans-serif,
+    /* 1. A FONTE PRINCIPAL (WEB FONT): Tenta primeiro carregar a fonte 'Caecilia' que configuramos no Adobe Fonts. O nome deve ser exato. */
+    /* 2. A PILHA DE FONTES DE SISTEMA (SYSTEM FONT STACK): Se a Caecilia falhar por algum motivo, em vez de usar uma fonte genérica, pedimos ao navegador para usar a fonte padrão do sistema operacional do usuário. Isso é moderno, super rápido (não precisa de download) e faz o site parecer "nativo" do dispositivo. */ -apple-system,
+    /* Para Safari no macOS e iOS (ex: fonte San Francisco) */ BlinkMacSystemFont,
+    /* Para Chrome no macOS */ 'Segoe UI',
+    /* Para Windows */ Roboto,
+    /* Para Android e Chrome OS */ Helvetica,
+    /* Fallback clássico para macOS/iOS mais antigos */ Arial,
+    /* Fallback universal, presente em quase todos os sistemas */ /* 3. A OPÇÃO GENÉRICA FINAL */
+    sans-serif,
+    /* Se NENHUMA das anteriores funcionar, o navegador usará qualquer fonte sem serifa que tiver disponível. É a garantia final. */
     /* 4. FONTES PARA EMOJIS: Estas garantem que os emojis sejam exibidos corretamente em diferentes sistemas. */
-    "Apple Color Emoji", 
-    "Segoe UI Emoji", 
-    "Segoe UI Symbol";
-  
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol';
+
   /* ... (outras propriedades do body) ... */
   margin: 0;
   background-color: #fffaf2;
-  color: #4A4A4A;
+  color: #4a4a4a;
   line-height: 1.6;
   font-size: 16px;
 }
@@ -3285,19 +3385,21 @@ body {
 }
 
 :root {
-  --color-principal: #F8941B;
+  --color-principal: #f8941b;
   --color-destaque: #940312;
-  --color-paleta-1: #A12E05;
-  --color-paleta-2: #AB1805;
-  --color-paleta-5: #FA761F;
+  --color-paleta-1: #a12e05;
+  --color-paleta-2: #ab1805;
+  --color-paleta-5: #fa761f;
 
   --main-color: var(--color-principal);
-  --main-color-hover: #F8941B; /* Darker shade of F8941B */
+  --main-color-hover: #f8941b; /* Darker shade of F8941B */
   --highlight-color: var(--color-destaque);
 
-  --text-color: #4A4A4A; /* Adjusted for better readability */
+  --text-color: #4a4a4a; /* Adjusted for better readability */
   --text-color-headings: #333333; /* Slightly darker for headings */
-  --link-color-footer: var(--color-paleta-5); /* Using a lighter orange for footer links on dark background */
+  --link-color-footer: var(
+    --color-paleta-5
+  ); /* Using a lighter orange for footer links on dark background */
   --link-color-footer-hover: #ffffff;
   --footer-bg-color: #2c1e10; /* Dark brown derived from palette */
 
@@ -3306,7 +3408,7 @@ body {
   --dark-surface: #41301f; /* A slightly lighter brown for surfaces */
   --dark-text: #e8d9c7; /* A warm, off-white for text */
   --dark-text-headings: #fffaf2; /* The original light background color for headings */
-  --dark-main-color: #F8941B; /* Orange can stay vibrant */
+  --dark-main-color: #f8941b; /* Orange can stay vibrant */
   --dark-highlight-color: #fa8a94; /* A slightly softer red for dark mode */
 }
 
@@ -3337,7 +3439,12 @@ body.dark-mode .main-nav a.active {
   border-bottom-color: var(--dark-main-color);
 }
 
-body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 {
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
   color: var(--dark-text-headings);
 }
 
@@ -3350,7 +3457,8 @@ body.dark-mode .content-section.background-light {
   background-color: #5a452e; /* A contrasting darker brown */
 }
 
-body.dark-mode .btn-primary, body.dark-mode .btn-primary-apoio {
+body.dark-mode .btn-primary,
+body.dark-mode .btn-primary-apoio {
   background-color: var(--dark-main-color);
   color: #2c1e10; /* Using the dark background color for text for better contrast */
   font-weight: bold;
@@ -3389,7 +3497,9 @@ body.dark-mode .site-footer {
   width: 20px;
   height: 20px;
   color: var(--text-color);
-  transition: opacity 0.3s, transform 0.3s;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
 }
 
 .theme-toggle-button .moon-icon {
@@ -3424,7 +3534,6 @@ body.dark-mode .theme-toggle-button .moon-icon {
   transform: translateX(0);
 }
 
-
 a {
   color: var(--main-color);
   text-decoration: none;
@@ -3435,8 +3544,9 @@ a:hover {
   text-decoration: underline;
 }
 
-h1, h2, h3{
-  
+h1,
+h2,
+h3 {
   font-family: caecilia, sans-serif;
   font-weight: 800;
   font-style: normal; /* Using Caecilia for headings */
@@ -3445,7 +3555,9 @@ h1, h2, h3{
   margin-bottom: 0.5em;
 }
 
-   h4, h5, h6 {
+h4,
+h5,
+h6 {
   font-family: caecilia, sans-serif;
   font-weight: 700;
   font-style: normal; /* Using Caecilia for headings */
@@ -3454,9 +3566,15 @@ h1, h2, h3{
   margin-bottom: 0.5em;
 }
 
-h1 { font-size: 3em; }
-h2 { font-size: 2em; }
-h3 { font-size: 1.85em; }
+h1 {
+  font-size: 3em;
+}
+h2 {
+  font-size: 2em;
+}
+h3 {
+  font-size: 1.85em;
+}
 
 img {
   max-width: 100%;
@@ -3478,8 +3596,6 @@ img {
   top: 0; /* Stick to the top of the viewport */
   z-index: 1000; /* Ensure it stays above other content */
   transition: top 0.4s;
-
- 
 }
 
 .site-header .container {
@@ -3489,20 +3605,20 @@ img {
   /* Make header elements spread to the ends */
   justify-content: space-between;
   /* Optional: If you want the content to truly hit the edges of the viewport for the header only */
-     max-width: none;
-     padding-left: 20px;
-     padding-right: 20px; 
+  max-width: none;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .footer-logo-area img {
-  max-width:80px;
-  display:block;
-  margin:0 auto;
+  max-width: 80px;
+  display: block;
+  margin: 0 auto;
 }
 .footer-logo-area p {
-text-align:center;
-margin-top:8px; 
-font-size:1rem;
-margin-bottom: -5px;
+  text-align: center;
+  margin-top: 8px;
+  font-size: 1rem;
+  margin-bottom: -5px;
 }
 
 .logo-area {
@@ -3534,7 +3650,6 @@ margin-bottom: -5px;
 
 /* Removendo as regras de .header-social-icons a e svg que não terão efeito se o container pai está none */
 
-
 .main-nav ul {
   list-style: none;
   padding: 0;
@@ -3552,12 +3667,15 @@ margin-bottom: -5px;
   font-weight: 500;
   padding: 5px 0;
   border-bottom: 2px solid transparent;
-  transition: color 0.3s ease, border-bottom-color 0.3s ease;
+  transition:
+    color 0.3s ease,
+    border-bottom-color 0.3s ease;
 }
 
 .main-nav a:hover,
 .main-nav a:focus,
-.main-nav a.active { /* Add .active class with JS for current page */
+.main-nav a.active {
+  /* Add .active class with JS for current page */
   color: var(--main-color);
   border-bottom-color: var(--main-color);
 }
@@ -3598,7 +3716,8 @@ margin-bottom: -5px;
   z-index: 1;
 }
 
-.hero-section .container { /* Ensure content is above the overlay */
+.hero-section .container {
+  /* Ensure content is above the overlay */
   position: relative;
   z-index: 2;
 }
@@ -3607,8 +3726,7 @@ margin-bottom: -5px;
   color: #ffffff;
   font-size: 3em;
   margin-bottom: 0.5em;
-  text-shadow: 0 5px 10px rgba(0, 0, 0, 0.212);;
-  
+  text-shadow: 0 5px 10px rgba(0, 0, 0, 0.212);
 }
 
 .hero-section p {
@@ -3627,17 +3745,15 @@ margin-bottom: -5px;
 }
 
 .content-section.background-light {
-    background-color: #ffb618b6; /* Very light orange, derived from main color */
+  background-color: #ffb618b6; /* Very light orange, derived from main color */
   border-radius: 25px;
-  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.129) ; /* Slightly stronger shadow for contrast */
-  
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.129); /* Slightly stronger shadow for contrast */
 }
 
 .content-section-background-light-text {
   margin-left: 120px;
   margin-right: 120px;
 }
-
 
 .content-section h2 {
   text-align: center;
@@ -3647,9 +3763,9 @@ margin-bottom: -5px;
   color: var(--highlight-color); /* Using highlight color for section titles */
 }
 
-
 /* Video List / Grid */
-.video-list, .video-grid {
+.video-list,
+.video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
   gap: 20px;
@@ -3670,7 +3786,8 @@ margin-bottom: -5px;
   border: none; /* Remove iframe border */
 }
 
-.video-item p { /* For optional titles below videos */
+.video-item p {
+  /* For optional titles below videos */
   padding: 10px;
   margin: 0;
   font-weight: bold;
@@ -3679,7 +3796,9 @@ margin-bottom: -5px;
 }
 
 /* Buttons */
-.btn-primary, .btn-secondary, .btn-primary-apoio{
+.btn-primary,
+.btn-secondary,
+.btn-primary-apoio {
   display: inline-block;
   padding: 12px 25px;
   border-radius: 25px;
@@ -3687,7 +3806,11 @@ margin-bottom: -5px;
   font-weight: bold;
   font-size: 1.1em;
   text-align: center;
-  transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
   border: none;
   cursor: pointer;
 }
@@ -3700,17 +3823,25 @@ margin-bottom: -5px;
   font-weight: bold;
   font-size: 1.1em;
   text-align: center;
-  transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
   border: none;
   cursor: pointer;
 }
-.btn-primary, .btn-primary-apoio{
+.btn-primary,
+.btn-primary-apoio {
   background-color: var(--main-color);
   color: #ffffff;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.278);
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary-apoio:hover, .btn-primary-apoio:focus {
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary-apoio:hover,
+.btn-primary-apoio:focus {
   background-color: var(--main-color-hover);
   color: #ffffff;
   text-decoration: none;
@@ -3724,7 +3855,8 @@ margin-bottom: -5px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.278);
 }
 
-.btn-secondary:hover, .btn-secondary:focus {
+.btn-secondary:hover,
+.btn-secondary:focus {
   background-color: var(--color-paleta-1); /* Darker red from palette */
   color: #ffffff;
   text-decoration: none;
@@ -3743,9 +3875,11 @@ margin-bottom: -5px;
 .article-card {
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   display: flex; /* helps footer stick to bottom if content is short */
   flex-direction: column;
 }
@@ -3753,7 +3887,7 @@ margin-bottom: -5px;
 .article-card:hover,
 .article-card:focus-within {
   transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .article-card-link {
@@ -3811,7 +3945,7 @@ margin-bottom: -5px;
 
 .inline-image img {
   border-radius: 800px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin: 10px 0; /* Space around inline images */
 }
 
@@ -3835,10 +3969,7 @@ margin-bottom: -5px;
     scale: 1.4; /* Scale down the image on smaller screens */
     transform: translateY(0px); /* Adjust vertical position for smaller screens */
   }
-  
 }
-
-
 
 .article-meta {
   font-size: 0.9em;
@@ -3858,13 +3989,12 @@ margin-bottom: -5px;
   color: var(--text-color-headings);
 }
 
-
-
 .article-content p {
   margin-bottom: 1.5em;
 }
 
-.article-content ul, .article-content ol {
+.article-content ul,
+.article-content ol {
   margin-bottom: 1.5em;
   padding-left: 25px;
 }
@@ -3895,7 +4025,7 @@ margin-bottom: -5px;
   border-bottom-right-radius: 17.5px;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: relative; /* For pseudo-element if needed */
 }
 
@@ -3919,7 +4049,7 @@ margin-bottom: -5px;
   max-width: 100%;
   height: auto;
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .article-content figure figcaption {
@@ -3965,7 +4095,7 @@ margin-bottom: -5px;
   margin: 0 auto; /* Centering the video container */
   border-radius: 25px;
   overflow: hidden; /* To clip iframe corners if needed */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .featured-donation-video iframe {
@@ -3996,19 +4126,19 @@ margin-bottom: -5px;
   margin: 10px auto 50px auto;
   border-radius: 17.5px;
   max-width: 450px;
-  
+
   /* PONTO-CHAVE: Esconde as bordas retas do vídeo que "vazam" */
   overflow: hidden;
 
   /* Efeito visual adicional para o container */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Garante que o vídeo preencha 100% do seu "envelope" */
 .valeu-video video {
   display: block; /* Remove espaços extras */
   width: 100%;
-  height: auto;   /* Mantém a proporção */
+  height: auto; /* Mantém a proporção */
 }
 
 /* Regra para telas mobile */
@@ -4019,9 +4149,6 @@ margin-bottom: -5px;
     autoplay: true; /* Habilita autoplay em telas menores */
   }
 }
-
-
-
 
 .donation-methods {
   display: grid;
@@ -4034,7 +4161,7 @@ margin-bottom: -5px;
   background-color: #fff;
   padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   text-align: center;
   border: 1px solid #e0e0e0;
 }
@@ -4061,9 +4188,8 @@ margin-bottom: -5px;
 }
 
 #donation-transparency strong {
-    color: var(--text-color-headings);
+  color: var(--text-color-headings);
 }
-
 
 /* Articles Page Specifics */
 /* CSS para o Card de Artigo Clicável */
@@ -4074,9 +4200,12 @@ margin-bottom: -5px;
   padding: 20px;
   background-color: #faf7f2; /* Light cream background */
   border-radius: 25px;
-  box-shadow: 0 8px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
-  transition: transform 0.4s, box-shadow 0.4s, background-color 0.4s; 
+  transition:
+    transform 0.4s,
+    box-shadow 0.4s,
+    background-color 0.4s;
   position: relative;
 }
 
@@ -4093,25 +4222,24 @@ margin-bottom: -5px;
 
 /* 3. Garante que a imagem não fique "embaixo" do link (opcional, mas bom para consistência) */
 .last-article .article-banner-image {
-    position: relative;
-    z-index: 0;
+  position: relative;
+  z-index: 0;
 }
 .last-article:hover {
-  box-shadow: 0 12px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 12px 15px rgba(0, 0, 0, 0.15);
   background-color: #fff7c9;
   transform: translateY(-8px);
 }
 
-.article-banner-image  {
+.article-banner-image {
   width: 1500px;
   max-height: 500px; /* Max height for banner */
   overflow: hidden;
   max-width: 100%;
   height: auto;
   border-radius: 37.5px;
-  box-shadow: 0 10px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
   transform: translateY(-10px); /* Slightly raised effect */
-
 }
 
 #lista-artigos ul {
@@ -4125,13 +4253,16 @@ margin-bottom: -5px;
   border-radius: 17.5px;
   border: 1px solid #e0e0e0;
   transition: box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.4s, box-shadow 0.4s, background-color 0.4s; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.4s,
+    box-shadow 0.4s,
+    background-color 0.4s;
 }
 #lista-artigos li:hover {
   clip-path: inset(0 round 17.5px); /* Makes the shadow follow the border radius */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transform: translateY(-8px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
 }
 
 #lista-artigos a {
@@ -4141,7 +4272,7 @@ margin-bottom: -5px;
   padding: 15px;
 }
 #lista-artigos a:hover {
-  background-color:#fff7c9; /* Subtle hover for the whole item */
+  background-color: #fff7c9; /* Subtle hover for the whole item */
 }
 #lista-artigos strong {
   display: block;
@@ -4156,22 +4287,22 @@ margin-bottom: -5px;
 
 /* Donation Page Specifics */
 #doacao h3 {
-    margin-top: 30px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
 }
 #doacao ul {
-    list-style: disc;
-    margin-left: 20px;
+  list-style: disc;
+  margin-left: 20px;
 }
 #doacao li {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 #doacao a {
-    color: var(--color-destaque);
-    text-decoration: none;
+  color: var(--color-destaque);
+  text-decoration: none;
 }
 
 /* Footer */
@@ -4185,18 +4316,19 @@ margin-bottom: -5px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   box-shadow: 0 -15px 50px rgba(0, 0, 0, 0.199);
-
 }
 
 .site-footer .container {
-    flex: auto;/* If using multiple columns in footer, can use flex here */
+  flex: auto; /* If using multiple columns in footer, can use flex here */
 }
 
 .social-links {
   margin-bottom: 15px;
 }
 
-.social-links a, .social-links img { /* Added img for potential icon styling */
+.social-links a,
+.social-links img {
+  /* Added img for potential icon styling */
   color: var(--link-color-footer);
   margin: 0 10px;
   font-size: 1.1em; /* Slightly larger for better clickability */
@@ -4208,7 +4340,8 @@ margin-bottom: -5px;
   text-decoration: underline;
 }
 
-.site-footer a { /* General links in footer if any others are added */
+.site-footer a {
+  /* General links in footer if any others are added */
   color: var(--link-color-footer);
 }
 
@@ -4275,7 +4408,6 @@ margin-bottom: -5px;
 
 .footer-logo-img:hover {
   transform: scale(1.25); /* Slight zoom effect on hover */
-  
 }
 
 .footer-logo-tagline p {
@@ -4326,16 +4458,19 @@ margin-bottom: -5px;
 .footer-doe-btn-grid .text-hover {
   max-width: 0;
   opacity: 0;
-  transition: max-width 0.5s ease-in-out 0.1s, opacity 0.2s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out 0.1s,
+    opacity 0.2s ease-in-out;
 }
 
 /* Texto padrão (visível por padrão) */
 .footer-doe-btn-grid .text-default {
   max-width: 100px; /* Espaço para "Doe" */
   opacity: 1;
-  transition: max-width 0.5s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out,
+    opacity 0.3s ease-in-out;
 }
-
 
 /* --- ESTADO DE HOVER --- */
 
@@ -4390,16 +4525,19 @@ margin-bottom: -5px;
 .button-text-container .text-hover {
   max-width: 0;
   opacity: 0;
-  transition: max-width 0.5s ease-in-out, opacity 0.2s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out,
+    opacity 0.2s ease-in-out;
 }
 
 /* Texto padrão visível */
 .button-text-container .text-default {
   max-width: 100px; /* Espaço suficiente para "e-mail" */
   opacity: 1;
-  transition: max-width 0.5s ease-in-out, opacity 0.4s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out,
+    opacity 0.4s ease-in-out;
 }
-
 
 /* --- ESTADO DE HOVER --- */
 
@@ -4430,7 +4568,8 @@ margin-bottom: -5px;
   opacity: 0;
 }
 
-.social-links-footer, .social-links-footer-email {
+.social-links-footer,
+.social-links-footer-email {
   display: flex;
   flex-direction: column; /* Stack social links vertically */
   align-items: center; /* Center social links */
@@ -4482,13 +4621,17 @@ margin-bottom: -5px;
 .social-btn-footer .text-hover {
   max-width: 0;
   opacity: 0;
-  transition: max-width 0.5s ease-in-out, opacity 0.2s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out,
+    opacity 0.2s ease-in-out;
 }
 
 .social-btn-footer .text-default {
   max-width: 100px;
   opacity: 1;
-  transition: max-width 0.5s ease-in-out, opacity 0.3s ease-in-out 0.1s;
+  transition:
+    max-width 0.5s ease-in-out,
+    opacity 0.3s ease-in-out 0.1s;
 }
 
 .social-btn-footer:hover .text-hover {
@@ -4517,7 +4660,6 @@ margin-bottom: -5px;
   border-color: transparent;
 }
 
-
 /* 2. Regras para Telas Pequenas (Mobile) */
 @media (max-width: 768px) {
   /* Esconde o container de texto inteiro no mobile */
@@ -4530,7 +4672,7 @@ margin-bottom: -5px;
     padding: 8px 10px;
     justify-content: center;
   }
-  
+
   /* Remove a margem do ícone, já que não há mais texto */
   .social-btn-footer svg {
     margin-right: 0;
@@ -4550,12 +4692,10 @@ margin-bottom: -5px;
 .footer-buttons, /* If this was only for the old doe button */
 .footer-row-contact-social,
 .footer-contact, /* If this was only for the old contact layout */
-.social-links /* If this was the old general social links container */
-{
+.social-links /* If this was the old general social links container */ {
   display: none !important; /* Effectively remove them for now */
 }
 /* Keep .btn-footer and .btn-doe-footer if they are used elsewhere, or integrate into .footer-doe-btn-grid */
-
 
 #back-to-top {
   position: fixed;
@@ -4571,15 +4711,19 @@ margin-bottom: -5px;
   text-align: center;
   line-height: 1; /* Adjust line-height for SVG centering */
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   display: none; /* Initially hidden, JS will show it */
   z-index: 1001;
-  transition: background-color 0.3s ease, opacity 0.5s ease, visibility 0.5s ease, bottom 0.3s ease, transform 0.5s ease;
+  transition:
+    background-color 0.3s ease,
+    opacity 0.5s ease,
+    visibility 0.5s ease,
+    bottom 0.3s ease,
+    transform 0.5s ease;
   padding: 0; /* Remove padding if icon is precisely sized */
   display: flex; /* For centering SVG inside */
   align-items: center;
   justify-content: center;
-  
 }
 
 /* Ícone dentro do botão */
@@ -4592,7 +4736,9 @@ margin-bottom: -5px;
 
 /* Animação do ícone ao passar o mouse no botão */
 #back-to-top:hover svg {
-  animation: back-to-top-bounce 1.3s cubic-bezier(0.4,0,0.6,1) infinite, ease-in-out;
+  animation:
+    back-to-top-bounce 1.3s cubic-bezier(0.4, 0, 0.6, 1) infinite,
+    ease-in-out;
 }
 
 @keyframes back-to-top-bounce {
@@ -4620,9 +4766,9 @@ margin-bottom: -5px;
 
 /* Ensure the button is not displayed by JS until scroll, then opacity transition works */
 #back-to-top {
-    display: none; /* Start hidden, JS controls display:block/none */
-    opacity: 0; /* Start transparent for fade-in */
-    visibility: hidden; /* Start not visible for transition */
+  display: none; /* Start hidden, JS controls display:block/none */
+  opacity: 0; /* Start transparent for fade-in */
+  visibility: hidden; /* Start not visible for transition */
 }
 
 /* About Page Specifics (from previous round, ensure they are present) */
@@ -4642,14 +4788,16 @@ margin-bottom: -5px;
   background-color: #ffffff;
   padding: 25px;
   border-radius: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   text-align: center;
-  transition: transform 0.5s, box-shadow 0.5s; 
-  
+  transition:
+    transform 0.5s,
+    box-shadow 0.5s;
+
   /* Adições importantes */
   position: relative; /* Para posicionar o pseudo-elemento dentro do card */
-  z-index: 1;         /* Garante que o conteúdo do card fique acima do fundo animado */
-  overflow: hidden;   /* Esconde o pseudo-elemento antes da animação */
+  z-index: 1; /* Garante que o conteúdo do card fique acima do fundo animado */
+  overflow: hidden; /* Esconde o pseudo-elemento antes da animação */
 }
 
 /* Cria a camada de cor que ficará escondida */
@@ -4665,11 +4813,11 @@ margin-bottom: -5px;
   /* PONTO-CHAVE: Coloca a camada de cor atrás do conteúdo do card
   
   /* Defina a cor que você quer que apareça no hover */
-  background-color: var(--main-color-hover); 
-  
+  background-color: var(--main-color-hover);
+
   /* Esconde o conteúdo e o posiciona fora da pilha de renderização normal */
   z-index: -1;
-  
+
   /* Começa "espremido" (invisível) e prepara a transição */
   transform: scaleX(0);
   transform-origin: top; /* A animação virá da esquerda */
@@ -4678,7 +4826,7 @@ margin-bottom: -5px;
 
 /* Animação no hover */
 .focus-item:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   transform: translateY(-10px);
 }
 
@@ -4686,14 +4834,16 @@ margin-bottom: -5px;
   /* Faz a camada de cor se expandir para preencher todo o card */
   transform: scaleX(1);
 }
-.focus-item:hover h3 { /* Adicionado para o título */
+.focus-item:hover h3 {
+  /* Adicionado para o título */
   color: var(--color-destaque); /* White text on hover */
   transition: color 0.4s ease-in-out;
 }
 
-.focus-item:hover p { /* Adicionado para o parágrafo, se houver */
+.focus-item:hover p {
+  /* Adicionado para o parágrafo, se houver */
   /* Garante que o texto mude de cor para ser legível sobre o novo fundo */
-  color: white; /* White text on hover */; 
+  color: white; /* White text on hover */
   transition: color 0.4s ease-in-out;
 }
 .focus-item h3 {
@@ -4741,7 +4891,6 @@ margin-bottom: -5px;
   /* Using .btn-secondary styles by default, can customize if needed */
 }
 
-
 /* Team Carousel Controls - Hidden by default, shown on mobile */
 .team-carousel-controls {
   display: none;
@@ -4764,22 +4913,24 @@ margin-bottom: -5px;
   background-color: var(--main-color-hover);
 }
 
-
 .team-member-card {
   background-color: #ffffff;
   border-radius: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
   padding: 20px;
-  transition: transform 0.5s ease, box-shadow 0.5s ease, padding 1s ease, margin 1s ease, border-radius 0.8s ease; /* REMOVED: opacity transition */
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease,
+    padding 1s ease,
+    margin 1s ease,
+    border-radius 0.8s ease; /* REMOVED: opacity transition */
   /* REMOVED: min-width (handled by grid item size) */
   /* REMOVED: scroll-snap-align */
   opacity: 1; /* Ensure full opacity */
 }
 
-
 /* REMOVED: .team-member-card.active-slide styles */
-
 
 .team-member-photo {
   width: 150px;
@@ -4820,7 +4971,6 @@ margin-bottom: -5px;
     font-family: 'Caecilia LT Std', serif; 
 } */
 
-
 /* Utility Classes */
 .text-center {
   text-align: center;
@@ -4829,7 +4979,8 @@ margin-bottom: -5px;
 
 /* Homepage Specifics */
 /* Estilo para o vídeo em destaque na INDEX.HTML */
-#hero + .content-section .single-featured-video .video-item { /* Mais específico para index */
+#hero + .content-section .single-featured-video .video-item {
+  /* Mais específico para index */
   max-width: 100vw;
   width: 70vw; /* Aumentado um pouco para melhor visualização, mas ainda relativo à viewport */
   margin-left: 50%;
@@ -4846,34 +4997,32 @@ margin-bottom: -5px;
   border-radius: 25px; /* Arredondar o próprio iframe */
 }
 
-
 /* Videos Page Specifics */
 /* Contêiner para o vídeo em destaque na PÁGINA DE VÍDEOS */
 #video-gallery .video-item-highlighted {
-    max-width: 900px; /* Largura máxima para o vídeo em destaque */
-    margin: 20px auto 40px auto; /* Centralizar e adicionar margem inferior */
-    border-radius: 25px; /* Bordas arredondadas para o contêiner do vídeo */
-    overflow: hidden; /* Para garantir que o iframe com bordas arredondadas funcione bem */
+  max-width: 900px; /* Largura máxima para o vídeo em destaque */
+  margin: 20px auto 40px auto; /* Centralizar e adicionar margem inferior */
+  border-radius: 25px; /* Bordas arredondadas para o contêiner do vídeo */
+  overflow: hidden; /* Para garantir que o iframe com bordas arredondadas funcione bem */
 }
 
 /* O .video-item dentro do .video-item-highlighted na PÁGINA DE VÍDEOS */
 #video-gallery .video-item-highlighted .video-item {
-    width: 100%; /* Ocupa toda a largura do .video-item-highlighted */
-    margin-left: 0;
-    transform: none;
-    border-radius: 0; /* Remove o radius do .video-item para não conflitar com o pai */
+  width: 100%; /* Ocupa toda a largura do .video-item-highlighted */
+  margin-left: 0;
+  transform: none;
+  border-radius: 0; /* Remove o radius do .video-item para não conflitar com o pai */
 }
 
 /* Iframe do vídeo em destaque na PÁGINA DE VÍDEOS */
 #video-gallery .video-item-highlighted .video-item iframe {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    height: auto !important;
-    border: none;
-    border-radius: 25px; /* Bordas arredondadas para o iframe */
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  border: none;
+  border-radius: 25px; /* Bordas arredondadas para o iframe */
 }
-
 
 .external-video-links {
   margin-bottom: 35px;
@@ -4944,11 +5093,11 @@ margin-bottom: -5px;
 }
 
 .placeholder-article {
-  width:100%; 
-  height:200px; 
-  background:#ccc; 
-  text-align:center; 
-  line-height:200px;
+  width: 100%;
+  height: 200px;
+  background: #ccc;
+  text-align: center;
+  line-height: 200px;
 }
 .featured-article-summary {
   background-color: #fffaf2;
@@ -4986,16 +5135,12 @@ margin-bottom: -5px;
     font-size: 1.5em; /* Slightly smaller on mobile */
     margin-right: 20px;
     margin-left: 20px;
-    }
-  
+  }
 }
-
-
 
 .featured-article-summary h3 a {
   text-decoration: none;
   color: var(--text-color-headings);
-  
 }
 .featured-article-summary h3 a:hover {
   color: var(--main-color);
@@ -5036,9 +5181,9 @@ margin-bottom: -5px;
 /* Ensure the container itself is centered if it's not full width, and text within is centered */
 #call-to-action-donate .container,
 #about-short .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Donation Charts Styling */
@@ -5063,13 +5208,11 @@ margin-bottom: -5px;
   align-items: flex-start; /* Align items to the top if they have different heights */
 }
 
-
-
 .chart-block {
   background-color: #fff;
   padding: 25px; /* Increased padding */
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   width: 100%;
   height: auto;
   display: flex;
@@ -5095,7 +5238,8 @@ margin-bottom: -5px;
 
 /* For medium to larger screens: try to put them side-by-side */
 @media (min-width: 960px) {
-  .charts-container, .charts-container-geral  {
+  .charts-container,
+  .charts-container-geral {
     flex-wrap: nowrap; /* Prevent wrapping if we want them strictly side-by-side */
   }
   .chart-block {
@@ -5116,7 +5260,8 @@ margin-bottom: -5px;
 }
 */
 
-.chart-block h3, .chart-block h4 {
+.chart-block h3,
+.chart-block h4 {
   text-align: center;
   margin-top: 0;
   margin-bottom: 15px;
@@ -5146,11 +5291,13 @@ margin-bottom: -5px;
 .detail-card {
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
-  border-left:8px solid var(--main-color); /* Accent border */
+  border-left: 8px solid var(--main-color); /* Accent border */
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.07);
-  transition: transform 0.8s ease, box-shadow 0.8s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+  transition:
+    transform 0.8s ease,
+    box-shadow 0.8s ease;
 }
 
 .detail-card:hover {
@@ -5174,8 +5321,6 @@ margin-bottom: -5px;
 .detail-card p strong {
   color: var(--text-color-headings); /* Make percentage stand out a bit */
 }
-
-
 
 /* Responsive adjustments for charts if needed */
 @media (min-width: 769px) {
@@ -5225,9 +5370,9 @@ margin-bottom: -5px;
 .history-text-container strong {
   color: var(--text-color-headings);
   font-weight: bold;
-  
+
   margin-bottom: 10px; /* Space below the strong text */
-  }
+}
 
 .history-text-container em {
   font-style: italic;
@@ -5239,7 +5384,6 @@ margin-bottom: -5px;
   font-style: italic; /* Italicize the strong text */
   color: var(--text-color-headings); /* Use heading color for emphasis */
   margin-bottom: 15px; /* Space below italicized strong text */
-
 }
 
 /* Responsive adjustments for history-inverted-section */
@@ -5261,7 +5405,6 @@ margin-bottom: -5px;
   }
 }
 
-
 /* About Page - Lamed Symbolism Grid */
 .lamed-symbolism-grid {
   display: grid;
@@ -5281,7 +5424,9 @@ margin-bottom: -5px;
   align-items: center; /* Center items horizontally */
   text-align: center; /* Center text */
   border-top: 10px solid var(--main-color); /* Accent color on top */
-  transition: transform 0.5s ease, box-shadow 0.5s ease; /* Smooth transition for hover effects */
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease; /* Smooth transition for hover effects */
 }
 
 .lamed-symbolism-card:hover {
@@ -5298,13 +5443,10 @@ margin-bottom: -5px;
   color: var(--main-color);
 }
 
-
-
 .lamed-symbolism-icon svg {
   width: 48px; /* Icon size */
   height: 48px;
 }
-
 
 /* CSS para a Animação do Ícone Trending Up */
 
@@ -5315,10 +5457,10 @@ margin-bottom: -5px;
   fill: none;
   stroke-width: 2; /* Mantendo a espessura do HTML */
   cursor: pointer;
-  
+
   /* Prepara o ícone para a animação */
   stroke-dasharray: 100; /* Um valor que cobre todo o comprimento do caminho */
-  stroke-dashoffset: 0;  /* Começa totalmente desenhado */
+  stroke-dashoffset: 0; /* Começa totalmente desenhado */
 }
 
 .lucide-trending-up.is-animating {
@@ -5341,7 +5483,7 @@ margin-bottom: -5px;
   /* Etapa 2: Redesenhar de Baixo para Cima (de 15% a 60%) */
   /* Mantemos o ícone invisível por um instante e depois o redesenhamos.
      Como invertemos o caminho no SVG, ele agora será desenhado de baixo para cima. */
-  
+
   70% {
     stroke-dashoffset: 0;
   }
@@ -5354,64 +5496,63 @@ margin-bottom: -5px;
   }
 }
 
-
-
 .lucide-heart {
-    width: 24px; /* Icon size */
-    height: 24px;
-    stroke: var(--main-color);
-    fill: none; /* Ensure no fill color */
-    stroke-width: 2; /* Adjust stroke width */
-    cursor: pointer; /* Pointer cursor for interactivity */
-    
-  }
-
-  .lamed-symbolism-card:hover .lucide-heart {
-    stroke: var(--main-color);
-    animation: pulse-heart 0.6s cubic-bezier(0.4,0,0.6,1) infinite;
-  }
-
- .lucide-heart.is-animating {
-  /* Aumentando a duração para tornar o efeito mais notável */
-  animation: pulse-heart 3s cubic-bezier(0.4,0,0.6,1) infinite;
+  width: 24px; /* Icon size */
+  height: 24px;
+  stroke: var(--main-color);
+  fill: none; /* Ensure no fill color */
+  stroke-width: 2; /* Adjust stroke width */
+  cursor: pointer; /* Pointer cursor for interactivity */
 }
 
-  @keyframes pulse-heart {
-    0% {
-      transform: scale(1);
-    }
-    30% {
-      transform: scale(1.18);
-    }
-    50% {
-      transform: scale(1.12);
-    }
-    70% {
-      transform: scale(1.18);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
+.lamed-symbolism-card:hover .lucide-heart {
+  stroke: var(--main-color);
+  animation: pulse-heart 0.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
 
-  .lucide-move-right {
-    width: 24px; /* Icon size */
-    height: 24px;
-    stroke: var(--main-color);
-    fill: none; /* Ensure no fill color */
-    stroke-width: 2; /* Adjust stroke width */
-    cursor: pointer; /* Pointer cursor for interactivity */
-    transition: stroke 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+.lucide-heart.is-animating {
+  /* Aumentando a duração para tornar o efeito mais notável */
+  animation: pulse-heart 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-heart {
+  0% {
+    transform: scale(1);
   }
+  30% {
+    transform: scale(1.18);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+  70% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.lucide-move-right {
+  width: 24px; /* Icon size */
+  height: 24px;
+  stroke: var(--main-color);
+  fill: none; /* Ensure no fill color */
+  stroke-width: 2; /* Adjust stroke width */
+  cursor: pointer; /* Pointer cursor for interactivity */
+  transition:
+    stroke 0.3s ease,
+    transform 0.3s ease; /* Smooth transition for hover effects */
+}
 
 .lamed-symbolism-card:hover .lucide-move-right {
-  animation: move-right-point 1.3s cubic-bezier(0.4,0,0.6,1) infinite;
+  animation: move-right-point 1.3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   stroke: var(--main-color);
 }
 
 .lucide-move-right.is-animating {
   /* Aumentando ligeiramente a duração */
-  animation: move-right-point 3s cubic-bezier(0.4,0,0.6,1) infinite;
+  animation: move-right-point 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes move-right-point {
@@ -5442,9 +5583,9 @@ margin-bottom: -5px;
   stroke-width: 1.5; /* Ajustado para corresponder ao SVG original */
   cursor: pointer;
   animation: 0.5s ease-in-out; /* Animação inicial para preparar o ícone */
-  
+
   /* PONTO-CHAVE: Define o eixo da transformação na base do ícone */
-  transform-origin: center bottom; 
+  transform-origin: center bottom;
 }
 
 .lamed-symbolism-card:hover .lucide-signpost-big-icon {
@@ -5468,18 +5609,17 @@ margin-bottom: -5px;
   }
   50% {
     /* Ao completar o primeiro giro, inclina para o outro lado */
-    transform: rotateY(360deg) rotate(5deg); 
+    transform: rotateY(360deg) rotate(5deg);
   }
   75% {
     /* No meio do segundo giro, inclina novamente */
-    transform:  rotateY(540deg) rotate(5deg);
+    transform: rotateY(540deg) rotate(5deg);
   }
   100% {
     /* Termina o segundo giro, voltando à posição original */
-    transform:  rotateY(720deg) rotate(0deg);
+    transform: rotateY(720deg) rotate(0deg);
   }
 }
-  
 
 .lamed-symbolism-text h5 {
   margin-top: 0;
@@ -5495,7 +5635,6 @@ margin-bottom: -5px;
   margin-bottom: 10px;
   /* padding-left: -120px; */ /* Removido - padding negativo é inválido */
 }
-
 
 /* Styling for Symbolism Section with Icons (sobre.html) - OLD - Kept for reference if needed, but new grid replaces it */
 /*
@@ -5542,7 +5681,8 @@ margin-bottom: -5px;
   text-align: center;
 }
 */
-.meaning-summary { /* Specific class for the summary parai */
+.meaning-summary {
+  /* Specific class for the summary parai */
   margin-top: 25px;
   font-size: 1.05em;
   line-height: 1.7;
@@ -5550,14 +5690,16 @@ margin-bottom: -5px;
   margin-right: 120px;
 }
 
-@media (max-width: 768px) { /* Using 768px breakpoint for consistency */
+@media (max-width: 768px) {
+  /* Using 768px breakpoint for consistency */
   .meaning-summary {
     margin-left: 20px;
     margin-right: 20px;
   }
 }
 
-@media (max-width: 600px) { /* Responsive adjustments for OLD symbolism items */
+@media (max-width: 600px) {
+  /* Responsive adjustments for OLD symbolism items */
   /*
   .symbolism-item {
     flex-direction: column;
@@ -5578,7 +5720,7 @@ margin-bottom: -5px;
 }
 
 .gemini-list li {
- margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 /* Botão Flutuante Voltar para Artigos */
@@ -5595,7 +5737,7 @@ margin-bottom: -5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   text-decoration: none;
   transition: all 0.3s ease; /* Transição para todas as propriedades */
   overflow: hidden; /* Para esconder o texto inicialmente */
@@ -5616,7 +5758,10 @@ margin-bottom: -5px;
   max-width: 0;
   opacity: 0;
   visibility: hidden;
-  transition: max-width 0.3s ease, opacity 0.3s ease 0.1s, margin-left 0.3s ease; /* Atraso na opacidade para melhor efeito */
+  transition:
+    max-width 0.3s ease,
+    opacity 0.3s ease 0.1s,
+    margin-left 0.3s ease; /* Atraso na opacidade para melhor efeito */
 }
 
 .floating-back-button:hover {
@@ -5638,7 +5783,9 @@ margin-bottom: -5px;
 .button-text-artigos {
   font-size: 0.9em; /* Tamanho do texto */
   color: white; /* Cor do texto */
-  transition: opacity 0.3s ease, margin-left 0.3s ease; /* Transição suave para opacidade e margem */
+  transition:
+    opacity 0.3s ease,
+    margin-left 0.3s ease; /* Transição suave para opacidade e margem */
 }
 
 /* Visibilidade controlada por JS */
@@ -5673,7 +5820,11 @@ margin-bottom: -5px;
   font-weight: bold;
   font-size: 1.1em;
   text-align: center;
-  transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
   border: none;
   cursor: pointer;
   background-color: var(--main-color);
@@ -5699,16 +5850,18 @@ margin-bottom: -5px;
 .plano-card {
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .plano-card:hover,
 .plano-card:focus-within {
   transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .plano-card h3 {
@@ -5731,14 +5884,16 @@ margin-bottom: -5px;
   width: 100%;
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .wallpaper-item a:hover img,
 .wallpaper-item a:focus img {
   transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive Design */
@@ -5822,33 +5977,29 @@ margin-bottom: -5px;
     flex-grow: 1;
   }
   /* As regras para .nav-social-item-mobile podem ser removidas, pois não serão mais adicionadas pelo JS */
-  }
+}
 
-  @media (max-width: 768px) {
-    /* ... outros estilos mobile ... */
+@media (max-width: 768px) {
+  /* ... outros estilos mobile ... */
 
-    /* A regra .logo-area .header-social-icons { display: none; } já foi tornada global,
+  /* A regra .logo-area .header-social-icons { display: none; } já foi tornada global,
        então não é mais necessária especificamente aqui. */
 
-    /* Remover estilos para .main-nav ul .nav-social-item-mobile e seus filhos,
+  /* Remover estilos para .main-nav ul .nav-social-item-mobile e seus filhos,
        pois esses elementos não serão mais criados. */
 
-    /* Team Carousel for Mobile */
+  /* Team Carousel for Mobile */
   #team .container {
     position: relative; /* For positioning controls if needed, though simple centering is fine too */
   }
-
-  
 
   .team-grid::-webkit-scrollbar {
     display: none; /* Hide scrollbar on WebKit browsers */
   }
   .team-grid {
-    -ms-overflow-style: none;  /* Hide scrollbar on IE and Edge */
-    scrollbar-width: none;  /* Hide scrollbar on Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar on IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar on Firefox */
   }
-
- 
 
   .team-carousel-controls {
     display: flex;
@@ -5861,7 +6012,6 @@ margin-bottom: -5px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    
   }
   .carousel-control {
     pointer-events: all;
@@ -5871,7 +6021,6 @@ margin-bottom: -5px;
   }
   /* End Team Carousel for Mobile */
 
-
   .main-nav {
     opacity: 0;
     visibility: hidden;
@@ -5880,10 +6029,13 @@ margin-bottom: -5px;
     left: 0;
     right: 0;
     background-color: #ffffff;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     z-index: -999;
     transform: translateY(-10px);
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transition:
+      opacity 0.3s ease-in-out,
+      visibility 0.3s ease-in-out,
+      transform 0.3s ease-in-out;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     padding-top: 25px; /* Add padding to push content down */
@@ -5919,7 +6071,8 @@ margin-bottom: -5px;
     border-bottom: none;
   }
 
-  .main-nav a:hover, .main-nav a.active {
+  .main-nav a:hover,
+  .main-nav a.active {
     background-color: #f8f8f8;
     border-bottom-color: #f0f0f0; /* Keep separator consistent on hover */
     color: var(--main-color);
@@ -5933,13 +6086,12 @@ margin-bottom: -5px;
     cursor: pointer;
     padding: 10px;
   }
-  .menu-toggle svg { /* Style for the Lucide Menu icon */
+  .menu-toggle svg {
+    /* Style for the Lucide Menu icon */
     width: 28px;
     height: 28px;
     stroke: var(--text-color-headings);
   }
-  
-
 
   .hero-section h1 {
     font-size: 2.5em;
@@ -5948,10 +6100,15 @@ margin-bottom: -5px;
     font-size: 1em;
   }
 
-  h1 { font-size: 2em; }
-  h2 { font-size: 1.8em; }
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.8em;
+  }
 
-  .video-list, .video-grid {
+  .video-list,
+  .video-grid {
     grid-template-columns: 1fr; /* Stack videos on smaller screens */
   }
 
@@ -5959,7 +6116,6 @@ margin-bottom: -5px;
     height: 300px; /* Adjust height for mobile if aspect-ratio trick is not enough */
   }
 }
-
 
 /* Old styles to remove or integrate if still needed - for now, mostly superseded */
 /*
@@ -6014,7 +6170,7 @@ margin-bottom: -5px;
   border: 1px solid #e0e0e0;
   border-radius: 25px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #search-input {

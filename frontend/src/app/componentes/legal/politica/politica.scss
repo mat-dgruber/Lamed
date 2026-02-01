@@ -7,12 +7,12 @@
 
 /* Hero Header */
 .hero-header {
-    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); /* Blue gradient similar to reference */
+    background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); /* Lamed Orange Gradient */
     color: white;
     padding: 3rem 1rem;
     text-align: center;
     border-radius: 0 0 2rem 2rem; /* Organic feel curve */
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 20px rgba(234, 88, 12, 0.25);
     margin-bottom: -2rem; /* Overlap effect */
     position: relative;
     z-index: 1;
@@ -22,11 +22,13 @@
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    color: white;
 }
 
 .last-updated {
     opacity: 0.9;
     font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* Container */
@@ -56,8 +58,8 @@
 }
 
 .card-icon {
-    background: #eff6ff;
-    color: #3b82f6;
+    background: #ffedd5; /* Orange-100 */
+    color: #ea580c; /* Orange-600 */
     width: 50px;
     height: 50px;
     border-radius: 12px;
@@ -86,12 +88,15 @@ h2 {
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 2rem;
+    color: #374151; /* Darker gray for readability */
+    text-align: left; /* Ensure text is not centered if parent is */
 }
 
 /* Info Grid (Icon + Text) */
 .info-grid {
     display: grid;
     gap: 1.5rem;
+    text-align: left; /* Explicitly align grid content left */
 }
 
 @media (min-width: 768px) {

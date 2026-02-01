@@ -1,4 +1,46 @@
+# Angular
+/frontend/dist/
+/frontend/tmp/
+/frontend/out-tsc/
+/frontend/bazel-out/
+/frontend/node_modules/
+/frontend/.idea/
+/frontend/.project
+/frontend/.ng/
+/frontend/.angular/
+/frontend/.vscode/
+
+# Python
+/backend/__pycache__/
+/backend/*.py[cod]
+/backend/*$py.class
+/backend/venv/
+/backend/env/
+/backend/.env
+/backend/.venv
+/backend/build/
+/backend/dist/
+/backend/*.spec
+
+# Firebase / Secrets
+backend/certs/
+*.json
+!package.json
+!tsconfig.json
+!angular.json
+!ng-package.json
+!nx.json
+!frontend/src/assets/**/*.json
+serviceAccountKey.json
+*.key
+.env
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+
+# IDE / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
 /_BKP
-/angular-lamed
-/angular-lamed
-/angular-lamed/vite

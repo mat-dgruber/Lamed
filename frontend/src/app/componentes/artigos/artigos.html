@@ -12,15 +12,15 @@
           <h2>Último artigo em destaque</h2>
           <article>
             <div class="last-article">
-              @if (latest.thumbnail_url) {
+              @if (latest.banner_image_url) {
                 <div class="article-banner-image">
-                  <a [routerLink]="['/bundle', latest.id]">
-                    <img [src]="latest.thumbnail_url" [alt]="latest.title" loading="lazy" />
+                  <a [routerLink]="['/article', latest.id]">
+                    <img [src]="latest.banner_image_url" [alt]="latest.title" loading="lazy" />
                   </a>
                 </div>
               }
               <h3>
-                <a [routerLink]="['/bundle', latest.id]">{{ latest.title }}</a>
+                <a [routerLink]="['/article', latest.id]">{{ latest.title }}</a>
               </h3>
               <p>{{ latest.description }}</p>
             </div>
@@ -58,21 +58,71 @@
 
       <section id="lista-artigos">
         <h2>Mais artigos</h2>
-        <ul id="articles-list-ul">
-          @for (article of filteredArticles(); track article.id) {
-            <li>
-              <a [routerLink]="['/bundle', article.id]">
-                <strong>{{ article.title }}</strong>
-                <span class="article-list-item-meta"
-                  >Por: {{ article.author || 'Lamed' }} - Publicado em:
-                  {{ article.published_at | date: 'dd/MM/yyyy' }}</span
-                >
+        <div class="articles-grid">
+          @for (article of initialArticles(); track article.id) {
+            <div class="article-card">
+              <a [routerLink]="['/article', article.id]" class="article-card-link">
+                <div class="article-card-content">
+                  <h4>{{ article.title }}</h4>
+                  <p class="article-meta-grid">
+                    Por: {{ article.author || 'Lamed' }}<br />
+                    <span class="text-sm text-gray-500">{{
+                      article.published_at | date: 'dd/MM/yyyy'
+                    }}</span>
+                  </p>
+                  <p class="article-desc-grid">
+                    {{ article.description | slice: 0 : 100
+                    }}{{ article.description && article.description.length > 100 ? '...' : '' }}
+                  </p>
+                </div>
               </a>
-            </li>
+            </div>
           } @empty {
-            <li>Nenhum artigo encontrado.</li>
+            <div *ngIf="!latestArticle()" class="col-span-3 text-center py-8 text-gray-500">
+              Nenhum artigo encontrado.
+            </div>
           }
-        </ul>
+        </div>
+
+        @if (remainingArticles().length > 0) {
+          <div class="show-more-container">
+            <button (click)="toggleShowAll()" class="btn-show-more">
+              {{
+                showAll()
+                  ? 'Ver menos artigos'
+                  : 'Ver mais artigos (' + remainingArticles().length + ')'
+              }}
+              <lucide-icon
+                [name]="showAll() ? 'chevron-up' : 'chevron-down'"
+                [size]="20"
+              ></lucide-icon>
+            </button>
+          </div>
+
+          @if (showAll()) {
+            <div class="articles-grid">
+              @for (article of remainingArticles(); track article.id) {
+                <div class="article-card">
+                  <a [routerLink]="['/article', article.id]" class="article-card-link">
+                    <div class="article-card-content">
+                      <h4>{{ article.title }}</h4>
+                      <p class="article-meta-grid">
+                        Por: {{ article.author || 'Lamed' }}<br />
+                        <span class="text-sm text-gray-500">{{
+                          article.published_at | date: 'dd/MM/yyyy'
+                        }}</span>
+                      </p>
+                      <p class="article-desc-grid">
+                        {{ article.description | slice: 0 : 100
+                        }}{{ article.description && article.description.length > 100 ? '...' : '' }}
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              }
+            </div>
+          }
+        }
       </section>
     </div>
   </section>

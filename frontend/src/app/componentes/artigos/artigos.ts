@@ -1,23 +1,24 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { BundleService } from '../../services/bundle.service';
+import { LucideAngularModule } from 'lucide-angular';
+import { ArticleService, Article } from '../../services/article.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-artigos',
   standalone: true,
-  imports: [CommonModule, RouterLink, ReactiveFormsModule],
+  imports: [CommonModule, RouterLink, ReactiveFormsModule, LucideAngularModule],
   templateUrl: './artigos.html',
   styleUrl: './artigos.scss',
 })
 export class Artigos {
-  private bundleService = inject(BundleService);
+  private articleService = inject(ArticleService);
 
-  // Load bundles
-  bundles = this.bundleService.bundles;
+  // Load articles
+  articles = toSignal(this.articleService.getArticles(), { initialValue: [] });
   
   // Search Control
   searchControl = new FormControl('');
@@ -29,42 +30,54 @@ export class Artigos {
     { initialValue: '' }
   );
 
-  // Latest Article (Bundle)
+  // Latest Article
   latestArticle = computed(() => {
-    const all = this.bundles();
+    const all = this.articles();
     return all.length > 0 ? all[0] : null;
   });
 
-  // Filtered Articles (Bundles)
-  filteredArticles = computed(() => {
+  // Toggles
+  showAll = signal(false);
+
+  // Filtered Articles (Base)
+  // We exclude the first one IF it's the latest (highlighted), BUT only if we are NOT searching?
+  // Actually, the original logic said: "Exclude the latest one... if there is no search term".
+  // Let's keep that logic.
+  baseArticles = computed(() => {
     const term = this.searchTerm()?.toLowerCase() || '';
-    const all = this.bundles();
-    
-    // If no search, return match all (excluding the latest if desired, but typically list all)
-    // Let's exclude the featured one from the main list if needed, or follow backup logic?
-    // Backup showed "Mais artigos" (More articles). 
-    // Usually means skipping the first one. Let's filter.
+    const all = this.articles();
     
     let list = all;
     
     if (term) {
-        list = list.filter(b => 
-            b.title.toLowerCase().includes(term) ||
-            b.description.toLowerCase().includes(term) ||
-            (b.author && b.author.toLowerCase().includes(term))
+        list = list.filter(a => 
+            a.title.toLowerCase().includes(term) ||
+            a.description.toLowerCase().includes(term) ||
+            (a.author && a.author.toLowerCase().includes(term))
         );
+        // If searching, we show ALL matches (including the latest if it matches)
+        return list; 
     }
     
-    // Exclude the latest one from the list if there is no search term (to replicate 'More articles')
-    // If searching, show all matches.
-    if (!term && list.length > 0) {
+    // If NOT searching, exclude the first one (latest) as it is shown in Hero
+    if (list.length > 0) {
         return list.slice(1);
     }
     
-    return list;
+    return [];
   });
 
-  constructor() {
-    this.bundleService.getBundles().subscribe();
+  // Initial List (First 6)
+  initialArticles = computed(() => {
+    return this.baseArticles().slice(0, 6);
+  });
+
+  // Remaining List (The rest)
+  remainingArticles = computed(() => {
+    return this.baseArticles().slice(6);
+  });
+
+  toggleShowAll() {
+    this.showAll.update(v => !v);
   }
 }
