@@ -16,16 +16,16 @@ if not firebase_admin._apps:
             print(f"🔑 Loading Firebase credentials from: {key_path}")
             cred = credentials.Certificate(key_path)
             firebase_admin.initialize_app(cred, {
-                'projectId': 'novo-lamed-angular',
-                'storageBucket': 'novo-lamed-angular.firebasestorage.app'
+                'projectId': 'lamed-148',
+                'storageBucket': 'lamed-148.firebasestorage.app'
             })
         else:
             # 2. Fallback to Application Default Credentials (gcloud auth application-default login)
             print("☁️  Loading Google Application Default Credentials...")
             cred = credentials.ApplicationDefault()
             firebase_admin.initialize_app(cred, {
-                'projectId': 'novo-lamed-angular',
-                'storageBucket': 'novo-lamed-angular.firebasestorage.app'
+                'projectId': 'lamed-148',
+                'storageBucket': 'lamed-148.firebasestorage.app'
             })
             
     except Exception as e:

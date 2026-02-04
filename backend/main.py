@@ -12,8 +12,8 @@ app = FastAPI(
 origins = [
     "http://localhost:4200",
     "http://localhost:8000",
-    "https://novo-lamed-angular.web.app",
-    "https://novo-lamed-angular.firebaseapp.com",
+    "https://lamed-148.web.app",
+    "https://lamed-148.firebaseapp.com",
 ]
 
 app.add_middleware(
@@ -30,3 +30,9 @@ def read_root():
 
 app.include_router(bundles.router, prefix="/bundles", tags=["bundles"])
 app.include_router(admin.router, prefix="/admin", tags=["admin"])
+
+if __name__ == "__main__":
+    import uvicorn
+    # Allow running directly with `python main.py` or `uv run main.py`
+    print("🚀 Starting server via main.py...")
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

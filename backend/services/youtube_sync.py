@@ -1,6 +1,6 @@
 from datetime import datetime
-from ..models import BundleCreate, VideoData
-from ..config import db
+from models import BundleCreate, VideoData
+from config import db
 
 BUNDLES_COLLECTION = "bundles"
 
