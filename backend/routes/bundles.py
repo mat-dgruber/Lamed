@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException, Query
 from typing import List, Optional
 from datetime import datetime
 from google.cloud.firestore import Query as FirestoreQuery
-from ..models import Bundle, BundleCreate
-from ..config import db
+from models import Bundle, BundleCreate
+from config import db
 
 router = APIRouter()
 

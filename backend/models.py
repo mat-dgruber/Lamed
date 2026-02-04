@@ -9,7 +9,7 @@ class VideoData(BaseModel):
 
 class Resource(BaseModel):
     title: str
-    type: Literal['pdf', 'pptx', 'infographic', 'doc', 'csv', 'audio', 'image']
+    type: Literal['pdf', 'pptx', 'infographic', 'doc', 'csv', 'audio', 'image', 'mapa_mental', 'slides', 'guia', 'infografico']
     url: str
 
 class BundleBase(BaseModel):
@@ -21,6 +21,7 @@ class BundleBase(BaseModel):
     video_data: Optional[VideoData] = None
     thumbnail_url: Optional[str] = None
     article_content: Optional[str] = None
+    article_url: Optional[str] = None
     resources: List[Resource] = []
     is_active: bool = False
 
