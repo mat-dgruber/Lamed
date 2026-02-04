@@ -1,0 +1,108 @@
+<!-- Hero Section (Global Style) -->
+<div class="hero-section pb-32">
+  <div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold">Trilhas de Estudos</h1>
+    <p class="mt-2 mb-4 text-lg opacity-90">
+      Aprofunde-se no estudo bíblico com nossos pacotes completos de estudos.
+    </p>
+  </div>
+</div>
+
+<div class="container mx-auto px-4 py-8 -mt-8 relative z-10">
+  @if (bundles().length > 0) {
+    <!-- Latest Bundle Hero Card -->
+    <div
+      class="mb-16 grid gap-8 lg:grid-cols-5 items-center bg-white rounded-3xl p-6 shadow-xl border border-zinc-100"
+    >
+      <div
+        class="lg:col-span-3 aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg ring-1 ring-zinc-900/10"
+      >
+        <iframe
+          [src]="getSafeUrl(bundles()[0].video_data?.url)"
+          title="Video em Destaque"
+          class="h-full w-full"
+          frameborder="0"
+          allow="
+            accelerometer;
+            autoplay;
+            clipboard-write;
+            encrypted-media;
+            gyroscope;
+            picture-in-picture;
+          "
+          allowfullscreen
+        >
+        </iframe>
+      </div>
+      <div class="lg:col-span-2 space-y-4">
+        <div class="flex items-center gap-2">
+          <span
+            class="inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-sm font-medium text-orange-800"
+          >
+            Destaque da Lição #{{ bundles()[0].week_number }}
+          </span>
+          <span class="text-sm text-zinc-500" *ngIf="bundles()[0].published_at">
+            {{ bundles()[0].published_at | date: 'longDate' }}
+          </span>
+        </div>
+
+        <h2 class="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+          {{ bundles()[0].title }}
+        </h2>
+
+        <p class="text-lg text-zinc-600 leading-relaxed line-clamp-3">
+          {{ bundles()[0].description }}
+        </p>
+
+        <div class="pt-4">
+          <a
+            [routerLink]="['/bundle', bundles()[0].id]"
+            class="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all"
+          >
+            <lucide-icon name="book-open" [size]="20"></lucide-icon>
+            Acessar Material Completo
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Separator -->
+    <div class="relative mb-12">
+      <div class="absolute inset-0 flex items-center" aria-hidden="true">
+        <div class="w-full border-t border-zinc-200"></div>
+      </div>
+      <div class="relative flex justify-center">
+        <span
+          class="bg-zinc-50 px-3 text-base font-semibold leading-6 text-zinc-900 uppercase tracking-wider"
+        >
+          Estudos Anteriores
+        </span>
+      </div>
+    </div>
+
+    <!-- Grid Section (Past Bundles) -->
+    <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+      @for (bundle of bundles(); track bundle.id; let i = $index) {
+        <!-- Skip index 0 as it is the Hero, limit to 13 items total (1 hero + 12 grid) -->
+        @if (i > 0 && i < 13) {
+          <app-bundle-card [bundle]="bundle" [compact]="true"></app-bundle-card>
+        }
+      }
+    </div>
+  }
+
+  @if (bundles().length === 0) {
+    <div
+      class="mt-12 flex flex-col items-center justify-center py-20 bg-white rounded-3xl border border-zinc-100 shadow-sm text-center"
+    >
+      <div class="bg-orange-50 p-6 rounded-full mb-6">
+        <lucide-icon name="library" class="text-orange-500" [size]="48"></lucide-icon>
+      </div>
+      <h3 class="text-xl font-bold text-zinc-900 mb-2">Nenhum estudo encontrado</h3>
+      <p class="text-zinc-500 max-w-md px-4">
+        Nossas trilhas estão sendo preparadas. Volte em breve para conferir os novos materiais de
+        estudo bíblico.
+      </p>
+    </div>
+  }
+</div>
