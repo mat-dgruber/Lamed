@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MateriaisExtras } from './materiais-extras';
+import { BundleList } from './bundle-list';
 
-describe('MateriaisExtras', () => {
-  let component: MateriaisExtras;
-  let fixture: ComponentFixture<MateriaisExtras>;
+describe('BundleList', () => {
+  let component: BundleList;
+  let fixture: ComponentFixture<BundleList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MateriaisExtras]
+      imports: [BundleList]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MateriaisExtras);
+    fixture = TestBed.createComponent(BundleList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

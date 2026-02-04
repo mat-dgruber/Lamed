@@ -7,12 +7,12 @@ export const routes: Routes = [
     { path: '', component: Home },
     { path: 'videos', component: Videos },
     { path: 'artigos', loadComponent: () => import('./componentes/artigos/artigos').then(m => m.Artigos) },
-    { path: 'materiais-extras', loadComponent: () => import('./componentes/materiais-extras/materiais-extras').then(m => m.MateriaisExtras) },
+    { path: 'materiais-extras', loadComponent: () => import('./componentes/bundle-list/bundle-list').then(m => m.BundleList) },
     { path: 'sobre', loadComponent: () => import('./componentes/sobre/sobre').then(m => m.Sobre) },
     { path: 'apoie', loadComponent: () => import('./componentes/apoie/apoie').then(m => m.Apoie) },
     { path: 'contato', loadComponent: () => import('./componentes/contato/contato').then(m => m.Contato) },
     { path: 'siga-nos', loadComponent: () => import('./componentes/siga-nos/siga-nos').then(m => m.SigaNos) },
-    { path: 'guia-de-estudos', loadComponent: () => import('./componentes/materiais-extras/materiais-extras').then(m => m.MateriaisExtras) }, // Assuming this maps to materials page for now, or check correct component.
+    { path: 'guia-de-estudos', loadComponent: () => import('./componentes/bundle-list/bundle-list').then(m => m.BundleList) }, // Assuming this maps to materials page for now, or check correct component.
     { path: 'termos-de-uso', loadComponent: () => import('./componentes/legal/termos/termos').then(m => m.Termos) },
     { path: 'politica-de-privacidade', loadComponent: () => import('./componentes/legal/politica/politica').then(m => m.Politica) },
     { path: 'bundle/:id', component: BundleDetailComponent },

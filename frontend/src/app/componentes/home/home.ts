@@ -1,6 +1,7 @@
 import { Component, OnInit, signal, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { BundleService, Bundle } from '../../services/bundle.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -8,7 +9,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, LucideAngularModule],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })

@@ -9,7 +9,8 @@ import { Bundle } from '../../../services/bundle.service';
   standalone: true,
   imports: [CommonModule, RouterLink, LucideAngularModule],
   template: `
-    <div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-all hover:shadow-lg dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+    <div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-all hover:shadow-lg dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800"
+         [class.h-full]="true">
       
       <!-- Video Thumbnail -->
       <div class="relative aspect-video w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
@@ -27,10 +28,10 @@ import { Bundle } from '../../../services/bundle.service';
         </div>
       </div>
 
-      <!-- Content -->
+       <!-- Content -->
       <div class="flex flex-1 flex-col p-5">
         <div class="flex items-center gap-2 mb-2">
-           <span class="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 dark:bg-blue-400/10 dark:text-blue-400">
+           <span class="inline-flex items-center rounded-full bg-orange-50 px-2 py-1 text-xs font-medium text-orange-700 ring-1 ring-inset ring-orange-700/10 dark:bg-orange-400/10 dark:text-orange-400">
              Semana {{ bundle.week_number }}
            </span>
            <span class="text-xs text-zinc-500" *ngIf="bundle.published_at">
@@ -38,21 +39,23 @@ import { Bundle } from '../../../services/bundle.service';
            </span>
         </div>
 
-        <h3 class="mb-2 text-xl font-bold leading-tight text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+        <h3 class="mb-2 font-bold leading-tight text-zinc-900 dark:text-zinc-100 group-hover:text-orange-600 dark:group-hover:text-orange-400"
+            [class.text-xl]="!compact" [class.text-lg]="compact">
           <a [routerLink]="['/bundle', bundle.id]" class="focus:outline-none">
             <span class="absolute inset-0" aria-hidden="true"></span>
             {{ bundle.title }}
           </a>
         </h3>
 
-        <p class="mb-4 line-clamp-3 flex-1 text-sm text-zinc-600 dark:text-zinc-400">
+        <!-- Description (Hidden in Compact) -->
+        <p class="mb-4 line-clamp-3 flex-1 text-sm text-zinc-600 dark:text-zinc-400" *ngIf="!compact">
           {{ bundle.description }}
         </p>
 
-        <!-- Actions Footer -->
-        <div class="mt-auto flex items-center justify-between border-t border-zinc-100 pt-4 dark:border-zinc-800">
+        <!-- Actions Footer (Hidden in Compact unless we want 'Ver Mais') -->
+        <div class="mt-auto flex items-center justify-between border-t border-zinc-100 pt-4 dark:border-zinc-800" *ngIf="!compact">
           <div class="flex items-center gap-4 text-sm font-medium text-zinc-600 dark:text-zinc-400">
-            <div class="flex items-center gap-1 hover:text-blue-600 dark:hover:text-blue-400">
+            <div class="flex items-center gap-1 hover:text-orange-600 dark:hover:text-orange-400">
               <lucide-icon [name]="'file-text'" [size]="16"></lucide-icon>
               <span>Artigo</span>
             </div>
@@ -62,6 +65,12 @@ import { Bundle } from '../../../services/bundle.service';
             </div>
           </div>
         </div>
+        
+        <!-- Compact Footer -->
+        <div class="mt-auto pt-2" *ngIf="compact">
+            <span class="text-sm font-medium text-orange-600 group-hover:text-orange-500">Ver mais &rarr;</span>
+        </div>
+
       </div>
     </div>
   `,
@@ -69,6 +78,7 @@ import { Bundle } from '../../../services/bundle.service';
 })
 export class BundleCardComponent {
   @Input({ required: true }) bundle!: Bundle;
+  @Input() compact = false;
 
   formatDuration(seconds: number): string {
     const min = Math.floor(seconds / 60);

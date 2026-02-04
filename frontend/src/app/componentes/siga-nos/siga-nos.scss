@@ -79,15 +79,16 @@
 
 /* Ajustes para o Hero Section específico da página */
 #siga-nos-hero {
-  padding-top: 60px;
-  padding-bottom: 60px;
-  background-color: var(--color-fundo-hero, #fffaf2);
-  text-align: center;
+  /* Global styles apply, but we want more vertical space here */
+  height: 400px; 
 }
 
-#siga-nos-hero h1 {
-    color: var(--color-destaque);
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    font-family: caecilia, sans-serif;
+/* Fix for the email icon being too large */
+.contato-section .btn-primary lucide-icon,
+.contato-section .btn-primary lucide-icon svg {
+  width: 18px !important;
+  height: 18px !important;
+  display: inline-block;
+  vertical-align: middle;
 }
+
