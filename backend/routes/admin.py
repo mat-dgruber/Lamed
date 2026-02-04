@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
-from ..config import settings
+from config import settings
 import shutil
 import os
 
@@ -24,7 +24,7 @@ def generate_upload_url(filename: str, content_type: str):
     # For prototype/dev without key:
     return {
         "upload_url": f"https://mock-upload.com/{filename}", # Frontend would PUT here
-        "public_url": f"https://firebasestorage.googleapis.com/v0/b/novo-lamed-angular.firebasestorage.app/o/uploads%2F{filename}?alt=media"
+        "public_url": f"https://firebasestorage.googleapis.com/v0/b/lamed-148.firebasestorage.app/o/uploads%2F{filename}?alt=media"
     }
 
 @router.post("/upload")
@@ -39,6 +39,6 @@ def trigger_sync():
     """
     Manually triggers the YouTube Sync process.
     """
-    from ..services.youtube_sync import sync_videos
+    from services.youtube_sync import sync_videos
     result = sync_videos()
     return {"status": "success", "data": result}
