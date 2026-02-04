@@ -1,0 +1,66 @@
+<main class="site-main">
+    <section class="content-section">
+      <div class="container">
+        <h1>Artigos Bíblicos</h1>
+        <p>Explore nossos artigos para um estudo aprofundado da Bíblia, com reflexões sobre teologia e vida cristã.</p>
+        <section id="destaque" *ngIf="latestArticle$ | async as latestArticle">
+          <h2>Último artigo em destaque</h2>
+          <article>
+            <div class="last-article">
+              <div class="article-banner-image">
+                <a [routerLink]="['/artigo', latestArticle.id]">
+                  <img [src]="latestArticle.bannerImage" [alt]="latestArticle.title" loading="lazy">
+                </a>
+              </div>
+              <h3><a [routerLink]="['/artigo', latestArticle.id]">{{ latestArticle.title }}</a></h3>
+              <p>{{ latestArticle.description }}</p>
+            </div>
+          </article>
+        </section>
+        <section id="search-section" class="search-section">
+          <div class="search-container">
+            <input type="text" id="search-input" placeholder="Pesquisar artigos por título ou palavra-chave..." [formControl]="searchControl">
+            <button id="search-button" aria-label="Pesquisar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </button>
+          </div>
+        </section>
+        <section id="lista-artigos">
+          <h2>Mais artigos</h2>
+          <ul id="articles-list-ul" *ngIf="filteredArticles$ | async as articles">
+            <li *ngFor="let article of articles">
+              <a [routerLink]="['/artigo', article.id]">
+                <strong>{{ article.title }}</strong>
+                <span class="article-list-item-meta">Por: {{ article.author }} - Publicado em: {{ article.displayDate }}</span>
+              </a>
+            </li>
+            <li *ngIf="articles.length === 0">Nenhum artigo encontrado.</li>
+          </ul>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyA-O5OuinkLc_Jjh2H66SAMvASSMLjn-Ew",
+    authDomain: "lamed-148.firebaseapp.com",
+    projectId: "lamed-148",
+    storageBucket: "lamed-148.firebasestorage.app",
+    messagingSenderId: "957958728332",
+    appId: "1:957958728332:web:54e2654652c944048729a9",
+    measurementId: "G-6XRD5FCRNY"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>

@@ -1,0 +1,106 @@
+/* contato.component.css */
+
+h2 {
+  text-align: center;
+  color: var(--highlight-color);
+  font-size: 2.2em;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.contact-form-container {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background-color: #fffaf2;
+  border-radius: 25px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.179);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--text-color-headings);
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  font-size: 1rem;
+  background-color: #ffffff;
+  color: var(--text-color);
+  box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--main-color);
+  box-shadow: 0 0 0 2px rgba(248, 148, 27, 0.4);
+}
+
+.error-message {
+  color: var(--highlight-color);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+button {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--main-color-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+/* Media Query for mobile responsiveness */
+@media (max-width: 768px) {
+  .contact-form-container {
+    margin: 1rem auto;
+    padding: 0.5rem;
+    width: 90%;
+  }
+
+  h2 {
+    font-size: 1.8em;
+    
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 0.9rem;
+  }
+
+  input,
+  textarea {
+    font-size: 0.9rem;
+    padding-bottom: 0.8rem;
+    padding-right: 0.05rem;
+    padding-top: 0.5rem;
+
+  }
+
+}
