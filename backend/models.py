@@ -9,7 +9,7 @@ class VideoData(BaseModel):
 
 class Resource(BaseModel):
     title: str
-    type: Literal['pdf', 'pptx', 'infographic', 'doc', 'csv', 'audio', 'image', 'mapa_mental', 'slides', 'guia', 'infografico']
+    type: Literal['pdf', 'pptx', 'infographic', 'doc', 'csv', 'audio', 'image', 'mapa_mental', 'slides', 'guia', 'infografico', 'video']
     url: str
 
 class BundleBase(BaseModel):
@@ -40,7 +40,7 @@ class ArticleBase(BaseModel):
     title: str
     subtitle: Optional[str] = None
     summary: str
-    cover_image: str  # URL to Google Drive or other source
+    cover_image: str = "assets/Imagens/Fundo_Lamed-total.png"  # URL to Google Drive or other source
     content: str  # HTML content from rich editor
     highlights: List[str] = []
     tags: List[str] = []

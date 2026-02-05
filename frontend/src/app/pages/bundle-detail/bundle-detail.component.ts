@@ -36,6 +36,7 @@ export class BundleDetailComponent implements OnInit {
       case 'guia': return 'book';
       case 'pdf': return 'file-text';
       case 'audio': return 'headphones';
+      case 'video': return 'play-circle';
       default: return 'file';
     }
   }
