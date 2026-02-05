@@ -10,7 +10,7 @@ if not firebase_admin._apps:
     try:
         # 1. Try Service Account Key first (Preferred for local dev if present)
         # Note: We check for 'certs/serviceAccountKey' assuming running from project root
-        key_path = os.path.join(os.path.dirname(__file__), 'certs', 'serviceAccountKey')
+        key_path = os.path.join(os.path.dirname(__file__), 'certs', 'serviceAccountKey.json')
         
         if os.path.exists(key_path):
             print(f"🔑 Loading Firebase credentials from: {key_path}")

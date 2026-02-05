@@ -52,7 +52,7 @@ export class Artigos {
     if (term) {
         list = list.filter(a => 
             a.title.toLowerCase().includes(term) ||
-            a.description.toLowerCase().includes(term) ||
+            a.summary.toLowerCase().includes(term) ||
             (a.author && a.author.toLowerCase().includes(term))
         );
         // If searching, we show ALL matches (including the latest if it matches)

@@ -12,17 +12,17 @@
           <h2>Último artigo em destaque</h2>
           <article>
             <div class="last-article">
-              @if (latest.banner_image_url) {
+              @if (latest.cover_image) {
                 <div class="article-banner-image">
                   <a [routerLink]="['/article', latest.id]">
-                    <img [src]="latest.banner_image_url" [alt]="latest.title" loading="lazy" />
+                    <img [src]="latest.cover_image" [alt]="latest.title" loading="lazy" />
                   </a>
                 </div>
               }
               <h3>
                 <a [routerLink]="['/article', latest.id]">{{ latest.title }}</a>
               </h3>
-              <p>{{ latest.description }}</p>
+              <p>{{ latest.summary }}</p>
             </div>
           </article>
         </section>
@@ -71,8 +71,8 @@
                     }}</span>
                   </p>
                   <p class="article-desc-grid">
-                    {{ article.description | slice: 0 : 100
-                    }}{{ article.description && article.description.length > 100 ? '...' : '' }}
+                    {{ article.summary | slice: 0 : 100
+                    }}{{ article.summary && article.summary.length > 100 ? '...' : '' }}
                   </p>
                 </div>
               </a>
@@ -113,8 +113,8 @@
                         }}</span>
                       </p>
                       <p class="article-desc-grid">
-                        {{ article.description | slice: 0 : 100
-                        }}{{ article.description && article.description.length > 100 ? '...' : '' }}
+                        {{ article.summary | slice: 0 : 100
+                        }}{{ article.summary && article.summary.length > 100 ? '...' : '' }}
                       </p>
                     </div>
                   </a>

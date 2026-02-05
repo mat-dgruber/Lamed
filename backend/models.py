@@ -1,6 +1,6 @@
 from datetime import datetime
-from typing import List, Optional, Literal
-from pydantic import BaseModel, HttpUrl
+from typing import List, Optional, Literal, Any
+from pydantic import BaseModel, HttpUrl, model_validator
 
 class VideoData(BaseModel):
     url: str
@@ -35,3 +35,36 @@ class Bundle(BundleBase):
 
     class Config:
         from_attributes = True
+
+class ArticleBase(BaseModel):
+    title: str
+    subtitle: Optional[str] = None
+    summary: str
+    cover_image: str  # URL to Google Drive or other source
+    content: str  # HTML content from rich editor
+    highlights: List[str] = []
+    tags: List[str] = []
+    published_at: Optional[datetime] = None
+    is_active: bool = True
+    author: str = "Lamed"
+
+    @model_validator(mode='before')
+    @classmethod
+    def map_legacy_fields(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            # Map description -> summary
+            if 'summary' not in data and 'description' in data:
+                data['summary'] = data['description']
+            # Map banner_image_url -> cover_image
+            if 'cover_image' not in data and 'banner_image_url' in data:
+                data['cover_image'] = data['banner_image_url']
+        return data
+
+class ArticleCreate(ArticleBase):
+    pass
+
+class Article(ArticleBase):
+    id: str
+    created_at: datetime
+    updated_at: datetime
+

@@ -1,0 +1,231 @@
+<div class="min-h-screen bg-zinc-50 pt-28 pb-12">
+  <div class="container mx-auto px-6 max-w-4xl">
+    <!-- Header Actions -->
+    <div class="mb-8 flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-zinc-900">
+          {{ isEditMode() ? 'Editar Artigo' : 'Novo Artigo' }}
+        </h1>
+        <p class="mt-1 text-zinc-500">Escreva e gerencie seu artigo.</p>
+      </div>
+      <div class="flex gap-3">
+        <a
+          routerLink="/admin/articles"
+          class="rounded-lg px-4 py-2.5 text-sm font-medium text-zinc-600 hover:bg-white hover:shadow-sm transition-all border border-transparent hover:border-zinc-200"
+        >
+          Voltar
+        </a>
+        <button
+          (click)="save()"
+          [disabled]="isSaving()"
+          class="rounded-lg bg-orange-600 px-6 py-2.5 text-sm font-bold text-white hover:bg-orange-500 disabled:opacity-50 shadow-sm transition-colors flex items-center gap-2"
+        >
+          <lucide-icon
+            *ngIf="isSaving()"
+            name="loader-2"
+            class="animate-spin"
+            [size]="18"
+          ></lucide-icon>
+          {{ isSaving() ? 'Salvando...' : 'Salvar Artigo' }}
+        </button>
+      </div>
+    </div>
+
+    <form class="space-y-8 bg-white p-8 rounded-3xl border border-zinc-100 shadow-xl">
+      <!-- Basic Info -->
+      <div>
+        <h2 class="text-lg font-bold text-zinc-900 mb-4 flex items-center gap-2">
+          <lucide-icon name="file-text" class="text-orange-500" [size]="20"></lucide-icon>
+          Informações Básicas
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="col-span-2">
+            <label class="block text-sm font-semibold text-zinc-700 mb-1">Título</label>
+            <input
+              type="text"
+              [(ngModel)]="model.title"
+              name="title"
+              class="block w-full rounded-xl border-zinc-200 bg-zinc-50 px-4 py-3 text-zinc-900 focus:border-orange-500 focus:ring-orange-500 transition-colors"
+              placeholder="Título do artigo"
+              required
+            />
+          </div>
+
+          <div class="col-span-2">
+            <label class="block text-sm font-semibold text-zinc-700 mb-1"
+              >Subtítulo (Opcional)</label
+            >
+            <input
+              type="text"
+              [(ngModel)]="model.subtitle"
+              name="subtitle"
+              class="block w-full rounded-xl border-zinc-200 bg-zinc-50 px-4 py-3 text-zinc-900 focus:border-orange-500 focus:ring-orange-500 transition-colors"
+              placeholder="Um breve complemento ao título"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-zinc-700 mb-1">Autor</label>
+            <input
+              type="text"
+              [(ngModel)]="model.author"
+              name="author"
+              class="block w-full rounded-xl border-zinc-200 bg-zinc-50 px-4 py-3 text-zinc-900 focus:border-orange-500 focus:ring-orange-500 transition-colors"
+            />
+          </div>
+
+          <!-- Placeholder for Grid alignment if needed -->
+          <div class="hidden md:block"></div>
+
+          <div class="col-span-2">
+            <label class="block text-sm font-semibold text-zinc-700 mb-1"
+              >Resumo (Para cards)</label
+            >
+            <textarea
+              [(ngModel)]="model.summary"
+              name="summary"
+              rows="3"
+              class="block w-full rounded-xl border-zinc-200 bg-zinc-50 px-4 py-3 text-zinc-900 focus:border-orange-500 focus:ring-orange-500 transition-colors"
+              placeholder="Um resumo curto do que trata este artigo..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Media -->
+      <div class="border-t border-zinc-100 pt-8">
+        <h2 class="text-lg font-bold text-zinc-900 mb-4 flex items-center gap-2">
+          <lucide-icon name="image" class="text-orange-500" [size]="20"></lucide-icon>
+          Imagem de Capa
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+          <div>
+            <label class="block text-sm font-semibold text-zinc-700 mb-1">URL da Imagem</label>
+            <div class="flex gap-2 mb-2">
+              <div class="relative flex-grow">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <lucide-icon name="link" class="text-zinc-400" [size]="16"></lucide-icon>
+                </div>
+                <input
+                  type="text"
+                  [(ngModel)]="model.cover_image"
+                  name="cover_image"
+                  class="block w-full pl-10 rounded-xl border-zinc-200 bg-zinc-50 px-4 py-3 text-zinc-900 focus:border-orange-500 focus:ring-orange-500 transition-colors"
+                  placeholder="https://..."
+                />
+              </div>
+            </div>
+            <p class="text-xs text-zinc-500">
+              Cole o link público da imagem (Google Drive, etc). Se falhar, usará o padrão.
+            </p>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-zinc-700 mb-1">Pré-visualização</label>
+            <div
+              class="aspect-video w-full rounded-xl border border-zinc-200 overflow-hidden bg-zinc-50 relative"
+            >
+              <img
+                [src]="model.cover_image || 'assets/Imagens/Fundo_Lamed.png'"
+                (error)="onImageError($event)"
+                class="w-full h-full object-cover"
+              />
+              <div
+                class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs p-1 text-center backdrop-blur-sm"
+              >
+                {{ model.cover_image ? 'Imagem selecionada' : 'Imagem padrão' }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editor Content -->
+      <div class="border-t border-zinc-100 pt-8">
+        <h2 class="text-lg font-bold text-zinc-900 mb-4 flex items-center gap-2">
+          <lucide-icon name="book-open" class="text-orange-500" [size]="20"></lucide-icon>
+          Conteúdo
+        </h2>
+        <p-editor [(ngModel)]="model.content" name="content" [style]="{ height: '400px' }">
+          <ng-template pTemplate="header">
+            <span class="ql-formats">
+              <select class="ql-header">
+                <option value="2"></option>
+                <option value="3"></option>
+                <option selected></option>
+              </select>
+              <select class="ql-font"></select>
+            </span>
+            <span class="ql-formats">
+              <button class="ql-bold"></button>
+              <button class="ql-italic"></button>
+              <button class="ql-underline"></button>
+              <button class="ql-strike"></button>
+            </span>
+            <span class="ql-formats">
+              <button class="ql-list" value="ordered"></button>
+              <button class="ql-list" value="bullet"></button>
+            </span>
+            <span class="ql-formats">
+              <button class="ql-link"></button>
+              <button class="ql-image"></button>
+              <button class="ql-code-block"></button>
+              <button class="ql-blockquote"></button>
+            </span>
+            <span class="ql-formats">
+              <button class="ql-clean"></button>
+            </span>
+          </ng-template>
+        </p-editor>
+      </div>
+
+      <!-- Highlights & Tags -->
+      <div class="border-t border-zinc-100 pt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <h2 class="text-lg font-bold text-zinc-900 mb-4 flex items-center gap-2">
+            <lucide-icon name="star" class="text-orange-500" [size]="20"></lucide-icon>
+            Pontos de Destaque
+          </h2>
+          <input
+            type="text"
+            [(ngModel)]="highlightsInput"
+            name="highlights"
+            class="block w-full rounded-xl border-zinc-200 bg-zinc-50 px-4 py-3 text-zinc-900 focus:border-orange-500 focus:ring-orange-500 transition-colors"
+            placeholder="Digite os pontos separados por vírgula..."
+          />
+          <p class="text-xs text-zinc-500 mt-2">Principais tópicos ou frases chave do artigo.</p>
+        </div>
+        <div>
+          <h2 class="text-lg font-bold text-zinc-900 mb-4 flex items-center gap-2">
+            <lucide-icon name="tag" class="text-orange-500" [size]="20"></lucide-icon>
+            Tags
+          </h2>
+          <input
+            type="text"
+            [(ngModel)]="tagsInput"
+            name="tags"
+            class="block w-full rounded-xl border-zinc-200 bg-zinc-50 px-4 py-3 text-zinc-900 focus:border-orange-500 focus:ring-orange-500 transition-colors"
+            placeholder="Ex: Torá, Festas, História (separados por vírgula)"
+          />
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="flex items-center justify-between border-t border-zinc-100 pt-8">
+        <div class="flex items-center gap-3">
+          <input
+            type="checkbox"
+            [(ngModel)]="model.is_active"
+            name="is_active"
+            id="is_active"
+            class="h-5 w-5 rounded border-zinc-300 text-orange-600 focus:ring-orange-600 cursor-pointer"
+          />
+          <label for="is_active" class="font-medium text-zinc-900 cursor-pointer select-none"
+            >Publicar Artigo</label
+          >
+        </div>
+        <p class="text-sm text-zinc-400">Se desativado, ficará salvo como rascunho.</p>
+      </div>
+    </form>
+  </div>
+</div>

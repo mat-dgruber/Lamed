@@ -1,10 +1,12 @@
 import { Component, OnInit, inject, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Params, ParamMap } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { LucideAngularModule } from 'lucide-angular';
 import { ArticleService, Article } from '../../services/article.service';
 import { Timestamp } from '@angular/fire/firestore';
+import { SeoService } from '../../core/services/seo.service';
+import { AnalyticsService } from '../../core/services/analytics.service';
 
 @Component({
   selector: 'app-article-detail',
@@ -17,6 +19,8 @@ export class ArticleDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private articleService = inject(ArticleService);
   private sanitizer = inject(DomSanitizer);
+  private seoService = inject(SeoService);
+  private analyticsService = inject(AnalyticsService);
 
   article = signal<Article | undefined>(undefined);
   loading = signal<boolean>(true);
@@ -31,11 +35,11 @@ export class ArticleDetailComponent implements OnInit {
 
   ngOnInit() {
     // Check for embedded mode
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params: Params) => {
         this.isEmbedded.set(params['embedded'] === 'true');
     });
 
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
       if (id) {
         this.loadArticle(id);
@@ -46,15 +50,35 @@ export class ArticleDetailComponent implements OnInit {
   loadArticle(id: string) {
     this.loading.set(true);
     this.articleService.getArticleById(id).subscribe({
-      next: (data) => {
+      next: (data: Article) => {
         this.article.set(data);
         if (data?.content) {
-          // Beware of scripts if any. Trusting content from our own DB.
           this.safeContent = this.sanitizer.bypassSecurityTrustHtml(data.content);
         }
+        
+        // SEO Update
+        if (data) {
+          const summary = data.content ? data.content.substring(0, 150).replace(/<[^>]*>/g, '') + '...' : 'Leia este artigo completo no Lamed.';
+          
+          this.seoService.updateMetaTags({
+            title: data.title,
+            description: summary,
+            image: data.cover_image,
+            type: 'article',
+            author: data.author,
+            slug: `/article/${data.id}`
+          });
+
+          // Track specific article view
+          this.analyticsService.trackEvent('view_article', {
+            article_id: data.id,
+            article_title: data.title
+          });
+        }
+
         this.loading.set(false);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error(err);
         this.loading.set(false);
       }
