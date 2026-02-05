@@ -8,15 +8,14 @@ on:
     branches:
       - main
     paths:
-      - 'src/assets/Artigos/**'
-      - 'src/assets/videos.json'
+      - 'frontend/**'
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
+      contents: read
 
     steps:
       - name: 1. Checkout code
@@ -28,33 +27,46 @@ jobs:
           node-version: '20'
 
       - name: 3. Install dependencies
-        run: |
-          npm install
-          npm install --prefix scripts
+        working-directory: frontend
+        run: npm ci
 
-      - name: 4. Fetch videos
-        run: node scripts/fetch-videos.js
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      - name: 4. Build Angular App
+        working-directory: frontend
+        run: npm run build -- --configuration production
 
-      - name: 5. Commit data files
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add src/assets/articles.json src/assets/videos.json package-lock.json scripts/package-lock.json || echo "No changes to stage"
-          # Commit only if there are changes
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: Update content data files"
-          fi
-          git pull --rebase
-          git push
-
-      - name: 6. Build Angular App
-        run: npm run build:prod
-
-      - name: 7. Deploy to Firebase
+      - name: 5. Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+  deploy-backend:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # Required for authenticating with Google Cloud
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Google Auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }} # User needs to set this secret
+          # OR use Workload Identity Federation (recommended but more setup)
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: lamed-backend
+          source: ./backend
+          region: us-central1 # Or your preferred region
+          project_id: lamed-148
+          env_vars: |
+            FIREBASE_PROJECT_ID=lamed-148
+            # Add other env vars here (secrets should be mapped from GitHub Secrets)

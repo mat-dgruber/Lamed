@@ -22,10 +22,10 @@
       <!-- Article Container -->
       <div class="bg-white rounded-2xl shadow-sm ring-1 ring-zinc-200 overflow-hidden">
         <!-- Banner Image -->
-        @if (loadedArticle.banner_image_url && !isEmbedded()) {
+        @if (loadedArticle.cover_image && !isEmbedded()) {
           <div class="relative h-64 md:h-96 w-full overflow-hidden">
             <img
-              [src]="loadedArticle.banner_image_url"
+              [src]="loadedArticle.cover_image"
               [alt]="loadedArticle.title"
               class="h-full w-full object-cover"
             />
@@ -55,17 +55,32 @@
                   {{ loadedArticle.author }}
                 </span>
               }
+              @if (loadedArticle.tags?.length) {
+                @for (tag of loadedArticle.tags; track tag) {
+                  <span
+                    class="inline-flex items-center rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-600"
+                  >
+                    {{ tag }}
+                  </span>
+                }
+              }
             </div>
 
             <h1 class="text-3xl md:text-4xl font-bold text-zinc-900 leading-tight mb-4">
               {{ loadedArticle.title }}
             </h1>
 
-            @if (loadedArticle.description) {
+            @if (loadedArticle.subtitle) {
+              <p class="text-xl text-zinc-700 font-medium mb-4">
+                {{ loadedArticle.subtitle }}
+              </p>
+            }
+
+            @if (loadedArticle.summary) {
               <p
                 class="text-lg text-zinc-600 leading-relaxed italic border-l-4 border-orange-500 pl-4"
               >
-                {{ loadedArticle.description }}
+                {{ loadedArticle.summary }}
               </p>
             }
           </div>

@@ -1,45 +1,59 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, query, orderBy, Timestamp } from '@angular/fire/firestore';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export interface Article {
-  id: string;
+  id?: string;
   title: string;
-  description: string;
+  subtitle?: string;
+  summary: string;
+  cover_image: string;
   content: string;
-  author: string;
-  published_at: Date; // Converted from Timestamp
-  banner_image_url: string;
-  tags?: string[];
+  highlights: string[];
+  tags: string[];
+  published_at?: string;
+  updated_at?: string;
+  created_at?: string;
   is_active: boolean;
+  author: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
-  private firestore = inject(Firestore);
-  private articlesCollection = collection(this.firestore, 'articles');
+  private http = inject(HttpClient);
+  private apiUrl = `${environment.apiUrl}/articles`;
 
-  getArticles(): Observable<Article[]> {
-    const q = query(this.articlesCollection, orderBy('published_at', 'desc'));
-    return (collectionData(q, { idField: 'id' }) as Observable<any[]>).pipe(
-      map(articles => articles.map(a => this.mapArticle(a)))
-    );
+  getArticles(limit: number = 10, offset: number = 0, onlyActive: boolean = true): Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.apiUrl}/`, {
+      params: {
+        limit: limit.toString(),
+        offset: offset.toString(),
+        only_active: onlyActive.toString()
+      }
+    });
   }
 
-  getArticleById(id: string): Observable<Article | undefined> {
-    const docRef = doc(this.firestore, `articles/${id}`);
-    return (docData(docRef, { idField: 'id' }) as Observable<any>).pipe(
-      map(a => a ? this.mapArticle(a) : undefined)
-    );
+  getArticle(id: string): Observable<Article> {
+    return this.http.get<Article>(`${this.apiUrl}/${id}`);
+  }
+  
+  // Alias for compatibility
+  getArticleById(id: string): Observable<Article> {
+    return this.getArticle(id);
   }
 
-  private mapArticle(data: any): Article {
-    return {
-      ...data,
-      published_at: data.published_at?.toDate ? data.published_at.toDate() : new Date(data.published_at),
-    } as Article;
+  createArticle(article: Article): Observable<Article> {
+    return this.http.post<Article>(`${this.apiUrl}/`, article);
+  }
+
+  updateArticle(id: string, article: Article): Observable<Article> {
+    return this.http.put<Article>(`${this.apiUrl}/${id}`, article);
+  }
+
+  deleteArticle(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

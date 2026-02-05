@@ -1,0 +1,136 @@
+<div class="min-h-screen bg-zinc-50 pt-28 pb-12">
+  <div class="container mx-auto px-6 max-w-7xl">
+    <!-- Header -->
+    <div class="mb-8 flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-zinc-900">Gerenciar Artigos</h1>
+        <p class="mt-1 text-zinc-500">Crie e gerencie os artigos do blog.</p>
+      </div>
+      <div class="flex gap-3">
+        <a
+          routerLink="/admin"
+          class="flex items-center gap-2 px-5 py-2.5 bg-white text-zinc-600 border border-zinc-200 rounded-lg font-bold hover:bg-zinc-50 hover:text-zinc-900 transition-all shadow-sm"
+        >
+          <lucide-icon name="arrow-left" [size]="18"></lucide-icon>
+          Voltar
+        </a>
+        <a
+          routerLink="/admin/articles/new"
+          class="flex items-center gap-2 px-5 py-2.5 bg-orange-600 text-white rounded-lg font-bold hover:bg-orange-500 transition-all shadow-sm"
+        >
+          <lucide-icon name="plus" [size]="18"></lucide-icon>
+          Novo Artigo
+        </a>
+      </div>
+    </div>
+
+    <!-- Filters (Placeholder for future) -->
+    <!-- <div class="mb-6 flex gap-4"> ... </div> -->
+
+    <!-- Table Card -->
+    <div class="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm text-zinc-600">
+          <thead
+            class="bg-zinc-50 border-b border-zinc-100 text-xs uppercase font-bold text-zinc-500 tracking-wider"
+          >
+            <tr>
+              <th class="px-6 py-4">Título</th>
+              <th class="px-6 py-4">Autor</th>
+              <th class="px-6 py-4">Status</th>
+              <th class="px-6 py-4">Publicado em</th>
+              <th class="px-6 py-4 text-right">Ações</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-100">
+            @for (article of articles; track article.id) {
+              <tr class="hover:bg-zinc-50 transition-colors group">
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="h-10 w-10 flex-shrink-0 rounded-lg bg-zinc-100 overflow-hidden border border-zinc-200"
+                    >
+                      @if (article.cover_image) {
+                        <img [src]="article.cover_image" class="h-full w-full object-cover" />
+                      } @else {
+                        <div class="h-full w-full flex items-center justify-center text-zinc-300">
+                          <lucide-icon name="image" [size]="16"></lucide-icon>
+                        </div>
+                      }
+                    </div>
+                    <div>
+                      <p class="font-bold text-zinc-900 line-clamp-1">{{ article.title }}</p>
+                      <p class="text-xs text-zinc-400 line-clamp-1">
+                        {{ article.subtitle || article.summary }}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-2">
+                    <div
+                      class="h-6 w-6 rounded-full bg-orange-100 flex items-center justify-center text-orange-700 text-xs font-bold"
+                    >
+                      {{ article.author.charAt(0) }}
+                    </div>
+                    {{ article.author }}
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  @if (article.is_active) {
+                    <span
+                      class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-100"
+                    >
+                      <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+                      Publicado
+                    </span>
+                  } @else {
+                    <span
+                      class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-50 text-yellow-700 border border-yellow-100"
+                    >
+                      <span class="h-1.5 w-1.5 rounded-full bg-yellow-500"></span>
+                      Rascunho
+                    </span>
+                  }
+                </td>
+                <td class="px-6 py-4">
+                  {{ article.published_at | date: 'dd/MM/yyyy' }}
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <div class="flex items-center justify-end gap-2">
+                    <a
+                      [routerLink]="['/admin/articles', article.id]"
+                      class="p-2 text-zinc-400 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
+                      title="Editar"
+                    >
+                      <lucide-icon name="pencil" [size]="18"></lucide-icon>
+                    </a>
+                    <button
+                      (click)="deleteArticle(article)"
+                      class="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      title="Excluir"
+                    >
+                      <lucide-icon name="trash-2" [size]="18"></lucide-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+            @if (articles.length === 0) {
+              <tr>
+                <td colspan="5" class="px-6 py-12 text-center text-zinc-500">
+                  <lucide-icon
+                    name="inbox"
+                    class="mx-auto mb-2 opacity-50"
+                    [size]="32"
+                  ></lucide-icon>
+                  <p>Nenhum artigo encontrado.</p>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

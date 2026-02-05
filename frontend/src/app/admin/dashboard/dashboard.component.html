@@ -9,6 +9,13 @@
         </p>
       </div>
       <div class="flex gap-3">
+        <a
+          routerLink="/admin/articles"
+          class="flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-6 py-2.5 text-sm font-semibold text-white hover:bg-white/20 transition-colors border border-white/20"
+        >
+          <lucide-icon [name]="'file-text'" [size]="18"></lucide-icon>
+          Artigos
+        </a>
         <button
           (click)="syncVideos()"
           [disabled]="isSyncing"
@@ -19,7 +26,7 @@
             [class.animate-spin]="isSyncing"
             [size]="18"
           ></lucide-icon>
-          {{ isSyncing ? 'Sincronizando...' : 'Sincronizar Vídeos' }}
+          {{ isSyncing ? 'Sincronizando...' : 'Sincronizar' }}
         </button>
         <a
           routerLink="/admin/new"

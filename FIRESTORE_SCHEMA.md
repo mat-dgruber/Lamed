@@ -32,12 +32,14 @@ Representa artigos individuais ou estudos migrados do sistema antigo.
 
 - **id** (Document ID): Slug ou ID único (ex: `do-fracasso-a-vitoria`).
 - **title** (string)
-- **description** (string)
+- **subtitle** (string, optional)
+- **summary** (string): Resumo curto para cards.
 - **content** (string): Conteúdo HTML completo do artigo.
-- **author** (string)
-- **published_at** (timestamp)
-- **tags** (array of strings)
-- **banner_image_url** (string): Caminho relativo ou URL da imagem de capa.
+- **cover_image** (string): URL da imagem de capa.
+- **highlights** (array of strings): Pontos de destaque do artigo.
+- **tags** (array of strings): Tags para categorização.
+- **author** (string): Nome do autor.
+- **published_at** (timestamp): Data de publicação.
 - **is_active** (boolean): Default true.
 - **created_at** (timestamp)
 - **updated_at** (timestamp)

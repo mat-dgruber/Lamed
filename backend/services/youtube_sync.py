@@ -12,7 +12,7 @@ def fetch_latest_videos_from_youtube(channel_id: str):
     return [
         {
             "id": "mock_vid_1",
-            "title": "Semana X: Estudo da Torá (Automático)",
+            "title": "Semana X: Estudo da Lição da Escola Sabatina (Automático)",
             "description": "Vídeo importado automaticamente.",
             "url": "https://youtube.com/watch?v=mock_vid_1",
             "published_at": datetime.utcnow()

@@ -4,6 +4,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
 import { LucideAngularModule } from 'lucide-angular';
 import { BundleService, Bundle } from '../../services/bundle.service';
+import { SeoService } from '../../core/services/seo.service';
+import { AnalyticsService } from '../../core/services/analytics.service';
 
 @Component({
   selector: 'app-bundle-detail',
@@ -16,6 +18,8 @@ export class BundleDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private bundleService = inject(BundleService);
   private sanitizer = inject(DomSanitizer);
+  private seoService = inject(SeoService);
+  private analyticsService = inject(AnalyticsService);
 
   bundle = signal<Bundle | null>(null);
   loading = signal<boolean>(true);
@@ -88,6 +92,22 @@ export class BundleDetailComponent implements OnInit {
         if (data.article_content) {
           this.safeArticleContent = this.sanitizer.bypassSecurityTrustHtml(data.article_content);
         }
+
+        // SEO Update
+        this.seoService.updateMetaTags({
+          title: data.title,
+          description: data.description || 'Confira este material exclusivo no Lamed.',
+          image: data.thumbnail_url,
+          type: 'website', // Bundles are collections
+          slug: `/bundle/${data.id}`
+        });
+
+        // Track bundle view
+        this.analyticsService.trackEvent('view_bundle', {
+          bundle_id: data.id,
+          bundle_title: data.title
+        });
+
         this.loading.set(false);
       },
       error: () => this.loading.set(false)

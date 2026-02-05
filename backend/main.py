@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from config import settings
-from routes import bundles, admin
+from routes import bundles, admin, articles
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -14,6 +14,7 @@ origins = [
     "http://localhost:8000",
     "https://lamed-148.web.app",
     "https://lamed-148.firebaseapp.com",
+    "https://lamed148.com.br"
 ]
 
 app.add_middleware(
@@ -30,6 +31,7 @@ def read_root():
 
 app.include_router(bundles.router, prefix="/bundles", tags=["bundles"])
 app.include_router(admin.router, prefix="/admin", tags=["admin"])
+app.include_router(articles.router, prefix="/articles", tags=["articles"])
 
 if __name__ == "__main__":
     import uvicorn
