@@ -1,59 +1,77 @@
-# Frontend
+# 🎨 Lamed Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.1.
+![Angular](https://img.shields.io/badge/Angular-20%2B-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![PrimeNG](https://img.shields.io/badge/UI-PrimeNG-blue?style=for-the-badge)
+![Tailwind](https://img.shields.io/badge/CSS-Tailwind-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 
-## Development server
+Aplicação Web Client-Side do projeto Lamed, construída com **Angular 20+** e **Standalone Components**.
 
-To start a local development server, run:
+---
+
+## 🏗️ Estrutura e Práticas
+
+### Diretórios Chave (`src/app`)
+
+| Pasta         | Responsabilidade                                     |
+| :------------ | :--------------------------------------------------- |
+| **`api/`**    | Interfaces e Serviços de comunicação com Backend.    |
+| **`core/`**   | Interceptors, Guards e Serviços Globais (Singleton). |
+| **`pages/`**  | Componentes de página (Roteados).                    |
+| **`shared/`** | Componentes reutilizáveis (UI) e Pipes.              |
+
+### Tecnologias
+
+- **Componentes**: Standalone (sem NgModules).
+- **Gerenciamento de Estado**: Signals (`signal`, `computed`, `effect`).
+- **Estilização**: Tailwind CSS + PrimeNG (Lara Theme).
+- **Ícones**: Lucide Icons.
+
+---
+
+## 🚀 Comandos Úteis
+
+> [!TIP]
+> Use `npm` ou `ng` diretamente nesta pasta.
+
+### Desenvolvimento
 
 ```bash
+# Iniciar servidor local (HMR ativo)
+npm start
+# ou
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Build
 
 ```bash
-ng generate component component-name
+# Produção (Otimizado)
+ng build --configuration=production
+
+# QA/Homologação
+ng build --configuration=staging
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Testes
 
 ```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
+# Unitários (Karma/Jasmine)
 ng test
-```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
+# End-to-End
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 📦 Deploy
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+O deploy é automatizado para o **Firebase Hosting**.
+
+```bash
+# Deploy manual (requer login)
+npx firebase deploy --only hosting
+```
+
+> [!WARNING]
+> Verifique o arquivo `firebase.json` na raiz para regras de rewrite e headers de cache.

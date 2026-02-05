@@ -11,7 +11,7 @@ export interface VideoData {
 
 export interface Resource {
   title: string;
-  type: 'pdf' | 'pptx' | 'infographic' | 'doc' | 'csv' | 'audio' | 'image';
+  type: 'pdf' | 'pptx' | 'infographic' | 'doc' | 'csv' | 'audio' | 'image' | 'video';
   url: string;
 }
 

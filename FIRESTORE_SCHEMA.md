@@ -1,50 +1,86 @@
-# FIRESTORE SCHEMA
+# 🔥 Firestore Schema Definitions
 
-## Collections
+![Firestore](https://img.shields.io/badge/Database-Firestore-FFCA28?style=flat-square&logo=firebase&logoColor=black)
+![Status](https://img.shields.io/badge/Schema-Verified-success?style=flat-square)
 
-### `bundles`
+Este documento é a **Fonte da Verdade** para a estrutura de dados do Lamed. Qualquer alteração nos Models do backend (`models.py`) ou Interfaces do frontend deve ser refletida aqui.
 
-Representa um pacote semanal de conteúdo de estudo.
+---
 
-- **id** (Document ID): Auto-generated string.
-- **title** (string): Título do bundle (ex: "Semana 1: Introdução à Torá").
-- **description** (string): Breve resumo do conteúdo.
-- **week_number** (number): Número sequencial da semana (para ordenação).
-- **author** (string): Nome do autor do artigo/estudo.
-- **published_at** (timestamp): Data de publicação exibida no artigo.
-- **video_data** (map):
-  - **url** (string): Link do YouTube ou Storage.
-  - **provider** (string): 'youtube' | 'storage'.
-  - **duration** (number, optional): Duração em segundos.
-- **thumbnail_url** (string): Capa do vídeo/bundle.
-- **article_content** (string): Conteúdo do artigo em HTML (suporta tags `<img>`).
-- **resources** (array of maps):
-  - **title** (string): Nome do recurso (ex: "Mapa Mental").
-  - **type** (string): 'pdf' | 'pptx' | 'infographic' | 'doc'.
-  - **url** (string): Link para download (Firebase Storage).
-- **is_active** (boolean): Se o bundle está visível.
-- **created_at** (timestamp): Data de criação sistema.
-- **updated_at** (timestamp): Última atualização.
+## 📦 Collections Overview
 
-### `articles`
+```mermaid
+graph TD
+    A[Bundles] -->|composes| B(Resources)
+    C[Articles]
+    D[Users]
+```
 
-Representa artigos individuais ou estudos migrados do sistema antigo.
+### 1. `bundles`
 
-- **id** (Document ID): Slug ou ID único (ex: `do-fracasso-a-vitoria`).
-- **title** (string)
-- **subtitle** (string, optional)
-- **summary** (string): Resumo curto para cards.
-- **content** (string): Conteúdo HTML completo do artigo.
-- **cover_image** (string): URL da imagem de capa.
-- **highlights** (array of strings): Pontos de destaque do artigo.
-- **tags** (array of strings): Tags para categorização.
-- **author** (string): Nome do autor.
-- **published_at** (timestamp): Data de publicação.
-- **is_active** (boolean): Default true.
-- **created_at** (timestamp)
-- **updated_at** (timestamp)
+Representa um pacote semanal de conteúdo de estudo. É a entidade central da aplicação.
 
-### `users`
+| Campo             | Tipo        | Descrição                                   | Obrigatório |
+| :---------------- | :---------- | :------------------------------------------ | :---------: |
+| **id**            | `string`    | Auto-generated ID ou Slug.                  |     ✅      |
+| **title**         | `string`    | Título do estudo (ex: "Semana 1: Gênesis"). |     ✅      |
+| **week_number**   | `number`    | Número sequencial para ordenação.           |     ✅      |
+| **description**   | `string`    | Resumo curto do conteúdo.                   |     ✅      |
+| **author**        | `string`    | Autor do conteúdo (Default: "Lamed").       |     ❌      |
+| **published_at**  | `timestamp` | Data de publicação.                         |     ❌      |
+| **is_active**     | `boolean`   | Se o conteúdo está visível no app.          |     ✅      |
+| **video_data**    | `map`       | Metadados do vídeo principal (veja abaixo). |     ❌      |
+| **thumbnail_url** | `string`    | Capa do bundle.                             |     ❌      |
+| **resources**     | `array`     | Lista de materiais de apoio.                |     ✅      |
 
-- **uid** (string): Firebase Auth UID.
-- **subscription_status** (string): 'active' | 'inactive'.
+#### 📹 Video Data Structure
+
+```json
+{
+  "url": "https://youtube.com/...",
+  "provider": "youtube",
+  "duration": 3600
+}
+```
+
+#### 📎 Resources Structure
+
+Itens baixáveis ou acessíveis dentro do bundle.
+
+| Campo     | Tipo      | Valores Aceitos                                       |
+| :-------- | :-------- | :---------------------------------------------------- |
+| **title** | `string`  | Título do arquivo.                                    |
+| **url**   | `string`  | Link direto (Storage/Drive).                          |
+| **type**  | `literal` | `pdf`, `pptx`, `infographic`, `video`, `audio`, `doc` |
+
+> [!NOTE]
+> O tipo `video` em resources renderiza um botão de play ou um player secundário, diferente do vídeo principal.
+
+---
+
+### 2. `articles`
+
+Artigos de blog ou estudos independentes.
+
+| Campo           | Tipo     | Descrição                     | Default                                |
+| :-------------- | :------- | :---------------------------- | :------------------------------------- |
+| **id**          | `string` | Slug único (ex: `a-criação`). | -                                      |
+| **title**       | `string` | Manchete do artigo.           | -                                      |
+| **summary**     | `string` | Texto de apoio/lead.          | -                                      |
+| **content**     | `string` | HTML rico (ckeditor/quill).   | -                                      |
+| **cover_image** | `string` | Imagem de destaque.           | `assets/Imagens/Fundo_Lamed-total.png` |
+| **tags**        | `array`  | Strings para busca.           | `[]`                                   |
+
+> [!IMPORTANT]
+> Se `cover_image` não for fornecida, o sistema DEVE usar o fallback apontado acima.
+
+---
+
+### 3. `users`
+
+Dados estendidos de usuários (Auth).
+
+| Campo                   | Tipo     | Descrição                            |
+| :---------------------- | :------- | :----------------------------------- |
+| **uid**                 | `string` | Link com Firebase Auth.              |
+| **subscription_status** | `string` | `active` \| `inactive` \| `past_due` |

@@ -1,105 +1,104 @@
-# AngularLamed
+# 🦁 AngularLamed
 
-## Como Executar com Docker (Método Recomendado)
+![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+![Angular](https://img.shields.io/badge/Angular-20%2B-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-Hosting%20%7C%20Firestore-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-Esta é a maneira mais simples e recomendada de executar o projeto para desenvolvimento. Você não precisa instalar Node.js ou qualquer outra dependência diretamente na sua máquina. Tudo é executado dentro de containers Docker, garantindo um ambiente consistente para todos os desenvolvedores.
+Bem-vindo ao repositório do **Novo Lamed**, a plataforma de estudos bíblicos modernos.
 
-### Pré-requisitos
+---
 
-- **Docker Desktop**: Certifique-se de que você tem o Docker Desktop instalado e em execução na sua máquina. Ele inclui tanto o Docker quanto o Docker Compose.
-  - [Faça o download aqui](https://www.docker.com/products/docker-desktop/)
+## 🚀 Como Executar (Recomendado)
 
-### Passos para Iniciar o Ambiente
+A maneira mais simples de rodar o projeto é via **Docker**. Isso garante que todas as dependências (Node, Python, Database tools) estejam isoladas e configuradas.
 
-1.  **Clone o Repositório**: Se você ainda não o fez, clone este projeto para a sua máquina local.
+> [!IMPORTANT]
+> Certifique-se de ter o **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** instalado e rodando.
 
-2.  **Inicie o Ambiente**: Abra um terminal na raiz do projeto (onde o arquivo `docker-compose.yml` está localizado) e execute o seguinte comando:
+### 🏁 Passo a Passo
+
+1.  **Clone o Repositório**
+
+    ```bash
+    git clone https://github.com/Novo_Lamed_Angular.git
+    cd Novo_Lamed_Angular
+    ```
+
+2.  **Inicie o Ambiente**
+    Execute na raiz do projeto:
 
     ```bash
     docker-compose up -d
     ```
-    - O Docker irá construir a imagem da aplicação (isso pode levar alguns minutos na primeira vez).
-    - Após o build, ele iniciará o container em modo "detached" (`-d`), ou seja, rodando em segundo plano.
 
-3.  **Acesse a Aplicação**: Abra seu navegador e acesse [http://localhost:4200/](http://localhost:4200/). A aplicação estará rodando.
+    > [!NOTE]
+    > O primeiro build pode levar alguns minutos. O Docker irá configurar o frontend Angular e a API Python automaticamente.
 
-### Desenvolvimento
+3.  **Acesse a Aplicação**
+    - **Frontend**: [http://localhost:4200](http://localhost:4200)
+    - **API Docs (Swagger)**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-Com o container em execução, você pode simplesmente editar os arquivos do projeto (na pasta `src/`, por exemplo) no seu editor de código preferido (VS Code, etc.). O servidor de desenvolvimento do Angular dentro do Docker detectará as alterações automaticamente e recarregará a página no seu navegador.
+---
 
-### Como Parar o Ambiente
+## 🛠️ Desenvolvimento Local (Legado)
 
-Para parar os containers, execute o seguinte comando no seu terminal (na mesma pasta):
+Caso prefira rodar sem Docker, você precisará configurar os ambientes individualmente.
+
+<details>
+<summary><strong>Expandir Instruções Manuais</strong></summary>
+
+### Frontend (Angular)
 
 ```bash
-docker-compose down
+cd frontend
+npm install
+ng serve
 ```
 
-### Executando Outros Comandos (Testes, etc.)
+### Backend (Python/FastAPI)
 
-Se precisar executar outros comandos `ng` ou `npm` (como os testes), você pode fazê-lo dentro do container em execução com o comando `docker-compose exec`.
+Recomendamos usar o `uv` para gerenciamento.
 
-Por exemplo, para rodar os testes unitários:
 ```bash
+cd backend
+uv sync
+uv run main.py
+```
+
+</details>
+
+---
+
+## 📂 Estrutura do Projeto
+
+```
+Novo_Lamed_Angular/
+├── 📂 backend/         # API FastAPI e Scripts
+│   ├── models.py      # Modelos Pydantic (A Verdade do Banco)
+│   └── main.py        # Entrypoint da API
+├── 📂 frontend/        # Aplicação Angular 19+
+│   ├── src/app/       # Componentes e Serviços
+│   └── public/        # Assets estáticos
+├── 🐳 docker-compose.yml
+└── 📄 FIRESTORE_SCHEMA.md
+```
+
+## 🧪 Testes
+
+Você pode rodar comandos dentro do container para garantir a integridade do código.
+
+```bash
+# Rodar testes do Angular
 docker-compose exec app npm test
+
+# Rodar testes do Backend (se configurado)
+docker-compose exec api pytest
 ```
 
 ---
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.6.
-
-## Development server (Método Antigo/Local)
-
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+> [!TIP]
+> Para parar o ambiente e economizar recursos, rode `docker-compose down`.
