@@ -28,7 +28,7 @@ jobs:
 
       - name: 3. Install dependencies
         working-directory: frontend
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: 4. Build Angular App
         working-directory: frontend
