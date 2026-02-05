@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+import os
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from config import settings
 from routes import bundles, admin, articles
@@ -34,11 +35,15 @@ app.include_router(admin.router, prefix="/admin", tags=["admin"])
 app.include_router(articles.router, prefix="/articles", tags=["articles"])
 
 @app.post("/api/sync-videos", tags=["system"])
-def trigger_video_sync():
+def trigger_video_sync(x_sync_token: str = Header(None)):
     """
     Manually triggers YouTube video synchronization.
     Called by GitHub Actions Cron.
     """
+    sync_token = os.getenv("SYNC_TOKEN")
+    if sync_token and x_sync_token != sync_token:
+        raise HTTPException(status_code=403, detail="Invalid sync token")
+    
     from services.youtube_sync import sync_videos
     return sync_videos()
 

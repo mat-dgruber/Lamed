@@ -13,4 +13,4 @@ jobs:
         run: |
           curl -X POST https://lamed-backend-957958728332.us-central1.run.app/api/sync-videos \
           -H "Content-Type: application/json"
-          # -H "X-Sync-Token: ${{ secrets.SYNC_TOKEN }}"  # TODO: Add auth
+          -H "X-Sync-Token: ${{ secrets.SYNC_TOKEN }}"  
