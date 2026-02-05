@@ -33,6 +33,15 @@ app.include_router(bundles.router, prefix="/bundles", tags=["bundles"])
 app.include_router(admin.router, prefix="/admin", tags=["admin"])
 app.include_router(articles.router, prefix="/articles", tags=["articles"])
 
+@app.post("/api/sync-videos", tags=["system"])
+def trigger_video_sync():
+    """
+    Manually triggers YouTube video synchronization.
+    Called by GitHub Actions Cron.
+    """
+    from services.youtube_sync import sync_videos
+    return sync_videos()
+
 if __name__ == "__main__":
     import uvicorn
     # Allow running directly with `python main.py` or `uv run main.py`

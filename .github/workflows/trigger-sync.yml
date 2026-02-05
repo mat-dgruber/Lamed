@@ -1,0 +1,16 @@
+name: Trigger Video Sync
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Every hour
+  workflow_dispatch: # Allow manual run
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Backend Sync
+        run: |
+          curl -X POST https://lamed-backend-957958728332.us-central1.run.app/api/sync-videos \
+          -H "Content-Type: application/json"
+          # -H "X-Sync-Token: ${{ secrets.SYNC_TOKEN }}"  # TODO: Add auth
