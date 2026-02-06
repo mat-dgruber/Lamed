@@ -19,7 +19,7 @@ def get_youtube_service():
         return None
     return build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
-def fetch_latest_videos_from_youtube(limit=5):
+def fetch_latest_videos_from_youtube(limit=20):
     """
     Fetches the latest interactions (videos) from the channel.
     """
@@ -62,7 +62,7 @@ def sync_videos():
     Orchestrates the sync process.
     """
     logger.info("Starting YouTube Sync...")
-    videos = fetch_latest_videos_from_youtube()
+    videos = fetch_latest_videos_from_youtube(limit=20)
     synced_count = 0
     errors = 0
     
