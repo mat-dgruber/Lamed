@@ -24,4 +24,4 @@ EXPOSE 8080
 
 # Comando de execução usando o Uvicorn direto (já instalado pelo uv)
 # Bind na porta definida pela variável de ambiente $PORT
-CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080", "--proxy-headers", "--forwarded-allow-ips", "*"]

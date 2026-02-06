@@ -49,7 +49,7 @@ export class BundleService {
     only_active: boolean = true,
   ): Observable<Bundle[]> {
     return this.http
-      .get<Bundle[]>(`${this.apiUrl}/bundles`, {
+      .get<Bundle[]>(`${this.apiUrl}/bundles/`, {
         params: { limit, offset, only_active },
       })
       .pipe(
@@ -62,19 +62,19 @@ export class BundleService {
   }
 
   getLatestBundle(): Observable<Bundle | null> {
-    return this.http.get<Bundle>(`${this.apiUrl}/bundles/latest`).pipe(catchError(() => of(null)));
+    return this.http.get<Bundle>(`${this.apiUrl}/bundles/latest/`).pipe(catchError(() => of(null)));
   }
 
   getBundleById(id: string): Observable<Bundle> {
-    return this.http.get<Bundle>(`${this.apiUrl}/bundles/${id}`);
+    return this.http.get<Bundle>(`${this.apiUrl}/bundles/${id}/`);
   }
 
   createBundle(bundle: Omit<Bundle, 'id' | 'created_at' | 'updated_at'>): Observable<Bundle> {
-    return this.http.post<Bundle>(`${this.apiUrl}/bundles`, bundle);
+    return this.http.post<Bundle>(`${this.apiUrl}/bundles/`, bundle);
   }
 
   updateBundle(id: string, bundle: Partial<Bundle>): Observable<Bundle> {
-    return this.http.put<Bundle>(`${this.apiUrl}/bundles/${id}`, bundle);
+    return this.http.put<Bundle>(`${this.apiUrl}/bundles/${id}/`, bundle);
   }
 
   syncVideosFromAssets(): Observable<any> {
