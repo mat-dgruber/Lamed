@@ -78,9 +78,10 @@ uv run main.py
 Novo_Lamed_Angular/
 ├── 📂 backend/         # API FastAPI e Scripts
 │   ├── models.py      # Modelos Pydantic (A Verdade do Banco)
-│   └── main.py        # Entrypoint da API
-├── 📂 frontend/        # Aplicação Angular 19+
-│   ├── src/app/       # Componentes e Serviços
+│   ├── routes/        # Roteamento (Bundles, Vídeos, Artigos)
+│   └── services/       # YouTube Sync e Lógica
+├── 📂 frontend/        # Aplicação Angular 20+
+│   ├── src/app/       # Componentes (Standalone), Signals, Services
 │   └── public/        # Assets estáticos
 ├── 🐳 docker-compose.yml
 └── 📄 FIRESTORE_SCHEMA.md

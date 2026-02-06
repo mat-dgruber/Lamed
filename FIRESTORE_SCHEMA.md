@@ -20,28 +20,18 @@ graph TD
 
 Representa um pacote semanal de conteúdo de estudo. É a entidade central da aplicação.
 
-| Campo             | Tipo        | Descrição                                   | Obrigatório |
-| :---------------- | :---------- | :------------------------------------------ | :---------: |
-| **id**            | `string`    | Auto-generated ID ou Slug.                  |     ✅      |
-| **title**         | `string`    | Título do estudo (ex: "Semana 1: Gênesis"). |     ✅      |
-| **week_number**   | `number`    | Número sequencial para ordenação.           |     ✅      |
-| **description**   | `string`    | Resumo curto do conteúdo.                   |     ✅      |
-| **author**        | `string`    | Autor do conteúdo (Default: "Lamed").       |     ❌      |
-| **published_at**  | `timestamp` | Data de publicação.                         |     ❌      |
-| **is_active**     | `boolean`   | Se o conteúdo está visível no app.          |     ✅      |
-| **video_data**    | `map`       | Metadados do vídeo principal (veja abaixo). |     ❌      |
-| **thumbnail_url** | `string`    | Capa do bundle.                             |     ❌      |
-| **resources**     | `array`     | Lista de materiais de apoio.                |     ✅      |
-
-#### 📹 Video Data Structure
-
-```json
-{
-  "url": "https://youtube.com/...",
-  "provider": "youtube",
-  "duration": 3600
-}
-```
+| Campo             | Tipo        | Descrição                             | Obrigatório |
+| :---------------- | :---------- | :------------------------------------ | :---------: |
+| **id**            | `string`    | Auto-generated ID ou Slug.            |     ✅      |
+| **title**         | `string`    | Título do estudo.                     |     ✅      |
+| **week_number**   | `number`    | Número sequencial para ordenação.     |     ✅      |
+| **description**   | `string`    | Resumo curto do conteúdo.             |     ✅      |
+| **author**        | `string`    | Autor do conteúdo (Default: "Lamed"). |     ❌      |
+| **published_at**  | `timestamp` | Data de publicação.                   |     ❌      |
+| **is_active**     | `boolean`   | Se o conteúdo está visível no app.    |     ✅      |
+| **video_id**      | `string`    | ID do vídeo na collection `videos`.   |     ❌      |
+| **thumbnail_url** | `string`    | Capa do bundle.                       |     ❌      |
+| **resources**     | `array`     | Lista de materiais de apoio.          |     ✅      |
 
 #### 📎 Resources Structure
 
@@ -58,7 +48,26 @@ Itens baixáveis ou acessíveis dentro do bundle.
 
 ---
 
-### 2. `articles`
+### 2. `videos`
+
+Collection independente para gestão de vídeos (desacoplada dos bundles).
+
+| Campo             | Tipo        | Descrição                                        |
+| :---------------- | :---------- | :----------------------------------------------- |
+| **id**            | `string`    | YouTube ID ou ID gerado.                         |
+| **title**         | `string`    | Título do vídeo.                                 |
+| **description**   | `string`    | Descrição detalhada.                             |
+| **url**           | `string`    | Link do YouTube.                                 |
+| **thumbnail_url** | `string`    | URL da imagem de capa.                           |
+| **published_at**  | `timestamp` | Data original de publicação.                     |
+| **created_at**    | `timestamp` | Data de criação no sistema.                      |
+| **author**        | `string`    | "Lamed" por padrão.                              |
+| **is_active**     | `boolean`   | Visibilidade na galeria.                         |
+| **provider**      | `string`    | `youtube` (atualmente o único player suportado). |
+
+---
+
+### 3. `articles`
 
 Artigos de blog ou estudos independentes.
 
