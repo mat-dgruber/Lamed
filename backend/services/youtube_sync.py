@@ -15,54 +15,69 @@ logger = logging.getLogger("uvicorn")
 
 def get_youtube_service():
     if not YOUTUBE_API_KEY:
-        logger.error("YOUTUBE_API_KEY not set!")
-        return None
+        raise ValueError("YOUTUBE_API_KEY environment variable is not set")
     return build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
 def fetch_latest_videos_from_youtube(limit=20):
     """
-    Fetches the latest interactions (videos) from the channel.
+    Fetches the latest videos from the channel's 'uploads' playlist.
+    This is more reliable than the search API.
     """
     service = get_youtube_service()
     if not service:
         return []
 
     try:
-        # Search for latest videos in the channel
-        request = service.search().list(
+        # 1. Get the 'uploads' playlist ID for the channel
+        channel_response = service.channels().list(
+            part="contentDetails",
+            id=CHANNEL_ID
+        ).execute()
+
+        if not channel_response.get("items"):
+            logger.error(f"Channel {CHANNEL_ID} not found")
+            return []
+
+        uploads_playlist_id = channel_response["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+
+        # 2. Get the latest videos from that playlist
+        request = service.playlistItems().list(
             part="snippet",
-            channelId=CHANNEL_ID,
-            maxResults=limit,
-            order="date",
-            type="video"
+            playlistId=uploads_playlist_id,
+            maxResults=limit
         )
         response = request.execute()
 
         videos = []
         for item in response.get("items", []):
-            video_id = item["id"]["videoId"]
             snippet = item["snippet"]
+            video_id = snippet["resourceId"]["videoId"]
             
             videos.append({
                 "id": video_id,
                 "title": snippet["title"],
                 "description": snippet["description"],
                 "url": f"https://www.youtube.com/watch?v={video_id}",
-                "thumbnail": snippet["thumbnails"]["high"]["url"],
+                "thumbnail": snippet["thumbnails"].get("high", snippet["thumbnails"].get("default"))["url"],
                 "published_at": snippet["publishedAt"]  # ISO format string
             })
         return videos
 
     except Exception as e:
         logger.error(f"Error fetching YouTube videos: {e}")
-        return []
+        raise e
 
 def sync_videos():
     """
     Orchestrates the sync process.
     """
     logger.info("Starting YouTube Sync...")
-    videos = fetch_latest_videos_from_youtube(limit=20)
+    try:
+        videos = fetch_latest_videos_from_youtube(limit=20)
+    except Exception as e:
+        logger.error(f"Sync failed during fetch: {e}")
+        return {"status": "error", "message": f"Failed to fetch videos from YouTube: {str(e)}"}
+        
     synced_count = 0
     errors = 0
     
