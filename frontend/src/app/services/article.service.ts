@@ -37,7 +37,7 @@ export class ArticleService {
   }
 
   getArticle(id: string): Observable<Article> {
-    return this.http.get<Article>(`${this.apiUrl}/${id}`);
+    return this.http.get<Article>(`${this.apiUrl}/${id}/`);
   }
   
   // Alias for compatibility
@@ -50,10 +50,10 @@ export class ArticleService {
   }
 
   updateArticle(id: string, article: Article): Observable<Article> {
-    return this.http.put<Article>(`${this.apiUrl}/${id}`, article);
+    return this.http.put<Article>(`${this.apiUrl}/${id}/`, article);
   }
 
   deleteArticle(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    return this.http.delete(`${this.apiUrl}/${id}/`);
   }
 }
