@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: Call Backend Sync
         run: |
-          curl -X POST https://lamed-backend-957958728332.us-central1.run.app/api/sync-videos \
-          -H "Content-Type: application/json"
-          -H "X-Sync-Token: ${{ secrets.SYNC_TOKEN }}"  
+          curl -X POST https://lamed-backend-957958728332.southamerica-east1.run.app/api/sync-videos \
+          -H "Content-Type: application/json" \
+          -H "X-Sync-Token: ${{ secrets.SYNC_TOKEN }}"
