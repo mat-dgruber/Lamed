@@ -55,7 +55,7 @@
                   {{ loadedArticle.author }}
                 </span>
               }
-              @if (loadedArticle.tags?.length) {
+              @if (loadedArticle.tags.length) {
                 @for (tag of loadedArticle.tags; track tag) {
                   <span
                     class="inline-flex items-center rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-600"

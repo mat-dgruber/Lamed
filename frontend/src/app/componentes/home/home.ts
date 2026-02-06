@@ -32,19 +32,8 @@ export class Home implements OnInit {
   constructor() {
     effect(() => {
       const bundle = this.latestBundle();
-      if (bundle && bundle.video_data) {
-        let url = bundle.video_data.url;
-        // Simple YouTube ID extraction manual fallback if clean
-        if (url.includes('youtube.com') || url.includes('youtu.be')) {
-           // We assume the stored URL might be full or embed.
-           // Ideally, should use the ID. For now trusting full embed URL if standard.
-           // Or converting simple watch URL to embed:
-           if(url.includes('watch?v=')) {
-             url = url.replace('watch?v=', 'embed/');
-           } else if (url.includes('youtu.be/')) {
-             url = url.replace('youtu.be/', 'www.youtube.com/embed/');
-           }
-        }
+      if (bundle && bundle.video_id) {
+        const url = `https://www.youtube.com/embed/${bundle.video_id}`;
         this.featuredVideoUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(url));
       }
     });

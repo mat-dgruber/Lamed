@@ -49,8 +49,8 @@ export class BundleEditorComponent {
             // Ensure resources is array
             if (!this.model.resources) this.model.resources = [];
             
-            if (data.video_data) {
-                this.videoUrl = data.video_data.url;
+            if (data.video_id) {
+                this.videoUrl = `https://www.youtube.com/watch?v=${data.video_id}`;
             }
         });
       }
@@ -76,13 +76,12 @@ export class BundleEditorComponent {
   save() {
     this.isSaving.set(true);
     
-    // Map video url back to object
+    // Map video url back to id
     if (this.videoUrl) {
-        this.model.video_data = {
-            url: this.videoUrl,
-            provider: 'youtube',
-            duration: 0
-        };
+        const videoId = this.extractYoutubeId(this.videoUrl);
+        if (videoId) {
+            this.model.video_id = videoId;
+        }
     }
 
     const request$ = this.isEditMode()
@@ -101,5 +100,11 @@ export class BundleEditorComponent {
             alert('Erro ao salvar. Verifique o console.');
         }
     });
+  }
+
+  private extractYoutubeId(url: string): string | null {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
   }
 }

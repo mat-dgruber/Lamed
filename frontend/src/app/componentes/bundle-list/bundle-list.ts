@@ -22,18 +22,9 @@ export class BundleList {
     this.bundleService.getBundles().subscribe();
   }
 
-  getSafeUrl(url: string | undefined): SafeResourceUrl | null {
-    if (!url) return null;
-    // Handle both embed URLs and watch URLs if necessary, but typical youtube embed is preferred.
-    // If it's a watch URL, convert to embed.
-    let embedUrl = url;
-    if (url.includes('watch?v=')) {
-      const videoId = url.split('watch?v=')[1].split('&')[0];
-      embedUrl = `https://www.youtube.com/embed/${videoId}`;
-    } else if (url.includes('youtu.be/')) {
-        const videoId = url.split('youtu.be/')[1].split('?')[0];
-        embedUrl = `https://www.youtube.com/embed/${videoId}`;
-    }
+  getSafeUrl(videoId: string | undefined): SafeResourceUrl | null {
+    if (!videoId) return null;
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
   }
 }
