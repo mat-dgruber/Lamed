@@ -69,4 +69,5 @@ jobs:
           project_id: lamed-148
           env_vars: |
             FIREBASE_PROJECT_ID=lamed-148
-            # Add other env vars here (secrets should be mapped from GitHub Secrets)
+            YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}
+            SYNC_TOKEN=${{ secrets.SYNC_TOKEN }}
