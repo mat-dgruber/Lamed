@@ -65,7 +65,7 @@ jobs:
         with:
           service: lamed-backend
           source: ./backend
-          region: us-central1 # Or your preferred region
+          region: southamerica-east1 # Updated to match your actual service region
           project_id: lamed-148
           env_vars: |
             FIREBASE_PROJECT_ID=lamed-148

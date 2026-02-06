@@ -9,6 +9,7 @@ from config import db
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 CHANNEL_ID = "UC2PYvVmcJBLt9ymvBpnXO9A"  # Lamed Channel
 BUNDLES_COLLECTION = "bundles"
+VIDEOS_COLLECTION = "videos"
 
 logger = logging.getLogger("uvicorn")
 
@@ -67,54 +68,61 @@ def sync_videos():
     
     for vid in videos:
         try:
-            # 1. Check if bundle exists with this video URL
-            # Note: Ideally we should have an index on 'video_data.url'
-            # For now, we do a client-side filter or simple query if index exists.
-            # To avoid index requirement errors on init, we'll scan recent documents or rely on a known ID pattern if possible.
-            # A safer check without composite index:
+            video_id = vid['id']
             
-            # Efficient duplication check: Query by exact field if possible.
-            # We will use the video ID as part of a unique check if we stored it separately, 
-            # but here we check the URL inside the map (requires index usually).
+            # 1. Save to VIDEOS Collection (Upsert)
+            video_ref = db.collection(VIDEOS_COLLECTION).document(video_id)
+            v_doc = video_ref.get()
             
-            # Alternative: Search by title (less reliable) or assume we won't import duplicates often.
-            # Let's try the query. If it fails due to missing index, we catch it.
+            now = datetime.utcnow()
+            video_data = {
+                "title": vid['title'],
+                "description": vid['description'],
+                "url": vid['url'],
+                "provider": "youtube",
+                "thumbnail_url": vid['thumbnail'],
+                "published_at": datetime.strptime(vid['published_at'].replace("Z", "+00:00"), "%Y-%m-%dT%H:%M:%S%z") if 'Z' in vid['published_at'] else now,
+                "is_active": True,
+                "author": "Lamed (YouTube)",
+                "updated_at": now
+            }
             
-            query = db.collection(BUNDLES_COLLECTION).where("video_data.url", "==", vid['url']).limit(1)
-            docs = list(query.stream())
-            
-            if docs:
-                logger.info(f"Video already exists: {vid['title']}")
-                continue
-            
-            # 2. Parse Date
-            try:
-                # YouTube API: 2026-01-07T15:59:06Z
-                pub_date = datetime.strptime(vid['published_at'].replace("Z", "+00:00"), "%Y-%m-%dT%H:%M:%S%z")
-            except ValueError:
-                pub_date = datetime.utcnow()
+            if not v_doc.exists:
+                video_data["created_at"] = now
+                video_ref.set(video_data)
+                logger.info(f"Created video: {vid['title']}")
+            else:
+                video_ref.update(video_data)
+                logger.info(f"Updated video info: {vid['title']}")
 
-            # 3. Create Bundle Object
-            new_bundle = BundleCreate(
-                title=vid['title'],
-                description=vid['description'][:200] + "...", # Truncate desc for summary
-                week_number=0, # To be filled by Admin
-                author="Lamed (YouTube)",
-                published_at=pub_date,
-                video_data=VideoData(
-                    url=vid['url'],
-                    provider='youtube',
-                    duration=0
-                ),
-                thumbnail_url=vid['thumbnail'],
-                is_active=False # Imported as Draft
-            )
-
-            # 4. Save to Firestore
-            db.collection(BUNDLES_COLLECTION).add(new_bundle.model_dump())
-            logger.info(f"Imported new bundle: {vid['title']}")
-            synced_count += 1
+            # 2. Check and Create Bundle (Draft)
+            # We check if a bundle already points to this video_id
+            bundle_query = db.collection(BUNDLES_COLLECTION).where("video_id", "==", video_id).limit(1)
+            bundle_docs = list(bundle_query.stream())
             
+            if not bundle_docs:
+                pub_date = video_data["published_at"]
+                
+                new_bundle = {
+                    "title": vid['title'],
+                    "description": vid['description'][:200] + "...",
+                    "week_number": 0,
+                    "author": "Lamed (YouTube)",
+                    "published_at": pub_date,
+                    "video_id": video_id,
+                    "thumbnail_url": vid['thumbnail'],
+                    "is_active": False, # Draft
+                    "created_at": now,
+                    "updated_at": now,
+                    "resources": []
+                }
+                
+                db.collection(BUNDLES_COLLECTION).add(new_bundle)
+                logger.info(f"Created draft bundle for video: {vid['title']}")
+                synced_count += 1
+            else:
+                logger.debug(f"Bundle already exists for video {video_id}")
+
         except Exception as e:
             logger.error(f"Failed to process video {vid['id']}: {e}")
             errors += 1

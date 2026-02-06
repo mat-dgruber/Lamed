@@ -7,6 +7,27 @@ class VideoData(BaseModel):
     provider: Literal['youtube', 'storage'] = 'youtube'
     duration: Optional[int] = None
 
+class VideoBase(BaseModel):
+    title: str
+    description: Optional[str] = None
+    url: str
+    provider: Literal['youtube', 'storage'] = 'youtube'
+    thumbnail_url: Optional[str] = None
+    published_at: Optional[datetime] = None
+    is_active: bool = True
+    author: str = "Lamed"
+
+class VideoCreate(VideoBase):
+    pass
+
+class Video(VideoBase):
+    id: str  # YouTube Video ID or Generated ID
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True
+
 class Resource(BaseModel):
     title: str
     type: Literal['pdf', 'pptx', 'infographic', 'doc', 'csv', 'audio', 'image', 'mapa_mental', 'slides', 'guia', 'infografico', 'video']
@@ -18,7 +39,7 @@ class BundleBase(BaseModel):
     week_number: int
     author: Optional[str] = "Lamed"
     published_at: Optional[datetime] = None
-    video_data: Optional[VideoData] = None
+    video_id: Optional[str] = None # Reference to Video.id
     thumbnail_url: Optional[str] = None
     article_content: Optional[str] = None
     article_url: Optional[str] = None
