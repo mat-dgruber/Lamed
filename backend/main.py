@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from config import settings
-from routes import bundles, admin, articles
+from routes import bundles, admin, articles, videos
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -33,6 +33,7 @@ def read_root():
 app.include_router(bundles.router, prefix="/bundles", tags=["bundles"])
 app.include_router(admin.router, prefix="/admin", tags=["admin"])
 app.include_router(articles.router, prefix="/articles", tags=["articles"])
+app.include_router(videos.router, prefix="/videos", tags=["videos"])
 
 @app.post("/api/sync-videos", tags=["system"])
 def trigger_video_sync(x_sync_token: str = Header(None)):
