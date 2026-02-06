@@ -18,6 +18,8 @@ origins = [
     "https://lamed148.com.br"
 ]
 
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -25,6 +27,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Trust proxy headers (X-Forwarded-Proto, etc.) for redirects
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 
 @app.get("/")
 def read_root():
