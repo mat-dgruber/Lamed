@@ -11,6 +11,7 @@ Este documento descreve as decisões técnicas e o fluxo de dados do **Lamed**.
 | **Frontend** | ![Angular](https://img.shields.io/badge/-Angular_20+-DD0031?logo=angular&logoColor=white)  | Standalone Components, Signals, PrimeNG. |
 | **Backend**  | ![FastAPI](https://img.shields.io/badge/-FastAPI-009688?logo=fastapi&logoColor=white)      | Python 3.14, Pydantic v2.                |
 | **Database** | ![Firestore](https://img.shields.io/badge/-Firestore-FFCA28?logo=firebase&logoColor=black) | NoSQL, realtime updates.                 |
+| **Videos**   | ![YouTube](https://img.shields.io/badge/-YouTube-FF0000?logo=youtube&logoColor=white)      | API Sync, Independent Collection.        |
 | **Build**    | ![Docker](https://img.shields.io/badge/-Docker-2496ED?logo=docker&logoColor=white)         | Docker Compose para orquestração local.  |
 
 ---
@@ -52,11 +53,17 @@ sequenceDiagram
   - _Responsabilidade_: CRUD de conteúdos.
   - _Acesso_: Protegido por Guard de Admin.
 
+- **`VideoGalleryComponent`**:
+  - _Responsabilidade_: Exibir biblioteca de vídeos independente.
+  - _Acesso_: Público.
+
 ### Backend (`/backend`)
 
 - **`main.py`**: Ponto de entrada da aplicação FastAPI.
 - **`models.py`**: Definições de tipos compartilhados (Single Source of Truth).
-- **`services/`**: Lógica de negócios (ex: sincronização com YouTube).
+- **`services/`**: Lógica de negócios.
+  - `youtube_sync.py`: Sincronização automática com canais do YouTube.
+  - `videos.py`: CRUD e queries para a collection independente.
 
 ---
 
