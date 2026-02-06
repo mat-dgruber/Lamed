@@ -10,7 +10,7 @@ import { AnalyticsService } from '../../core/services/analytics.service';
 @Component({
   selector: 'app-bundle-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, LucideAngularModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './bundle-detail.component.html',
   styleUrl: './bundle-detail.component.scss'
 })
@@ -55,11 +55,8 @@ export class BundleDetailComponent implements OnInit {
     this.bundleService.getBundleById(id).subscribe({
       next: (data) => {
         this.bundle.set(data);
-        if (data.video_data?.url) {
-           const videoId = this.extractYoutubeId(data.video_data.url);
-           if (videoId) {
-             this.safeVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
-           }
+        if (data.video_id) {
+           this.safeVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${data.video_id}`);
         }
         if (data.article_url) {
           try {

@@ -23,9 +23,6 @@ import { Bundle } from '../../../services/bundle.service';
           <lucide-icon [name]="'play-circle'" [size]="48" class="text-white drop-shadow-lg"></lucide-icon>
         </div>
         
-        <div class="absolute bottom-2 right-2 rounded bg-black/70 px-2 py-1 text-xs font-medium text-white" *ngIf="bundle.video_data?.duration">
-          {{ formatDuration(bundle.video_data!.duration!) }}
-        </div>
       </div>
 
        <!-- Content -->
