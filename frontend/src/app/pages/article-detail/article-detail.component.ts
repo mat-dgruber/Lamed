@@ -29,9 +29,13 @@ export class ArticleDetailComponent implements OnInit {
   isButtonVisible = signal(false);
   isEmbedded = signal(false);
 
-  @HostListener('window:scroll', [])
   onWindowScroll() {
     this.isButtonVisible.set(window.scrollY > 200);
+  }
+
+  onImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/Imagens/qm-vai-testemunhar-capa-artigo.png';
   }
 
   ngOnInit() {

@@ -19,6 +19,7 @@ import { GoogleDriveImagePipe } from '../../../pipes/google-drive-image.pipe';
           [src]="bundle.thumbnail_url | googleDriveImage" 
           [alt]="bundle.title"
           class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          (error)="onImageError($event)"
         />
         <div class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
           <lucide-icon [name]="'play-circle'" [size]="48" class="text-white drop-shadow-lg"></lucide-icon>
@@ -82,5 +83,10 @@ export class BundleCardComponent {
     const min = Math.floor(seconds / 60);
     const sec = seconds % 60;
     return `${min}:${sec.toString().padStart(2, '0')}`;
+  }
+
+  onImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/Imagens/Fundo_Lamed.png';
   }
 }
