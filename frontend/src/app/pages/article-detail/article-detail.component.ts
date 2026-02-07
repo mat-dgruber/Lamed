@@ -7,11 +7,12 @@ import { ArticleService, Article } from '../../services/article.service';
 import { Timestamp } from '@angular/fire/firestore';
 import { SeoService } from '../../core/services/seo.service';
 import { AnalyticsService } from '../../core/services/analytics.service';
+import { GoogleDriveImagePipe } from '../../pipes/google-drive-image.pipe';
 
 @Component({
   selector: 'app-article-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, LucideAngularModule],
+  imports: [CommonModule, RouterLink, LucideAngularModule, GoogleDriveImagePipe],
   templateUrl: './article-detail.component.html',
   styleUrl: './article-detail.component.scss'
 })

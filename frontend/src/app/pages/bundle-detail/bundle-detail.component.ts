@@ -6,11 +6,12 @@ import { LucideAngularModule } from 'lucide-angular';
 import { BundleService, Bundle } from '../../services/bundle.service';
 import { SeoService } from '../../core/services/seo.service';
 import { AnalyticsService } from '../../core/services/analytics.service';
+import { GoogleDriveImagePipe } from '../../pipes/google-drive-image.pipe';
 
 @Component({
   selector: 'app-bundle-detail',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, LucideAngularModule, GoogleDriveImagePipe],
   templateUrl: './bundle-detail.component.html',
   styleUrl: './bundle-detail.component.scss'
 })
@@ -95,7 +96,7 @@ export class BundleDetailComponent implements OnInit {
         this.seoService.updateMetaTags({
           title: data.title,
           description: data.description || 'Confira este material exclusivo no Lamed.',
-          image: data.thumbnail_url,
+          image: new GoogleDriveImagePipe().transform(data.thumbnail_url),
           type: 'website', // Bundles are collections
           slug: `/bundle/${data.id}`
         });
