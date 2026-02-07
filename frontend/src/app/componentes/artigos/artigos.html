@@ -15,7 +15,11 @@
               @if (latest.cover_image) {
                 <div class="article-banner-image">
                   <a [routerLink]="['/article', latest.id]">
-                    <img [src]="latest.cover_image" [alt]="latest.title" loading="lazy" />
+                    <img
+                      [src]="latest.cover_image | googleDriveImage"
+                      [alt]="latest.title"
+                      loading="lazy"
+                    />
                   </a>
                 </div>
               }

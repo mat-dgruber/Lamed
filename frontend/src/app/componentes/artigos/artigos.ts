@@ -6,11 +6,12 @@ import { LucideAngularModule } from 'lucide-angular';
 import { ArticleService, Article } from '../../services/article.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { GoogleDriveImagePipe } from '../../pipes/google-drive-image.pipe';
 
 @Component({
   selector: 'app-artigos',
   standalone: true,
-  imports: [CommonModule, RouterLink, ReactiveFormsModule, LucideAngularModule],
+  imports: [CommonModule, RouterLink, ReactiveFormsModule, LucideAngularModule, GoogleDriveImagePipe],
   templateUrl: './artigos.html',
   styleUrl: './artigos.scss',
 })
