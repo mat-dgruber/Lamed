@@ -580,7 +580,6 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover; /* Cover the area, might crop */
-  transform: translateY(-70px);
 }
 @media screen and (max-width: 768px) {
   .article-banner-image img {
@@ -3835,7 +3834,6 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover; /* Cover the area, might crop */
-  transform: translateY(-70px);
 }
 @media screen and (max-width: 768px) {
   .article-banner-image img {

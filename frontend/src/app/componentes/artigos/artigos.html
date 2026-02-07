@@ -13,13 +13,14 @@
           <article>
             <div class="last-article">
               @if (latest.cover_image) {
-                <div class="article-banner-image">
+                <div class="article-banner-image rounded-[25px] overflow-hidden">
                   <a [routerLink]="['/article', latest.id]">
                     <img
                       [src]="latest.cover_image | googleDriveImage"
                       [alt]="latest.title"
                       loading="lazy"
                       (error)="onImageError($event)"
+                      class="h-full w-full object-cover"
                     />
                   </a>
                 </div>
@@ -68,7 +69,7 @@
             <div class="article-card">
               <a [routerLink]="['/article', article.id]" class="article-card-link">
                 @if (article.cover_image) {
-                  <div class="h-48 w-full overflow-hidden">
+                  <div class="h-48 w-full overflow-hidden rounded-[25px]">
                     <img
                       [src]="article.cover_image | googleDriveImage"
                       [alt]="article.title"
@@ -120,7 +121,7 @@
                 <div class="article-card">
                   <a [routerLink]="['/article', article.id]" class="article-card-link">
                     @if (article.cover_image) {
-                      <div class="h-48 w-full overflow-hidden">
+                      <div class="h-48 w-full overflow-hidden rounded-[25px]">
                         <img
                           [src]="article.cover_image | googleDriveImage"
                           [alt]="article.title"

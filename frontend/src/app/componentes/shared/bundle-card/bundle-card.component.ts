@@ -87,6 +87,6 @@ export class BundleCardComponent {
 
   onImageError(event: Event) {
     const img = event.target as HTMLImageElement;
-    img.src = 'assets/Imagens/Fundo_Lamed.png';
+    img.src = 'assets/Imagens/Fundo_Lamed-total.png';
   }
 }
