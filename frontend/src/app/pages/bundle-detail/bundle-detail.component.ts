@@ -11,7 +11,7 @@ import { GoogleDriveImagePipe } from '../../pipes/google-drive-image.pipe';
 @Component({
   selector: 'app-bundle-detail',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, GoogleDriveImagePipe],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './bundle-detail.component.html',
   styleUrl: './bundle-detail.component.scss'
 })
