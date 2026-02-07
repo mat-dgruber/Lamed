@@ -81,4 +81,9 @@ export class Artigos {
   toggleShowAll() {
     this.showAll.update(v => !v);
   }
+
+  onImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/Imagens/qm-vai-testemunhar-capa-artigo.png';
+  }
 }
