@@ -5,30 +5,35 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true
 })
 export class GoogleDriveImagePipe implements PipeTransform {
-  transform(url: string | undefined): string {
+  transform(url: string | null | undefined): string {
     if (!url) return '';
     
-    // Check if it's a Google Drive link
-    if (url.includes('drive.google.com')) {
-      // Extract the ID from various formats
-      // Format 1: https://drive.google.com/file/d/ID/view?usp=sharing
-      // Format 2: https://drive.google.com/open?id=ID
-      // Format 3: https://drive.google.com/uc?id=ID
-      
+    // If it's already a direct link or not from Google Drive, return as is
+    if (!url.includes('drive.google.com')) {
+      return url;
+    }
+
+    try {
       let id = '';
+      
+      // Format 1: https://drive.google.com/file/d/ID/view...
       if (url.includes('/file/d/')) {
-        const parts = url.split('/file/d/');
-        if (parts.length > 1) {
-          id = parts[1].split('/')[0];
+        const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (match && match[1]) {
+          id = match[1];
         }
-      } else if (url.includes('id=')) {
-        const urlParams = new URL(url);
-        id = urlParams.searchParams.get('id') || '';
+      } 
+      // Format 2 & 3: https://drive.google.com/open?id=ID or /uc?id=ID
+      else if (url.includes('id=')) {
+        const urlObj = new URL(url);
+        id = urlObj.searchParams.get('id') || '';
       }
       
       if (id) {
-        return `https://drive.google.com/uc?id=${id}`;
+        return `https://drive.google.com/uc?export=view&id=${id}`;
       }
+    } catch (e) {
+      console.warn('Error parsing Google Drive URL:', e);
     }
     
     return url;

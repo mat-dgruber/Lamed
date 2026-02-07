@@ -28,6 +28,7 @@
               [src]="loadedArticle.cover_image | googleDriveImage"
               [alt]="loadedArticle.title"
               class="h-full w-full object-cover"
+              (error)="onImageError($event)"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           </div>

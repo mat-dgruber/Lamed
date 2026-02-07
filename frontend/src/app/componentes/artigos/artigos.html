@@ -19,6 +19,7 @@
                       [src]="latest.cover_image | googleDriveImage"
                       [alt]="latest.title"
                       loading="lazy"
+                      (error)="onImageError($event)"
                     />
                   </a>
                 </div>
@@ -66,6 +67,16 @@
           @for (article of initialArticles(); track article.id) {
             <div class="article-card">
               <a [routerLink]="['/article', article.id]" class="article-card-link">
+                @if (article.cover_image) {
+                  <div class="h-48 w-full overflow-hidden">
+                    <img
+                      [src]="article.cover_image | googleDriveImage"
+                      [alt]="article.title"
+                      class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                      (error)="onImageError($event)"
+                    />
+                  </div>
+                }
                 <div class="article-card-content">
                   <h4>{{ article.title }}</h4>
                   <p class="article-meta-grid">
@@ -108,6 +119,16 @@
               @for (article of remainingArticles(); track article.id) {
                 <div class="article-card">
                   <a [routerLink]="['/article', article.id]" class="article-card-link">
+                    @if (article.cover_image) {
+                      <div class="h-48 w-full overflow-hidden">
+                        <img
+                          [src]="article.cover_image | googleDriveImage"
+                          [alt]="article.title"
+                          class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                          (error)="onImageError($event)"
+                        />
+                      </div>
+                    }
                     <div class="article-card-content">
                       <h4>{{ article.title }}</h4>
                       <p class="article-meta-grid">
