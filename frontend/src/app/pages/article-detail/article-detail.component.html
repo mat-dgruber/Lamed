@@ -25,7 +25,7 @@
         @if (loadedArticle.cover_image && !isEmbedded()) {
           <div class="relative h-64 md:h-96 w-full overflow-hidden">
             <img
-              [src]="loadedArticle.cover_image"
+              [src]="loadedArticle.cover_image | googleDriveImage"
               [alt]="loadedArticle.title"
               class="h-full w-full object-cover"
             />
