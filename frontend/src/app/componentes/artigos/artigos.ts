@@ -84,6 +84,6 @@ export class Artigos {
 
   onImageError(event: Event) {
     const img = event.target as HTMLImageElement;
-    img.src = 'assets/Imagens/qm-vai-testemunhar-capa-artigo.png';
+    img.src = 'assets/Imagens/Fundo_Lamed-total.png';
   }
 }

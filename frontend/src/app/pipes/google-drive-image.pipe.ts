@@ -16,17 +16,21 @@ export class GoogleDriveImagePipe implements PipeTransform {
     try {
       let id = '';
       
-      // Format 1: https://drive.google.com/file/d/ID/view...
-      if (url.includes('/file/d/')) {
-        const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-        if (match && match[1]) {
-          id = match[1];
-        }
+      // Handle /file/d/ID/...
+      const dMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      if (dMatch && dMatch[1]) {
+        id = dMatch[1];
       } 
-      // Format 2 & 3: https://drive.google.com/open?id=ID or /uc?id=ID
+      // Handle id=ID in query params
       else if (url.includes('id=')) {
-        const urlObj = new URL(url);
-        id = urlObj.searchParams.get('id') || '';
+        try {
+          const urlObj = new URL(url);
+          id = urlObj.searchParams.get('id') || '';
+        } catch {
+          // Fallback regex for id=ID if URL is malformed
+          const idMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+          if (idMatch) id = idMatch[1];
+        }
       }
       
       if (id) {

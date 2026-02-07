@@ -23,7 +23,7 @@
       <div class="bg-white rounded-2xl shadow-sm ring-1 ring-zinc-200 overflow-hidden">
         <!-- Banner Image -->
         @if (loadedArticle.cover_image && !isEmbedded()) {
-          <div class="relative h-64 md:h-96 w-full overflow-hidden">
+          <div class="relative h-64 md:h-96 w-full overflow-hidden rounded-[25px]">
             <img
               [src]="loadedArticle.cover_image | googleDriveImage"
               [alt]="loadedArticle.title"
