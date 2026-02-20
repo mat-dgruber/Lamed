@@ -1,0 +1,30 @@
+.donation-page {
+  /* Increase spacing for main headings within the donation page */
+ h2 {
+    margin-top: 1.5em; /* Default was 1.5em */
+    margin-bottom: 1em; /* Default was 0.5em */
+  }
+
+  /* Increase spacing for paragraphs, especially those with the specific class */
+  p.content-section-background-light-text {
+    margin-bottom: 2em; /* Increase breathing room between text blocks */
+    line-height: 1.8; /* Slightly increase line height for better readability */
+  }
+
+  /* General paragraph spacing increase if not covered above */
+  .content-section p {
+    margin-bottom: 1.5em; 
+  }
+
+  /* Add extra space between the sections themselves if needed, 
+     though content-section already has significant padding. 
+     This ensures visual separation. */
+  .content-section {
+    margin-bottom: 40px; /* Default was 20px */
+  }
+  
+  /* Specific adjustment for the distribution text to separate it from the chart */
+  h2 + p {
+      margin-bottom: 3em;
+  }
+}

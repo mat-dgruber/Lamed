@@ -1,0 +1,11 @@
+@if (!isEmbedded()) {
+  <app-header></app-header>
+}
+
+<main class="site-main">
+  <router-outlet></router-outlet>
+</main>
+
+@if (!isEmbedded()) {
+  <app-footer></app-footer>
+}

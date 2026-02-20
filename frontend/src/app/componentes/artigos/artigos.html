@@ -1,0 +1,198 @@
+<main class="site-main">
+  <section class="content-section">
+    <div class="container">
+      <h1>Artigos Bíblicos</h1>
+      <p>
+        Explore nossos artigos para um estudo aprofundado da Bíblia, com reflexões sobre teologia e
+        vida cristã.
+      </p>
+
+      @if (articles() !== undefined) {
+        @if (latestArticle(); as latest) {
+          <section id="destaque">
+            <h2>Último artigo em destaque</h2>
+            <article>
+              <div class="last-article">
+                @if (latest.cover_image) {
+                  <div class="article-banner-image rounded-[25px] overflow-hidden">
+                    <a [routerLink]="['/article', latest.id]">
+                      <img
+                        [src]="latest.cover_image | googleDriveImage"
+                        [alt]="latest.title"
+                        loading="lazy"
+                        (error)="onImageError($event)"
+                        class="h-full w-full object-cover"
+                      />
+                    </a>
+                  </div>
+                }
+                <h3>
+                  <a [routerLink]="['/article', latest.id]">{{ latest.title }}</a>
+                </h3>
+                <p>{{ latest.summary }}</p>
+              </div>
+            </article>
+          </section>
+        }
+
+        <section id="search-section" class="search-section">
+          <div class="search-container">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Pesquisar artigos por título ou palavra-chave..."
+              [formControl]="searchControl"
+            />
+            <button id="search-button" aria-label="Pesquisar">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-search"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </button>
+          </div>
+        </section>
+
+        <section id="lista-artigos">
+          <h2>Mais artigos</h2>
+          <div class="articles-grid">
+            @for (article of initialArticles(); track article.id) {
+              <div class="article-card">
+                <a [routerLink]="['/article', article.id]" class="article-card-link">
+                  @if (article.cover_image) {
+                    <div class="h-48 w-full overflow-hidden rounded-[25px]">
+                      <img
+                        [src]="article.cover_image | googleDriveImage"
+                        [alt]="article.title"
+                        class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                        (error)="onImageError($event)"
+                      />
+                    </div>
+                  }
+                  <div class="article-card-content">
+                    <h4>{{ article.title }}</h4>
+                    <p class="article-meta-grid">
+                      Por: {{ article.author || 'Lamed' }}<br />
+                      <span class="text-sm text-gray-500">{{
+                        article.published_at | date: 'dd/MM/yyyy'
+                      }}</span>
+                    </p>
+                    <p class="article-desc-grid">
+                      {{ article.summary | slice: 0 : 100
+                      }}{{ article.summary && article.summary.length > 100 ? '...' : '' }}
+                    </p>
+                  </div>
+                </a>
+              </div>
+            } @empty {
+              <div *ngIf="!latestArticle()" class="col-span-3 text-center py-8 text-gray-500">
+                Nenhum artigo encontrado.
+              </div>
+            }
+          </div>
+
+          @if (remainingArticles().length > 0) {
+            <div class="show-more-container">
+              <button (click)="toggleShowAll()" class="btn-show-more">
+                {{
+                  showAll()
+                    ? 'Ver menos artigos'
+                    : 'Ver mais artigos (' + remainingArticles().length + ')'
+                }}
+                <lucide-icon
+                  [name]="showAll() ? 'chevron-up' : 'chevron-down'"
+                  [size]="20"
+                ></lucide-icon>
+              </button>
+            </div>
+
+            @if (showAll()) {
+              <div class="articles-grid">
+                @for (article of remainingArticles(); track article.id) {
+                  <div class="article-card">
+                    <a [routerLink]="['/article', article.id]" class="article-card-link">
+                      @if (article.cover_image) {
+                        <div class="h-48 w-full overflow-hidden rounded-[25px]">
+                          <img
+                            [src]="article.cover_image | googleDriveImage"
+                            [alt]="article.title"
+                            class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                            (error)="onImageError($event)"
+                          />
+                        </div>
+                      }
+                      <div class="article-card-content">
+                        <h4>{{ article.title }}</h4>
+                        <p class="article-meta-grid">
+                          Por: {{ article.author || 'Lamed' }}<br />
+                          <span class="text-sm text-gray-500">{{
+                            article.published_at | date: 'dd/MM/yyyy'
+                          }}</span>
+                        </p>
+                        <p class="article-desc-grid">
+                          {{ article.summary | slice: 0 : 100
+                          }}{{ article.summary && article.summary.length > 100 ? '...' : '' }}
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                }
+              </div>
+            }
+          }
+        </section>
+      } @else {
+        <!-- Skeleton Loading State -->
+        <div class="animate-pulse">
+          <!-- Latest Article Skeleton -->
+          <section id="destaque-skeleton" class="mb-12">
+            <div class="h-8 w-64 bg-zinc-200 rounded mb-6"></div>
+            <div
+              class="bg-white rounded-[25px] overflow-hidden shadow-sm border border-zinc-100 p-6"
+            >
+              <div class="h-64 w-full bg-zinc-200 rounded-[25px] mb-6"></div>
+              <div class="h-8 w-3/4 bg-zinc-200 rounded mb-4"></div>
+              <div class="space-y-2">
+                <div class="h-4 w-full bg-zinc-200 rounded"></div>
+                <div class="h-4 w-5/6 bg-zinc-200 rounded"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Search Skeleton -->
+          <section class="mb-12">
+            <div class="h-12 w-full max-w-2xl mx-auto bg-zinc-200 rounded-full"></div>
+          </section>
+
+          <!-- Grid Skeleton -->
+          <section>
+            <div class="h-8 w-48 bg-zinc-200 rounded mb-6"></div>
+            <div class="articles-grid">
+              @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+                <div class="article-card bg-white p-4 rounded-[25px] border border-zinc-100 h-96">
+                  <div class="h-48 w-full bg-zinc-200 rounded-[25px] mb-4"></div>
+                  <div class="h-6 w-3/4 bg-zinc-200 rounded mb-2"></div>
+                  <div class="h-4 w-1/2 bg-zinc-200 rounded mb-4"></div>
+                  <div class="space-y-2">
+                    <div class="h-4 w-full bg-zinc-200 rounded"></div>
+                    <div class="h-4 w-full bg-zinc-200 rounded"></div>
+                  </div>
+                </div>
+              }
+            </div>
+          </section>
+        </div>
+      }
+    </div>
+  </section>
+</main>

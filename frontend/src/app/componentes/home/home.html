@@ -1,0 +1,161 @@
+<section id="hero" class="hero-section">
+  <div class="container">
+    @if (showHeroText1()) {
+      <div id="hero-text-1" [style.opacity]="heroText1Opacity()" class="hero-text">
+        <h1>Bem-vindo ao LAMED</h1>
+        <p>Onde você estuda a Bíblia de um jeito diferenciado.</p>
+      </div>
+    }
+    @if (showHeroText2()) {
+      <div id="hero-text-2" [style.opacity]="heroText2Opacity()" class="hero-text">
+        <h1>Estude a Bíblia de um jeito diferenciado</h1>
+        <p>
+          O Lamed é o seu portal para um estudo bíblico aprofundado e transformador.<br />Explore
+          nossos vídeos, artigos e materiais de estudo.
+        </p>
+      </div>
+    }
+  </div>
+</section>
+
+<section id="call-to-action-study" class="content-section">
+  <div class="container">
+    <h2>Explore Nossos Materiais de Estudo</h2>
+    <p class="mb-8">
+      Descubra uma variedade de recursos para aprofundar seu conhecimento bíblico, incluindo guias
+      de estudo semanais, artigos e vídeos.
+    </p>
+    @if (latestBundle(); as bundle) {
+      <div class="container mt-8">
+        <div
+          class="grid gap-8 lg:grid-cols-5 items-center bg-white rounded-3xl p-6 shadow-xl border border-zinc-100"
+        >
+          <div
+            class="lg:col-span-3 aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg ring-1 ring-zinc-900/10"
+          >
+            @if (featuredVideoUrl()) {
+              <iframe
+                [src]="featuredVideoUrl()"
+                title="Video em Destaque"
+                class="h-full w-full"
+                frameborder="0"
+                allow="
+                  accelerometer;
+                  autoplay;
+                  clipboard-write;
+                  encrypted-media;
+                  gyroscope;
+                  picture-in-picture;
+                "
+                allowfullscreen
+              >
+              </iframe>
+            }
+          </div>
+          <div class="lg:col-span-2 space-y-4">
+            <div class="flex items-center gap-2">
+              <span
+                class="inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-sm font-medium text-orange-800"
+              >
+                Destaque da Lição #{{ bundle.week_number }}
+              </span>
+              @if (bundle.published_at) {
+                <span class="text-sm text-zinc-500">
+                  {{ bundle.published_at | date: 'longDate' }}
+                </span>
+              }
+            </div>
+
+            <h2 class="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+              {{ bundle.title }}
+            </h2>
+
+            @if (bundle.description) {
+              <p class="text-lg text-zinc-600 leading-relaxed line-clamp-3">
+                {{ bundle.description }}
+              </p>
+            }
+
+            <div class="pt-4">
+              <a
+                [routerLink]="['/bundle', bundle.id]"
+                class="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-orange-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all"
+              >
+                <lucide-icon name="book-open" [size]="20"></lucide-icon>
+                Acessar Material Completo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @else if (latestBundle() === undefined) {
+      <!-- Skeleton Loading State -->
+      <div class="container mt-8 animate-pulse">
+        <div
+          class="grid gap-8 lg:grid-cols-5 items-center bg-white rounded-3xl p-6 shadow-xl border border-zinc-100"
+        >
+          <!-- Video Skeleton -->
+          <div
+            class="lg:col-span-3 aspect-video w-full overflow-hidden rounded-2xl bg-zinc-200"
+          ></div>
+
+          <!-- Content Skeleton -->
+          <div class="lg:col-span-2 space-y-4">
+            <div class="flex items-center gap-2">
+              <!-- Tag Skeleton -->
+              <div class="h-6 w-32 rounded-full bg-zinc-200"></div>
+              <!-- Date Skeleton -->
+              <div class="h-4 w-24 rounded bg-zinc-200"></div>
+            </div>
+
+            <!-- Title Skeleton -->
+            <div class="h-10 w-3/4 rounded-lg bg-zinc-200"></div>
+
+            <!-- Description Skeleton -->
+            <div class="space-y-2">
+              <div class="h-4 w-full rounded bg-zinc-200"></div>
+              <div class="h-4 w-full rounded bg-zinc-200"></div>
+              <div class="h-4 w-2/3 rounded bg-zinc-200"></div>
+            </div>
+
+            <!-- Button Skeleton -->
+            <div class="pt-4">
+              <div class="h-12 w-48 rounded-xl bg-zinc-200"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <div class="text-center">
+      <!-- Route adjusted to main bundle list -->
+      <a routerLink="/guia-de-estudos" class="btn-primary-apoio">Acessar o Guia de Estudos</a>
+    </div>
+  </div>
+</section>
+
+<section id="call-to-action-donate" class="content-section background-light">
+  <div class="container">
+    <h2>Apoie Nossa Missão</h2>
+    <p>
+      O Lamed é uma associação sem fins lucrativos dedicada a compartilhar o conhecimento bíblico de
+      forma acessível e transformadora.
+    </p>
+    <div class="text-center">
+      <a routerLink="/apoie" class="btn-secondary">Fazer uma Doação</a>
+    </div>
+  </div>
+</section>
+
+<section id="about-short" class="content-section">
+  <div class="container">
+    <h2>Sobre Nós</h2>
+    <p>
+      Nossa missão é equipar e inspirar pessoas a experimentar a Bíblia, promovendo transformação
+      pessoal e comunitária através do estudo das Escrituras.
+    </p>
+    <div class="text-center">
+      <a routerLink="/sobre" class="btn-destaque">Saiba Mais</a>
+    </div>
+  </div>
+</section>

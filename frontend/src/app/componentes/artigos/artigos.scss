@@ -1,0 +1,318 @@
+/* Main Containers */
+.site-main {
+    min-height: 80vh;
+}
+
+.content-section {
+    padding: 3rem 1rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Headers */
+h1 {
+    font-family: caecilia, sans-serif;
+    font-size: 2.5rem;
+    color: var(--text-color-headings, #333);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+    color: var(--text-color, #666);
+    margin-bottom: 2rem;
+    font-family: caecilia, sans-serif;
+}
+
+/* Featured Article (Destaque) */
+#destaque {
+    margin-bottom: 4rem;
+}
+
+#destaque h2 {
+    font-family: caecilia, sans-serif;
+    font-size: 1.8rem;
+    color: var(--text-color-headings, #444);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.last-article {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.last-article:hover {
+    transform: translateY(-5px);
+}
+
+/* Banner Image - Aspect Ratio Fix */
+.article-banner-image a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.article-banner-image img {
+    width: 100%;
+    height: 100%; 
+    max-height: 400px;
+    object-fit: cover;
+    /* aspect-ratio: 16/9; Remove strict aspect ratio to prevent awkward cropping */
+}
+
+@media (max-width: 768px) {
+    .article-banner-image img {
+        max-height: 250px;
+    }
+}
+
+.last-article h3 {
+    padding: 1.5rem 1.5rem 0.5rem;
+    font-size: 1.5rem;
+    margin: 0;
+    font-family: caecilia, sans-serif;
+}
+
+.last-article h3 a {
+    color: var(--text-color-headings, #333);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.last-article h3 a:hover {
+    color: var(--main-color);
+}
+
+.last-article p {
+    padding: 0 1.5rem 1.5rem;
+    text-align: left;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Search Section - Border Fix */
+.search-section {
+    margin-bottom: 3rem;
+}
+
+.search-container {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#search-input {
+    width: 100%;
+    padding: 1rem 3rem 1rem 1.5rem;
+    border: 1px solid #cbd5e1; /* Darker border for better visibility */
+    border-radius: 50px;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: none; /* Remove shadow to avoid 'double border' look */
+    appearance: none; /* Remove native browser styles */
+    -webkit-appearance: none;
+    transition: all 0.2s;
+    font-family: caecilia, sans-serif;
+    background-color: #fff;
+}
+
+#search-input::placeholder {
+    color: #94a3b8; /* Explicit placeholder color */
+}
+
+#search-input:focus {
+    border-color: var(--main-color, #e65100);
+    box-shadow: 0 0 0 3px rgba(230, 81, 0, 0.1); /* Subtle focus ring instead of harsh border */
+}
+
+#search-button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: #64748b;
+}
+
+#search-button:hover {
+    color: var(--main-color, #e65100);
+}
+
+/* Articles List - Tighter Spacing */
+#lista-artigos h2 {
+    font-family: caecilia, sans-serif;
+    font-size: 1.8rem;
+    color: var(--text-color-headings, #444);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+#articles-list-ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem; /* Reduced to 1rem as requested */
+}
+
+#articles-list-ul li {
+    background: #fff;
+    padding: 1rem; /* Reduced from 1.5rem to 1rem */
+    border-radius: 50px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-left: 4px solid transparent;
+    transition: all 0.2s;
+}
+
+#articles-list-ul li:hover {
+    border-left-color: var(--main-color);
+    transform: translateX(5px);
+}
+
+#articles-list-ul a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+#articles-list-ul strong {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-family: caecilia, sans-serif;
+}
+
+.article-list-item-meta {
+    display: block;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Show More Button */
+.show-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.btn-show-more {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--main-color, #e65100);
+    color: #fff;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-family: caecilia, sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(230, 81, 0, 0.2);
+}
+
+.btn-show-more:hover {
+    background-color: #ef6c00;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(230, 81, 0, 0.3);
+}
+
+/* Expanded Grid - renamed to generic Grid */
+.articles-grid {
+    display: grid;
+    /* Use flexible columns with min width */
+    grid-template-columns: repeat(3, 1fr); /* Force 3 columns on desktop */
+    gap: 2rem;
+    margin-top: 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@media (max-width: 992px) {
+    .articles-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .articles-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.article-card {
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: transform 0.2s;
+    border: 1px solid #f0f0f0;
+    text-align: left !important; /* Force left align */
+    display: flex;
+    flex-direction: column;
+}
+
+.article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.article-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.article-card-content {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.article-card h4 {
+    font-family: caecilia, sans-serif;
+    font-size: 1.25rem;
+    color: var(--main-color, #e65100); /* Updated to Orange */
+    margin-bottom: 0.5rem;
+    margin-top: 0; /* Fix excessive global top margin */
+    line-height: 1.2;
+    text-align: left; /* Ensure left align */
+}
+
+.article-meta-grid {
+    font-size: 0.875rem;
+    color: #718096;
+    margin-bottom: 0.75rem;
+    text-align: left; /* Ensure left align */
+    font-weight: 500;
+}
+
+.article-desc-grid {
+    font-size: 0.95rem;
+    color: #4a5568;
+    line-height: 1.5;
+    margin: 0;
+    text-align: left !important; /* Ensure left align */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

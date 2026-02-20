@@ -1,0 +1,55 @@
+/* video-gallery styles from backup HTML context implies standard section padding */
+.video-gallery {
+    padding: 2rem 0;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.video-item {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.212);
+    transition: transform 0.2s;
+}
+
+.video-item:hover {
+    transform: translateY(-4px);
+}
+
+.video-item iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+.video-item p {
+    padding: 1rem;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+}
+
+.external-video-links {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Layout specific fixes for video page buttons */
+.btn-primary, .btn-primary-apoio, .btn-secondary {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.lucide {
+    margin-left: 0.5rem;
+}

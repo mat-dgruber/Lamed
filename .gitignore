@@ -1,45 +1,60 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# Angular
+/frontend/dist/
+/frontend/tmp/
+/frontend/out-tsc/
+/frontend/bazel-out/
+/frontend/node_modules/
+/frontend/.idea/
+/frontend/.project
+/frontend/.ng/
+/frontend/.angular/
+/frontend/.vscode/
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# Python
+/backend/__pycache__/
+/backend/*.py[cod]
+/backend/*$py.class
+/backend/venv/
+/backend/env/
+/backend/.env
+/backend/.venv
+/backend/build/
+/backend/dist/
+/backend/*.spec
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# Firebase / Secrets
+backend/certs/
+*.json
+!package.json
+!tsconfig.json
+!angular.json
+!ng-package.json
+!nx.json
+!frontend/src/assets/**/*.json
+serviceAccountKey.json
+*.key
+.env
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
 
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+# Large Media Files (Ignored to save space)
+*.mp4
+*.pdf
+frontend/public/assets/Imagens-artigos/*.png
+backend/media/bundles/
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-
-# System files
+# IDE / OS
 .DS_Store
 Thumbs.db
+# IDE / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+/_BKP
+
+# Local / Cache
 /frontend/node_modules
 /frontend/.angular
 /backend/content
@@ -49,3 +64,4 @@ Thumbs.db
 /backend/config/__pycache__
 *.cache
 /.firebase
+*.pyc
