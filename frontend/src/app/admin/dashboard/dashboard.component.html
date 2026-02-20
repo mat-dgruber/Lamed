@@ -48,61 +48,86 @@
         <tr>
           <th scope="col" class="px-6 py-4 font-bold">Título</th>
           <th scope="col" class="px-6 py-4 font-bold">Semana</th>
+          <th scope="col" class="px-6 py-4 font-bold">Data</th>
           <th scope="col" class="px-6 py-4 font-bold">Status</th>
           <th scope="col" class="px-6 py-4 font-bold text-right">Ações</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-zinc-100">
-        @for (bundle of bundles(); track bundle.id) {
-          <tr class="group hover:bg-zinc-50 transition-colors">
-            <td class="px-6 py-4 font-medium text-zinc-900">
-              {{ bundle.title }}
-              <div class="text-xs font-normal text-zinc-500">
-                {{ bundle.description | slice: 0 : 50 }}...
-              </div>
-            </td>
-            <td class="px-6 py-4">#{{ bundle.week_number }}</td>
-            <td class="px-6 py-4">
-              <span
-                class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset"
-                [ngClass]="
-                  bundle.is_active
-                    ? 'bg-green-50 text-green-700 ring-green-600/20'
-                    : 'bg-yellow-50 text-yellow-800 ring-yellow-600/20'
-                "
-              >
-                {{ bundle.is_active ? 'Publicado' : 'Rascunho' }}
-              </span>
-            </td>
-            <td class="px-6 py-4 text-right">
-              <a
-                [routerLink]="['/admin/edit', bundle.id]"
-                class="text-blue-600 hover:text-blue-500 font-medium"
-                >Editar</a
-              >
-            </td>
-          </tr>
-        }
-
-        @if (bundles().length === 0) {
-          <tr>
-            <td colspan="4" class="p-0 border-none">
-              <div class="flex flex-col items-center justify-center py-20 text-center">
-                <div class="bg-orange-50 p-6 rounded-full mb-6">
-                  <lucide-icon name="layout-list" class="text-orange-500" [size]="48"></lucide-icon>
+        @if (bundles(); as list) {
+          @for (bundle of list; track bundle.id) {
+            <tr class="group hover:bg-zinc-50 transition-colors">
+              <td class="px-6 py-4 font-medium text-zinc-900">
+                {{ bundle.title }}
+                <div class="text-xs font-normal text-zinc-500">
+                  {{ bundle.description | slice: 0 : 50 }}...
                 </div>
-                <h3 class="text-xl font-bold text-zinc-900 mb-2">Nenhum bundle encontrado</h3>
-                <p class="text-zinc-500 max-w-md px-4 mb-6">
-                  Comece sincronizando seus vídeos do YouTube ou crie um novo bundle manualmente.
-                </p>
-                <a
-                  routerLink="/admin/new"
-                  class="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-sm font-semibold text-white hover:bg-orange-500 transition-colors"
+              </td>
+              <td class="px-6 py-4">#{{ bundle.week_number }}</td>
+              <td class="px-6 py-4">
+                {{ bundle.published_at | date: 'dd/MM/yyyy' }}
+              </td>
+              <td class="px-6 py-4">
+                <span
+                  class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset"
+                  [ngClass]="
+                    bundle.is_active
+                      ? 'bg-green-50 text-green-700 ring-green-600/20'
+                      : 'bg-yellow-50 text-yellow-800 ring-yellow-600/20'
+                  "
                 >
-                  Criar Primeiro Bundle
+                  {{ bundle.is_active ? 'Publicado' : 'Rascunho' }}
+                </span>
+              </td>
+              <td class="px-6 py-4 text-right flex justify-end items-center gap-4">
+                <a
+                  [routerLink]="['/admin/edit', bundle.id]"
+                  class="text-blue-600 hover:text-blue-500 font-medium flex items-center gap-1"
+                >
+                  <lucide-icon name="edit" [size]="16"></lucide-icon>
+                  Editar
                 </a>
-              </div>
-            </td>
+                <button
+                  (click)="deleteBundle(bundle.id)"
+                  class="text-red-600 hover:text-red-500 font-medium flex items-center gap-1"
+                  title="Excluir"
+                >
+                  <lucide-icon name="trash-2" [size]="16"></lucide-icon>
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          }
+
+          @if (list.length === 0) {
+            <tr>
+              <td colspan="4" class="p-0 border-none">
+                <div class="flex flex-col items-center justify-center py-20 text-center">
+                  <div class="bg-orange-50 p-6 rounded-full mb-6">
+                    <lucide-icon
+                      name="layout-list"
+                      class="text-orange-500"
+                      [size]="48"
+                    ></lucide-icon>
+                  </div>
+                  <h3 class="text-xl font-bold text-zinc-900 mb-2">Nenhum bundle encontrado</h3>
+                  <p class="text-zinc-500 max-w-md px-4 mb-6">
+                    Comece sincronizando seus vídeos do YouTube ou crie um novo bundle manualmente.
+                  </p>
+                  <a
+                    routerLink="/admin/new"
+                    class="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-sm font-semibold text-white hover:bg-orange-500 transition-colors"
+                  >
+                    Criar Primeiro Bundle
+                  </a>
+                </div>
+              </td>
+            </tr>
+          }
+        } @else {
+          <!-- Loading State -->
+          <tr>
+            <td colspan="4" class="px-6 py-4 text-center text-zinc-500">Carregando trilhas...</td>
           </tr>
         }
       </tbody>

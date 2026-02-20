@@ -1,0 +1,61 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // -------------------------------------------------------------------------
+    // 🛡️ Helper Functions
+    // -------------------------------------------------------------------------
+
+    // Verifica se o usuário está autenticado
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Verifica se o usuário é dono do recurso (comparando UID)
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Verifica permissão de Admin
+    // Requer Custom Claim 'admin' ou UID hardcoded
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.get('admin', false) == true ||
+        // ⚠️ SUBSTITUA PELO SEU UID DE ADMIN REAL ⚠️
+        request.auth.uid == "SEU_UID_AQUI" 
+      );
+    }
+
+    // -------------------------------------------------------------------------
+    // 📦 Conteúdo Público (Read-Only para todos, Write para Admin)
+    // -------------------------------------------------------------------------
+
+    // Bundles (Pacotes de Estudo)
+    match /bundles/{bundleId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Videos
+    match /videos/{videoId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Articles (Artigos/Blog)
+    match /articles/{articleId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // -------------------------------------------------------------------------
+    // 👤 Dados de Usuário
+    // -------------------------------------------------------------------------
+
+    // Perfil do Usuário
+    match /users/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+  }
+}

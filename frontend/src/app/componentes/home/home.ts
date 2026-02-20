@@ -17,6 +17,8 @@ export class Home implements OnInit {
   private bundleService = inject(BundleService);
   private sanitizer = inject(DomSanitizer);
 
+  isLoading = signal(true);
+
   // Data
   latestBundle = toSignal(this.bundleService.getLatestBundle());
   

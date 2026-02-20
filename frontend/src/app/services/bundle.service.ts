@@ -41,7 +41,7 @@ export class BundleService {
   private apiUrl = environment.apiUrl;
 
   // Signals for reactive state
-  bundles = signal<Bundle[]>([]);
+  bundles = signal<Bundle[] | undefined>(undefined);
 
   getBundles(
     limit: number = 10,
@@ -77,11 +77,19 @@ export class BundleService {
     return this.http.put<Bundle>(`${this.apiUrl}/bundles/${id}/`, bundle);
   }
 
+  deleteBundle(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/bundles/${id}/`);
+  }
+
+  syncWithYouTube(): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/admin/sync-youtube`, {});
+  }
+
   syncVideosFromAssets(): Observable<any> {
     return this.http.get<any[]>('assets/videos.json').pipe(
       map((videos) => {
         const existingVideoIds = new Set(
-          this.bundles().map((b) => {
+          (this.bundles() || []).map((b) => {
             // Extract ID from URL like https://youtube.com/watch?v=ID or https://youtu.be/ID
             return b.video_id || '';
           }),

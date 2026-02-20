@@ -11,7 +11,13 @@ import { GoogleDriveImagePipe } from '../../pipes/google-drive-image.pipe';
 @Component({
   selector: 'app-artigos',
   standalone: true,
-  imports: [CommonModule, RouterLink, ReactiveFormsModule, LucideAngularModule, GoogleDriveImagePipe],
+  imports: [
+    CommonModule,
+    RouterLink,
+    ReactiveFormsModule,
+    LucideAngularModule,
+    GoogleDriveImagePipe,
+  ],
   templateUrl: './artigos.html',
   styleUrl: './artigos.scss',
 })
@@ -19,22 +25,19 @@ export class Artigos {
   private articleService = inject(ArticleService);
 
   // Load articles
-  articles = toSignal(this.articleService.getArticles(), { initialValue: [] });
-  
+  articles = toSignal(this.articleService.getArticles());
+
   // Search Control
   searchControl = new FormControl('');
   searchTerm = toSignal(
-    this.searchControl.valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ),
-    { initialValue: '' }
+    this.searchControl.valueChanges.pipe(debounceTime(300), distinctUntilChanged()),
+    { initialValue: '' },
   );
 
   // Latest Article
   latestArticle = computed(() => {
     const all = this.articles();
-    return all.length > 0 ? all[0] : null;
+    return all && all.length > 0 ? all[0] : null;
   });
 
   // Toggles
@@ -47,24 +50,27 @@ export class Artigos {
   baseArticles = computed(() => {
     const term = this.searchTerm()?.toLowerCase() || '';
     const all = this.articles();
-    
+
+    if (!all) return [];
+
     let list = all;
-    
+
     if (term) {
-        list = list.filter(a => 
-            a.title.toLowerCase().includes(term) ||
-            a.summary.toLowerCase().includes(term) ||
-            (a.author && a.author.toLowerCase().includes(term))
-        );
-        // If searching, we show ALL matches (including the latest if it matches)
-        return list; 
+      list = list.filter(
+        (a) =>
+          a.title.toLowerCase().includes(term) ||
+          a.summary.toLowerCase().includes(term) ||
+          (a.author && a.author.toLowerCase().includes(term)),
+      );
+      // If searching, we show ALL matches (including the latest if it matches)
+      return list;
     }
-    
+
     // If NOT searching, exclude the first one (latest) as it is shown in Hero
     if (list.length > 0) {
-        return list.slice(1);
+      return list.slice(1);
     }
-    
+
     return [];
   });
 
@@ -79,7 +85,7 @@ export class Artigos {
   });
 
   toggleShowAll() {
-    this.showAll.update(v => !v);
+    this.showAll.update((v) => !v);
   }
 
   onImageError(event: Event) {

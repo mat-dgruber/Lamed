@@ -9,7 +9,7 @@ import { BundleService, Bundle } from '../../services/bundle.service';
   standalone: true,
   imports: [CommonModule, RouterLink, LucideAngularModule],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrl: './dashboard.component.scss',
 })
 export class AdminDashboardComponent {
   private bundleService = inject(BundleService);
@@ -22,20 +22,39 @@ export class AdminDashboardComponent {
 
   syncVideos() {
     this.isSyncing = true;
-    this.bundleService.syncVideosFromAssets().subscribe({
-      next: (results) => {
+    this.bundleService.syncWithYouTube().subscribe({
+      next: (res) => {
         this.isSyncing = false;
-        if (results && results.length > 0) {
-          alert(`Sincronização concluída! ${results.length} novos bundles criados.`);
+        if (res && res.data) {
+          const imported = res.data.imported || 0;
+          const errors = res.data.errors || 0;
+          alert(`Sincronização concluída!\nImportados: ${imported}\nErros: ${errors}`);
+          // Refresh list
+          this.bundleService.getBundles(50, 0, false).subscribe();
         } else {
-          alert('Nenhum vídeo novo encontrado para sincronizar.');
+          alert('Sincronização concluída.');
         }
       },
       error: (err) => {
         this.isSyncing = false;
         console.error(err);
-        alert('Erro ao sincronizar vídeos. Verifique o console.');
-      }
+        alert('Erro ao sincronizar vídeos. Veja o console para detalhes.');
+      },
     });
+  }
+
+  deleteBundle(id: string) {
+    if (confirm('Tem certeza que deseja excluir este bundle?')) {
+      this.bundleService.deleteBundle(id).subscribe({
+        next: () => {
+          // Optimistic update or refresh
+          this.bundleService.getBundles(50, 0, false).subscribe();
+        },
+        error: (err) => {
+          console.error('Error deleting bundle:', err);
+          alert('Erro ao excluir bundle.');
+        },
+      });
+    }
   }
 }

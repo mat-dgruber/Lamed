@@ -1,9 +1,10 @@
-import os
 import logging
+import os
 from datetime import datetime
+
+from config import db
 from googleapiclient.discovery import build
 from models import BundleCreate, VideoData
-from config import db
 
 # Settings
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
@@ -127,7 +128,7 @@ def sync_videos():
                     "video_id": video_id,
                     "thumbnail_url": vid['thumbnail'],
                     "is_active": False, # Draft
-                    "created_at": now,
+                    "created_at": pub_date, # Use video publish date for sorting
                     "updated_at": now,
                     "resources": []
                 }
@@ -135,6 +136,11 @@ def sync_videos():
                 db.collection(BUNDLES_COLLECTION).add(new_bundle)
                 logger.info(f"Created draft bundle for video: {vid['title']}")
                 synced_count += 1
+            else:
+                logger.debug(f"Bundle already exists for video {video_id}")
+                # Optional: Update existing bundle if needed
+                # doc = bundle_docs[0]
+                # doc.reference.update({"video_id": video_id})
             else:
                 logger.debug(f"Bundle already exists for video {video_id}")
 
