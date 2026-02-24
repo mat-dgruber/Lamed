@@ -24,14 +24,18 @@ def get_bundles(limit: int = 10, offset: int = 0, only_active: bool = True):
     )
     query = query.limit(limit).offset(offset)
 
-    docs = query.stream()
-    bundles = []
-    for doc in docs:
-        data = doc.to_dict()
-        data["id"] = doc.id
-        bundles.append(data)
+    try:
+        docs = query.stream()
+        bundles = []
+        for doc in docs:
+            data = doc.to_dict()
+            data["id"] = doc.id
+            bundles.append(data)
 
-    return bundles
+        return bundles
+    except Exception as e:
+        print(f"Error fetching bundles: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/latest", response_model=Optional[Bundle])

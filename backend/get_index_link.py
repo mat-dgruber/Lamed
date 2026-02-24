@@ -6,9 +6,9 @@ import traceback
 print("🔍 Capturing Index URL...")
 
 try:
-    query = db.collection("articles")
+    query = db.collection("bundles")
     query = query.where(field_path="is_active", op_string="==", value=True)
-    query = query.order_by("published_at", direction=FirestoreQuery.DESCENDING)
+    query = query.order_by("week_number", direction=FirestoreQuery.DESCENDING).order_by("published_at", direction=FirestoreQuery.DESCENDING)
     list(query.stream()) # Trigger the error
 except Exception:
     error_msg = traceback.format_exc()
