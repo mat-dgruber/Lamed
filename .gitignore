@@ -53,6 +53,8 @@ Thumbs.db
 .vscode/
 .idea/
 /_BKP
+.agent
+.agent/
 
 # Local / Cache
 /frontend/node_modules
@@ -65,3 +67,4 @@ Thumbs.db
 *.cache
 /.firebase
 *.pyc
+/backend/.venv_temp
