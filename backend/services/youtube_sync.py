@@ -7,7 +7,7 @@ from googleapiclient.discovery import build
 from models import BundleCreate, VideoData
 
 # Settings
-YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY") or os.getenv("GOOGLE_API_KEY")
 CHANNEL_ID = "UC2PYvVmcJBLt9ymvBpnXO9A"  # Lamed Channel
 BUNDLES_COLLECTION = "bundles"
 VIDEOS_COLLECTION = "videos"
