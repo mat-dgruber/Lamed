@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from typing import List
+from typing import List, Optional
 from models import Video
 from config import db
 from datetime import datetime
@@ -8,12 +8,19 @@ router = APIRouter()
 VIDEOS_COLLECTION = "videos"
 
 @router.get("/", response_model=List[Video])
-def get_videos(limit: int = 50, offset: int = 0):
+def get_videos(limit: int = 50, start_after_id: Optional[str] = None):
     """
-    Returns a list of videos from the independent collection.
+    Returns a list of videos from the independent collection using cursor pagination.
     """
     try:
-        query = db.collection(VIDEOS_COLLECTION).order_by("published_at", direction="DESCENDING").limit(limit).offset(offset)
+        query = db.collection(VIDEOS_COLLECTION).order_by("published_at", direction="DESCENDING")
+        
+        if start_after_id:
+            last_doc = db.collection(VIDEOS_COLLECTION).document(start_after_id).get()
+            if last_doc.exists:
+                query = query.start_after(last_doc)
+                
+        query = query.limit(limit)
         docs = query.stream()
         
         videos = []

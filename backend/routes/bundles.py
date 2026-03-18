@@ -12,7 +12,9 @@ BUNDLES_COLLECTION = "bundles"
 
 
 @router.get("/", response_model=List[Bundle])
-def get_bundles(limit: int = 10, offset: int = 0, only_active: bool = True):
+def get_bundles(
+    limit: int = 10, start_after_id: Optional[str] = None, only_active: bool = True
+):
     query = db.collection(BUNDLES_COLLECTION)
 
     if only_active:
@@ -22,7 +24,13 @@ def get_bundles(limit: int = 10, offset: int = 0, only_active: bool = True):
     query = query.order_by("week_number", direction=FirestoreQuery.DESCENDING).order_by(
         "published_at", direction=FirestoreQuery.DESCENDING
     )
-    query = query.limit(limit).offset(offset)
+    
+    if start_after_id:
+        last_doc = db.collection(BUNDLES_COLLECTION).document(start_after_id).get()
+        if last_doc.exists:
+            query = query.start_after(last_doc)
+
+    query = query.limit(limit)
 
     try:
         docs = query.stream()
@@ -95,21 +103,16 @@ def create_bundle(bundle_in: BundleCreate):
 
 @router.put("/{bundle_id}", response_model=Bundle)
 def update_bundle(bundle_id: str, bundle_in: BundleCreate):
-    # TODO: Add Authentication check here
-
     doc_ref = db.collection(BUNDLES_COLLECTION).document(bundle_id)
-    if not doc_ref.get().exists:
-        raise HTTPException(status_code=404, detail="Bundle not found")
-
+    
     data = bundle_in.model_dump()
     data["updated_at"] = datetime.utcnow()
 
-    doc_ref.update(data)
+    try:
+        doc_ref.update(data)
+    except Exception:
+        raise HTTPException(status_code=404, detail="Bundle not found")
 
-    data["id"] = bundle_id
-    # Note: 'created_at' might be missing in 'data' if strictly following BundleCreate,
-    # but for response model Pydantic is lenient or we should fetch existing.
-    # For now, simplest path: fetch updated
     updated_doc = doc_ref.get().to_dict()
     updated_doc["id"] = bundle_id
     return updated_doc
@@ -117,11 +120,6 @@ def update_bundle(bundle_id: str, bundle_in: BundleCreate):
 
 @router.delete("/{bundle_id}", status_code=204)
 def delete_bundle(bundle_id: str):
-    # TODO: Add Authentication check here
-
     doc_ref = db.collection(BUNDLES_COLLECTION).document(bundle_id)
-    if not doc_ref.get().exists:
-        raise HTTPException(status_code=404, detail="Bundle not found")
-
     doc_ref.delete()
     return None
