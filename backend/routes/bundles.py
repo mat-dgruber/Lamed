@@ -20,9 +20,9 @@ def get_bundles(
     if only_active:
         query = query.where(field_path="is_active", op_string="==", value=True)
 
-    # Ordering by week_number descending (newest first), then by published_at
-    query = query.order_by("week_number", direction=FirestoreQuery.DESCENDING).order_by(
-        "published_at", direction=FirestoreQuery.DESCENDING
+    # Ordering by published_at descending (newest first), then by week_number
+    query = query.order_by("published_at", direction=FirestoreQuery.DESCENDING).order_by(
+        "week_number", direction=FirestoreQuery.DESCENDING
     )
     
     if start_after_id:
@@ -52,6 +52,7 @@ def get_latest_bundle():
         query = (
             db.collection(BUNDLES_COLLECTION)
             .where(field_path="is_active", op_string="==", value=True)
+            .order_by("published_at", direction=FirestoreQuery.DESCENDING)
             .order_by("week_number", direction=FirestoreQuery.DESCENDING)
             .limit(1)
         )
