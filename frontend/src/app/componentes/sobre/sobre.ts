@@ -81,24 +81,24 @@ export class Sobre implements OnInit, AfterViewInit {
           "\"A construção do roteiro. É o momento de mergulhar no tema e garantir que a mensagem seja fiel, profunda e, ao mesmo tempo, relevante para a realidade dos nossos jovens. Saber que estamos entregando um conteúdo seguro e transformador é o que me realiza neste projeto.\""
       ]
     },
+    // {
+    //   id: 3,
+    //   name: 'Allana Matos',
+    //   role: 'Apresentadora',
+    //   photo: 'assets/Imagens/IMG_3771.PNG',
+    //   verse: '"Por causa da desobediência a Deus de uma só pessoa, muitos se tornaram pecadores. Mas, por causa da obediência de uma só pessoa a Deus, muitos serão declarados justos." (Rm 5:19)',
+    //   bio: [
+    //     "Allana Matos, com 18 anos, é estudante de Jornalismo no UNASP e uma verdadeira apaixonada por comunicação. Ela viu no projeto Lamed uma oportunidade de aprender e colocar em prática aquilo que mais gosta de fazer: conectar pessoas e compartilhar mensagens de forma criativa e cuidadosa.",
+    //     "Seu primeiro contato com a equipe foi de um jeito bem especial. Durante o projeto \"10 Dias de Oração\" de 2024, ela teve a chance de ajudar nas gravações de uma série de podcasts em parceria com o canal Adventistas Brasil. A experiência foi tão positiva que, desde então, ela passou a fazer parte do time Lamed.",
+    //     "Hoje, ela colabora com o projeto trazendo novas ideias e ajudando na criação de conteúdo, sempre com o olhar curioso de quem está aprendendo e o desejo de encontrar as melhores formas de dialogar com o público. Sua participação traz uma energia jovem e um novo fôlego para a equipe."
+    //   ],
+    //   favoritePart: "Qual sua parte favorita no projeto Lamed?",
+    //   favoritePartAnswer: [
+    //     "\"A minha parte preferida do projeto é saber que tem adolescentes procurando se achegar mais perto de Cristo e eu poder ajudar para que o Lamed seja mais um incentivo para que isso aconteça.\""
+    //   ]
+    // },
     {
       id: 3,
-      name: 'Allana Matos',
-      role: 'Apresentadora',
-      photo: 'assets/Imagens/IMG_3771.PNG',
-      verse: '"Por causa da desobediência a Deus de uma só pessoa, muitos se tornaram pecadores. Mas, por causa da obediência de uma só pessoa a Deus, muitos serão declarados justos." (Rm 5:19)',
-      bio: [
-        "Allana Matos, com 18 anos, é estudante de Jornalismo no UNASP e uma verdadeira apaixonada por comunicação. Ela viu no projeto Lamed uma oportunidade de aprender e colocar em prática aquilo que mais gosta de fazer: conectar pessoas e compartilhar mensagens de forma criativa e cuidadosa.",
-        "Seu primeiro contato com a equipe foi de um jeito bem especial. Durante o projeto \"10 Dias de Oração\" de 2024, ela teve a chance de ajudar nas gravações de uma série de podcasts em parceria com o canal Adventistas Brasil. A experiência foi tão positiva que, desde então, ela passou a fazer parte do time Lamed.",
-        "Hoje, ela colabora com o projeto trazendo novas ideias e ajudando na criação de conteúdo, sempre com o olhar curioso de quem está aprendendo e o desejo de encontrar as melhores formas de dialogar com o público. Sua participação traz uma energia jovem e um novo fôlego para a equipe."
-      ],
-      favoritePart: "Qual sua parte favorita no projeto Lamed?",
-      favoritePartAnswer: [
-        "\"A minha parte preferida do projeto é saber que tem adolescentes procurando se achegar mais perto de Cristo e eu poder ajudar para que o Lamed seja mais um incentivo para que isso aconteça.\""
-      ]
-    },
-    {
-      id: 4,
       name: 'Maria Izabela',
       role: 'Escritora e Pesquisadora',
       photo: 'assets/Imagens/IMG_3772.JPG',
@@ -116,7 +116,7 @@ export class Sobre implements OnInit, AfterViewInit {
       ]
     },
     {
-      id: 5,
+      id: 4,
       name: 'Levi Gruber',
       role: 'Diretor de Arte',
       photo: 'assets/Imagens/IMG_2253.jpg',
@@ -132,7 +132,7 @@ export class Sobre implements OnInit, AfterViewInit {
       ]
     },
     {
-      id: 6,
+      id: 5,
       name: 'Lucas Nóbrega',
       role: 'Design e Editor de Vídeos',
       photo: 'assets/Imagens/IMG_3769.JPG',
