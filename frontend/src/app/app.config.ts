@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom, LOCALE_ID } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, provideAppInitializer, inject, importProvidersFrom, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -14,6 +14,7 @@ import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { MetaTagsService } from './services/meta-tags.service';
 
 registerLocaleData(localePt);
 
@@ -24,6 +25,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideClientHydration(),
     provideAnimationsAsync(),
+    provideAppInitializer(() => {
+      const metaTags = inject(MetaTagsService);
+      metaTags.init();
+    }),
     providePrimeNG({
         theme: {
             preset: Aura,
