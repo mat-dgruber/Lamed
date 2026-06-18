@@ -324,56 +324,10 @@
   </section>
 
   @if (selectedMember(); as member) {
-    <div
-      class="modal is-open"
-      role="dialog"
-      aria-modal="true"
-      [attr.aria-label]="'Biografia de ' + member.name"
-    >
-      <div class="modal-content">
-        <button
-          type="button"
-          class="close-button"
-          (click)="closeModal()"
-          aria-label="Fechar modal"
-        >
-          <lucide-icon [img]="icons.X" size="32"></lucide-icon>
-        </button>
-        @if (!hasImageError(member.id)) {
-          <img
-            [src]="member.photo"
-            [alt]="'Foto de ' + member.name"
-            class="team-member-photo-modal"
-            loading="lazy"
-            (error)="onImageError(member.id)"
-          />
-        } @else {
-          <div class="team-member-photo-modal team-member-photo--fallback" aria-hidden="true">
-            {{ member.name.charAt(0) }}
-          </div>
-        }
-        <h2>{{ member.name }}</h2>
-        <h3>{{ member.role }}</h3>
-
-        @for (paragraph of member.bio; track $index) {
-          <p>{{ paragraph }}</p>
-        }
-
-        @if (member.favoritePart) {
-          <p class="team-member-favorite">
-            <strong>{{ member.favoritePart }}</strong>
-          </p>
-          @for (ans of member.favoritePartAnswer; track $index) {
-            <p>{{ ans }}</p>
-          }
-        }
-      </div>
-      <button
-        type="button"
-        class="modal-overlay"
-        aria-label="Fechar modal"
-        (click)="closeModal()"
-      ></button>
-    </div>
+    <app-team-modal
+      [member]="member"
+      (closed)="closeModal()"
+    ></app-team-modal>
   }
 </main>
+

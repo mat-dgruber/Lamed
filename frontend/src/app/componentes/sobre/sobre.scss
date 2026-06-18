@@ -325,15 +325,7 @@
     text-transform: uppercase;
 }
 
-.team-member-photo-modal {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 3px solid var(--main-color, #F8941B);
-    display: block;
-    margin: 0 auto 1rem auto;
-    object-fit: cover;
-}
+
 
 /* Swiper nav */
 .swiper-button-next,
@@ -341,109 +333,10 @@
     color: var(--highlight-color, #940312);
 }
 
-/* Modal */
-.modal {
-    position: fixed;
-    inset: 0;
-    background: var(--modal-overlay, rgba(0, 0, 0, 0.8));
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
-}
-
-.modal.is-open {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.modal-overlay {
-    position: absolute;
-    inset: 0;
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-}
-
-.modal-content {
-    background: var(--surface-color, #fff);
-    color: var(--text-color);
-    padding: 2rem;
-    border-radius: 1.5rem;
-    width: 100%;
-    max-width: 600px;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    z-index: 2001;
-
-    &::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: var(--surface-muted, #f1f1f1);
-        border-radius: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: var(--main-color, #F8941B);
-        border-radius: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-        background: var(--highlight-color, #940312);
-    }
-
-    h2 {
-        margin-bottom: 0.5rem;
-        color: var(--highlight-color, #940311);
-        text-align: center;
-    }
-
-    h3 {
-        text-align: center;
-        color: var(--text-muted, #777);
-        margin-bottom: 1.5rem;
-    }
-
-    p {
-        text-align: left;
-        margin-bottom: 1rem;
-    }
-}
-
-.close-button {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    cursor: pointer;
-    color: var(--text-muted, #888);
-    background: transparent;
-    border: 0;
-    transition: color 0.3s;
-
-    &:hover,
-    &:focus-visible {
-        color: var(--highlight-color, #940311);
-    }
-
-    &:focus-visible {
-        outline: 2px solid var(--focus-ring, var(--highlight-color));
-        outline-offset: 2px;
-    }
-}
-
+/* Responsive */
 @media (max-width: 768px) {
     .hero-section h1 {
         font-size: 2rem;
-    }
-
-    .modal-content {
-        padding: 1.5rem;
     }
 }
 
@@ -465,7 +358,6 @@
 }
 
 :root[data-theme='hc'] .lamed-symbolism-card,
-:root[data-theme='hc'] .team-member-card,
-:root[data-theme='hc'] .modal-content {
+:root[data-theme='hc'] .team-member-card {
     border: 2px solid currentColor;
 }

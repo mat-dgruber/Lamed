@@ -13,7 +13,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MetaTagsService } from '../../services/meta-tags.service';
-import { LucideAngularModule, TrendingUp, Heart, MoveRight, SignpostBig, X } from 'lucide-angular';
+import { LucideAngularModule, TrendingUp, Heart, MoveRight, SignpostBig } from 'lucide-angular';
+import { TeamModalComponent } from '../shared/team-modal/team-modal.component';
 import Swiper, { type Swiper as SwiperInstance } from 'swiper';
 import { Navigation } from 'swiper/modules';
 
@@ -32,7 +33,7 @@ export interface TeamMember {
   selector: 'app-sobre',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, LucideAngularModule, TeamModalComponent],
   templateUrl: './sobre.html',
   styleUrl: './sobre.scss'
 })
@@ -54,8 +55,7 @@ export class Sobre implements OnInit, AfterViewInit, OnDestroy {
     TrendingUp,
     Heart,
     MoveRight,
-    SignpostBig,
-    X
+    SignpostBig
   } as const;
 
   readonly teamMembers: ReadonlyArray<TeamMember> = [
