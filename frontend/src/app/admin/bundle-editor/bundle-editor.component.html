@@ -19,12 +19,13 @@
           (click)="save()"
           class="rounded-lg bg-orange-600 px-6 py-2.5 text-sm font-bold text-white hover:bg-orange-500 disabled:opacity-50 shadow-sm transition-colors flex items-center gap-2"
         >
-          <lucide-icon
-            *ngIf="isSaving()"
-            name="loader-2"
-            class="animate-spin"
-            [size]="18"
-          ></lucide-icon>
+          @if (isSaving()) {
+            <lucide-icon
+              name="loader-2"
+              class="animate-spin"
+              [size]="18"
+            ></lucide-icon>
+          }
           {{ isSaving() ? 'Salvando...' : 'Salvar Bundle' }}
         </button>
       </div>
@@ -169,33 +170,36 @@
         </h2>
 
         <!-- Existing Resources -->
-        <div class="space-y-3 mb-6" *ngIf="model.resources?.length > 0">
-          <div
-            *ngFor="let res of model.resources; let i = index"
-            class="flex items-center gap-4 p-4 bg-white rounded-xl border border-zinc-200 shadow-sm hover:border-orange-200 transition-colors group"
-          >
-            <div
-              class="h-10 w-10 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600"
-            >
-              <lucide-icon name="file" [size]="20"></lucide-icon>
-            </div>
-            <div class="flex-1">
-              <p class="font-bold text-sm text-zinc-900">{{ res.title }}</p>
-              <p class="text-xs text-zinc-500 truncate max-w-xs">{{ res.url }}</p>
-            </div>
-            <span
-              class="text-xs font-bold px-2 py-1 bg-zinc-100 rounded text-zinc-600 uppercase tracking-wider"
-              >{{ res.type }}</span
-            >
-            <button
-              type="button"
-              (click)="removeResource(i)"
-              class="h-8 w-8 flex items-center justify-center rounded-lg text-zinc-400 hover:text-red-600 hover:bg-red-50 transition-colors"
-            >
-              <lucide-icon name="trash-2" [size]="18"></lucide-icon>
-            </button>
+        @if (model.resources && model.resources.length > 0) {
+          <div class="space-y-3 mb-6">
+            @for (res of model.resources; track res.url; let i = $index) {
+              <div
+                class="flex items-center gap-4 p-4 bg-white rounded-xl border border-zinc-200 shadow-sm hover:border-orange-200 transition-colors group"
+              >
+                <div
+                  class="h-10 w-10 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600"
+                >
+                  <lucide-icon name="file" [size]="20"></lucide-icon>
+                </div>
+                <div class="flex-1">
+                  <p class="font-bold text-sm text-zinc-900">{{ res.title }}</p>
+                  <p class="text-xs text-zinc-500 truncate max-w-xs">{{ res.url }}</p>
+                </div>
+                <span
+                  class="text-xs font-bold px-2 py-1 bg-zinc-100 rounded text-zinc-600 uppercase tracking-wider"
+                  >{{ res.type }}</span
+                >
+                <button
+                  type="button"
+                  (click)="removeResource(i)"
+                  class="h-8 w-8 flex items-center justify-center rounded-lg text-zinc-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                >
+                  <lucide-icon name="trash-2" [size]="18"></lucide-icon>
+                </button>
+              </div>
+            }
           </div>
-        </div>
+        }
 
         <!-- Add Resource Form -->
         <div class="bg-zinc-50 p-5 rounded-2xl border border-dashed border-zinc-300">

@@ -1,13 +1,16 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ArticleService } from './article.service';
 
-import { ArtigosService } from './artigos.service';
-
-describe('ArtigosService', () => {
-  let service: ArtigosService;
+describe('ArticleService', () => {
+  let service: ArticleService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ArtigosService);
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [ArticleService]
+    });
+    service = TestBed.inject(ArticleService);
   });
 
   it('should be created', () => {

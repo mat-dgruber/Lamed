@@ -6,7 +6,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { environment } from '../environments/environment';
-import { LucideAngularModule, Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2 } from 'lucide-angular';
+import { LucideAngularModule, Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2, X, Check, CheckCircle } from 'lucide-angular';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
@@ -38,7 +38,7 @@ export const appConfig: ApplicationConfig = {
     provideAnalytics(() => getAnalytics()),
     ScreenTrackingService,
     UserTrackingService,
-    importProvidersFrom(LucideAngularModule.pick({ Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2 })),
+    importProvidersFrom(LucideAngularModule.pick({ Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2, X, Check, CheckCircle })),
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]
 };

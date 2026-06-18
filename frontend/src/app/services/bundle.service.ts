@@ -11,7 +11,7 @@ export interface VideoData {
 
 export interface Resource {
   title: string;
-  type: 'pdf' | 'pptx' | 'infographic' | 'doc' | 'csv' | 'audio' | 'image' | 'video';
+  type: 'pdf' | 'pptx' | 'infographic' | 'doc' | 'csv' | 'audio' | 'image' | 'video' | 'mapa_mental' | 'slides' | 'guia' | 'infografico';
   url: string;
 }
 
@@ -45,13 +45,15 @@ export class BundleService {
 
   getBundles(
     limit: number = 10,
-    offset: number = 0,
+    startAfterId?: string,
     only_active: boolean = true,
   ): Observable<Bundle[]> {
+    const params: any = { limit, only_active };
+    if (startAfterId) {
+      params.start_after_id = startAfterId;
+    }
     return this.http
-      .get<Bundle[]>(`${this.apiUrl}/bundles/`, {
-        params: { limit, offset, only_active },
-      })
+      .get<Bundle[]>(`${this.apiUrl}/bundles/`, { params })
       .pipe(
         tap((data) => this.bundles.set(data)),
         catchError((err) => {
@@ -62,11 +64,11 @@ export class BundleService {
   }
 
   getLatestBundle(): Observable<Bundle | null> {
-    return this.http.get<Bundle>(`${this.apiUrl}/bundles/latest/`).pipe(catchError(() => of(null)));
+    return this.http.get<Bundle>(`${this.apiUrl}/bundles/latest`).pipe(catchError(() => of(null)));
   }
 
   getBundleById(id: string): Observable<Bundle> {
-    return this.http.get<Bundle>(`${this.apiUrl}/bundles/${id}/`);
+    return this.http.get<Bundle>(`${this.apiUrl}/bundles/${id}`);
   }
 
   createBundle(bundle: Omit<Bundle, 'id' | 'created_at' | 'updated_at'>): Observable<Bundle> {
@@ -74,18 +76,18 @@ export class BundleService {
   }
 
   updateBundle(id: string, bundle: Partial<Bundle>): Observable<Bundle> {
-    return this.http.put<Bundle>(`${this.apiUrl}/bundles/${id}/`, bundle);
+    return this.http.put<Bundle>(`${this.apiUrl}/bundles/${id}`, bundle);
   }
 
   deleteBundle(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/bundles/${id}/`);
+    return this.http.delete<void>(`${this.apiUrl}/bundles/${id}`);
   }
 
   syncWithYouTube(): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/admin/sync-youtube`, {});
   }
 
-  syncVideosFromAssets(): Observable<any> {
+  syncVideosFromAssets(): Observable<Bundle[]> {
     return this.http.get<any[]>('assets/videos.json').pipe(
       map((videos) => {
         const existingVideoIds = new Set(
@@ -123,9 +125,9 @@ export class BundleService {
 
         return forkJoin(creationRequests);
       }),
-      tap(() => {
-        // Refresh bundles after sync
-        this.getBundles(50, 0).subscribe();
+      switchMap(() => {
+        // Refresh bundles after sync and return the new list reactively
+        return this.getBundles(50, undefined);
       }),
     );
   }

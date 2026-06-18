@@ -56,14 +56,31 @@
           </div>
         </div>
 
-        <!-- Sidebar (Resources) -->
+        <!-- Sidebar (Resources & Meta) -->
         <div class="lg:col-span-1 space-y-6">
           <!-- Download Card -->
           <div class="bg-white rounded-xl p-6 shadow-sm ring-1 ring-zinc-200">
-            <h3 class="font-semibold text-lg mb-4 flex items-center gap-2">
-              <lucide-icon [name]="'download'" [size]="20"></lucide-icon>
-              Material de Apoio
-            </h3>
+            <div class="flex items-center justify-between mb-4 gap-2">
+              <h3 class="font-semibold text-lg flex items-center gap-2">
+                <lucide-icon [name]="'download'" [size]="20"></lucide-icon>
+                Material de Apoio
+              </h3>
+              @if (bundle.resources.length > 0) {
+                <button
+                  (click)="downloadAllAsZip()"
+                  [disabled]="zipping()"
+                  class="inline-flex items-center gap-1.5 rounded-lg bg-orange-50 px-2.5 py-1.5 text-xs font-semibold text-orange-700 hover:bg-orange-100 transition-colors disabled:opacity-50"
+                >
+                  @if (zipping()) {
+                    <lucide-icon [name]="'loader-2'" [size]="14" class="animate-spin"></lucide-icon>
+                    Compactando...
+                  } @else {
+                    <lucide-icon [name]="'download-cloud'" [size]="14"></lucide-icon>
+                    Baixar Tudo
+                  }
+                </button>
+              }
+            </div>
 
             <div class="space-y-3">
               @for (res of bundle.resources; track res.title) {
@@ -97,27 +114,141 @@
             </div>
           </div>
 
-          <!-- Share / Meta -->
-          <div class="bg-orange-50 rounded-xl p-6 border border-orange-100">
-            <h4 class="font-medium text-orange-900 mb-2">Compartilhe este estudo</h4>
-            <p class="text-sm text-orange-700 mb-4">Ajude a espalhar o conhecimento da Bíblia.</p>
+          <!-- Share Card -->
+          <div class="bg-gradient-to-br from-orange-50/60 to-amber-50/30 rounded-2xl p-6 border border-orange-100 shadow-sm">
+            <h4 class="font-bold text-zinc-800 text-base mb-1">Compartilhar Estudo</h4>
+            <p class="text-xs text-zinc-500 mb-4">Ajude a espalhar a palavra compartilhando este estudo.</p>
+            
+            <!-- Copiar Link com Feedback Visual Premium -->
             <button
               (click)="copyLink()"
-              class="w-full rounded-lg bg-orange-600 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 transition-colors"
+              [class.bg-emerald-50]="linkCopied()"
+              [class.border-emerald-200]="linkCopied()"
+              [class.text-emerald-700]="linkCopied()"
+              [class.bg-orange-600]="!linkCopied()"
+              [class.border-transparent]="!linkCopied()"
+              [class.text-white]="!linkCopied()"
+              [class.hover:bg-orange-500]="!linkCopied()"
+              class="w-full flex items-center justify-center gap-2 rounded-xl border py-3 text-sm font-semibold shadow-sm transition-all duration-300 active:scale-[0.98] mb-4"
             >
-              Copiar Link
+              @if (linkCopied()) {
+                <lucide-icon name="check-circle" [size]="16" class="text-emerald-600 animate-pulse"></lucide-icon>
+                Link Copiado!
+              } @else {
+                <lucide-icon name="link" [size]="16"></lucide-icon>
+                Copiar Link
+              }
             </button>
+            
+            <!-- Botões de Redes Sociais no Estilo Premium -->
+            <div class="flex items-center gap-3">
+              <!-- WhatsApp -->
+              <a
+                [href]="getShareUrl('whatsapp')"
+                target="_blank"
+                class="flex h-12 flex-1 items-center justify-center rounded-xl bg-white border border-zinc-200 text-zinc-600 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600 hover:shadow-md hover:shadow-emerald-50 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+                title="Compartilhar no WhatsApp"
+              >
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.454 5.709 1.455h.008c6.56 0 11.89-5.335 11.893-11.893a11.821 11.825 0 00-3.48-8.413"/>
+                </svg>
+              </a>
+              
+              <!-- Telegram -->
+              <a
+                [href]="getShareUrl('telegram')"
+                target="_blank"
+                class="flex h-12 flex-1 items-center justify-center rounded-xl bg-white border border-zinc-200 text-zinc-600 hover:bg-sky-50 hover:border-sky-200 hover:text-sky-500 hover:shadow-md hover:shadow-sky-50 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+                title="Compartilhar no Telegram"
+              >
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.62.15-.15 2.7-2.46 2.75-2.68.01-.03.01-.14-.06-.2-.07-.06-.17-.04-.25-.02-.11.02-1.87 1.18-5.28 3.48-.5.35-.95.52-1.35.5-.45-.02-1.31-.26-1.95-.47-.78-.25-1.4-.4-1.35-.85.03-.24.35-.48.97-.73 3.8-1.65 6.35-2.73 7.64-3.25 3.63-1.48 4.38-1.74 4.87-1.75.11 0 .35.03.5.16.13.1.17.24.18.35.01.07.01.21 0 .33z"/>
+                </svg>
+              </a>
+              
+              <!-- Facebook -->
+              <a
+                [href]="getShareUrl('facebook')"
+                target="_blank"
+                class="flex h-12 flex-1 items-center justify-center rounded-xl bg-white border border-zinc-200 text-zinc-600 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 hover:shadow-md hover:shadow-blue-50 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+                title="Compartilhar no Facebook"
+              >
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Embedded Article (Iframe) - Full Width -->
-      @if (safeArticleUrl) {
-        <div
-          class="mt-12 w-full h-[1200px] overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-zinc-200"
-        >
-          <iframe [src]="safeArticleUrl" class="h-full w-full border-0" title="Artigo do Estudo">
-          </iframe>
+      <!-- Reading Mode Section -->
+      @if (safeArticleUrl || safeArticleContent) {
+        <div class="mt-12 bg-white rounded-xl p-8 shadow-sm ring-1 ring-zinc-200 text-center max-w-3xl mx-auto border-t-4 border-orange-500">
+          <div class="flex justify-center mb-4">
+            <div class="flex h-14 w-14 items-center justify-center rounded-full bg-orange-50 text-orange-600">
+              <lucide-icon [name]="'book-open'" [size]="28"></lucide-icon>
+            </div>
+          </div>
+          <h3 class="text-xl font-bold text-zinc-900 mb-2">Guia de Estudos / Artigo</h3>
+          <p class="text-zinc-600 text-sm max-w-md mx-auto mb-6">
+            Aprofunde seus conhecimentos nesta lição lendo o artigo completo de apoio ao estudo.
+          </p>
+          <button
+            (click)="setReadingMode(true)"
+            class="inline-flex items-center gap-2 rounded-lg bg-orange-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 transition-all active:scale-[0.98]"
+          >
+            <lucide-icon [name]="'book-open'" [size]="18"></lucide-icon>
+            Abrir Artigo no Modo Leitura
+          </button>
+        </div>
+      }
+
+      <!-- Fullscreen Reading Modal -->
+      @if (readingModeActive()) {
+        <div class="fixed inset-0 z-50 flex flex-col bg-zinc-50 overflow-hidden">
+          <!-- Header -->
+          <header class="flex items-center justify-between border-b border-zinc-200 bg-white px-6 py-4 shadow-sm">
+            <div class="flex items-center gap-3">
+              <button
+                (click)="setReadingMode(false)"
+                class="flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 transition-colors"
+                aria-label="Fechar"
+              >
+                <lucide-icon [name]="'arrow-left'" [size]="20"></lucide-icon>
+              </button>
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-orange-600">Lição {{ bundle.week_number }}</span>
+                <h2 class="text-base font-bold text-zinc-900 sm:text-lg max-w-xs sm:max-w-md md:max-w-xl truncate">{{ bundle.title }}</h2>
+              </div>
+            </div>
+            <button
+              (click)="setReadingMode(false)"
+              class="flex h-10 w-10 items-center justify-center rounded-full text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 transition-colors"
+              aria-label="Fechar"
+            >
+              <lucide-icon [name]="'x'" [size]="20"></lucide-icon>
+            </button>
+          </header>
+
+          <!-- Content Area -->
+          <div class="flex-1 overflow-y-auto px-4 py-8 sm:px-6">
+            @if (safeArticleContent) {
+              <!-- Native HTML Reader -->
+              <article class="prose prose-orange max-w-3xl mx-auto bg-white rounded-2xl p-6 sm:p-12 shadow-sm ring-1 ring-zinc-900/5">
+                <div [innerHTML]="safeArticleContent"></div>
+              </article>
+            } @else if (safeArticleUrl) {
+              <!-- Fullscreen Iframe Fallback -->
+              <div class="h-full w-full max-w-6xl mx-auto bg-white rounded-2xl overflow-hidden shadow-sm ring-1 ring-zinc-900/5">
+                <iframe [src]="safeArticleUrl" class="h-full w-full border-0" title="Artigo do Estudo"></iframe>
+              </div>
+            } @else {
+              <div class="flex h-full items-center justify-center text-zinc-500">
+                Artigo não disponível.
+              </div>
+            }
+          </div>
         </div>
       }
     </div>

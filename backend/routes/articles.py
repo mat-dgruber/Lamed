@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from typing import List, Optional
-from datetime import datetime
-from google.cloud.firestore import Query as FirestoreQuery
+from datetime import datetime, timezone
+from google.cloud.firestore import Query as FirestoreQuery, FieldFilter
 from models import Article, ArticleCreate
 from config import db
 
@@ -18,7 +18,7 @@ def get_articles(
     query = db.collection(ARTICLES_COLLECTION)
     
     if only_active:
-        query = query.where(field_path="is_active", op_string="==", value=True)
+        query = query.where(filter=FieldFilter("is_active", "==", True))
     
     # Use server-side ordering (Requires Composite Index)
     query = query.order_by("published_at", direction=FirestoreQuery.DESCENDING)
@@ -54,12 +54,12 @@ def get_article(article_id: str):
 @router.post("/", response_model=Article)
 def create_article(article_in: ArticleCreate):
     data = article_in.model_dump()
-    data['created_at'] = datetime.utcnow()
-    data['updated_at'] = datetime.utcnow()
+    data['created_at'] = datetime.now(timezone.utc)
+    data['updated_at'] = datetime.now(timezone.utc)
     
     # If published_at is not set, set it to now if active
     if not data.get('published_at') and data.get('is_active'):
-        data['published_at'] = datetime.utcnow()
+        data['published_at'] = datetime.now(timezone.utc)
 
     update_time, doc_ref = db.collection(ARTICLES_COLLECTION).add(data)
     
@@ -71,7 +71,7 @@ def update_article(article_id: str, article_in: ArticleCreate):
     doc_ref = db.collection(ARTICLES_COLLECTION).document(article_id)
     
     data = article_in.model_dump()
-    data['updated_at'] = datetime.utcnow()
+    data['updated_at'] = datetime.now(timezone.utc)
     
     try:
         doc_ref.update(data)

@@ -28,12 +28,11 @@
             placeholder="admin@lamed.com"
           />
         </div>
-        <p
-          *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
-          class="mt-1 text-sm text-red-600"
-        >
-          Email válido é obrigatório.
-        </p>
+        @if (form.get('email')?.touched && form.get('email')?.invalid) {
+          <p class="mt-1 text-sm text-red-600">
+            Email válido é obrigatório.
+          </p>
+        }
       </div>
 
       <!-- Password -->
@@ -53,22 +52,20 @@
             placeholder="••••••••"
           />
         </div>
-        <p
-          *ngIf="form.get('password')?.touched && form.get('password')?.invalid"
-          class="mt-1 text-sm text-red-600"
-        >
-          Senha é obrigatória (mín. 6 caracteres).
-        </p>
+        @if (form.get('password')?.touched && form.get('password')?.invalid) {
+          <p class="mt-1 text-sm text-red-600">
+            Senha é obrigatória (mín. 6 caracteres).
+          </p>
+        }
       </div>
 
       <!-- Error Message -->
-      <div
-        *ngIf="error"
-        class="bg-red-50 text-red-700 p-3 rounded-lg text-sm flex items-center gap-2"
-      >
-        <lucide-icon name="alert-circle" [size]="16"></lucide-icon>
-        {{ error }}
-      </div>
+      @if (error) {
+        <div class="bg-red-50 text-red-700 p-3 rounded-lg text-sm flex items-center gap-2">
+          <lucide-icon name="alert-circle" [size]="16"></lucide-icon>
+          {{ error }}
+        </div>
+      }
 
       <!-- Submit Button -->
       <button
@@ -76,12 +73,13 @@
         [disabled]="form.invalid || isLoading"
         class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
       >
-        <lucide-icon
-          *ngIf="isLoading"
-          name="loader-2"
-          class="animate-spin mr-2"
-          [size]="18"
-        ></lucide-icon>
+        @if (isLoading) {
+          <lucide-icon
+            name="loader-2"
+            class="animate-spin mr-2"
+            [size]="18"
+          ></lucide-icon>
+        }
         {{ isLoading ? 'Entrando...' : 'Entrar' }}
       </button>
     </form>

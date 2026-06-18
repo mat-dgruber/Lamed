@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://lamed-backend-oodcsi22wa-rj.a.run.app',
+  apiUrl: 'https://lamed-backend-957958728332.southamerica-east1.run.app',
   firebase: {
     projectId: 'lamed-148',
     appId: '1:957958728332:web:54e2654652c944048729a9',

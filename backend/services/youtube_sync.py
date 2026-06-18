@@ -1,8 +1,9 @@
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 from config import db
+from google.cloud.firestore import FieldFilter
 from googleapiclient.discovery import build
 from models import BundleCreate, VideoData
 
@@ -99,7 +100,7 @@ def sync_videos():
             video_ref = db.collection(VIDEOS_COLLECTION).document(video_id)
             v_doc = video_ref.get()
 
-            now = datetime.utcnow()
+            now = datetime.now(timezone.utc)
             video_data = {
                 "title": vid["title"],
                 "description": vid["description"],
@@ -115,7 +116,7 @@ def sync_videos():
                     else now
                 ),
                 "is_active": True,
-                "author": "Lamed (YouTube)",
+                "author": "Lamed",
                 "updated_at": now,
             }
 
@@ -131,7 +132,7 @@ def sync_videos():
             # We check if a bundle already points to this video_id
             bundle_query = (
                 db.collection(BUNDLES_COLLECTION)
-                .where("video_id", "==", video_id)
+                .where(filter=FieldFilter("video_id", "==", video_id))
                 .limit(1)
             )
             bundle_docs = list(bundle_query.stream())
@@ -143,7 +144,7 @@ def sync_videos():
                     "title": vid["title"],
                     "description": vid["description"][:200] + "...",
                     "week_number": 0,
-                    "author": "Lamed (YouTube)",
+                    "author": "Lamed",
                     "published_at": pub_date,
                     "video_id": video_id,
                     "thumbnail_url": vid["thumbnail"],

@@ -24,7 +24,6 @@ import { GoogleDriveImagePipe } from '../../../pipes/google-drive-image.pipe';
         <div class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
           <lucide-icon [name]="'play-circle'" [size]="48" class="text-white drop-shadow-lg"></lucide-icon>
         </div>
-        
       </div>
 
        <!-- Content -->

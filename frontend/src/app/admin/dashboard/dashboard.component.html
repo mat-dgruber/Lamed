@@ -54,83 +54,117 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-zinc-100">
-        @if (bundles(); as list) {
-          @for (bundle of list; track bundle.id) {
-            <tr class="group hover:bg-zinc-50 transition-colors">
-              <td class="px-6 py-4 font-medium text-zinc-900">
-                {{ bundle.title }}
-                <div class="text-xs font-normal text-zinc-500">
-                  {{ bundle.description | slice: 0 : 50 }}...
-                </div>
-              </td>
-              <td class="px-6 py-4">#{{ bundle.week_number }}</td>
-              <td class="px-6 py-4">
-                {{ bundle.published_at | date: 'dd/MM/yyyy' }}
-              </td>
-              <td class="px-6 py-4">
-                <span
-                  class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset"
-                  [ngClass]="
-                    bundle.is_active
-                      ? 'bg-green-50 text-green-700 ring-green-600/20'
-                      : 'bg-yellow-50 text-yellow-800 ring-yellow-600/20'
-                  "
-                >
-                  {{ bundle.is_active ? 'Publicado' : 'Rascunho' }}
-                </span>
-              </td>
-              <td class="px-6 py-4 text-right flex justify-end items-center gap-4">
-                <a
-                  [routerLink]="['/admin/edit', bundle.id]"
-                  class="text-blue-600 hover:text-blue-500 font-medium flex items-center gap-1"
-                >
-                  <lucide-icon name="pencil" [size]="16"></lucide-icon>
-                  Editar
-                </a>
-                <button
-                  (click)="deleteBundle(bundle.id)"
-                  class="text-red-600 hover:text-red-500 font-medium flex items-center gap-1"
-                  title="Excluir"
-                >
-                  <lucide-icon name="trash-2" [size]="16"></lucide-icon>
-                  Excluir
-                </button>
-              </td>
-            </tr>
-          }
-
-          @if (list.length === 0) {
-            <tr>
-              <td colspan="4" class="p-0 border-none">
-                <div class="flex flex-col items-center justify-center py-20 text-center">
-                  <div class="bg-orange-50 p-6 rounded-full mb-6">
-                    <lucide-icon
-                      name="layout-list"
-                      class="text-orange-500"
-                      [size]="48"
-                    ></lucide-icon>
-                  </div>
-                  <h3 class="text-xl font-bold text-zinc-900 mb-2">Nenhum bundle encontrado</h3>
-                  <p class="text-zinc-500 max-w-md px-4 mb-6">
-                    Comece sincronizando seus vídeos do YouTube ou crie um novo bundle manualmente.
-                  </p>
-                  <a
-                    routerLink="/admin/new"
-                    class="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-sm font-semibold text-white hover:bg-orange-500 transition-colors"
-                  >
-                    Criar Primeiro Bundle
-                  </a>
-                </div>
-              </td>
-            </tr>
-          }
-        } @else {
+        @if (loading()) {
           <!-- Loading State -->
           <tr>
-            <td colspan="4" class="px-6 py-4 text-center text-zinc-500">Carregando trilhas...</td>
+            <td colspan="5" class="px-6 py-12 text-center text-zinc-500">
+              <div class="flex items-center justify-center gap-2">
+                <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-orange-600"></div>
+                Carregando trilhas...
+              </div>
+            </td>
           </tr>
+        } @else {
+          @if (bundles(); as list) {
+            @for (bundle of list; track bundle.id) {
+              <tr class="group hover:bg-zinc-50 transition-colors">
+                <td class="px-6 py-4 font-medium text-zinc-900">
+                  {{ bundle.title }}
+                  <div class="text-xs font-normal text-zinc-500">
+                    {{ bundle.description | slice: 0 : 50 }}...
+                  </div>
+                </td>
+                <td class="px-6 py-4">#{{ bundle.week_number }}</td>
+                <td class="px-6 py-4">
+                  {{ bundle.published_at | date: 'dd/MM/yyyy' }}
+                </td>
+                <td class="px-6 py-4">
+                  <span
+                    class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset"
+                    [ngClass]="
+                      bundle.is_active
+                        ? 'bg-green-50 text-green-700 ring-green-600/20'
+                        : 'bg-yellow-50 text-yellow-800 ring-yellow-600/20'
+                    "
+                  >
+                    {{ bundle.is_active ? 'Publicado' : 'Rascunho' }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-right flex justify-end items-center gap-4">
+                  <a
+                    [routerLink]="['/admin/edit', bundle.id]"
+                    class="text-blue-600 hover:text-blue-500 font-medium flex items-center gap-1"
+                  >
+                    <lucide-icon name="pencil" [size]="16"></lucide-icon>
+                    Editar
+                  </a>
+                  <button
+                    (click)="deleteBundle(bundle.id)"
+                    class="text-red-600 hover:text-red-500 font-medium flex items-center gap-1"
+                    title="Excluir"
+                  >
+                    <lucide-icon name="trash-2" [size]="16"></lucide-icon>
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            }
+
+            @if (list.length === 0) {
+              <tr>
+                <td colspan="5" class="p-0 border-none">
+                  <div class="flex flex-col items-center justify-center py-20 text-center">
+                    <div class="bg-orange-50 p-6 rounded-full mb-6">
+                      <lucide-icon
+                        name="layout-list"
+                        class="text-orange-500"
+                        [size]="48"
+                      ></lucide-icon>
+                    </div>
+                    <h3 class="text-xl font-bold text-zinc-900 mb-2">Nenhum bundle encontrado</h3>
+                    <p class="text-zinc-500 max-w-md px-4 mb-6">
+                      Comece sincronizando seus vídeos do YouTube ou crie um novo bundle manualmente.
+                    </p>
+                    <a
+                      routerLink="/admin/new"
+                      class="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-sm font-semibold text-white hover:bg-orange-500 transition-colors"
+                    >
+                      Criar Primeiro Bundle
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            }
+          } @else {
+            <tr>
+              <td colspan="5" class="px-6 py-4 text-center text-zinc-500">Nenhum dado disponível.</td>
+            </tr>
+          }
         }
       </tbody>
     </table>
+
+    <!-- Pagination Footer -->
+    <div class="bg-zinc-50 border-t border-zinc-100 px-6 py-4 flex items-center justify-between">
+      <div class="flex flex-1 justify-between items-center">
+        <button
+          (click)="prevPage()"
+          [disabled]="currentPage() === 1 || loading()"
+          class="relative inline-flex items-center rounded-xl border border-zinc-300 bg-white px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 disabled:opacity-50 transition-colors cursor-pointer"
+        >
+          &larr; Anterior
+        </button>
+        <span class="text-xs text-zinc-500 font-medium">
+          Página {{ currentPage() }}
+        </span>
+        <button
+          (click)="nextPage()"
+          [disabled]="!hasNextPage() || loading()"
+          class="relative inline-flex items-center rounded-xl border border-zinc-300 bg-white px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 disabled:opacity-50 transition-colors cursor-pointer"
+        >
+          Próximo &rarr;
+        </button>
+      </div>
+    </div>
   </div>
 </div>

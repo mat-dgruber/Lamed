@@ -20,12 +20,13 @@
           [disabled]="isSaving()"
           class="rounded-lg bg-orange-600 px-6 py-2.5 text-sm font-bold text-white hover:bg-orange-500 disabled:opacity-50 shadow-sm transition-colors flex items-center gap-2"
         >
-          <lucide-icon
-            *ngIf="isSaving()"
-            name="loader-2"
-            class="animate-spin"
-            [size]="18"
-          ></lucide-icon>
+          @if (isSaving()) {
+            <lucide-icon
+              name="loader-2"
+              class="animate-spin"
+              [size]="18"
+            ></lucide-icon>
+          }
           {{ isSaving() ? 'Salvando...' : 'Salvar Artigo' }}
         </button>
       </div>

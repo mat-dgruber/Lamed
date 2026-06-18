@@ -20,7 +20,7 @@ export class ArticleListComponent implements OnInit {
   }
 
   loadArticles() {
-    this.articleService.getArticles(50, 0, false).subscribe(data => {
+    this.articleService.getArticles(50, undefined, false).subscribe(data => {
       this.articles = data;
     });
   }

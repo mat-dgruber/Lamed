@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LucideAngularModule, Link } from 'lucide-angular';
-import { BundleService, Bundle } from '../../services/bundle.service';
+import { BundleService, Bundle, Resource } from '../../services/bundle.service';
 
 @Component({
   selector: 'app-bundle-editor',
@@ -21,19 +21,23 @@ export class BundleEditorComponent {
   isSaving = signal(false);
   
   // Model state
-  model: any = {
+  model: Omit<Bundle, 'created_at' | 'updated_at'> = {
+    id: '',
     title: '',
     week_number: 1,
     author: 'Lamed',
     description: '',
     resources: [],
     is_active: false,
-    article_url: '' // Initialize
+    article_url: '',
+    article_content: '',
+    video_id: '',
+    thumbnail_url: ''
   };
   
   videoUrl = '';
 
-  newResource = {
+  newResource: Resource = {
     title: '',
     type: 'pdf',
     url: ''
@@ -84,9 +88,10 @@ export class BundleEditorComponent {
         }
     }
 
+    const { id, ...bundleData } = this.model;
     const request$ = this.isEditMode()
-        ? this.bundleService.updateBundle(this.model.id, this.model)
-        : this.bundleService.createBundle(this.model);
+        ? this.bundleService.updateBundle(id, this.model)
+        : this.bundleService.createBundle(bundleData);
 
     request$.subscribe({
         next: (savedBundle) => {

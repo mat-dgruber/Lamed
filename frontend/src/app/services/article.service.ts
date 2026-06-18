@@ -26,18 +26,19 @@ export class ArticleService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/articles`;
 
-  getArticles(limit: number = 10, offset: number = 0, onlyActive: boolean = true): Observable<Article[]> {
-    return this.http.get<Article[]>(`${this.apiUrl}/`, {
-      params: {
-        limit: limit.toString(),
-        offset: offset.toString(),
-        only_active: onlyActive.toString()
-      }
-    });
+  getArticles(limit: number = 10, startAfterId?: string, onlyActive: boolean = true): Observable<Article[]> {
+    const params: any = {
+      limit: limit.toString(),
+      only_active: onlyActive.toString()
+    };
+    if (startAfterId) {
+      params.start_after_id = startAfterId;
+    }
+    return this.http.get<Article[]>(`${this.apiUrl}/`, { params });
   }
 
   getArticle(id: string): Observable<Article> {
-    return this.http.get<Article>(`${this.apiUrl}/${id}/`);
+    return this.http.get<Article>(`${this.apiUrl}/${id}`);
   }
   
   // Alias for compatibility
@@ -50,10 +51,10 @@ export class ArticleService {
   }
 
   updateArticle(id: string, article: Article): Observable<Article> {
-    return this.http.put<Article>(`${this.apiUrl}/${id}/`, article);
+    return this.http.put<Article>(`${this.apiUrl}/${id}`, article);
   }
 
   deleteArticle(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}/`);
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }
