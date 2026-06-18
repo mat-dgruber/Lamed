@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { SigaNos } from './siga-nos';
+import { MetaTagsService } from '../../services/meta-tags.service';
 
 describe('SigaNos', () => {
   let component: SigaNos;
@@ -8,7 +10,11 @@ describe('SigaNos', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SigaNos]
+      imports: [SigaNos],
+      providers: [
+        provideRouter([]),
+        { provide: MetaTagsService, useValue: { updateTags: () => {} } },
+      ],
     })
     .compileComponents();
 

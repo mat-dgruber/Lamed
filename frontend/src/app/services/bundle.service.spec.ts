@@ -66,7 +66,7 @@ describe('BundleService', () => {
       expect(bundle).toEqual(mockBundles[0]);
     });
 
-    const req = httpMock.expectOne(`${apiUrl}/bundles/1/`);
+    const req = httpMock.expectOne(`${apiUrl}/bundles/1`);
     expect(req.request.method).toBe('GET');
     req.flush(mockBundles[0]);
   });
