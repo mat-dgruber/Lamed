@@ -15,7 +15,7 @@ import { TeamMember } from '../../sobre/sobre';
   selector: 'app-team-modal',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, LucideAngularModule.pick({ X })],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './team-modal.component.html',
   styleUrl: './team-modal.component.scss'
 })
