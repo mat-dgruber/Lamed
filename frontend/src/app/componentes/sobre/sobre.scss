@@ -38,8 +38,6 @@
 
 .history-content-wrapper {
     overflow: hidden;
-    transition: max-height 0.5s ease;
-    max-height: 1000px;
 }
 
 .expandable-content {
@@ -193,9 +191,33 @@
     margin-bottom: 3rem;
 }
 
-.focus-item h3 {
-    color: var(--main-color, #F8941B);
-    font-size: 1.5rem;
+.focus-item {
+    background-color: var(--surface-card, var(--surface-color));
+    color: var(--text-color);
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 10px var(--shadow-color, rgba(0, 0, 0, 0.08));
+    transition: box-shadow 0.3s, transform 0.3s;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px var(--shadow-color-strong, rgba(0, 0, 0, 0.15));
+    }
+
+    h3 {
+        color: var(--highlight-color, #940311);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
+    }
+
+    p {
+        color: var(--text-color);
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 0;
+    }
 }
 
 .btn-primary-apoio {
@@ -358,6 +380,7 @@
 }
 
 :root[data-theme='hc'] .lamed-symbolism-card,
-:root[data-theme='hc'] .team-member-card {
+:root[data-theme='hc'] .team-member-card,
+:root[data-theme='hc'] .focus-item {
     border: 2px solid currentColor;
 }
