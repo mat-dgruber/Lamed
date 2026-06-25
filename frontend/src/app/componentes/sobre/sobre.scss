@@ -7,12 +7,14 @@
     h1 {
         font-size: 2.5rem;
         margin-bottom: 1rem;
-        color: var(--highlight-color, #940311);
+        color: #ffffff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     }
 
     p {
-        color: var(--text-muted, #555);
+        color: rgba(255, 255, 255, 0.9);
         font-size: 1.1rem;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     }
 }
 
@@ -304,14 +306,18 @@
         var(--highlight-color, #940312) 0%,
         var(--highlight-color-dark, #7a000c) 100%
     );
-    color: var(--text-on-accent, #fff);
+    color: var(--text-on-accent, #fff) !important;
     transform: rotateY(180deg);
     z-index: 1;
 
     h4 {
         font-size: 1.5rem;
         margin-bottom: 1rem;
-        color: var(--text-on-accent, #fff);
+        color: var(--text-on-accent, #fff) !important;
+    }
+
+    p {
+        color: var(--text-on-accent, #fff) !important;
     }
 }
 
@@ -321,10 +327,17 @@
 }
 
 .team-member-verse {
-    color: var(--text-on-accent, #fff);
+    color: var(--text-on-accent, #fff) !important;
     font-size: 1rem;
     font-style: italic;
     text-align: center;
+}
+
+.team-member-hint {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 1rem;
 }
 
 .team-member-photo {
