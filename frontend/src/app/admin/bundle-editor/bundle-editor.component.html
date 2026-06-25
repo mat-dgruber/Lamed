@@ -38,8 +38,8 @@
           <lucide-icon name="file-text" class="text-orange-500" [size]="20"></lucide-icon>
           Informações Básicas
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="col-span-2">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="col-span-1 md:col-span-3">
             <label class="block text-sm font-semibold text-zinc-700 mb-1">Título do Estudo</label>
             <input
               type="text"
@@ -70,7 +70,17 @@
             />
           </div>
 
-          <div class="col-span-2">
+          <div>
+            <label class="block text-sm font-semibold text-zinc-700 mb-1">Data de Publicação</label>
+            <input
+              type="date"
+              [(ngModel)]="publishedDateStr"
+              name="publishedDate"
+              class="block w-full rounded-xl border-zinc-200 bg-zinc-50 px-4 py-3 text-zinc-900 focus:border-orange-500 focus:ring-orange-500 transition-colors"
+            />
+          </div>
+
+          <div class="col-span-1 md:col-span-3">
             <label class="block text-sm font-semibold text-zinc-700 mb-1">Descrição Curta</label>
             <textarea
               [(ngModel)]="model.description"

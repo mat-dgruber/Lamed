@@ -97,6 +97,10 @@ def create_bundle(bundle_in: BundleCreate):
     data["created_at"] = datetime.now(timezone.utc)
     data["updated_at"] = datetime.now(timezone.utc)
 
+    # Default published_at to current time if missing/None
+    if not data.get("published_at"):
+        data["published_at"] = datetime.now(timezone.utc)
+
     # Auto-assign generic thumbnail if missing
     if not data.get("thumbnail_url"):
         data["thumbnail_url"] = "https://placehold.co/600x400?text=Bundle"

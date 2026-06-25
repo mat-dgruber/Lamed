@@ -20,26 +20,26 @@ A maneira mais simples de rodar o projeto é via **Docker**. Isso garante que to
 
 ### 🏁 Passo a Passo
 
-1.  **Clone o Repositório**
+1. **Clone o Repositório**
 
-    ```bash
-    git clone https://github.com/Novo_Lamed_Angular.git
-    cd Novo_Lamed_Angular
-    ```
+   ```bash
+   git clone https://github.com/Novo_Lamed_Angular.git
+   cd Novo_Lamed_Angular
+   ```
+2. **Inicie o Ambiente**
+   Execute na raiz do projeto:
 
-2.  **Inicie o Ambiente**
-    Execute na raiz do projeto:
+   ```bash
+   docker-compose up -d
+   ```
 
-    ```bash
-    docker-compose up -d
-    ```
+   > [!NOTE]
+   > O primeiro build pode levar alguns minutos. O Docker irá configurar o frontend Angular e a API Python automaticamente.
+   >
+3. **Acesse a Aplicação**
 
-    > [!NOTE]
-    > O primeiro build pode levar alguns minutos. O Docker irá configurar o frontend Angular e a API Python automaticamente.
-
-3.  **Acesse a Aplicação**
-    - **Frontend**: [http://localhost:4200](http://localhost:4200)
-    - **API Docs (Swagger)**: [http://localhost:8000/docs](http://localhost:8000/docs)
+   - **Frontend**: [http://localhost:4200](http://localhost:4200)
+   - **API Docs (Swagger)**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 

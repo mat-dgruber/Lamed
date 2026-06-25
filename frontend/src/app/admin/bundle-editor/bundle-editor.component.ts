@@ -32,10 +32,12 @@ export class BundleEditorComponent {
     article_url: '',
     article_content: '',
     video_id: '',
-    thumbnail_url: ''
+    thumbnail_url: '',
+    published_at: ''
   };
   
   videoUrl = '';
+  publishedDateStr = '';
 
   newResource: Resource = {
     title: '',
@@ -56,7 +58,17 @@ export class BundleEditorComponent {
             if (data.video_id) {
                 this.videoUrl = `https://www.youtube.com/watch?v=${data.video_id}`;
             }
+
+            if (data.published_at) {
+                this.publishedDateStr = data.published_at.substring(0, 10);
+            }
         });
+      } else {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        this.publishedDateStr = `${yyyy}-${mm}-${dd}`;
       }
     });
   }
@@ -86,6 +98,19 @@ export class BundleEditorComponent {
         if (videoId) {
             this.model.video_id = videoId;
         }
+    }
+
+    if (this.publishedDateStr) {
+        const dateParts = this.publishedDateStr.split('-');
+        if (dateParts.length === 3) {
+            const year = parseInt(dateParts[0], 10);
+            const month = parseInt(dateParts[1], 10) - 1;
+            const day = parseInt(dateParts[2], 10);
+            const localDate = new Date(year, month, day, 12, 0, 0);
+            this.model.published_at = localDate.toISOString();
+        }
+    } else {
+        this.model.published_at = undefined;
     }
 
     const { id, ...bundleData } = this.model;
