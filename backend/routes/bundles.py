@@ -7,10 +7,11 @@ import urllib.request
 import zipfile
 
 from config import db
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 from google.cloud.firestore import Query as FirestoreQuery, FieldFilter
 from models import Bundle, BundleCreate
+from api.dependencies import get_admin
 
 router = APIRouter()
 
@@ -90,8 +91,8 @@ def get_bundle(bundle_id: str):
 
 
 @router.post("/", response_model=Bundle)
-def create_bundle(bundle_in: BundleCreate):
-    # TODO: Add Authentication check here
+def create_bundle(bundle_in: BundleCreate, _admin=Depends(get_admin)):
+    # Auth via Depends(get_admin); token validated, admin claim enforced.
 
     data = bundle_in.model_dump()
     data["created_at"] = datetime.now(timezone.utc)
@@ -113,7 +114,7 @@ def create_bundle(bundle_in: BundleCreate):
 
 
 @router.put("/{bundle_id}", response_model=Bundle)
-def update_bundle(bundle_id: str, bundle_in: BundleCreate):
+def update_bundle(bundle_id: str, bundle_in: BundleCreate, _admin=Depends(get_admin)):
     doc_ref = db.collection(BUNDLES_COLLECTION).document(bundle_id)
     
     data = bundle_in.model_dump()
@@ -130,7 +131,7 @@ def update_bundle(bundle_id: str, bundle_in: BundleCreate):
 
 
 @router.delete("/{bundle_id}", status_code=204)
-def delete_bundle(bundle_id: str):
+def delete_bundle(bundle_id: str, _admin=Depends(get_admin)):
     doc_ref = db.collection(BUNDLES_COLLECTION).document(bundle_id)
     doc_ref.delete()
     return None

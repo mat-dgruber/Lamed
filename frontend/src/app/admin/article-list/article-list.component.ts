@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { ArticleService, Article } from '../../services/article.service';
+import { GoogleDriveImagePipe } from '../../pipes/google-drive-image.pipe';
 
 @Component({
   selector: 'app-article-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, LucideAngularModule],
+  imports: [CommonModule, RouterLink, LucideAngularModule, GoogleDriveImagePipe],
   templateUrl: './article-list.component.html',
   styles: []
 })

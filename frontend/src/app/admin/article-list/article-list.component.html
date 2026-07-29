@@ -51,7 +51,7 @@
                       class="h-10 w-10 flex-shrink-0 rounded-lg bg-zinc-100 overflow-hidden border border-zinc-200"
                     >
                       @if (article.cover_image) {
-                        <img [src]="article.cover_image" class="h-full w-full object-cover" />
+                        <img [src]="article.cover_image | googleDriveImage" class="h-full w-full object-cover" />
                       } @else {
                         <div class="h-full w-full flex items-center justify-center text-zinc-300">
                           <lucide-icon name="image" [size]="16"></lucide-icon>

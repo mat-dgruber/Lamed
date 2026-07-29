@@ -1,9 +1,10 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import List, Optional
 from datetime import datetime, timezone
 from google.cloud.firestore import Query as FirestoreQuery, FieldFilter
 from models import Article, ArticleCreate
 from config import db
+from api.dependencies import get_admin
 
 router = APIRouter()
 
@@ -52,7 +53,7 @@ def get_article(article_id: str):
     return data
 
 @router.post("/", response_model=Article)
-def create_article(article_in: ArticleCreate):
+def create_article(article_in: ArticleCreate, _admin=Depends(get_admin)):
     data = article_in.model_dump()
     data['created_at'] = datetime.now(timezone.utc)
     data['updated_at'] = datetime.now(timezone.utc)
@@ -67,7 +68,7 @@ def create_article(article_in: ArticleCreate):
     return data
 
 @router.put("/{article_id}", response_model=Article)
-def update_article(article_id: str, article_in: ArticleCreate):
+def update_article(article_id: str, article_in: ArticleCreate, _admin=Depends(get_admin)):
     doc_ref = db.collection(ARTICLES_COLLECTION).document(article_id)
     
     data = article_in.model_dump()
@@ -83,7 +84,7 @@ def update_article(article_id: str, article_in: ArticleCreate):
     return updated_doc
 
 @router.delete("/{article_id}")
-def delete_article(article_id: str):
+def delete_article(article_id: str, _admin=Depends(get_admin)):
     doc_ref = db.collection(ARTICLES_COLLECTION).document(article_id)
     # Deleting a non-existent document in Firestore is a no-op and costs nothing extra
     doc_ref.delete()

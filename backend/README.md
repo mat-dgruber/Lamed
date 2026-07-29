@@ -48,6 +48,31 @@ A API utiliza o **Firebase Admin SDK**.
 > [!IMPORTANT]
 > Para rodar localmente, você precisa da credencial de conta de serviço (JSON) configurada na variável de ambiente `GOOGLE_APPLICATION_CREDENTIALS` ou autenticada via `gcloud auth application-default login`.
 
+### Permissão de Admin (mutating endpoints)
+
+Os endpoints `POST/PUT/DELETE` em `/admin`, `/articles` e `/bundles` exigem **Bearer Firebase ID Token** com custom claim `admin: True`.
+
+Para promover um usuário a admin (via Firebase Admin SDK):
+
+```python
+from firebase_admin import auth
+auth.set_custom_user_claims("<UID_DO_USUARIO>", {"admin": True})
+```
+
+Após definir o claim, force um refresh no frontend (`user.getIdToken(true)`) para que o novo token seja emitido.
+
+### Variáveis sensíveis do servidor
+
+| Env var | Uso |
+| :-- | :-- |
+| `SYNC_TOKEN` | Token enviado em `X-Sync-Token` no POST `/api/sync-videos` (GitHub Actions). **Obrigatório** — sem ele o endpoint responde `503`. |
+| `FIREBASE_STORAGE_BUCKET` | Bucket do Firebase Storage (default: `lamed-148.firebasestorage.app`). |
+
+### Probes
+
+- `GET /healthz` — liveness (sempre `200`).
+- `GET /readyz` — readiness (Firestore + Storage; `503` se Storage indisponível).
+
 ---
 
 ## 🚀 Deploy (Cloud Run)

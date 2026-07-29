@@ -111,14 +111,15 @@
                 <input
                   type="text"
                   [(ngModel)]="model.cover_image"
+                  (ngModelChange)="onCoverImageInput()"
                   name="cover_image"
                   class="block w-full pl-10 rounded-xl border-zinc-200 bg-zinc-50 px-4 py-3 text-zinc-900 focus:border-orange-500 focus:ring-orange-500 transition-colors"
-                  placeholder="https://..."
+                  placeholder="https://drive.google.com/file/d/..."
                 />
               </div>
             </div>
             <p class="text-xs text-zinc-500">
-              Cole o link público da imagem (Google Drive, etc). Se falhar, usará o padrão.
+              Cole o link público da imagem (Google Drive, etc). Suporta links do Drive diretamente!
             </p>
           </div>
           <div>
@@ -127,7 +128,7 @@
               class="aspect-video w-full rounded-xl border border-zinc-200 overflow-hidden bg-zinc-50 relative"
             >
               <img
-                [src]="model.cover_image || 'assets/Imagens/Fundo_Lamed.png'"
+                [src]="(model.cover_image | googleDriveImage) || 'assets/Imagens/Fundo_Lamed.png'"
                 (error)="onImageError($event)"
                 class="w-full h-full object-cover"
               />
@@ -147,36 +148,70 @@
           <lucide-icon name="book-open" class="text-orange-500" [size]="20"></lucide-icon>
           Conteúdo
         </h2>
-        <p-editor [(ngModel)]="model.content" name="content" [style]="{ height: '400px' }">
-          <ng-template pTemplate="header">
+        <p-editor [(ngModel)]="model.content" name="content" [style]="{ height: '420px' }">
+          <p-header>
+            <!-- Headers & Sizes -->
             <span class="ql-formats">
-              <select class="ql-header">
-                <option value="2"></option>
-                <option value="3"></option>
-                <option selected></option>
+              <select class="ql-header" title="Cabeçalho">
+                <option value="1">Título 1 (H1)</option>
+                <option value="2">Título 2 (H2)</option>
+                <option value="3">Título 3 (H3)</option>
+                <option selected>Normal</option>
               </select>
-              <select class="ql-font"></select>
+              <select class="ql-size" title="Tamanho do Texto">
+                <option value="small">Pequeno</option>
+                <option selected>Normal</option>
+                <option value="large">Grande</option>
+                <option value="huge">Gigante</option>
+              </select>
             </span>
+
+            <!-- Inline Styles & Scripts -->
             <span class="ql-formats">
-              <button class="ql-bold"></button>
-              <button class="ql-italic"></button>
-              <button class="ql-underline"></button>
-              <button class="ql-strike"></button>
+              <button class="ql-bold" title="Negrito"></button>
+              <button class="ql-italic" title="Itálico"></button>
+              <button class="ql-underline" title="Sublinhado"></button>
+              <button class="ql-strike" title="Tachado"></button>
+              <button class="ql-script" value="sub" title="Subscrito"></button>
+              <button class="ql-script" value="super" title="Sobrescrito"></button>
             </span>
+
+            <!-- Colors & Highlights (Destaques) -->
             <span class="ql-formats">
-              <button class="ql-list" value="ordered"></button>
-              <button class="ql-list" value="bullet"></button>
+              <select class="ql-color" title="Cor do Texto"></select>
+              <select class="ql-background" title="Destaque / Cor de Fundo"></select>
             </span>
+
+            <!-- Quotes & Formatting Blocks (Citações) -->
             <span class="ql-formats">
-              <button class="ql-link"></button>
-              <button class="ql-image"></button>
-              <button class="ql-code-block"></button>
-              <button class="ql-blockquote"></button>
+              <button class="ql-blockquote" title="Citação / Assemo"></button>
+              <button class="ql-code-block" title="Bloco de Código"></button>
             </span>
+
+            <!-- Alignment -->
             <span class="ql-formats">
-              <button class="ql-clean"></button>
+              <select class="ql-align" title="Alinhamento"></select>
             </span>
-          </ng-template>
+
+            <!-- Lists & Indentation -->
+            <span class="ql-formats">
+              <button class="ql-list" value="ordered" title="Lista Numerada"></button>
+              <button class="ql-list" value="bullet" title="Lista de Marcadores"></button>
+              <button class="ql-indent" value="-1" title="Diminuir Recuo"></button>
+              <button class="ql-indent" value="+1" title="Aumentar Recuo"></button>
+            </span>
+
+            <!-- Media & Links -->
+            <span class="ql-formats">
+              <button class="ql-link" title="Inserir Link"></button>
+              <button class="ql-image" title="Inserir Imagem"></button>
+            </span>
+
+            <!-- Clean -->
+            <span class="ql-formats">
+              <button class="ql-clean" title="Limpar Formatação"></button>
+            </span>
+          </p-header>
         </p-editor>
       </div>
 
