@@ -28,6 +28,49 @@
     aspect-ratio: 16/9;
 }
 
+.video-thumbnail-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    cursor: pointer;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.video-thumbnail-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.video-thumbnail-container:hover img {
+    transform: scale(1.04);
+    opacity: 0.9;
+}
+
+.play-button-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background-color: rgba(220, 38, 38, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.video-thumbnail-container:hover .play-button-overlay {
+    background-color: #ff0000;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
 .video-item p {
     padding: 1rem;
     font-weight: 500;
