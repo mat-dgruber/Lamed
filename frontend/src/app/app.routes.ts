@@ -68,13 +68,10 @@ export const routes: Routes = [
             description: 'Acompanhe o Lamed nas redes sociais e fique por dentro das novidades.' 
         }
     },
-    { 
-        path: 'guia-de-estudos', 
-        loadComponent: () => import('./componentes/bundle-list/bundle-list').then(m => m.BundleList),
-        data: { 
-            title: 'Guia de Estudos', 
-            description: 'Siga nossos guias de estudo para uma jornada estruturada de aprendizado.' 
-        }
+    {
+        path: 'guia-de-estudos',
+        redirectTo: 'materiais-extras',
+        pathMatch: 'full'
     },
     { 
         path: 'termos-de-uso', 
@@ -105,8 +102,12 @@ export const routes: Routes = [
     { 
         path: 'admin', 
         loadChildren: () => import('./admin/admin.routes').then(m => m.ADMIN_ROUTES),
-        data: { title: 'Área Administrativa' } // No description needed mainly
+        data: { title: 'Área Administrativa', noindex: true } // No description needed mainly
     },
-    // Redirects and wildcards
-    { path: '**', redirectTo: '' }
+    // 404 dedicated
+    {
+        path: '**',
+        loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent),
+        data: { title: 'Página não encontrada' }
+    }
 ];

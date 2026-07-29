@@ -692,14 +692,22 @@ img {
 }
 
 /* List styling */
-.article-content ul,
+.article-content ul {
+  list-style-type: disc !important;
+  text-align: left;
+  margin-bottom: 1.5em;
+  padding-left: 2rem;
+}
+
 .article-content ol {
+  list-style-type: decimal !important;
   text-align: left;
   margin-bottom: 1.5em;
   padding-left: 2rem;
 }
 
 .article-content li {
+  display: list-item !important;
   margin-bottom: 0.5em;
 }
 
@@ -1365,6 +1373,14 @@ img {
 }
 .social-btn-footer.instagram:hover {
   background: var(--main-color-hover);
+  border-color: transparent;
+}
+
+.social-btn-footer.tiktok {
+  border-color: #000000;
+}
+.social-btn-footer.tiktok:hover {
+  background: #000000;
   border-color: transparent;
 }
 
@@ -4528,6 +4544,14 @@ img {
 }
 .social-btn-footer.instagram:hover {
   background: var(--color-principal);
+  border-color: transparent;
+}
+
+.social-btn-footer.tiktok {
+  border-color: #000000;
+}
+.social-btn-footer.tiktok:hover {
+  background: #000000;
   border-color: transparent;
 }
 

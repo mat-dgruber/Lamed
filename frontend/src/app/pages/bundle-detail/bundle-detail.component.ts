@@ -129,6 +129,35 @@ export class BundleDetailComponent implements OnInit {
             slug: `/bundle/${data.id}`,
           });
 
+          // VideoObject JSON-LD when bundle has a YouTube video
+          if (data.video_id) {
+            const thumbImage = new GoogleDriveImagePipe().transform(data.thumbnail_url);
+            this.seoService.updateJsonLd({
+              id: `bundle-video-${data.id}`,
+              data: {
+                '@context': 'https://schema.org',
+                '@type': 'VideoObject',
+                name: data.title,
+                description: data.description || 'Estudo bíblico em vídeo no Lamed.',
+                thumbnailUrl: thumbImage,
+                uploadDate: data.published_at,
+                embedUrl: `https://www.youtube.com/embed/${data.video_id}`,
+                contentUrl: `https://www.youtube.com/watch?v=${data.video_id}`,
+                publisher: {
+                  '@type': 'Organization',
+                  name: 'Lamed',
+                  logo: { '@type': 'ImageObject', url: 'https://lamed148.com.br/assets/Imagens/lamed-logo.png' },
+                },
+              },
+            });
+          } else {
+            // Empty placeholder so a stale previous bundle's VideoObject isn't served.
+            this.seoService.updateJsonLd({
+              id: `bundle-video-${data.id}`,
+              data: { '@context': 'https://schema.org', '@type': 'WebPage' },
+            });
+          }
+
           // Track bundle view
           this.analyticsService.trackEvent('view_bundle', {
             bundle_id: data.id,

@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, Shield, Cookie, ExternalLink, Mail, Eye, Lock, Database } from 'lucide-angular';
-import { MetaTagsService } from '../../../services/meta-tags.service';
+import { SeoService } from '../../../core/services/seo.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './politica.scss'
 })
 export class Politica implements OnInit {
-  private metaTagService = inject(MetaTagsService);
+  private metaTagService = inject(SeoService);
   private router = inject(Router);
 
   // Icons used in template

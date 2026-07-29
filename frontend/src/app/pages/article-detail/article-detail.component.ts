@@ -7,7 +7,7 @@ import { ArticleService, Article } from '../../services/article.service';
 import { Timestamp } from '@angular/fire/firestore';
 import { SeoService } from '../../core/services/seo.service';
 import { AnalyticsService } from '../../core/services/analytics.service';
-import { GoogleDriveImagePipe } from '../../pipes/google-drive-image.pipe';
+import { GoogleDriveImagePipe, convertGoogleDriveUrl } from '../../pipes/google-drive-image.pipe';
 
 @Component({
   selector: 'app-article-detail',
@@ -58,7 +58,8 @@ export class ArticleDetailComponent implements OnInit {
       next: (data: Article) => {
         this.article.set(data);
         if (data?.content) {
-          this.safeContent = this.sanitizer.bypassSecurityTrustHtml(data.content);
+          const processedHtml = this.processDriveImagesInHtml(data.content);
+          this.safeContent = this.sanitizer.bypassSecurityTrustHtml(processedHtml);
         }
         
         // SEO Update
@@ -72,6 +73,29 @@ export class ArticleDetailComponent implements OnInit {
             type: 'article',
             author: data.author,
             slug: `/article/${data.id}`
+          });
+
+          this.seoService.updateJsonLd({
+            id: `article-${data.id}`,
+            data: {
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: data.title,
+              description: summary,
+              image: data.cover_image,
+              author: { '@type': 'Person', name: data.author || 'Lamed' },
+              publisher: {
+                '@type': 'Organization',
+                name: 'Lamed',
+                logo: { '@type': 'ImageObject', url: 'https://lamed148.com.br/assets/Imagens/lamed-logo.png' },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': `https://lamed148.com.br/article/${data.id}`,
+              },
+              datePublished: data.published_at,
+              dateModified: data.updated_at || data.published_at,
+            },
           });
 
           // Track specific article view
@@ -99,4 +123,15 @@ export class ArticleDetailComponent implements OnInit {
     // If it's already a date or string (fallback)
     return new Date(timestamp);
   }
+
+  private processDriveImagesInHtml(html: string): string {
+    return html.replace(/src=["'](https?:\/\/[^"']+)["']/gi, (match, url) => {
+      if (url.includes('drive.google.com')) {
+        const converted = convertGoogleDriveUrl(url);
+        return `src="${converted}"`;
+      }
+      return match;
+    });
+  }
 }
+

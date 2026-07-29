@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MetaTagsService } from '../../services/meta-tags.service';
+import { SeoService } from '../../core/services/seo.service';
 
 @Component({
   selector: 'app-contato',
@@ -15,7 +15,7 @@ import { MetaTagsService } from '../../services/meta-tags.service';
 export class Contato implements OnInit {
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
-  private metaTagService = inject(MetaTagsService);
+  private metaTagService = inject(SeoService);
   private router = inject(Router);
 
   contactForm = this.fb.group({

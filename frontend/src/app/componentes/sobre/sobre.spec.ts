@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Sobre } from './sobre';
-import { MetaTagsService } from '../../services/meta-tags.service';
+import { SeoService } from '../../core/services/seo.service';
 
-class MetaTagsServiceStub {
+class SeoServiceStub {
   updateTags = jasmine.createSpy('updateTags');
 }
 
@@ -16,7 +16,7 @@ describe('Sobre', () => {
       imports: [Sobre],
       providers: [
         provideRouter([]),
-        { provide: MetaTagsService, useClass: MetaTagsServiceStub }
+        { provide: SeoService, useClass: SeoServiceStub }
       ]
     }).compileComponents();
 
@@ -90,7 +90,7 @@ describe('Sobre', () => {
   });
 
   it('calls updateTags on init with expected shape', () => {
-    const stub = TestBed.inject(MetaTagsService) as unknown as MetaTagsServiceStub;
+    const stub = TestBed.inject(SeoService) as unknown as SeoServiceStub;
     expect(stub.updateTags).toHaveBeenCalled();
     const call = stub.updateTags.calls.mostRecent().args[0];
     expect(call.title).toBe('Sobre Nós');

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { SigaNos } from './siga-nos';
-import { MetaTagsService } from '../../services/meta-tags.service';
+import { SeoService } from '../../core/services/seo.service';
 
 describe('SigaNos', () => {
   let component: SigaNos;
@@ -13,7 +13,7 @@ describe('SigaNos', () => {
       imports: [SigaNos],
       providers: [
         provideRouter([]),
-        { provide: MetaTagsService, useValue: { updateTags: () => {} } },
+        { provide: SeoService, useValue: { updateTags: () => {} } },
       ],
     })
     .compileComponents();

@@ -7,12 +7,12 @@
   }
 
   @if (article(); as loadedArticle) {
-    <div class="container mx-auto px-4 pt-6 max-w-4xl">
+    <div class="container mx-auto px-0 sm:px-4 pt-0 sm:pt-6 max-w-4xl">
       <!-- Breadcrumb / Back -->
       @if (!isEmbedded()) {
         <a
           routerLink="/artigos"
-          class="mb-6 inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-orange-500 transition-colors"
+          class="mb-4 sm:mb-6 px-4 sm:px-0 pt-4 sm:pt-0 inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-orange-500 transition-colors"
         >
           <lucide-icon [name]="'arrow-left'" [size]="16"></lucide-icon>
           Voltar para Artigos
@@ -20,10 +20,10 @@
       }
 
       <!-- Article Container -->
-      <div class="bg-white rounded-2xl shadow-sm ring-1 ring-zinc-200 overflow-hidden">
+      <div class="bg-white rounded-none sm:rounded-2xl shadow-none sm:shadow-sm ring-0 sm:ring-1 ring-zinc-200 overflow-hidden">
         <!-- Banner Image -->
         @if (loadedArticle.cover_image && !isEmbedded()) {
-          <div class="relative h-64 md:h-96 w-full overflow-hidden rounded-[25px]">
+          <div class="relative h-56 sm:h-64 md:h-96 w-full overflow-hidden rounded-none sm:rounded-[25px]">
             <img
               [src]="loadedArticle.cover_image | googleDriveImage"
               [alt]="loadedArticle.title"
@@ -35,7 +35,7 @@
         }
 
         <!-- Content Wrapper -->
-        <div class="p-8 md:p-12">
+        <div class="p-5 sm:p-8 md:p-12">
           <!-- Header -->
           <div class="mb-8">
             <div class="flex flex-wrap items-center gap-3 mb-4 text-sm">

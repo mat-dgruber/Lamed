@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Apoie } from './apoie';
-import { MetaTagsService } from '../../services/meta-tags.service';
+import { SeoService } from '../../core/services/seo.service';
 
 describe('Apoie', () => {
   let fixture: ComponentFixture<Apoie>;
@@ -13,7 +13,7 @@ describe('Apoie', () => {
       providers: [
         provideRouter([]),
         {
-          provide: MetaTagsService,
+          provide: SeoService,
           useValue: { updateTags: jasmine.createSpy('updateTags') }
         }
       ]
@@ -40,7 +40,7 @@ describe('Apoie', () => {
   });
 
   it('should call updateTags with Apoie meta on init', () => {
-    const svc = TestBed.inject(MetaTagsService) as unknown as {
+    const svc = TestBed.inject(SeoService) as unknown as {
       updateTags: jasmine.Spy;
     };
     expect(svc.updateTags).toHaveBeenCalled();

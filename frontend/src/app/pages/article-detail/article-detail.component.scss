@@ -42,3 +42,88 @@
     margin-right: 0.5rem;
   }
 }
+
+// Styling for Rich Text Article Content
+:host ::ng-deep .article-content {
+  color: #27272a;
+  line-height: 1.8;
+
+  blockquote {
+    border-left: 4px solid #ea580c;
+    background-color: #fff7ed;
+    color: #3f3f46;
+    font-style: italic;
+    padding: 0.75rem 1.5rem;
+    margin: 1rem 0;
+    border-radius: 0 0.75rem 0.75rem 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+
+    p {
+      margin: 0;
+    }
+
+    & + blockquote {
+      margin-top: -1rem;
+      padding-top: 0.25rem;
+      border-top-right-radius: 0;
+    }
+  }
+
+  code {
+    background-color: #f4f4f5;
+    color: #c2410c;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.375rem;
+    font-family: monospace;
+    font-size: 0.9em;
+  }
+
+  pre, pre.ql-syntax {
+    background-color: #18181b;
+    color: #f4f4f5;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    font-family: monospace;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    margin: 1.5rem auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  span[style*="background-color"], mark {
+    padding: 0.15rem 0.35rem;
+    border-radius: 0.25rem;
+  }
+
+  h1, h2, h3, h4 {
+    color: #09090b;
+    font-weight: 700;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  ul {
+    list-style-type: disc !important;
+    padding-left: 2rem !important;
+    margin: 1.25rem 0 !important;
+  }
+
+  ol {
+    list-style-type: decimal !important;
+    padding-left: 2rem !important;
+    margin: 1.25rem 0 !important;
+  }
+
+  li {
+    display: list-item !important;
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+}
+

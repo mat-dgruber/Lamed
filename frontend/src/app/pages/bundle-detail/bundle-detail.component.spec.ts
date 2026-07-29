@@ -36,7 +36,7 @@ describe('BundleDetailComponent', () => {
 
   beforeEach(async () => {
     bundleServiceSpy = jasmine.createSpyObj('BundleService', ['getBundleById']);
-    seoServiceSpy = jasmine.createSpyObj('SeoService', ['updateMetaTags']);
+    seoServiceSpy = jasmine.createSpyObj('SeoService', ['updateMetaTags', 'updateJsonLd']);
     analyticsServiceSpy = jasmine.createSpyObj('AnalyticsService', ['trackEvent']);
 
     bundleServiceSpy.getBundleById.and.returnValue(of(mockBundle));

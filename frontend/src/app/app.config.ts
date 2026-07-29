@@ -14,7 +14,7 @@ import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-import { MetaTagsService } from './services/meta-tags.service';
+import { SeoService } from './core/services/seo.service';
 
 registerLocaleData(localePt);
 
@@ -26,8 +26,8 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideAnimationsAsync(),
     provideAppInitializer(() => {
-      const metaTags = inject(MetaTagsService);
-      metaTags.init();
+      const seo = inject(SeoService);
+      seo.init();
     }),
     providePrimeNG({
         theme: {

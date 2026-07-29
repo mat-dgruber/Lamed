@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 
 import { Artigos } from './artigos';
 import { ArticleService } from '../../services/article.service';
-import { MetaTagsService } from '../../services/meta-tags.service';
+import { SeoService } from '../../core/services/seo.service';
 
 describe('Artigos', () => {
   let component: Artigos;
@@ -20,7 +20,7 @@ describe('Artigos', () => {
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: ArticleService, useValue: { getArticles: () => of([]) } },
-        { provide: MetaTagsService, useValue: { updateTags: () => {} } },
+        { provide: SeoService, useValue: { updateTags: () => {} } },
       ],
     })
     .compileComponents();

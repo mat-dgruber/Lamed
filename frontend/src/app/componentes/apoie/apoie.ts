@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { DonationChartsComponent } from '../../componentes/donation-charts/donation-charts.component';
-import { MetaTagsService } from '../../services/meta-tags.service';
+import { SeoService } from '../../core/services/seo.service';
 
 type CopyStatus = 'idle' | 'copied' | 'error';
 
@@ -14,7 +14,7 @@ type CopyStatus = 'idle' | 'copied' | 'error';
   styleUrl: './apoie.scss'
 })
 export class Apoie implements OnInit {
-  private readonly metaTagService = inject(MetaTagsService);
+  private readonly metaTagService = inject(SeoService);
   private readonly router = inject(Router);
 
   readonly activeTab = signal<'cripto' | 'gift' | 'done'>('gift');

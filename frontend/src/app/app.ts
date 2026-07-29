@@ -48,6 +48,9 @@ export class App implements OnInit {
           type: 'website'
         });
       }
+
+      // Noindex opt-in via route data
+      this.seoService.setNoindex(!!data['noindex']);
     });
   }
 

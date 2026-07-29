@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { LucideAngularModule, Youtube, Instagram, HeartHandshake, Mail, Globe } from 'lucide-angular';
-import { MetaTagsService } from '../../services/meta-tags.service';
+import { SeoService } from '../../core/services/seo.service';
 
 @Component({
   selector: 'app-siga-nos',
@@ -12,7 +12,7 @@ import { MetaTagsService } from '../../services/meta-tags.service';
   styleUrl: './siga-nos.scss'
 })
 export class SigaNos implements OnInit {
-  private metaTagService = inject(MetaTagsService);
+  private metaTagService = inject(SeoService);
   private router = inject(Router);
 
   readonly icons = {

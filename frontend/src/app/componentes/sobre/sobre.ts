@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { MetaTagsService } from '../../services/meta-tags.service';
+import { SeoService } from '../../core/services/seo.service';
 import { LucideAngularModule, TrendingUp, Heart, MoveRight, SignpostBig } from 'lucide-angular';
 import { TeamModalComponent } from '../shared/team-modal/team-modal.component';
 import Swiper, { type Swiper as SwiperInstance } from 'swiper';
@@ -38,7 +38,7 @@ export interface TeamMember {
   styleUrl: './sobre.scss'
 })
 export class Sobre implements OnInit, AfterViewInit, OnDestroy {
-  private readonly metaTagService = inject(MetaTagsService);
+  private readonly metaTagService = inject(SeoService);
   private readonly router = inject(Router);
 
   readonly isHistoryExpanded = signal(false);

@@ -4,7 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { Contato } from './contato';
-import { MetaTagsService } from '../../services/meta-tags.service';
+import { SeoService } from '../../core/services/seo.service';
 
 describe('Contato', () => {
   let component: Contato;
@@ -17,7 +17,7 @@ describe('Contato', () => {
         provideRouter([]),
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: MetaTagsService, useValue: { updateTags: () => {} } },
+        { provide: SeoService, useValue: { updateTags: () => {} } },
       ],
     })
     .compileComponents();
