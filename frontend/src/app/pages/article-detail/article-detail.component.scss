@@ -1,7 +1,7 @@
 // SCSS for Article Detail Component
 .floating-back-button {
   position: fixed;
-  bottom: 20px;
+  top: 100px;
   left: 20px;
   background-color: var(--color-destaque, #dc2626);
   color: white;
@@ -14,11 +14,11 @@
   justify-content: center;
   overflow: hidden;
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(20px);
-  pointer-events: none;
-  z-index: 1000;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  z-index: 99;
   text-decoration: none;
   padding: 0 13px;
 
