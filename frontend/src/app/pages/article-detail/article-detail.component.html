@@ -23,9 +23,9 @@
 
       <!-- Article Container -->
       <div [class.bg-white]="true" [class.rounded-none]="isEmbedded()" [class.sm:rounded-2xl]="!isEmbedded()" [class.shadow-none]="isEmbedded()" [class.sm:shadow-sm]="!isEmbedded()" [class.ring-0]="isEmbedded()" [class.sm:ring-1]="!isEmbedded()" class="ring-zinc-200 overflow-hidden w-full">
-        <!-- Banner Image -->
+        <!-- Banner Image (16:9 Aspect Ratio) -->
         @if (loadedArticle.cover_image) {
-          <div class="relative h-56 sm:h-64 md:h-96 w-full overflow-hidden rounded-none sm:rounded-[25px]">
+          <div class="relative aspect-video w-full overflow-hidden rounded-none sm:rounded-t-2xl">
             <img
               [src]="loadedArticle.cover_image | googleDriveImage"
               [alt]="loadedArticle.title"

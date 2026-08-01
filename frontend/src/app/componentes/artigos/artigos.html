@@ -14,8 +14,8 @@
             <article>
               <div class="last-article">
                 @if (latest.cover_image) {
-                  <div class="article-banner-image rounded-[25px] overflow-hidden">
-                    <a [routerLink]="['/article', latest.id]">
+                  <div class="article-banner-image aspect-video w-full overflow-hidden rounded-t-xl sm:rounded-t-2xl">
+                    <a [routerLink]="['/article', latest.id]" class="block w-full h-full">
                       <img
                         [src]="latest.cover_image | googleDriveImage"
                         [alt]="latest.title"
