@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-zinc-50 pb-20">
+<div [class.min-h-screen]="!isEmbedded()" [class.bg-zinc-50]="!isEmbedded()" [class.pb-20]="!isEmbedded()" [class.p-0]="isEmbedded()">
   <!-- Loading State -->
   @if (loading()) {
     <div class="flex h-96 items-center justify-center">
@@ -7,7 +7,7 @@
   }
 
   @if (article(); as loadedArticle) {
-    <div class="container mx-auto px-0 sm:px-4 pt-0 sm:pt-6 max-w-4xl">
+    <div [class.container]="!isEmbedded()" [class.mx-auto]="!isEmbedded()" [class.px-0]="isEmbedded()" [class.sm:px-4]="!isEmbedded()" [class.pt-0]="true" [class.sm:pt-6]="!isEmbedded()" [class.max-w-4xl]="!isEmbedded()" [class.w-full]="isEmbedded()">
       <!-- Breadcrumb / Back -->
       @if (!isEmbedded()) {
         <a
@@ -20,7 +20,7 @@
       }
 
       <!-- Article Container -->
-      <div class="bg-white rounded-none sm:rounded-2xl shadow-none sm:shadow-sm ring-0 sm:ring-1 ring-zinc-200 overflow-hidden">
+      <div [class.bg-white]="true" [class.rounded-none]="isEmbedded()" [class.sm:rounded-2xl]="!isEmbedded()" [class.shadow-none]="isEmbedded()" [class.sm:shadow-sm]="!isEmbedded()" [class.ring-0]="isEmbedded()" [class.sm:ring-1]="!isEmbedded()" class="ring-zinc-200 overflow-hidden w-full">
         <!-- Banner Image -->
         @if (loadedArticle.cover_image) {
           <div class="relative h-56 sm:h-64 md:h-96 w-full overflow-hidden rounded-none sm:rounded-[25px]">
@@ -35,7 +35,7 @@
         }
 
         <!-- Content Wrapper -->
-        <div class="p-5 sm:p-8 md:p-12">
+        <div [class.p-5]="!isEmbedded()" [class.sm:p-8]="!isEmbedded()" [class.md:p-12]="!isEmbedded()" [class.p-4]="isEmbedded()" [class.sm:p-6]="isEmbedded()">
           <!-- Header -->
           <div class="mb-8">
             <div class="flex flex-wrap items-center gap-3 mb-4 text-sm">

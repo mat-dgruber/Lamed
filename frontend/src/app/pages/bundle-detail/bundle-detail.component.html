@@ -64,8 +64,8 @@
 
           <!-- Guia de Estudos / Artigo Integrado Direto na Página -->
           @if (safeArticleUrl || safeArticleContent) {
-            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm ring-1 ring-zinc-200/80 border-t-4 border-orange-500">
-              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-zinc-100">
+            <div class="bg-white rounded-2xl shadow-sm ring-1 ring-zinc-200/80 border-t-4 border-orange-500 overflow-hidden">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 border-b border-zinc-100 bg-white">
                 <div class="flex items-center gap-3">
                   <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-orange-600">
                     <lucide-icon [name]="'book-open'" [size]="24"></lucide-icon>
@@ -86,13 +86,13 @@
               </div>
 
               <!-- Conteúdo embutido na própria página -->
-              <div class="pt-6">
+              <div>
                 @if (safeArticleContent) {
-                  <article class="prose prose-orange max-w-none text-zinc-800 leading-relaxed">
+                  <article class="prose prose-orange max-w-none text-zinc-800 leading-relaxed p-6 sm:p-8">
                     <div [innerHTML]="safeArticleContent"></div>
                   </article>
                 } @else if (safeArticleUrl) {
-                  <div class="w-full h-[650px] rounded-xl overflow-hidden border border-zinc-200 shadow-inner bg-zinc-50">
+                  <div class="w-full h-[750px] overflow-hidden bg-white">
                     <iframe [src]="safeArticleUrl" class="w-full h-full border-0" title="Artigo da Lição"></iframe>
                   </div>
                 }
