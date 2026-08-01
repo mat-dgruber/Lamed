@@ -1,38 +1,63 @@
 // SCSS for Article Detail Component
 .floating-back-button {
   position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  background-color: theme('colors.orange.600');
+  bottom: 20px;
+  left: 20px;
+  background-color: var(--color-destaque, #dc2626);
   color: white;
-  padding: 0.75rem 1.25rem;
-  border-radius: 9999px;
-  box-shadow: 0 10px 25px -5px rgba(234, 88, 12, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4), 0 2px 8px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-  z-index: 100;
-
-  &:hover {
-    background-color: theme('colors.orange.500');
-    transform: translateY(-2px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  }
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  pointer-events: none;
+  z-index: 1000;
+  text-decoration: none;
+  padding: 0 13px;
 
   &.visible {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0);
     pointer-events: auto;
+  }
+
+  &:hover {
+    width: 200px;
+    border-radius: 25px;
+    background-color: #b91c1c; /* Darker red on hover */
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5), 0 4px 12px rgba(0, 0, 0, 0.2);
+    justify-content: flex-start;
+    padding-left: 13px;
+  }
+
+  lucide-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
   }
 
   .button-text-artigos {
     font-weight: 600;
     font-size: 0.875rem;
     white-space: nowrap;
+    opacity: 0;
+    max-width: 0;
+    margin-left: 0;
+    transition: opacity 0.25s ease, max-width 0.35s ease, margin-left 0.25s ease;
+  }
+
+  &:hover .button-text-artigos {
+    opacity: 1;
+    max-width: 140px;
+    margin-left: 0.5rem;
   }
 }
 
