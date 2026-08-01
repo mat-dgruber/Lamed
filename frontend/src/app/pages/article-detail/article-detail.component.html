@@ -22,7 +22,7 @@
       <!-- Article Container -->
       <div class="bg-white rounded-none sm:rounded-2xl shadow-none sm:shadow-sm ring-0 sm:ring-1 ring-zinc-200 overflow-hidden">
         <!-- Banner Image -->
-        @if (loadedArticle.cover_image && !isEmbedded()) {
+        @if (loadedArticle.cover_image) {
           <div class="relative h-56 sm:h-64 md:h-96 w-full overflow-hidden rounded-none sm:rounded-[25px]">
             <img
               [src]="loadedArticle.cover_image | googleDriveImage"
