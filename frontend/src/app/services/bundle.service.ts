@@ -27,6 +27,7 @@ export interface Bundle {
   article_content?: string;
   article_url?: string;
   resources: Resource[];
+  related_video_urls?: string[];
   is_active: boolean;
   created_at: string;
   updated_at: string;

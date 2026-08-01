@@ -12,12 +12,12 @@ API RESTful responsável pela lógica de negócios, validação de dados e integ
 
 O backend segue uma arquitetura simplificada baseada em serviços.
 
-| Arquivo/Pasta   | Descrição                                                  |
-| :-------------- | :--------------------------------------------------------- |
+| Arquivo/Pasta           | Descrição                                                        |
+| :---------------------- | :----------------------------------------------------------------- |
 | **`main.py`**   | **Entrypoint**. Configuração do App FastAPI, CORS e Rotas. |
-| **`models.py`** | **Schema Source**. Modelos Pydantic compartilhados.        |
-| **`services/`** | Lógica de negócios isolada (ex: `youtube_sync.py`).        |
-| **`scripts/`**  | Ferramentas de manutenção (migrações, verificação).        |
+| **`models.py`** | **Schema Source**. Modelos Pydantic compartilhados.          |
+| **`services/`** | Lógica de negócios isolada (ex:`youtube_sync.py`).             |
+| **`scripts/`**  | Ferramentas de manutenção (migrações, verificação).          |
 
 ---
 
@@ -63,10 +63,10 @@ Após definir o claim, force um refresh no frontend (`user.getIdToken(true)`) pa
 
 ### Variáveis sensíveis do servidor
 
-| Env var | Uso |
-| :-- | :-- |
-| `SYNC_TOKEN` | Token enviado em `X-Sync-Token` no POST `/api/sync-videos` (GitHub Actions). **Obrigatório** — sem ele o endpoint responde `503`. |
-| `FIREBASE_STORAGE_BUCKET` | Bucket do Firebase Storage (default: `lamed-148.firebasestorage.app`). |
+| Env var                     | Uso                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SYNC_TOKEN`              | Token enviado em`X-Sync-Token` no POST `/api/sync-videos` (GitHub Actions). **Obrigatório** — sem ele o endpoint responde `503`. |
+| `FIREBASE_STORAGE_BUCKET` | Bucket do Firebase Storage (default:`lamed-148.firebasestorage.app`).                                                                        |
 
 ### Probes
 

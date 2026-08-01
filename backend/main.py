@@ -97,6 +97,20 @@ def trigger_video_sync(x_sync_token: str = Header(None)):
     from services.youtube_sync import sync_videos
     return sync_videos()
 
+@app.post("/api/check-pending-bundle", tags=["system"])
+def trigger_check_pending_bundle(x_sync_token: str = Header(None)):
+    """
+    Checks if the current week bundle is published and sends an email reminder if missing.
+    Called by GitHub Actions Cron or Cloud Scheduler.
+    """
+    expected = os.getenv("SYNC_TOKEN")
+    if expected and not hmac.compare_digest(x_sync_token or "", expected):
+        raise HTTPException(status_code=403, detail="Invalid sync token")
+
+    from scripts.check_pending_bundle_email import check_and_notify_pending_bundle
+    check_and_notify_pending_bundle()
+    return {"status": "checked"}
+
 if __name__ == "__main__":
     import uvicorn
     # Allow running directly with `python main.py` or `uv run main.py`

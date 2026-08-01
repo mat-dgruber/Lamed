@@ -151,7 +151,15 @@ def sync_videos():
                     "is_active": False,  # Draft
                     "created_at": pub_date,  # Use video publish date for sorting
                     "updated_at": now,
-                    "resources": [],
+                    "resources": [
+                        {"title": "PDF Geral da Lição", "type": "pdf", "url": ""},
+                        {"title": "Apresentação PowerPoint / Slides", "type": "slides", "url": ""},
+                        {"title": "Infográfico Principal", "type": "infografico", "url": ""},
+                        {"title": "Infográfico Secundário", "type": "infografico", "url": ""},
+                        {"title": "Vídeo Extra Complementar", "type": "video", "url": ""},
+                        {"title": "Podcast / Áudio de Estudo", "type": "audio", "url": ""}
+                    ],
+                    "related_video_urls": []
                 }
 
                 db.collection(BUNDLES_COLLECTION).add(new_bundle)

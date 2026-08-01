@@ -1,0 +1,17 @@
+# GitHub Actions Workflow para checagem semanal de Bundle às quintas-feiras às 19h BRT (22h UTC)
+name: Check Pending Bundle Weekly Email
+
+on:
+  schedule:
+    # 22:00 UTC toda quinta-feira = 19:00 Horário de Brasília (BRT)
+    - cron: '0 22 * * 4'
+  workflow_dispatch:
+
+jobs:
+  check-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Pending Bundle Email Check
+        run: |
+          curl -X POST "https://lamed-backend-395724128522.southamerica-east1.run.app/api/check-pending-bundle" \
+            -H "x-sync-token: ${{ secrets.SYNC_TOKEN }}"

@@ -72,3 +72,8 @@ jobs:
             FIREBASE_PROJECT_ID=lamed-148
             YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}
             SYNC_TOKEN=${{ secrets.SYNC_TOKEN }}
+            SMTP_SERVER=smtp.gmail.com
+            SMTP_PORT=587
+            SMTP_USER=lamedchanel@gmail.com
+            SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}
+            NOTIFICATION_EMAIL=matheus.gruber123@gmail.com

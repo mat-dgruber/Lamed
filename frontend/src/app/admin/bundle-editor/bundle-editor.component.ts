@@ -45,6 +45,8 @@ export class BundleEditorComponent {
     url: ''
   };
 
+  newRelatedVideoUrl = '';
+
   constructor() {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
@@ -54,6 +56,7 @@ export class BundleEditorComponent {
             this.model = { ...data };
             // Ensure resources is array
             if (!this.model.resources) this.model.resources = [];
+            if (!this.model.related_video_urls) this.model.related_video_urls = [];
             
             if (data.video_id) {
                 this.videoUrl = `https://www.youtube.com/watch?v=${data.video_id}`;
@@ -69,8 +72,36 @@ export class BundleEditorComponent {
         const mm = String(today.getMonth() + 1).padStart(2, '0');
         const dd = String(today.getDate()).padStart(2, '0');
         this.publishedDateStr = `${yyyy}-${mm}-${dd}`;
+        
+        // Auto-load Smart Default Resources Template for new bundle
+        this.loadDefaultResourcesTemplate();
       }
     });
+  }
+
+  loadDefaultResourcesTemplate() {
+    this.model.resources = [
+      { title: 'PDF Geral da Lição', type: 'pdf', url: '' },
+      { title: 'Apresentação PowerPoint / Slides', type: 'slides', url: '' },
+      { title: 'Infográfico Principal', type: 'infografico', url: '' },
+      { title: 'Infográfico Secundário', type: 'infografico', url: '' },
+      { title: 'Vídeo Extra Complementar', type: 'video', url: '' },
+      { title: 'Podcast / Áudio de Estudo', type: 'audio', url: '' }
+    ];
+  }
+
+  addRelatedVideo() {
+    if (this.newRelatedVideoUrl.trim()) {
+      if (!this.model.related_video_urls) this.model.related_video_urls = [];
+      this.model.related_video_urls.push(this.newRelatedVideoUrl.trim());
+      this.newRelatedVideoUrl = '';
+    }
+  }
+
+  removeRelatedVideo(index: number) {
+    if (this.model.related_video_urls) {
+      this.model.related_video_urls.splice(index, 1);
+    }
   }
 
   addResource() {
@@ -91,6 +122,11 @@ export class BundleEditorComponent {
 
   save() {
     this.isSaving.set(true);
+
+    // Clean resources without URL before saving
+    if (this.model.resources) {
+      this.model.resources = this.model.resources.filter(r => r.url && r.url.trim().length > 0);
+    }
     
     // Map video url back to id
     if (this.videoUrl) {

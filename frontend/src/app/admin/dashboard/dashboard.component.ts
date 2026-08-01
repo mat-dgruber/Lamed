@@ -50,6 +50,19 @@ export class AdminDashboardComponent {
     });
   }
 
+  getCurrentWeekNumber(): number {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+    const yearStart = new Date(d.getFullYear(), 0, 1);
+    return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  }
+
+  get currentWeekBundle(): Bundle | undefined {
+    const currWeek = this.getCurrentWeekNumber();
+    return this.bundles().find(b => b.week_number === currWeek || b.is_active);
+  }
+
   nextPage() {
     if (!this.hasNextPage()) return;
     const currentList = this.bundles();

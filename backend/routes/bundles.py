@@ -95,6 +95,21 @@ def create_bundle(bundle_in: BundleCreate, _admin=Depends(get_admin)):
     # Auth via Depends(get_admin); token validated, admin claim enforced.
 
     data = bundle_in.model_dump()
+
+    # Check for duplicate video_id if provided
+    if data.get("video_id"):
+        existing = list(
+            db.collection(BUNDLES_COLLECTION)
+            .where(filter=FieldFilter("video_id", "==", data["video_id"]))
+            .limit(1)
+            .stream()
+        )
+        if existing:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Este vídeo do YouTube (ID: {data['video_id']}) já está vinculado a outro Bundle registrado."
+            )
+
     data["created_at"] = datetime.now(timezone.utc)
     data["updated_at"] = datetime.now(timezone.utc)
 
@@ -118,6 +133,22 @@ def update_bundle(bundle_id: str, bundle_in: BundleCreate, _admin=Depends(get_ad
     doc_ref = db.collection(BUNDLES_COLLECTION).document(bundle_id)
     
     data = bundle_in.model_dump()
+
+    # Check for duplicate video_id if provided (excluding current bundle)
+    if data.get("video_id"):
+        existing = list(
+            db.collection(BUNDLES_COLLECTION)
+            .where(filter=FieldFilter("video_id", "==", data["video_id"]))
+            .limit(2)
+            .stream()
+        )
+        for doc in existing:
+            if doc.id != bundle_id:
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Este vídeo do YouTube (ID: {data['video_id']}) já está vinculado a outro Bundle registrado."
+                )
+
     data["updated_at"] = datetime.now(timezone.utc)
 
     try:

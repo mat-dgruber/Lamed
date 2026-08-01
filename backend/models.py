@@ -44,6 +44,7 @@ class BundleBase(BaseModel):
     article_content: Optional[str] = None
     article_url: Optional[str] = None
     resources: List[Resource] = []
+    related_video_urls: List[str] = []
     is_active: bool = False
 
 class BundleCreate(BundleBase):

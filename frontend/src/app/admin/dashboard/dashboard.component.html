@@ -41,6 +41,98 @@
 </div>
 
 <div class="container mx-auto px-6 py-8 -mt-8 relative z-10">
+  <!-- Checklist Inteligente da Semana -->
+  <div class="mb-8 p-6 rounded-3xl bg-white border border-zinc-200 shadow-xl">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-100 pb-4 mb-4">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600">
+          <lucide-icon name="check-square" [size]="22"></lucide-icon>
+        </div>
+        <div>
+          <h2 class="text-lg font-bold text-zinc-900">Checklist do Bundle da Semana {{ getCurrentWeekNumber() }}</h2>
+          <p class="text-xs text-zinc-500">Acompanhe a preparação e publicação do conteúdo semanal</p>
+        </div>
+      </div>
+      <div>
+        @if (currentWeekBundle && currentWeekBundle.is_active) {
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-green-50 text-green-700 ring-1 ring-green-600/20">
+            <span class="h-2 w-2 rounded-full bg-green-600 animate-pulse"></span>
+            Bundle da Semana No Ar
+          </span>
+        } @else {
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 ring-1 ring-amber-600/20">
+            <span class="h-2 w-2 rounded-full bg-amber-500"></span>
+            Publicação Pendente
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+      <div class="p-4 rounded-2xl bg-zinc-50 border border-zinc-100 flex items-start gap-3">
+        <div class="mt-0.5">
+          @if (currentWeekBundle?.video_id) {
+            <lucide-icon name="check-circle-2" class="text-green-600" [size]="18"></lucide-icon>
+          } @else {
+            <lucide-icon name="circle" class="text-zinc-300" [size]="18"></lucide-icon>
+          }
+        </div>
+        <div>
+          <p class="font-bold text-zinc-900">Vídeo do YouTube</p>
+          <p class="text-zinc-500 mt-0.5">{{ currentWeekBundle?.video_id ? 'Vídeo principal vinculado' : 'Pendente inclusão' }}</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-zinc-50 border border-zinc-100 flex items-start gap-3">
+        <div class="mt-0.5">
+          @if (currentWeekBundle?.resources && currentWeekBundle!.resources.length > 0) {
+            <lucide-icon name="check-circle-2" class="text-green-600" [size]="18"></lucide-icon>
+          } @else {
+            <lucide-icon name="circle" class="text-zinc-300" [size]="18"></lucide-icon>
+          }
+        </div>
+        <div>
+          <p class="font-bold text-zinc-900">Materiais de Apoio</p>
+          <p class="text-zinc-500 mt-0.5">
+            {{ currentWeekBundle?.resources?.length ? currentWeekBundle!.resources.length + ' materiais anexados' : 'Pendente links' }}
+          </p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-zinc-50 border border-zinc-100 flex items-start gap-3">
+        <div class="mt-0.5">
+          @if (currentWeekBundle?.is_active) {
+            <lucide-icon name="check-circle-2" class="text-green-600" [size]="18"></lucide-icon>
+          } @else {
+            <lucide-icon name="circle" class="text-zinc-300" [size]="18"></lucide-icon>
+          }
+        </div>
+        <div>
+          <p class="font-bold text-zinc-900">Publicação no Site</p>
+          <p class="text-zinc-500 mt-0.5">{{ currentWeekBundle?.is_active ? 'Bundle Ativo' : 'Pendente Ativação' }}</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-orange-50/50 border border-orange-100 flex items-start gap-3">
+        <div class="mt-0.5">
+          @if (currentWeekBundle?.article_url || currentWeekBundle?.article_content) {
+            <lucide-icon name="check-circle-2" class="text-orange-600" [size]="18"></lucide-icon>
+          } @else {
+            <lucide-icon name="info" class="text-orange-400" [size]="18"></lucide-icon>
+          }
+        </div>
+        <div>
+          <p class="font-bold text-zinc-900 flex items-center gap-1">
+            Artigo da Lição
+            <span class="text-[10px] font-normal px-1.5 py-0.2 bg-orange-100 text-orange-800 rounded">Recomendado</span>
+          </p>
+          <p class="text-zinc-500 mt-0.5">
+            {{ (currentWeekBundle?.article_url || currentWeekBundle?.article_content) ? 'Artigo anexado' : 'Opcional (não impede envio)' }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- List -->
   <div class="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-xl">
     <table class="w-full text-left text-sm text-zinc-500">
