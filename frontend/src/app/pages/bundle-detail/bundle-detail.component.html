@@ -99,6 +99,55 @@
               </div>
             </div>
           }
+
+          <!-- Vídeos Curtos e Relacionados -->
+          @if (relatedVideos().length > 0) {
+            <div class="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-zinc-200/80 border-t-4 border-amber-500 space-y-6">
+              <div class="flex items-center gap-3 border-b border-zinc-100 pb-4">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+                  <lucide-icon [name]="'play-circle'" [size]="24"></lucide-icon>
+                </div>
+                <div>
+                  <h2 class="text-xl font-bold text-zinc-900">Vídeos Curtos & Relacionados</h2>
+                  <p class="text-xs text-zinc-500">Shorts, cortes e conteúdos complementares</p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                @for (rv of relatedVideos(); track $index) {
+                  <div class="flex flex-col items-center w-full">
+                    @if (rv.safeEmbedUrl) {
+                      <div
+                        [class.aspect-\[9\/16\]]="rv.isShort"
+                        [class.max-w-\[260px\]]="rv.isShort"
+                        [class.aspect-video]="!rv.isShort"
+                        class="w-full overflow-hidden rounded-2xl bg-black shadow-md ring-1 ring-zinc-900/10"
+                      >
+                        <iframe
+                          [src]="rv.safeEmbedUrl"
+                          class="h-full w-full border-0"
+                          allowfullscreen
+                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                          title="Vídeo relacionado"
+                        >
+                        </iframe>
+                      </div>
+                    } @else {
+                      <a
+                        [href]="rv.url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="w-full flex items-center justify-center gap-2 p-4 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-orange-500 text-xs font-bold text-zinc-800 transition-colors"
+                      >
+                        <lucide-icon [name]="'external-link'" [size]="16"></lucide-icon>
+                        Assistir Vídeo Complementar
+                      </a>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          }
         </div>
 
         <!-- Sidebar (Resources & Meta) -->
@@ -142,6 +191,37 @@
                 <div class="text-sm text-zinc-500 italic">Nenhum material extra disponível.</div>
               }
             </div>
+          </div>
+
+          <!-- Card Seja Membro do Canal (Apoio ao Ministério) -->
+          <div class="bg-gradient-to-br from-zinc-900 via-zinc-900 to-orange-950 rounded-2xl p-6 text-white shadow-md ring-1 ring-zinc-800 relative overflow-hidden group">
+            <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-orange-600/10 rounded-full blur-2xl group-hover:bg-orange-600/20 transition-all duration-500"></div>
+            
+            <div class="flex items-center gap-2 mb-3">
+              <span class="inline-flex items-center gap-1 rounded-full bg-orange-500/20 border border-orange-500/30 px-2.5 py-0.5 text-[11px] font-bold text-orange-400 uppercase tracking-wider">
+                <lucide-icon name="heart" [size]="12" class="fill-orange-400"></lucide-icon>
+                Apoie o Lamed
+              </span>
+            </div>
+
+            <h4 class="font-bold text-lg text-white mb-2 leading-snug">
+              Seja Membro do Nosso Canal
+            </h4>
+
+            <p class="text-xs text-zinc-300 mb-5 leading-relaxed">
+              Ajude-nos a continuar produzindo guias de estudo e vídeos semanais com uma pequena contribuição mensal no YouTube.
+            </p>
+
+            <a
+              href="https://www.youtube.com/channel/UC2PYvVmcJBLt9ymvBpnXO9A/join"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 py-3 px-4 text-xs font-bold text-white shadow-lg shadow-orange-950/40 transition-all duration-300 active:scale-[0.98]"
+            >
+              <lucide-icon name="youtube" [size]="16"></lucide-icon>
+              Seja Membro no YouTube
+              <lucide-icon name="external-link" [size]="14" class="opacity-80"></lucide-icon>
+            </a>
           </div>
 
           <!-- Share Card -->

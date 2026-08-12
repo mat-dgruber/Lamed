@@ -77,7 +77,22 @@ export class Videos implements OnInit {
   }
 
   getThumbnailUrl(videoId: string, customThumbUrl?: string): string {
-    if (customThumbUrl) return customThumbUrl;
-    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    if (customThumbUrl && !customThumbUrl.includes('gen_')) return customThumbUrl;
+    if (videoId && videoId.length === 11) {
+      return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    }
+    return 'assets/Imagens/Fundo_Lamed-total.png';
+  }
+
+  onThumbnailError(event: Event, videoId: string): void {
+    const img = event.target as HTMLImageElement;
+    if (!img) return;
+    if (img.src.includes('hqdefault.jpg')) {
+      img.src = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+    } else if (img.src.includes('mqdefault.jpg')) {
+      img.src = `https://i.ytimg.com/vi/${videoId}/0.jpg`;
+    } else if (!img.src.includes('Fundo_Lamed-total.png')) {
+      img.src = 'assets/Imagens/Fundo_Lamed-total.png';
+    }
   }
 }

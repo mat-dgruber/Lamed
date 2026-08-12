@@ -37,6 +37,15 @@ def _map_video_response(doc_id: str, data: dict) -> dict:
     return data
 
 
+def _is_short_video(v_data: dict) -> bool:
+    if v_data.get("is_short") is True:
+        return True
+    url = (v_data.get("url") or "").lower()
+    title = (v_data.get("title") or "").lower()
+    desc = (v_data.get("description") or "").lower()
+    return "/shorts/" in url or "#shorts" in title or "#shorts" in desc
+
+
 @router.get("/", response_model=List[Video])
 def get_videos(
     limit: int = 50,
@@ -56,24 +65,28 @@ def get_videos(
         if only_active:
             query = query.where(filter=FieldFilter("is_active", "==", True))
 
-        if is_short is not None:
-            query = query.where(filter=FieldFilter("is_short", "==", is_short))
-
         query = query.order_by("published_at", direction=FirestoreQuery.DESCENDING)
-        
+
         if start_after_id:
             last_doc = db.collection(VIDEOS_COLLECTION).document(start_after_id).get()
             if last_doc.exists:
                 query = query.start_after(last_doc)
-                
-        query = query.limit(limit)
+
         docs = query.stream()
-        
+
         videos = []
         for doc in docs:
             v_data = doc.to_dict()
             mapped = _map_video_response(doc.id, v_data)
+
+            if is_short is not None:
+                if _is_short_video(mapped) != is_short:
+                    continue
+
             videos.append(mapped)
+            if len(videos) >= limit:
+                break
+
         return videos
     except Exception as e:
         logger.error(f"Error fetching videos list: {e}", exc_info=True)

@@ -1,69 +1,12 @@
-@use 'sass:color';
-
-.not-found {
-  min-height: 70vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-  text-align: center;
-
-  &__card {
-    max-width: 32rem;
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
   }
-
-  &__code {
-    font-size: clamp(4rem, 12vw, 7rem);
-    font-weight: 800;
-    margin: 0;
-    line-height: 1;
-    color: var(--p-primary-color, #2563eb);
-    letter-spacing: -0.02em;
+  to {
+    transform: rotate(360deg);
   }
+}
 
-  &__title {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    margin: 0.5rem 0 1rem;
-    font-weight: 700;
-  }
-
-  &__text {
-    color: var(--p-text-muted-color, #6b7280);
-    line-height: 1.55;
-    margin: 0 auto 1.75rem;
-    max-width: 28rem;
-  }
-
-  &__actions {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  &__btn {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.625rem;
-    text-decoration: none;
-    font-weight: 600;
-    transition: transform 0.15s ease, background-color 0.2s ease;
-
-    &:hover { transform: translateY(-1px); }
-
-    &--primary {
-      background: var(--p-primary-color, #2563eb);
-      color: white;
-
-      &:hover { background: color.adjust(#2563eb, $lightness: -8%); }
-    }
-
-    &--ghost {
-      background: transparent;
-      color: var(--p-text-color, #111);
-      border: 1px solid var(--p-content-border-color, #d4d4d8);
-
-      &:hover { background: rgba(0, 0, 0, 0.04); }
-    }
-  }
+.animate-spin-slow {
+  animation: spinSlow 12s linear infinite;
 }

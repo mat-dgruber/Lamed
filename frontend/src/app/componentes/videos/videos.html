@@ -1,23 +1,25 @@
 <main class="site-main">
-  <section id="video-gallery" class="content-section">
-    <div class="container mx-auto px-4 py-8">
-      <h1 class="text-3xl font-bold text-center mb-4">Vídeos de Estudo Bíblico</h1>
-      <p class="text-center text-gray-600 mb-8">
-        Explore nossa coleção completa de vídeos do último trimestre. O mais recente está no topo.
+  <section id="video-gallery" class="content-section py-8 sm:py-12">
+    <div class="container mx-auto px-4 max-w-7xl">
+      <h1 class="text-2xl sm:text-4xl font-extrabold text-center text-zinc-900 mb-3 tracking-tight">
+        Vídeos de Estudo Bíblico
+      </h1>
+      <p class="text-center text-zinc-600 max-w-xl mx-auto text-sm sm:text-base mb-8 leading-relaxed">
+        Explore nossa coleção completa de vídeos de estudos e conteúdos curtos para sua lição.
       </p>
 
       <!-- Tab Buttons -->
-      <div class="flex justify-center gap-4 mb-8">
+      <div class="flex justify-center items-center gap-2 sm:gap-4 mb-8 max-w-md mx-auto">
         <button
           type="button"
           (click)="setTab('long')"
           [class]="
             activeTab() === 'long'
-              ? 'px-6 py-2.5 rounded-full font-semibold transition-all duration-200 shadow-md bg-orange-600 text-white flex items-center gap-2 cursor-pointer'
-              : 'px-6 py-2.5 rounded-full font-semibold transition-all duration-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 flex items-center gap-2 cursor-pointer'
+              ? 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 shadow-md bg-orange-600 text-white flex items-center justify-center gap-2 cursor-pointer'
+              : 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 flex items-center justify-center gap-2 cursor-pointer'
           "
         >
-          <lucide-icon name="video" class="w-5 h-5"></lucide-icon>
+          <lucide-icon name="video" [size]="18"></lucide-icon>
           Estudos Bíblicos
         </button>
         <button
@@ -25,11 +27,11 @@
           (click)="setTab('shorts')"
           [class]="
             activeTab() === 'shorts'
-              ? 'px-6 py-2.5 rounded-full font-semibold transition-all duration-200 shadow-md bg-orange-600 text-white flex items-center gap-2 cursor-pointer'
-              : 'px-6 py-2.5 rounded-full font-semibold transition-all duration-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 flex items-center gap-2 cursor-pointer'
+              ? 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 shadow-md bg-orange-600 text-white flex items-center justify-center gap-2 cursor-pointer'
+              : 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 flex items-center justify-center gap-2 cursor-pointer'
           "
         >
-          <lucide-icon name="smartphone" class="w-5 h-5"></lucide-icon>
+          <lucide-icon name="smartphone" [size]="18"></lucide-icon>
           Shorts & Cortes
         </button>
       </div>
@@ -40,14 +42,15 @@
           [class]="
             activeTab() === 'shorts'
               ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto'
-              : 'video-grid thirteen-videos'
+              : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto'
           "
         >
           @for (video of videos; track video.id.videoId; let i = $index) {
             <div
-              class="video-item"
-              [class.video-item-highlighted]="activeTab() === 'long' && i === 0"
-              [class.is-shorts]="activeTab() === 'shorts'"
+              class="bg-white rounded-2xl border border-zinc-200 shadow-md overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg flex flex-col"
+              [class.col-span-1]="true"
+              [class.md:col-span-2]="activeTab() === 'long' && i === 0"
+              [class.lg:col-span-2]="activeTab() === 'long' && i === 0"
               [class.max-w-\[280px\]]="activeTab() === 'shorts'"
               [class.mx-auto]="activeTab() === 'shorts'"
               [class.w-full]="activeTab() === 'shorts'"
@@ -72,7 +75,7 @@
                 </iframe>
               } @else {
                 <div
-                  class="video-thumbnail-container"
+                  class="video-thumbnail-container relative overflow-hidden bg-black cursor-pointer group"
                   [class]="activeTab() === 'shorts' ? 'aspect-[9/16] w-full' : 'aspect-video w-full'"
                   (click)="playVideo(video.id.videoId)"
                   (keydown.enter)="playVideo(video.id.videoId)"
@@ -83,22 +86,30 @@
                   <img
                     [src]="getThumbnailUrl(video.id.videoId, video.snippet.thumbnails.high.url)"
                     [alt]="video.snippet.title"
+                    (error)="onThumbnailError($event, video.id.videoId)"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
                     loading="lazy"
                   />
-                  <div class="play-button-overlay">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="28"
-                      height="28"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
+                  <div class="play-button-overlay absolute inset-0 flex items-center justify-center">
+                    <div class="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-500 transition-all duration-300">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                    </div>
                   </div>
                 </div>
               }
-              <p>{{ video.snippet.title }}</p>
+              <div class="p-4 flex-1 flex flex-col justify-between">
+                <p class="font-bold text-zinc-900 text-sm leading-snug line-clamp-2">
+                  {{ video.snippet.title }}
+                </p>
+              </div>
             </div>
           }
         </div>
@@ -108,13 +119,12 @@
           [class]="
             activeTab() === 'shorts'
               ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto animate-pulse'
-              : 'video-grid thirteen-videos animate-pulse'
+              : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto animate-pulse'
           "
         >
-          @for (i of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track i) {
+          @for (i of [1, 2, 3, 4, 5, 6]; track i) {
             <div
-              class="video-item bg-zinc-100 border border-zinc-200"
-              [class.is-shorts]="activeTab() === 'shorts'"
+              class="bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-xs"
               [class.max-w-\[280px\]]="activeTab() === 'shorts'"
               [class.mx-auto]="activeTab() === 'shorts'"
               [class.w-full]="activeTab() === 'shorts'"
@@ -123,8 +133,8 @@
                 class="w-full bg-zinc-200"
                 [class]="activeTab() === 'shorts' ? 'aspect-[9/16]' : 'aspect-video'"
               ></div>
-              <div class="p-4">
-                <div class="h-4 w-3/4 bg-zinc-200 rounded mb-2"></div>
+              <div class="p-4 space-y-2">
+                <div class="h-4 w-3/4 bg-zinc-200 rounded"></div>
                 <div class="h-4 w-1/2 bg-zinc-200 rounded"></div>
               </div>
             </div>
@@ -132,67 +142,34 @@
         </div>
       }
 
-      <!-- YouTube and Instagram Buttons -->
-      <div class="external-video-links text-center">
+      <!-- YouTube, Instagram, and TikTok Buttons -->
+      <div class="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mt-12 w-full max-w-2xl mx-auto px-2">
         <a
           href="https://www.youtube.com/channel/UC2PYvVmcJBLt9ymvBpnXO9A/join"
           target="_blank"
-          class="btn-primary"
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-xs sm:text-sm bg-red-600 hover:bg-red-500 text-white shadow-md transition-colors"
         >
           Siga-nos no YouTube
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-youtube"
-          >
-            <path
-              d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17Z"
-            />
-            <path d="m10 15 5-3-5-3z" />
-          </svg>
+          <lucide-icon name="youtube" [size]="18"></lucide-icon>
         </a>
-        <a href="https://www.instagram.com/lamed148/" target="_blank" class="btn-secondary">
+        <a
+          href="https://www.instagram.com/lamed148/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-xs sm:text-sm bg-zinc-900 hover:bg-zinc-800 text-white shadow-md transition-colors"
+        >
           Siga-nos no Instagram
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-instagram"
-          >
-            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-          </svg>
+          <lucide-icon name="external-link" [size]="18"></lucide-icon>
         </a>
-        <a href="https://www.tiktok.com/@lamed148" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+        <a
+          href="https://www.tiktok.com/@lamed148"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-xs sm:text-sm bg-zinc-900 hover:bg-zinc-800 text-white shadow-md transition-colors"
+        >
           Siga-nos no TikTok
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-tiktok"
-          >
-            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.55a8.16 8.16 0 0 0 4.77 1.53V6.62a4.85 4.85 0 0 1-1.84-.23Z"/>
-          </svg>
+          <lucide-icon name="external-link" [size]="18"></lucide-icon>
         </a>
       </div>
     </div>

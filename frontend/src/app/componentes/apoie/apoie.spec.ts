@@ -68,4 +68,10 @@ describe('Apoie', () => {
     await component.copyPixKey();
     expect(component.copyStatus()).toBe('error');
   });
+
+  it('navigateToSobre should navigate to /sobre', () => {
+    const spy = spyOn((component as any).router, 'navigate');
+    component.navigateToSobre();
+    expect(spy).toHaveBeenCalledWith(['/sobre']);
+  });
 });

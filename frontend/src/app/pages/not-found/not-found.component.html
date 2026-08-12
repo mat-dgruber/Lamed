@@ -1,13 +1,97 @@
-<section class="not-found">
-  <div class="not-found__card">
-    <p class="not-found__code">404</p>
-    <h1 class="not-found__title">Página não encontrada</h1>
-    <p class="not-found__text">
-      O conteúdo que você procura não está aqui. Pode ter sido movido, renomeado ou nunca existiu.
-    </p>
-    <nav class="not-found__actions" aria-label="Navegação alternativa">
-      <a routerLink="/" class="not-found__btn not-found__btn--primary">Voltar ao início</a>
-      <a routerLink="/materiais-extras" class="not-found__btn not-found__btn--ghost">Ver materiais</a>
-    </nav>
+<main class="min-h-[80vh] flex items-center justify-center px-4 py-16 bg-gradient-to-b from-amber-50/40 via-white to-zinc-50">
+  <div class="max-w-2xl w-full text-center space-y-8">
+    <!-- Visual Badge & Big 404 -->
+    <div class="relative inline-block">
+      <div class="absolute -inset-4 rounded-full bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-yellow-500/10 blur-xl"></div>
+      <span class="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase bg-amber-100/80 text-amber-800 border border-amber-200/80 mb-2">
+        <lucide-icon name="compass" [size]="14" class="text-orange-600 animate-spin-slow"></lucide-icon>
+        Erro 404 &bull; Página Não Encontrada
+      </span>
+      <h1 class="relative text-8xl sm:text-9xl font-black tracking-tight bg-gradient-to-r from-orange-600 via-amber-600 to-amber-500 bg-clip-text text-transparent select-none drop-shadow-xs">
+        404
+      </h1>
+    </div>
+
+    <!-- Message Section -->
+    <div class="space-y-3 max-w-lg mx-auto">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-zinc-900 tracking-tight">
+        Ops! Esta página saiu do caminho da lição
+      </h2>
+      <p class="text-sm sm:text-base text-zinc-600 leading-relaxed">
+        O conteúdo que você procurava não está mais aqui. Pode ter sido movido para um novo estudo ou atualizado.
+      </p>
+    </div>
+
+    <!-- Quick Navigation Card Grid -->
+    <div class="bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-3xl border border-zinc-200/80 shadow-xl shadow-amber-950/5 space-y-6">
+      <p class="text-xs font-bold uppercase tracking-wider text-zinc-400">
+        Para onde você gostaria de ir agora?
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+        <a
+          routerLink="/"
+          class="group flex items-start gap-3.5 p-4 rounded-2xl bg-zinc-50 hover:bg-orange-50/80 border border-zinc-200/80 hover:border-orange-300 transition-all duration-200"
+        >
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+            <lucide-icon name="home" [size]="20"></lucide-icon>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-zinc-900 group-hover:text-orange-700 transition-colors">Página Inicial</h3>
+            <p class="text-xs text-zinc-500 mt-0.5">Volte para a capa e estude as lições mais recentes.</p>
+          </div>
+        </a>
+
+        <a
+          routerLink="/videos"
+          class="group flex items-start gap-3.5 p-4 rounded-2xl bg-zinc-50 hover:bg-orange-50/80 border border-zinc-200/80 hover:border-orange-300 transition-all duration-200"
+        >
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+            <lucide-icon name="video" [size]="20"></lucide-icon>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-zinc-900 group-hover:text-orange-700 transition-colors">Vídeos de Estudo</h3>
+            <p class="text-xs text-zinc-500 mt-0.5">Assista aos estudos bíblicos e vídeos curtos.</p>
+          </div>
+        </a>
+
+        <a
+          routerLink="/materiais-extras"
+          class="group flex items-start gap-3.5 p-4 rounded-2xl bg-zinc-50 hover:bg-orange-50/80 border border-zinc-200/80 hover:border-orange-300 transition-all duration-200"
+        >
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+            <lucide-icon name="library" [size]="20"></lucide-icon>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-zinc-900 group-hover:text-orange-700 transition-colors">Materiais de Apoio</h3>
+            <p class="text-xs text-zinc-500 mt-0.5">Baixe PDFs, guias e recursos extras.</p>
+          </div>
+        </a>
+
+        <a
+          routerLink="/sobre"
+          class="group flex items-start gap-3.5 p-4 rounded-2xl bg-zinc-50 hover:bg-orange-50/80 border border-zinc-200/80 hover:border-orange-300 transition-all duration-200"
+        >
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+            <lucide-icon name="book-open" [size]="20"></lucide-icon>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-zinc-900 group-hover:text-orange-700 transition-colors">Sobre o Lamed</h3>
+            <p class="text-xs text-zinc-500 mt-0.5">Conheça o projeto e nossa equipe.</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Action Button -->
+      <div class="pt-2">
+        <a
+          routerLink="/"
+          class="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full font-bold text-sm bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white shadow-lg shadow-orange-600/25 hover:shadow-orange-600/35 transition-all duration-200 cursor-pointer"
+        >
+          <lucide-icon name="arrow-left" [size]="18"></lucide-icon>
+          Voltar para a Capa do Lamed
+        </a>
+      </div>
+    </div>
   </div>
-</section>
+</main>

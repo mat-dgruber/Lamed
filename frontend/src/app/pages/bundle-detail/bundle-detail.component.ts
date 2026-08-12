@@ -12,6 +12,13 @@ import { AnalyticsService } from '../../core/services/analytics.service';
 import { GoogleDriveImagePipe } from '../../pipes/google-drive-image.pipe';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+export interface RelatedVideo {
+  url: string;
+  videoId: string | null;
+  safeEmbedUrl: SafeResourceUrl | null;
+  isShort: boolean;
+}
+
 @Component({
   selector: 'app-bundle-detail',
   standalone: true,
@@ -39,6 +46,7 @@ export class BundleDetailComponent implements OnInit {
   safeVideoUrl: SafeResourceUrl | null = null;
   safeArticleUrl: SafeResourceUrl | null = null;
   safeArticleContent: SafeHtml | null = null;
+  relatedVideos = signal<RelatedVideo[]>([]);
 
   getIcon(type: string): string {
     switch (type) {
@@ -120,6 +128,25 @@ export class BundleDetailComponent implements OnInit {
             this.safeArticleContent = this.sanitizer.bypassSecurityTrustHtml(data.article_content);
           }
 
+          if (data.related_video_urls && data.related_video_urls.length > 0) {
+            const processed: RelatedVideo[] = data.related_video_urls.map((vUrl) => {
+              const videoId = this.extractYoutubeId(vUrl);
+              const isShort = vUrl.includes('/shorts/') || vUrl.includes('shorts=true');
+              const safeEmbedUrl = videoId
+                ? this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`)
+                : null;
+              return {
+                url: vUrl,
+                videoId,
+                safeEmbedUrl,
+                isShort,
+              };
+            });
+            this.relatedVideos.set(processed);
+          } else {
+            this.relatedVideos.set([]);
+          }
+
           // SEO Update
           this.seoService.updateMetaTags({
             title: data.title,
@@ -192,8 +219,9 @@ export class BundleDetailComponent implements OnInit {
       });
   }
 
-  private extractYoutubeId(url: string): string | null {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  extractYoutubeId(url: string): string | null {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
     return match && match[2].length === 11 ? match[2] : null;
   }

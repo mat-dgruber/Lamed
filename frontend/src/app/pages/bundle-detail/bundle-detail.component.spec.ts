@@ -6,7 +6,7 @@ import { AnalyticsService } from '../../core/services/analytics.service';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { LucideAngularModule, Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2, X, Check, CheckCircle } from 'lucide-angular';
+import { LucideAngularModule, Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2, X, Check, CheckCircle, Heart, Youtube, ExternalLink } from 'lucide-angular';
 
 describe('BundleDetailComponent', () => {
   let component: BundleDetailComponent;
@@ -44,7 +44,7 @@ describe('BundleDetailComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        LucideAngularModule.pick({ Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2, X, Check, CheckCircle }),
+        LucideAngularModule.pick({ Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2, X, Check, CheckCircle, Heart, Youtube, ExternalLink }),
         BundleDetailComponent
       ],
       providers: [
@@ -84,6 +84,26 @@ describe('BundleDetailComponent', () => {
 
     expect(component.loading()).toBeFalse();
     expect(component.bundle()).toBeNull();
+  });
+
+  it('should process related_video_urls correctly on load', () => {
+    const bundleWithRelated: Bundle = {
+      ...mockBundle,
+      related_video_urls: [
+        'https://www.youtube.com/shorts/1234567890a',
+        'https://www.youtube.com/watch?v=0987654321b'
+      ]
+    };
+    bundleServiceSpy.getBundleById.and.returnValue(of(bundleWithRelated));
+
+    fixture.detectChanges();
+
+    const related = component.relatedVideos();
+    expect(related.length).toBe(2);
+    expect(related[0].isShort).toBeTrue();
+    expect(related[0].videoId).toBe('1234567890a');
+    expect(related[1].isShort).toBeFalse();
+    expect(related[1].videoId).toBe('0987654321b');
   });
 
 });

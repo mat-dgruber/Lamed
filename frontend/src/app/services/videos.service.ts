@@ -34,17 +34,15 @@ export class VideosService {
       map(videos =>
         videos
           .filter(v => {
-            if (v.is_short !== undefined) {
-              return v.is_short === isShort;
-            }
             const url = (v.url || '').toLowerCase();
             const title = (v.title || '').toLowerCase();
             const desc = (v.description || '').toLowerCase();
-            const detectedIsShort = url.includes('/shorts/') || title.includes('#shorts') || desc.includes('#shorts');
+            const textIsShort = url.includes('/shorts/') || title.includes('#shorts') || desc.includes('#shorts');
+            const detectedIsShort = Boolean(v.is_short) || textIsShort;
             return detectedIsShort === isShort;
           })
           .map(video => this.adaptVideo(video))
-          .slice(0, 13)
+          .slice(0, 20)
       )
     );
   }
@@ -58,19 +56,28 @@ export class VideosService {
   private adaptVideo(video: Video): AdaptedVideo {
     let videoId = video.id;
     const url = video.url || '';
-    
-    // Ensure we have a valid YouTube ID for the player
-    if (videoId.startsWith('gen_') || !videoId) {
-       if (url.includes('v=')) {
+
+    // Ensure we extract a valid YouTube ID from URL if videoId is gen_... or missing
+    if (!videoId || videoId.startsWith('gen_')) {
+      if (url.includes('v=')) {
         videoId = url.split('v=')[1].split('&')[0];
       } else if (url.includes('be/')) {
         videoId = url.split('be/')[1].split('?')[0];
+      } else if (url.includes('shorts/')) {
+        videoId = url.split('shorts/')[1].split('?')[0].split('/')[0];
       }
     }
 
     let pubAt: Date | undefined;
     if (video.published_at) {
       pubAt = new Date(video.published_at);
+    }
+
+    let thumbUrl = video.thumbnail_url;
+    if (!thumbUrl || thumbUrl.includes('gen_')) {
+      if (videoId) {
+        thumbUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+      }
     }
 
     return {
@@ -80,7 +87,7 @@ export class VideosService {
         publishedAt: pubAt,
         description: video.description,
         thumbnails: {
-          high: { url: video.thumbnail_url }
+          high: { url: thumbUrl }
         }
       }
     };

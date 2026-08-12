@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Videos } from './videos';
 import { VideosService } from '../../services/videos.service';
 import { of } from 'rxjs';
-import { LucideAngularModule, Video, Smartphone } from 'lucide-angular';
+import { LucideAngularModule, Video, Smartphone, Youtube, ExternalLink } from 'lucide-angular';
 
 describe('Videos', () => {
   let component: Videos;
@@ -14,7 +14,7 @@ describe('Videos', () => {
     videosServiceSpy.getVideos.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
-      imports: [Videos, LucideAngularModule.pick({ Video, Smartphone })],
+      imports: [Videos, LucideAngularModule.pick({ Video, Smartphone, Youtube, ExternalLink })],
       providers: [
         { provide: VideosService, useValue: videosServiceSpy }
       ]

@@ -64,6 +64,8 @@ import {
   Video,
   Smartphone,
   Filter,
+  Home,
+  Compass,
 } from 'lucide-angular';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -146,6 +148,8 @@ export const appConfig: ApplicationConfig = {
         Video,
         Smartphone,
         Filter,
+        Home,
+        Compass,
       }),
     ),
     { provide: LOCALE_ID, useValue: 'pt-BR' },

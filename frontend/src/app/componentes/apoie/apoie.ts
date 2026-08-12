@@ -47,7 +47,7 @@ export class Apoie implements OnInit {
     }
   }
 
-  goHome(): void {
-    void this.router.navigate(['/']);
+  navigateToSobre(): void {
+    void this.router.navigate(['/sobre']);
   }
 }

@@ -817,7 +817,8 @@ img {
 }
 
 /* Garante que o vídeo preencha 100% do seu "envelope" */
-.valeu-video video {
+.valeu-video video,
+.valeu-video img {
   display: block; /* Remove espaços extras */
   width: 100%;
   height: auto; /* Mantém a proporção */
@@ -4022,7 +4023,8 @@ img {
 }
 
 /* Garante que o vídeo preencha 100% do seu "envelope" */
-.valeu-video video {
+.valeu-video video,
+.valeu-video img {
   display: block; /* Remove espaços extras */
   width: 100%;
   height: auto; /* Mantém a proporção */
