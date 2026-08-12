@@ -15,6 +15,7 @@ class VideoBase(BaseModel):
     thumbnail_url: Optional[str] = None
     published_at: Optional[datetime] = None
     is_active: bool = True
+    is_short: bool = False
     author: str = "Lamed"
 
 class VideoCreate(VideoBase):

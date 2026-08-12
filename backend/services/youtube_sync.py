@@ -1,11 +1,29 @@
 import logging
 import os
+import re
 from datetime import datetime, timezone
 
+import isodate
 from config import db
 from google.cloud.firestore import FieldFilter
 from googleapiclient.discovery import build
 from models import BundleCreate, VideoData
+
+
+def parse_iso_duration(duration_str: str) -> int:
+    if not duration_str:
+        return 0
+    try:
+        return int(isodate.parse_duration(duration_str).total_seconds())
+    except Exception:
+        pass
+    match = re.match(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", duration_str)
+    if not match:
+        return 0
+    hours = int(match.group(1) or 0)
+    minutes = int(match.group(2) or 0)
+    seconds = int(match.group(3) or 0)
+    return hours * 3600 + minutes * 60 + seconds
 
 # Settings
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY") or os.getenv("GOOGLE_API_KEY")
@@ -51,21 +69,73 @@ def fetch_latest_videos_from_youtube(limit=20):
         )
         response = request.execute()
 
+        items = response.get("items", [])
+        if not items:
+            return []
+
+        video_ids = [item["snippet"]["resourceId"]["videoId"] for item in items]
+        video_ids_str = ",".join(video_ids)
+
+        # Fetch video contentDetails for duration
+        details_by_id = {}
+        try:
+            videos_detail_response = (
+                service.videos()
+                .list(part="contentDetails,snippet", id=video_ids_str)
+                .execute()
+            )
+            for item in videos_detail_response.get("items", []):
+                vid_id = item.get("id")
+                if vid_id:
+                    details_by_id[vid_id] = item
+        except Exception as e:
+            logger.warning(f"Could not fetch video details for duration: {e}")
+
         videos = []
-        for item in response.get("items", []):
+        for item in items:
             snippet = item["snippet"]
             video_id = snippet["resourceId"]["videoId"]
+
+            title = snippet.get("title", "")
+            description = snippet.get("description", "")
+            url = f"https://www.youtube.com/watch?v={video_id}"
+
+            detail = details_by_id.get(video_id, {})
+            duration_str = detail.get("contentDetails", {}).get("duration", "")
+            duration_sec = parse_iso_duration(duration_str)
+
+            title_lower = title.lower()
+            desc_lower = description.lower()
+            url_lower = url.lower()
+
+            contains_shorts_keyword = (
+                "shorts" in title_lower
+                or "#shorts" in title_lower
+                or "shorts" in desc_lower
+                or "#shorts" in desc_lower
+                or "shorts" in url_lower
+                or "#shorts" in url_lower
+            )
+
+            is_short = (0 < duration_sec <= 60) or contains_shorts_keyword
+
+            thumbnail_info = snippet.get("thumbnails", {})
+            thumb_url = (
+                thumbnail_info.get("high")
+                or thumbnail_info.get("default")
+                or {}
+            ).get("url", "")
 
             videos.append(
                 {
                     "id": video_id,
-                    "title": snippet["title"],
-                    "description": snippet["description"],
-                    "url": f"https://www.youtube.com/watch?v={video_id}",
-                    "thumbnail": snippet["thumbnails"].get(
-                        "high", snippet["thumbnails"].get("default")
-                    )["url"],
-                    "published_at": snippet["publishedAt"],  # ISO format string
+                    "title": title,
+                    "description": description,
+                    "url": url,
+                    "thumbnail": thumb_url,
+                    "published_at": snippet.get("publishedAt", ""),
+                    "is_short": is_short,
+                    "duration": duration_sec,
                 }
             )
         return videos
@@ -116,6 +186,7 @@ def sync_videos():
                     else now
                 ),
                 "is_active": True,
+                "is_short": vid.get("is_short", False),
                 "author": "Lamed",
                 "updated_at": now,
             }
@@ -174,5 +245,23 @@ def sync_videos():
         except Exception as e:
             logger.error(f"Failed to process video {vid['id']}: {e}")
             errors += 1
+
+    # Soft-delete auto-deactivation: query active YouTube videos in Firestore
+    # and deactivate any video missing from the fetched list from YouTube
+    fetched_ids = {v["id"] for v in videos}
+    try:
+        active_videos_query = db.collection(VIDEOS_COLLECTION).where(
+            filter=FieldFilter("is_active", "==", True)
+        )
+        active_docs = list(active_videos_query.stream())
+        now = datetime.now(timezone.utc)
+        for doc in active_docs:
+            if doc.id not in fetched_ids:
+                doc.reference.update({"is_active": False, "updated_at": now})
+                logger.info(
+                    f"Deactivated video {doc.id} as it was removed from YouTube"
+                )
+    except Exception as e:
+        logger.error(f"Failed to auto-deactivate missing videos: {e}")
 
     return {"status": "completed", "imported": synced_count, "errors": errors}
