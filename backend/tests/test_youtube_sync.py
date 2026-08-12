@@ -35,9 +35,20 @@ class TestYouTubeSync(unittest.TestCase):
         )
         self.assertFalse(v_default.is_short)
 
+    @patch("services.youtube_sync.get_youtube_service")
     @patch("services.youtube_sync.db")
     @patch("services.youtube_sync.fetch_latest_videos_from_youtube")
-    def test_sync_videos_deactivates_missing_videos(self, mock_fetch, mock_db):
+    def test_sync_videos_deactivates_missing_videos(self, mock_fetch, mock_db, mock_get_service):
+        mock_service = MagicMock()
+        mock_get_service.return_value = mock_service
+
+        # Mock service.videos().list(part="id,status", ...)
+        mock_videos_res = MagicMock()
+        mock_service.videos.return_value = mock_videos_res
+        mock_videos_res.list.return_value.execute.return_value = {
+            "items": [{"id": "vid-old"}]  # vid-old exists, vid-deleted is missing
+        }
+
         # YouTube returns 1 video: vid-1
         mock_fetch.return_value = [
             {
@@ -71,9 +82,14 @@ class TestYouTubeSync(unittest.TestCase):
         mock_doc1_snap.exists = True
         mock_doc1_ref.get.return_value = mock_doc1_snap
 
-        # Mock existing active videos in Firestore: vid-1 and vid-deleted
+        # Mock existing active videos in Firestore: vid-1, vid-old and vid-deleted
         doc_active_1 = MagicMock()
         doc_active_1.id = "vid-1"
+
+        doc_active_old = MagicMock()
+        doc_active_old.id = "vid-old"
+        doc_active_old_ref = MagicMock()
+        doc_active_old.reference = doc_active_old_ref
 
         doc_active_deleted = MagicMock()
         doc_active_deleted.id = "vid-deleted"
@@ -82,10 +98,16 @@ class TestYouTubeSync(unittest.TestCase):
 
         # where("is_active", "==", True) query stream
         mock_active_query = MagicMock()
-        mock_active_query.stream.return_value = [doc_active_1, doc_active_deleted]
+        mock_active_query.stream.return_value = [
+            doc_active_1,
+            doc_active_old,
+            doc_active_deleted,
+        ]
 
         mock_videos_coll.where.return_value = mock_active_query
-        mock_videos_coll.document.side_effect = lambda doc_id: mock_doc1_ref if doc_id == "vid-1" else MagicMock()
+        mock_videos_coll.document.side_effect = (
+            lambda doc_id: mock_doc1_ref if doc_id == "vid-1" else MagicMock()
+        )
 
         # Bundle check query
         mock_bundle_query = MagicMock()
@@ -101,6 +123,9 @@ class TestYouTubeSync(unittest.TestCase):
         doc_active_deleted_ref.update.assert_called_once()
         update_args = doc_active_deleted_ref.update.call_args[0][0]
         self.assertFalse(update_args["is_active"])
+
+        # Verify vid-old was preserved and NOT updated / deactivated
+        doc_active_old_ref.update.assert_not_called()
 
     @patch("services.youtube_sync.get_youtube_service")
     def test_fetch_latest_videos_is_short_detection(self, mock_get_service):

@@ -247,19 +247,45 @@ def sync_videos():
             errors += 1
 
     # Soft-delete auto-deactivation: query active YouTube videos in Firestore
-    # and deactivate any video missing from the fetched list from YouTube
+    # and deactivate any video missing from the fetched list only if confirmed deleted/missing on YouTube
     fetched_ids = {v["id"] for v in videos}
     try:
         active_videos_query = db.collection(VIDEOS_COLLECTION).where(
             filter=FieldFilter("is_active", "==", True)
         )
         active_docs = list(active_videos_query.stream())
-        now = datetime.now(timezone.utc)
-        for doc in active_docs:
-            if doc.id not in fetched_ids:
-                doc.reference.update({"is_active": False, "updated_at": now})
-                logger.info(
-                    f"Deactivated video {doc.id} as it was removed from YouTube"
+        candidate_missing_docs = [
+            doc for doc in active_docs if doc.id not in fetched_ids
+        ]
+        if candidate_missing_docs:
+            try:
+                service = get_youtube_service()
+                if service:
+                    still_existing_ids = set()
+                    missing_ids = [doc.id for doc in candidate_missing_docs]
+                    for i in range(0, len(missing_ids), 50):
+                        chunk_ids = missing_ids[i : i + 50]
+                        response = (
+                            service.videos()
+                            .list(part="id,status", id=",".join(chunk_ids))
+                            .execute()
+                        )
+                        for item in response.get("items", []):
+                            if item.get("id"):
+                                still_existing_ids.add(item["id"])
+
+                    now = datetime.now(timezone.utc)
+                    for doc in candidate_missing_docs:
+                        if doc.id not in still_existing_ids:
+                            doc.reference.update(
+                                {"is_active": False, "updated_at": now}
+                            )
+                            logger.info(
+                                f"Deactivated video {doc.id} as it was removed from YouTube"
+                            )
+            except Exception as service_err:
+                logger.error(
+                    f"Failed to verify video status with YouTube API: {service_err}"
                 )
     except Exception as e:
         logger.error(f"Failed to auto-deactivate missing videos: {e}")
