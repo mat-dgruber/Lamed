@@ -42,19 +42,23 @@ def get_videos(
     limit: int = 50,
     start_after_id: Optional[str] = None,
     only_active: bool = True,
+    is_short: Optional[bool] = None,
 ):
     """
     Returns a list of videos from the independent collection using cursor pagination.
     """
     # Prevent DoS
     limit = min(limit, 100)
-    
+
     try:
         query = db.collection(VIDEOS_COLLECTION)
-        
+
         if only_active:
             query = query.where(filter=FieldFilter("is_active", "==", True))
-            
+
+        if is_short is not None:
+            query = query.where(filter=FieldFilter("is_short", "==", is_short))
+
         query = query.order_by("published_at", direction=FirestoreQuery.DESCENDING)
         
         if start_after_id:
