@@ -63,6 +63,7 @@ import {
   ExternalLink,
   Video,
   Smartphone,
+  Filter,
 } from 'lucide-angular';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -144,6 +145,7 @@ export const appConfig: ApplicationConfig = {
         ExternalLink,
         Video,
         Smartphone,
+        Filter,
       }),
     ),
     { provide: LOCALE_ID, useValue: 'pt-BR' },

@@ -15,6 +15,9 @@ export const ADMIN_ROUTES: Routes = [
     // Article Routes
     { path: 'articles', component: ArticleListComponent, canActivate: [adminAuthGuard] },
     { path: 'articles/new', component: ArticleEditorComponent, canActivate: [adminAuthGuard] },
-    { path: 'articles/:id', component: ArticleEditorComponent, canActivate: [adminAuthGuard] }
+    { path: 'articles/:id', component: ArticleEditorComponent, canActivate: [adminAuthGuard] },
+
+    // Video Routes
+    { path: 'videos', loadComponent: () => import('./videos/admin-videos.component').then((m) => m.AdminVideosComponent), canActivate: [adminAuthGuard] }
 ];
 
