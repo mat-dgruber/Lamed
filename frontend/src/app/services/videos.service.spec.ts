@@ -51,6 +51,7 @@ describe('VideosService', () => {
 
   it('should adapt videos properly including YouTube ID extractions and Dates', (done) => {
     service.getVideos().subscribe((adapted) => {
+      expect(videoServiceSpy.getVideos).toHaveBeenCalledWith(50, undefined, true, false);
       expect(adapted.length).toBe(2);
 
       // First video - keeps direct ID
@@ -62,6 +63,31 @@ describe('VideosService', () => {
       // Second video - extracts ID from youtu.be URL
       expect(adapted[1].id.videoId).toBe('extracted_id_456');
       expect(adapted[1].snippet.title).toBe('Test Video 2');
+      done();
+    });
+  });
+
+  it('should request shorts when isShort is true', (done) => {
+    const mockShorts: Video[] = [
+      {
+        id: 'short_789',
+        title: 'Test Short 1 #shorts',
+        description: 'Short description',
+        url: 'https://youtube.com/shorts/short_789',
+        provider: 'youtube',
+        thumbnail_url: 'https://img.youtube.com/vi/short_789/hqdefault.jpg',
+        published_at: '2026-06-18T12:00:00.000Z',
+        is_active: true,
+        is_short: true,
+        author: 'Lamed',
+      }
+    ];
+    videoServiceSpy.getVideos.and.returnValue(of(mockShorts));
+
+    service.getVideos(true).subscribe((adapted) => {
+      expect(videoServiceSpy.getVideos).toHaveBeenCalledWith(50, undefined, true, true);
+      expect(adapted.length).toBe(1);
+      expect(adapted[0].id.videoId).toBe('short_789');
       done();
     });
   });

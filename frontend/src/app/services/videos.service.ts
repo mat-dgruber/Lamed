@@ -26,19 +26,22 @@ export class VideosService {
   private videoService = inject(VideoService);
 
   /**
-   * Adapts the new Video collection data to the structure expected by the video gallery UI.
-   * Filters out YouTube Shorts and limits to the latest 13 long videos.
+   * Adapts the Video collection data to the structure expected by the video gallery UI.
+   * Supports filtering by Shorts (isShort = true) or long videos (isShort = false).
    */
-  getVideos(): Observable<AdaptedVideo[]> {
-    return this.videoService.getVideos(50, undefined, true).pipe(
+  getVideos(isShort: boolean = false): Observable<AdaptedVideo[]> {
+    return this.videoService.getVideos(50, undefined, true, isShort).pipe(
       map(videos =>
         videos
           .filter(v => {
+            if (v.is_short !== undefined) {
+              return v.is_short === isShort;
+            }
             const url = (v.url || '').toLowerCase();
             const title = (v.title || '').toLowerCase();
             const desc = (v.description || '').toLowerCase();
-            const isShort = url.includes('/shorts/') || title.includes('#shorts') || desc.includes('#shorts');
-            return !isShort;
+            const detectedIsShort = url.includes('/shorts/') || title.includes('#shorts') || desc.includes('#shorts');
+            return detectedIsShort === isShort;
           })
           .map(video => this.adaptVideo(video))
           .slice(0, 13)

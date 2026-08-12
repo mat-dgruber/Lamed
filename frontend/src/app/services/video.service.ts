@@ -12,6 +12,7 @@ export interface Video {
   thumbnail_url?: string;
   published_at?: string; // ISO String from backend API
   is_active: boolean;
+  is_short?: boolean;
   author: string;
   created_at?: string;
   updated_at?: string;
@@ -28,10 +29,14 @@ export class VideoService {
     limit: number = 50,
     startAfterId?: string,
     onlyActive: boolean = true,
+    isShort?: boolean,
   ): Observable<Video[]> {
     const params: any = { limit, only_active: onlyActive };
     if (startAfterId) {
       params.start_after_id = startAfterId;
+    }
+    if (isShort !== undefined) {
+      params.is_short = isShort;
     }
     return this.http.get<Video[]>(`${this.apiUrl}/`, { params }).pipe(
       catchError((err) => {
