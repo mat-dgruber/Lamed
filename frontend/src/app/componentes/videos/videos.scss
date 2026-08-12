@@ -17,6 +17,17 @@
     overflow: hidden;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.212);
     transition: transform 0.2s;
+
+    &.is-shorts {
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+
+        iframe, .video-thumbnail-container {
+            aspect-ratio: 9/16;
+        }
+    }
 }
 
 .video-item:hover {

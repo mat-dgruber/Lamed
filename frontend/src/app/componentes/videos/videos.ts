@@ -4,11 +4,12 @@ import { VideosService } from '../../services/videos.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SeoService } from '../../core/services/seo.service';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-videos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './videos.html',
   styleUrl: './videos.scss',
 })
@@ -18,8 +19,16 @@ export class Videos implements OnInit {
   private seo = inject(SeoService);
   private router = inject(Router);
 
-  videos$ = this.videosService.getVideos();
+  activeTab = signal<'long' | 'shorts'>('long');
+  videos$ = this.videosService.getVideos(false);
   playingVideoIds = signal<Set<string>>(new Set());
+
+  setTab(tab: 'long' | 'shorts'): void {
+    if (this.activeTab() === tab) return;
+    this.activeTab.set(tab);
+    this.playingVideoIds.set(new Set());
+    this.videos$ = this.videosService.getVideos(tab === 'shorts');
+  }
 
   ngOnInit(): void {
     this.seo.updateTags({
@@ -30,7 +39,7 @@ export class Videos implements OnInit {
       url: this.router.url,
     });
 
-    this.videosService.getVideos().subscribe((videos) => {
+    this.videosService.getVideos(false).subscribe((videos) => {
       this.seo.updateJsonLd({
         id: 'videos-list',
         data: {

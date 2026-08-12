@@ -6,14 +6,57 @@
         Explore nossa coleção completa de vídeos do último trimestre. O mais recente está no topo.
       </p>
 
+      <!-- Tab Buttons -->
+      <div class="flex justify-center gap-4 mb-8">
+        <button
+          type="button"
+          (click)="setTab('long')"
+          [class]="
+            activeTab() === 'long'
+              ? 'px-6 py-2.5 rounded-full font-semibold transition-all duration-200 shadow-md bg-orange-600 text-white flex items-center gap-2 cursor-pointer'
+              : 'px-6 py-2.5 rounded-full font-semibold transition-all duration-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 flex items-center gap-2 cursor-pointer'
+          "
+        >
+          <lucide-icon name="video" class="w-5 h-5"></lucide-icon>
+          Estudos Bíblicos
+        </button>
+        <button
+          type="button"
+          (click)="setTab('shorts')"
+          [class]="
+            activeTab() === 'shorts'
+              ? 'px-6 py-2.5 rounded-full font-semibold transition-all duration-200 shadow-md bg-orange-600 text-white flex items-center gap-2 cursor-pointer'
+              : 'px-6 py-2.5 rounded-full font-semibold transition-all duration-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 flex items-center gap-2 cursor-pointer'
+          "
+        >
+          <lucide-icon name="smartphone" class="w-5 h-5"></lucide-icon>
+          Shorts & Cortes
+        </button>
+      </div>
+
       @if (videos$ | async; as videos) {
-        <div id="youtube-videos-container" class="video-grid thirteen-videos">
+        <div
+          id="youtube-videos-container"
+          [class]="
+            activeTab() === 'shorts'
+              ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto'
+              : 'video-grid thirteen-videos'
+          "
+        >
           @for (video of videos; track video.id.videoId; let i = $index) {
-            <div class="video-item" [class.video-item-highlighted]="i === 0">
+            <div
+              class="video-item"
+              [class.video-item-highlighted]="activeTab() === 'long' && i === 0"
+              [class.is-shorts]="activeTab() === 'shorts'"
+              [class.max-w-\[280px\]]="activeTab() === 'shorts'"
+              [class.mx-auto]="activeTab() === 'shorts'"
+              [class.w-full]="activeTab() === 'shorts'"
+            >
               @if (isPlaying(video.id.videoId)) {
                 <iframe
                   [src]="getSafeUrl(video.id.videoId)"
                   [title]="video.snippet.title"
+                  [class]="activeTab() === 'shorts' ? 'aspect-[9/16] w-full' : 'aspect-video w-full'"
                   frameborder="0"
                   allow="
                     accelerometer;
@@ -30,6 +73,7 @@
               } @else {
                 <div
                   class="video-thumbnail-container"
+                  [class]="activeTab() === 'shorts' ? 'aspect-[9/16] w-full' : 'aspect-video w-full'"
                   (click)="playVideo(video.id.videoId)"
                   (keydown.enter)="playVideo(video.id.videoId)"
                   tabindex="0"
@@ -60,10 +104,25 @@
         </div>
       } @else {
         <!-- Skeleton Loading State -->
-        <div class="video-grid thirteen-videos animate-pulse">
+        <div
+          [class]="
+            activeTab() === 'shorts'
+              ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto animate-pulse'
+              : 'video-grid thirteen-videos animate-pulse'
+          "
+        >
           @for (i of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track i) {
-            <div class="video-item bg-zinc-100 border border-zinc-200">
-              <div class="w-full aspect-video bg-zinc-200"></div>
+            <div
+              class="video-item bg-zinc-100 border border-zinc-200"
+              [class.is-shorts]="activeTab() === 'shorts'"
+              [class.max-w-\[280px\]]="activeTab() === 'shorts'"
+              [class.mx-auto]="activeTab() === 'shorts'"
+              [class.w-full]="activeTab() === 'shorts'"
+            >
+              <div
+                class="w-full bg-zinc-200"
+                [class]="activeTab() === 'shorts' ? 'aspect-[9/16]' : 'aspect-video'"
+              ></div>
               <div class="p-4">
                 <div class="h-4 w-3/4 bg-zinc-200 rounded mb-2"></div>
                 <div class="h-4 w-1/2 bg-zinc-200 rounded"></div>

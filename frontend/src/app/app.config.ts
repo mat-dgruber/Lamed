@@ -58,6 +58,11 @@ import {
   X,
   Check,
   CheckCircle,
+  Heart,
+  Youtube,
+  ExternalLink,
+  Video,
+  Smartphone,
 } from 'lucide-angular';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -134,6 +139,11 @@ export const appConfig: ApplicationConfig = {
         X,
         Check,
         CheckCircle,
+        Heart,
+        Youtube,
+        ExternalLink,
+        Video,
+        Smartphone,
       }),
     ),
     { provide: LOCALE_ID, useValue: 'pt-BR' },
