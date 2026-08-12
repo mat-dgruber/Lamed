@@ -9,10 +9,12 @@ export interface SeoConfig {
   title: string;
   description: string;
   image?: string;
+  imageAlt?: string;
   slug?: string;
   type?: 'website' | 'article' | 'video.movie';
   keywords?: string[];
   author?: string;
+  themeColor?: string;
 }
 
 export interface MetaTagsInput {
@@ -118,10 +120,12 @@ export class SeoService {
       { property: 'og:type', content: config.type || 'website' },
       { property: 'og:url', content: canonicalUrl },
       { property: 'og:image', content: imageUrl },
+      { property: 'og:image:alt', content: config.imageAlt || config.title },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
       { property: 'og:site_name', content: this.siteName },
       { property: 'og:locale', content: 'pt_BR' },
+      { name: 'theme-color', content: config.themeColor || '#0f172a' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: config.title },
       { name: 'twitter:description', content: config.description },
@@ -174,6 +178,49 @@ export class SeoService {
     if (!link.parentNode) {
       this.doc.head.appendChild(link);
     }
+  }
+
+  emitBreadcrumbs(items: Array<{ name: string; url: string }>): void {
+    const itemListElement = items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: this.toAbsoluteUrl(item.url),
+    }));
+
+    this.updateJsonLd({
+      id: 'page-breadcrumbs',
+      data: {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement,
+      },
+    });
+  }
+
+  emitFaqSchema(faqs: Array<{ question: string; answer: string }>, id: string = 'page-faq'): void {
+    if (!faqs || faqs.length === 0) {
+      this.removeJsonLd(id);
+      return;
+    }
+
+    const mainEntity = faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    }));
+
+    this.updateJsonLd({
+      id,
+      data: {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity,
+      },
+    });
   }
 
   updateJsonLd(payload: JsonLdPayload): void {
