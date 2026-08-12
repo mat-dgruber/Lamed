@@ -1,0 +1,42 @@
+# Rules for files and directories ignored by graphify
+graphify-out/
+node_modules/
+.git/
+.angular/
+dist/
+build/
+coverage/
+.next/
+.cache/
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+.agent/
+.openclaude/
+.remember/
+.superpowers/
+.firebase/
+certs/
+backend/certs/
+*.log
+.env*
+
+# Binary & Asset files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.mp4
+*.pdf
+*.zip
+*.tar.gz
+
+# Lock files & Agent docs
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+docs/superpowers/

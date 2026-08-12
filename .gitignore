@@ -1,70 +1,78 @@
-# Angular
+# Angular / Frontend
 /frontend/dist/
 /frontend/tmp/
 /frontend/out-tsc/
 /frontend/bazel-out/
 /frontend/node_modules/
-/frontend/.idea/
-/frontend/.project
 /frontend/.ng/
 /frontend/.angular/
-/frontend/.vscode/
+node_modules/
+.angular/
 
-# Python
-/backend/__pycache__/
-/backend/*.py[cod]
-/backend/*$py.class
+# Python / Backend
+__pycache__/
+*.py[cod]
+*$py.class
 /backend/venv/
 /backend/env/
 /backend/.env
 /backend/.venv
+/backend/.venv_temp
 /backend/build/
 /backend/dist/
 /backend/*.spec
+/backend/content
+/backend/certs/
+.venv/
+.venv*/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
 
-# Firebase / Secrets
-backend/certs/
-*.json
-!package.json
-!tsconfig.json
-!angular.json
-!ng-package.json
-!nx.json
-!frontend/src/assets/**/*.json
-serviceAccountKey.json
-*.key
+# Firebase / Secrets / Env
 .env
+.env.*
 firebase-debug.log*
 firestore-debug.log*
 ui-debug.log*
+serviceAccountKey.json
+*.key
+backend/certs/
+/.firebase
 
-# Large Media Files (Ignored to save space)
+# JSON Rules
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!tsconfig*.json
+!angular.json
+!ng-package.json
+!nx.json
+!firebase.json
+!firestore.indexes.json
+!**/firestore.indexes.json
+!frontend/src/assets/**/*.json
+!frontend/public/assets/**/*.json
+
+# Large Media / Assets
 *.mp4
 *.pdf
 frontend/public/assets/Imagens-artigos/*.png
 backend/media/bundles/
 
-# IDE / OS
-.DS_Store
-Thumbs.db
+# AI Tooling & Local Agent State
+graphify-out/
+.agent/
+.openclaude/
+.remember/
+.superpowers/
+
 # IDE / OS
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
 /_BKP
-.agent
-.agent/
-
-# Local / Cache
-/frontend/node_modules
-/frontend/.angular
-/backend/content
-/backend/__pycache__
-/backend/api/__pycache__
-/backend/certs
-/backend/config/__pycache__
-*.cache
-/.firebase
-*.pyc
-/backend/.venv_temp
