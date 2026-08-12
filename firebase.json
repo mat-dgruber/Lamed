@@ -8,6 +8,20 @@
     ],
     "rewrites": [
       {
+        "source": "/sitemap.xml",
+        "run": {
+          "serviceId": "lamed-backend",
+          "region": "southamerica-east1"
+        }
+      },
+      {
+        "source": "/rss.xml",
+        "run": {
+          "serviceId": "lamed-backend",
+          "region": "southamerica-east1"
+        }
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
