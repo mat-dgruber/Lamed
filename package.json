@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Orquestrador de Deploy para Lamed",
   "scripts": {
+    "start": "cd frontend && npm start",
     "deploy:backend": "cd backend && gcloud run deploy lamed-backend --project lamed-148 --source . --region southamerica-east1 --quiet",
     "deploy:frontend": "cd frontend && npm install --legacy-peer-deps && npm run build && firebase deploy --only hosting --project lamed-148",
     "deploy": "npm run deploy:backend && npm run deploy:frontend"
