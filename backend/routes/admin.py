@@ -53,9 +53,16 @@ async def upload_file(file: UploadFile = File(...)):
 @router.post("/sync-youtube")
 def trigger_sync(_admin=Depends(get_admin)):
     """Aciona manualmente o sync do YouTube. Requer admin."""
-    from services.youtube_sync import sync_videos
-    result = sync_videos()
-    return {"status": "success", "data": result}
+    try:
+        from services.youtube_sync import sync_videos
+        result = sync_videos()
+        return {"status": "success", "data": result}
+    except Exception as e:
+        logger.error(f"Error during YouTube sync: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Erro ao sincronizar com YouTube: {str(e)}"
+        )
 
 
 @router.get("/videos/", response_model=List[Video])
