@@ -40,7 +40,7 @@ def get_youtube_service():
     return build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
 
-def fetch_latest_videos_from_youtube(limit=20):
+def fetch_latest_videos_from_youtube(limit=50):
     """
     Fetches the latest videos from the channel's 'uploads' playlist.
     This is more reliable than the search API.
@@ -65,7 +65,7 @@ def fetch_latest_videos_from_youtube(limit=20):
 
         # 2. Get the latest videos from that playlist
         request = service.playlistItems().list(
-            part="snippet", playlistId=uploads_playlist_id, maxResults=limit
+            part="snippet", playlistId=uploads_playlist_id, maxResults=min(limit, 50)
         )
         response = request.execute()
 
@@ -74,20 +74,21 @@ def fetch_latest_videos_from_youtube(limit=20):
             return []
 
         video_ids = [item["snippet"]["resourceId"]["videoId"] for item in items]
-        video_ids_str = ",".join(video_ids)
 
-        # Fetch video contentDetails for duration
+        # Fetch video contentDetails for duration in chunks of 50
         details_by_id = {}
         try:
-            videos_detail_response = (
-                service.videos()
-                .list(part="contentDetails,snippet", id=video_ids_str)
-                .execute()
-            )
-            for item in videos_detail_response.get("items", []):
-                vid_id = item.get("id")
-                if vid_id:
-                    details_by_id[vid_id] = item
+            for i in range(0, len(video_ids), 50):
+                chunk_ids = video_ids[i : i + 50]
+                videos_detail_response = (
+                    service.videos()
+                    .list(part="contentDetails,snippet", id=",".join(chunk_ids))
+                    .execute()
+                )
+                for item in videos_detail_response.get("items", []):
+                    vid_id = item.get("id")
+                    if vid_id:
+                        details_by_id[vid_id] = item
         except Exception as e:
             logger.warning(f"Could not fetch video details for duration: {e}")
 
@@ -115,9 +116,14 @@ def fetch_latest_videos_from_youtube(limit=20):
                 or "#shorts" in desc_lower
                 or "shorts" in url_lower
                 or "#shorts" in url_lower
+                or "#reels" in title_lower
+                or "#reels" in desc_lower
+                or "#corte" in title_lower
+                or "#cortes" in desc_lower
             )
 
-            is_short = (0 < duration_sec <= 60) or contains_shorts_keyword
+            # Videos with duration <= 90 seconds or containing shorts hashtags are classified as shorts
+            is_short = (0 < duration_sec <= 90) or contains_shorts_keyword
 
             thumbnail_info = snippet.get("thumbnails", {})
             thumb_url = (
@@ -151,7 +157,7 @@ def sync_videos():
     """
     logger.info("Starting YouTube Sync...")
     try:
-        videos = fetch_latest_videos_from_youtube(limit=20)
+        videos = fetch_latest_videos_from_youtube(limit=50)
     except Exception as e:
         logger.error(f"Sync failed during fetch: {e}")
         return {

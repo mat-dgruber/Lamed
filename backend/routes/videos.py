@@ -43,7 +43,15 @@ def _is_short_video(v_data: dict) -> bool:
     url = (v_data.get("url") or "").lower()
     title = (v_data.get("title") or "").lower()
     desc = (v_data.get("description") or "").lower()
-    return "/shorts/" in url or "#shorts" in title or "#shorts" in desc
+    return (
+        "/shorts/" in url
+        or "#shorts" in title
+        or "#shorts" in desc
+        or "#reels" in title
+        or "#reels" in desc
+        or "#corte" in title
+        or "#cortes" in desc
+    )
 
 
 @router.get("/", response_model=List[Video])

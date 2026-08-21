@@ -33,12 +33,19 @@ export class VideosService {
     return this.videoService.getVideos(50, undefined, true, isShort).pipe(
       map(videos =>
         videos
-          .filter(v => {
-            const url = (v.url || '').toLowerCase();
-            const title = (v.title || '').toLowerCase();
-            const desc = (v.description || '').toLowerCase();
-            const textIsShort = url.includes('/shorts/') || title.includes('#shorts') || desc.includes('#shorts');
-            const detectedIsShort = Boolean(v.is_short) || textIsShort;
+          .filter(videos => {
+            const url = (videos.url || '').toLowerCase();
+            const title = (videos.title || '').toLowerCase();
+            const desc = (videos.description || '').toLowerCase();
+            const textIsShort =
+              url.includes('/shorts/') ||
+              title.includes('#shorts') ||
+              desc.includes('#shorts') ||
+              title.includes('#reels') ||
+              desc.includes('#reels') ||
+              title.includes('#corte') ||
+              desc.includes('#cortes');
+            const detectedIsShort = Boolean(videos.is_short) || textIsShort;
             return detectedIsShort === isShort;
           })
           .map(video => this.adaptVideo(video))
