@@ -8,13 +8,20 @@
           Crie, edite e publique seus conteúdos semanais.
         </p>
       </div>
-      <div class="flex gap-3">
+      <div class="flex flex-wrap items-center gap-3">
         <a
           routerLink="/admin/articles"
           class="flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-6 py-2.5 text-sm font-semibold text-white hover:bg-white/20 transition-colors border border-white/20"
         >
           <lucide-icon [name]="'file-text'" [size]="18"></lucide-icon>
           Artigos
+        </a>
+        <a
+          routerLink="/admin/videos"
+          class="flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-6 py-2.5 text-sm font-semibold text-white hover:bg-white/20 transition-colors border border-white/20"
+        >
+          <lucide-icon [name]="'video'" [size]="18"></lucide-icon>
+          Vídeos
         </a>
         <button
           (click)="syncVideos()"
