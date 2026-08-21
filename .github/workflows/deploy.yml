@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write # Required for authenticating with Google Cloud
+      id-token: write
 
     steps:
       - name: Checkout
@@ -55,18 +55,28 @@ jobs:
       - name: Google Auth
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }} # User needs to set this secret
-          # OR use Workload Identity Federation (recommended but more setup)
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker southamerica-east1-docker.pkg.dev --quiet
+
+      - name: Build and Push Docker Image
+        run: |
+          IMAGE_TAG="southamerica-east1-docker.pkg.dev/lamed-148/lamed-backend/lamed-backend:${{ github.sha }}"
+          IMAGE_LATEST="southamerica-east1-docker.pkg.dev/lamed-148/lamed-backend/lamed-backend:latest"
+          docker build -t "$IMAGE_TAG" -t "$IMAGE_LATEST" ./backend
+          docker push "$IMAGE_TAG"
+          docker push "$IMAGE_LATEST"
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: lamed-backend
-          source: ./backend
-          region: southamerica-east1 # Updated to match your actual service region
+          image: southamerica-east1-docker.pkg.dev/lamed-148/lamed-backend/lamed-backend:${{ github.sha }}
+          region: southamerica-east1
           project_id: lamed-148
           env_vars: |
             FIREBASE_PROJECT_ID=lamed-148
