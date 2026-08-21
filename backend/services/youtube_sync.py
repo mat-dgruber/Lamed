@@ -2,8 +2,6 @@ import logging
 import os
 import re
 from datetime import datetime, timezone
-
-import isodate
 from config import db
 from google.cloud.firestore import FieldFilter
 from googleapiclient.discovery import build
@@ -14,16 +12,18 @@ def parse_iso_duration(duration_str: str) -> int:
     if not duration_str:
         return 0
     try:
+        import isodate
         return int(isodate.parse_duration(duration_str).total_seconds())
     except Exception:
         pass
-    match = re.match(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", duration_str)
+    match = re.match(r"^P(?:(\d+)D)?T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$", duration_str)
     if not match:
         return 0
-    hours = int(match.group(1) or 0)
-    minutes = int(match.group(2) or 0)
-    seconds = int(match.group(3) or 0)
-    return hours * 3600 + minutes * 60 + seconds
+    days = int(match.group(1) or 0)
+    hours = int(match.group(2) or 0)
+    minutes = int(match.group(3) or 0)
+    seconds = int(match.group(4) or 0)
+    return days * 86400 + hours * 3600 + minutes * 60 + seconds
 
 # Settings
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY") or os.getenv("GOOGLE_API_KEY")
