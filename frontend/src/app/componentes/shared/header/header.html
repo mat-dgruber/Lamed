@@ -4,9 +4,12 @@
       <a routerLink="/" class="logo-link">
         <img
           src="/assets/Imagens/lamed-logo.png"
-          alt="Lamed Logo"
+          alt="Logo Lamed — Plataforma de Estudos Bíblicos"
           class="logo-img"
-          loading="lazy"
+          loading="eager"
+          fetchpriority="high"
+          width="50"
+          height="50"
         />
         <span class="logo-text">LAMED</span>
       </a>
@@ -15,10 +18,16 @@
       <ul>
         <li><a routerLink="/" (click)="toggleMenu()">Início</a></li>
         <li class="dropdown" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" #dropdown>
-          <a (click)="toggleDropdown($event)" class="dropdown-toggle" style="cursor: pointer"
-            >Materiais</a
-          >
-          <ul class="dropdown-menu" [ngClass]="{ show: isDropdownOpen() }" #dropdownMenu>
+          <a
+            href="/materiais-extras"
+            (click)="toggleDropdown($event); $event.preventDefault()"
+            class="dropdown-toggle"
+            role="button"
+            aria-haspopup="true"
+            [attr.aria-expanded]="isDropdownOpen()"
+            aria-controls="materiais-dropdown"
+          >Materiais</a>
+          <ul id="materiais-dropdown" class="dropdown-menu" [ngClass]="{ show: isDropdownOpen() }" #dropdownMenu role="menu">
             <li><a routerLink="/videos" (click)="closeMenu()">Vídeos</a></li>
             <li><a routerLink="/artigos" (click)="closeMenu()">Artigos</a></li>
             <li><a routerLink="/materiais-extras" (click)="closeMenu()">Trilhas</a></li>

@@ -96,6 +96,16 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+.btn-primary-apoio:focus-visible, .btn-secondary:focus-visible, .btn-destaque:focus-visible {
+    outline: 2px solid var(--color-principal);
+    outline-offset: 3px;
+}
+
+.btn-primary-apoio:active, .btn-secondary:active, .btn-destaque:active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
 /* VIDEO SECTION */
 .video-list {
     display: flex;

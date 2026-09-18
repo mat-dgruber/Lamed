@@ -6,6 +6,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Acessibilidade: respeita a preferência de movimento reduzido do sistema */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Garante que todos os links do Angular pareçam clicáveis */
 a[routerLink] {
   cursor: pointer;
@@ -87,8 +97,6 @@ main {
   ); /* Using a lighter orange for footer links on dark background */
   --link-color-footer-hover: #ffffff;
   --footer-bg-color: #2c1e10; /* Dark brown derived from palette */
-
-  --footer-bg-color: #2c1e10; /* Dark brown derived from palette */
 }
 
 
@@ -150,7 +158,11 @@ img {
   margin-bottom: -30px; /* Space below header */
   border-top: 1px solid #e7e7e7; /* Subtle border at the top */
   border-bottom: 1px solid #e7e7e7; /* Subtle border */
-  box-shadow: 0 20px 14px rgba(0, 0, 0, 0.308);
+  /* Sombra layered, sutil e premium */
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.04);
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
   z-index: 1000; /* Ensure it stays above other content */
@@ -247,7 +259,7 @@ img {
 .hero-section {
   background-image: url('/assets/Imagens/Fundo_Lamed.png'); /* User requested background image */
   background-size: cover; /* Cover the entire section */
-  background-attachment: fixed; /* Parallax effect */
+  background-attachment: scroll; /* fixed quebra iOS Safari e causa repaints no Android */
   background-color: #2c1e10; /* Fallback color, dark brown from palette */
   height: 280px; /* Fixed height for hero section */
   background-position: center center;

@@ -136,11 +136,22 @@ a:hover {
 /* Mobile Menu Styles */
 @media (max-width: 768px) {
   .menu-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
+    /* Touch target mínimo 48px (Android) / 44pt (iOS) */
+    min-width: 48px;
+    min-height: 48px;
+    padding: 12px;
+    border-radius: 8px;
+    /* Feedback tátil no toque */
+    transition: background-color 0.15s ease;
+    &:active {
+      background-color: rgba(0, 0, 0, 0.06);
+    }
   }
   
   .menu-toggle lucide-icon {
@@ -150,18 +161,24 @@ a:hover {
   }
 
   .main-nav {
-    display: none;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     background-color: #ffffff;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    padding: 20px;
+    padding: 0 20px;
+    /* Anima abertura/fechamento sem display:none */
+    transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
   }
 
   .main-nav.active {
-    display: block;
+    max-height: 400px;
+    opacity: 1;
+    padding: 20px;
   }
 
   .menu-lista {
