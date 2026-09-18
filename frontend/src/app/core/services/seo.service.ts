@@ -63,9 +63,15 @@ export class SeoService {
     const org = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
+      '@id': `${this.baseUrl}/#organization`,
       name: this.siteName,
       url: this.baseUrl,
-      logo: this.defaultImage,
+      logo: {
+        '@type': 'ImageObject',
+        url: this.defaultImage,
+        width: 512,
+        height: 512,
+      },
       description:
         'Projeto Lamed — estudos bíblicos semanais, artigos e guias para adolescentes e jovens.',
       sameAs: [
@@ -76,14 +82,32 @@ export class SeoService {
     const site = {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
+      '@id': `${this.baseUrl}/#website`,
       name: this.siteName,
       url: this.baseUrl,
       inLanguage: 'pt-BR',
+      publisher: { '@id': `${this.baseUrl}/#organization` },
       potentialAction: {
         '@type': 'SearchAction',
-        target: `${this.baseUrl}/?q={search_term_string}`,
+        target: `${this.baseUrl}/artigos?q={search_term_string}`,
         'query-input': 'required name=search_term_string',
       },
+    };
+
+    const softwareApp = {
+      '@type': 'SoftwareApplication',
+      '@id': `${this.baseUrl}/#app`,
+      name: 'Lamed — Estudos Bíblicos',
+      operatingSystem: 'Web, iOS, Android',
+      applicationCategory: 'EducationApplication',
+      inLanguage: 'pt-BR',
+      url: this.baseUrl,
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'BRL',
+      },
+      publisher: { '@id': `${this.baseUrl}/#organization` },
     };
 
     // Single @graph payload keeps things under one <script> tag.
@@ -91,7 +115,7 @@ export class SeoService {
       id: 'global-org-website',
       data: {
         '@context': 'https://schema.org',
-        '@graph': [org, site],
+        '@graph': [org, site, softwareApp],
       },
     });
   }
