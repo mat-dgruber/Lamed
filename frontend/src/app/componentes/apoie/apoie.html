@@ -78,39 +78,94 @@
       </div>
 
       <!-- FORMAS COMPLEMENTARES -->
-      <div class="support-grid mt-10">
+      <div class="support-grid mt-12">
+        <!-- CARD 1: VALEU DEMAIS -->
         <div class="support-subcard">
-          <div class="support-subcard-icon">
-            <lucide-icon name="heart" [size]="28"></lucide-icon>
+          <div class="subcard-header">
+            <div class="support-subcard-icon icon-heart">
+              <lucide-icon name="heart" [size]="24"></lucide-icon>
+            </div>
+            <span class="subcard-pill pill-avulso">Doação Avulsa</span>
           </div>
-          <h4>"Valeu Demais" nos Vídeos</h4>
-          <p>
-            Deseja apoiar com uma contribuição única e avulsa? Clique no botão <strong>"Valeu"</strong>
-            abaixo de qualquer um dos nossos vídeos no YouTube e escolha o valor desejado.
+
+          <h4>Recurso "Valeu" nos Vídeos</h4>
+          
+          <p class="subcard-description">
+            Contribua de forma única e pontual diretamente em qualquer um de nossos vídeos no YouTube, escolhendo o valor que desejar.
           </p>
-          <div class="valeu-video mt-4">
-            <img
-              src="assets/Imagens/valeu.png"
-              alt="Demonstração do botão Valeu Demais no YouTube"
-              class="valeu-img rounded-xl shadow-sm border border-zinc-200"
-              loading="lazy"
-            />
+
+          <div class="valeu-preview-frame">
+            <span class="preview-label">Disponível na barra abaixo de cada vídeo:</span>
+            <div class="valeu-image-wrapper">
+              <img
+                src="assets/Imagens/valeu.png"
+                alt="Demonstração do botão Valeu Demais no YouTube"
+                class="valeu-img"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div class="subcard-footer">
+            <a
+              href="https://www.youtube.com/channel/UC2PYvVmcJBLt9ymvBpnXO9A"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-subcard-action"
+            >
+              <lucide-icon name="video" [size]="18"></lucide-icon>
+              <span>Ver Vídeos no YouTube</span>
+              <lucide-icon name="external-link" [size]="14"></lucide-icon>
+            </a>
           </div>
         </div>
 
+        <!-- CARD 2: COMPARTILHAR GRATUITAMENTE -->
         <div class="support-subcard">
-          <div class="support-subcard-icon">
-            <lucide-icon name="share-2" [size]="28"></lucide-icon>
+          <div class="subcard-header">
+            <div class="support-subcard-icon icon-share">
+              <lucide-icon name="share-2" [size]="24"></lucide-icon>
+            </div>
+            <span class="subcard-pill pill-gratuito">Apoio Gratuito</span>
           </div>
-          <h4>Compartilhar Gratuitamente</h4>
-          <p>
-            O simples fato de assistir aos vídeos completos, curtir, se inscrever e compartilhar nossos
-            estudos com seus amigos e igreja expande imensamente o impacto da mensagem sem nenhum custo.
+
+          <h4>Compartilhe Nossos Estudos</h4>
+          
+          <p class="subcard-description">
+            Multiplique o alcance da Palavra de Deus sem custo financeiro. Pequenas ações no canal geram um impacto missionário enorme:
           </p>
-          <div class="free-support-box mt-4">
-            <p class="text-sm font-semibold text-zinc-700">
-              Compartilhe com quem precisa estudar a Bíblia com profundidade!
-            </p>
+
+          <div class="free-support-checklist">
+            <div class="checklist-item">
+              <div class="check-bullet">
+                <lucide-icon name="check" [size]="14"></lucide-icon>
+              </div>
+              <span><strong>Assista até o fim:</strong> O algoritmo recomenda para mais pessoas</span>
+            </div>
+            <div class="checklist-item">
+              <div class="check-bullet">
+                <lucide-icon name="check" [size]="14"></lucide-icon>
+              </div>
+              <span><strong>Deixe seu Gostei:</strong> Fortalece a relevância do ministério</span>
+            </div>
+            <div class="checklist-item">
+              <div class="check-bullet">
+                <lucide-icon name="check" [size]="14"></lucide-icon>
+              </div>
+              <span><strong>Envie nos grupos:</strong> Compartilhe com sua igreja e família</span>
+            </div>
+          </div>
+
+          <div class="subcard-footer">
+            <button
+              type="button"
+              (click)="shareContent()"
+              class="btn-subcard-action"
+              [class.btn-copied]="shareCopied()"
+            >
+              <lucide-icon [name]="shareCopied() ? 'check-circle-2' : 'share-2'" [size]="18"></lucide-icon>
+              <span>{{ shareCopied() ? 'Link Copiado com Sucesso!' : 'Compartilhar o Lamed' }}</span>
+            </button>
           </div>
         </div>
       </div>

@@ -48,6 +48,33 @@ export class Apoie implements OnInit {
     }
   }
 
+  readonly shareCopied = signal(false);
+
+  async shareContent(): Promise<void> {
+    const shareData = {
+      title: 'Lamed - Estudo Bíblico Aprofundado',
+      text: 'Conheça o Lamed: onde você estuda a Bíblia de um jeito diferenciado!',
+      url: 'https://www.youtube.com/channel/UC2PYvVmcJBLt9ymvBpnXO9A'
+    };
+
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch {
+        // Fallback to clipboard if share dialog is cancelled or unsupported
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareData.url);
+      this.shareCopied.set(true);
+      setTimeout(() => this.shareCopied.set(false), 3000);
+    } catch {
+      // Graceful fallback
+    }
+  }
+
   navigateToSobre(): void {
     void this.router.navigate(['/sobre']);
   }

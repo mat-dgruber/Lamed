@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 
 @Component({
@@ -8,12 +8,13 @@ import { Chart, registerables } from 'chart.js';
   templateUrl: './donation-charts.component.html',
   styleUrl: './donation-charts.component.css'
 })
-export class DonationChartsComponent implements AfterViewInit {
+export class DonationChartsComponent implements AfterViewInit, OnDestroy {
   @ViewChild('geralDonationChart') geralDonationChart: ElementRef<HTMLCanvasElement> | undefined;
   @ViewChild('socialProjectsChart') socialProjectsChart: ElementRef<HTMLCanvasElement> | undefined;
 
   private geralChart: Chart | undefined;
   private socialChart: Chart | undefined;
+  private observer: IntersectionObserver | undefined;
 
   constructor() {
     Chart.register(...registerables);
@@ -28,10 +29,22 @@ export class DonationChartsComponent implements AfterViewInit {
     }
   }
 
+  ngOnDestroy(): void {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+    if (this.geralChart) {
+      this.geralChart.destroy();
+    }
+    if (this.socialChart) {
+      this.socialChart.destroy();
+    }
+  }
+
   observeChart(canvas: HTMLCanvasElement, chartType: 'geral' | 'social'): void {
     const observerOptions = {
       root: null,
-      threshold: 0.5
+      threshold: 0.3
     };
 
     const observerCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
@@ -47,8 +60,8 @@ export class DonationChartsComponent implements AfterViewInit {
       });
     };
 
-    const chartObserver = new IntersectionObserver(observerCallback, observerOptions);
-    chartObserver.observe(canvas);
+    this.observer = new IntersectionObserver(observerCallback, observerOptions);
+    this.observer.observe(canvas);
   }
 
   createGeralChart(canvas: HTMLCanvasElement): void {
@@ -56,30 +69,53 @@ export class DonationChartsComponent implements AfterViewInit {
       this.geralChart.destroy();
     }
     this.geralChart = new Chart(canvas, {
-      type: 'pie',
+      type: 'doughnut',
       data: {
-        labels: ['LAMED (Operacional, Novos Projetos)', 'Projetos Sociais e Missionários'],
+        labels: ['LAMED (Operação & Conteúdo)', 'Projetos Sociais & Missionários'],
         datasets: [{
-          label: 'Distribuição Geral',
           data: [45, 55],
-          backgroundColor: ['rgb(248, 149, 27)', 'rgb(148, 3, 17)'],
-          borderColor: ['rgba(248, 148, 27, 1)', 'rgba(148, 3, 18, 1)'],
-          borderWidth: 1
+          backgroundColor: ['#F8941B', '#940312'],
+          hoverBackgroundColor: ['#e07e0c', '#7d020e'],
+          borderColor: '#ffffff',
+          borderWidth: 3,
+          borderRadius: 6,
+          spacing: 3
         }]
       },
       options: {
         responsive: true,
-        aspectRatio: 1.5,
+        maintainAspectRatio: false,
+        cutout: '70%',
         animation: {
-          duration: 2000,
-          easing: 'easeInOutQuart'
+          duration: 1400,
+          easing: 'easeOutQuart'
         },
         plugins: {
-          legend: { position: 'top' },
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: {
+                family: 'caecilia, sans-serif',
+                size: 13,
+                weight: 'bold'
+              },
+              color: '#3f3f46',
+              padding: 18,
+              usePointStyle: true,
+              pointStyle: 'circle'
+            }
+          },
           tooltip: {
+            backgroundColor: '#2c1e10',
+            bodyFont: { family: 'caecilia, sans-serif', size: 13, weight: 'bold' },
+            padding: { top: 8, bottom: 8, left: 12, right: 12 },
+            cornerRadius: 10,
+            displayColors: false,
+            caretPadding: 8,
             callbacks: {
+              title: () => '',
               label: function(context) {
-                return `${context.label || ''}: ${context.parsed || 0}%`;
+                return `${context.label}: ${context.parsed}%`;
               }
             }
           }
@@ -93,30 +129,53 @@ export class DonationChartsComponent implements AfterViewInit {
       this.socialChart.destroy();
     }
     this.socialChart = new Chart(canvas, {
-      type: 'pie',
+      type: 'doughnut',
       data: {
         labels: ['Missão Global', 'Projetos Sociais (ADRA)', 'Dízimo', 'Oferta (IASD)'],
         datasets: [{
-          label: 'Distribuição em Projetos Sociais e Missionários',
           data: [20, 20, 10, 5],
-          backgroundColor: ['rgba(250, 184, 31, 1)', 'rgb(250, 119, 31)', 'rgb(148, 3, 17)', 'rgb(92, 36, 3)'],
-          borderColor: ['rgba(250, 184, 31, 1)', 'rgb(250, 119, 31)', 'rgba(148, 3, 17)', 'rgb(92, 36, 3)'],
-          borderWidth: 1
+          backgroundColor: ['#F8941B', '#E06A0B', '#940312', '#63020B'],
+          hoverBackgroundColor: ['#e07e0c', '#c75806', '#7d020e', '#4c0107'],
+          borderColor: '#ffffff',
+          borderWidth: 3,
+          borderRadius: 5,
+          spacing: 2
         }]
       },
       options: {
         responsive: true,
-        aspectRatio: 1.5,
+        maintainAspectRatio: false,
+        cutout: '70%',
         animation: {
-          duration: 4000,
-          easing: 'easeInOutQuart'
+          duration: 1600,
+          easing: 'easeOutQuart'
         },
         plugins: {
-          legend: { position: 'top' },
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: {
+                family: 'caecilia, sans-serif',
+                size: 13,
+                weight: 'bold'
+              },
+              color: '#3f3f46',
+              padding: 16,
+              usePointStyle: true,
+              pointStyle: 'circle'
+            }
+          },
           tooltip: {
+            backgroundColor: '#2c1e10',
+            bodyFont: { family: 'caecilia, sans-serif', size: 13, weight: 'bold' },
+            padding: { top: 8, bottom: 8, left: 12, right: 12 },
+            cornerRadius: 10,
+            displayColors: false,
+            caretPadding: 8,
             callbacks: {
+              title: () => '',
               label: function(context) {
-                return `${context.label || ''}: ${context.parsed || 0}% (de 55%)`;
+                return `${context.label}: ${context.parsed}%`;
               }
             }
           }

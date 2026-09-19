@@ -64,6 +64,7 @@ import {
   Info,
   RotateCcw,
   Heart,
+  Share2,
   Youtube,
   ExternalLink,
   Video,
@@ -71,6 +72,10 @@ import {
   Filter,
   Home,
   Compass,
+  Sparkles,
+  Clock,
+  ArrowRight,
+  ChevronRight,
 } from 'lucide-angular';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -153,6 +158,7 @@ export const appConfig: ApplicationConfig = {
         Info,
         RotateCcw,
         Heart,
+        Share2,
         Youtube,
         ExternalLink,
         Video,
@@ -160,6 +166,10 @@ export const appConfig: ApplicationConfig = {
         Filter,
         Home,
         Compass,
+        Sparkles,
+        Clock,
+        ArrowRight,
+        ChevronRight,
       }),
     ),
     { provide: LOCALE_ID, useValue: 'pt-BR' },

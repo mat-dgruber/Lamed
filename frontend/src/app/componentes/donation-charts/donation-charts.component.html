@@ -1,50 +1,82 @@
-<div class="charts-container">
-  <div class="chart-block">
-    <h3>Distribuição Geral das Doações</h3>
-    <canvas #geralDonationChart id="geralDonationChart"></canvas>
+<div class="charts-comparison-grid">
+  <!-- Gráfico 1: Geral -->
+  <div class="chart-card">
+    <div class="chart-card-header">
+      <h3>Distribuição Geral</h3>
+      <span class="chart-badge">Visão Macro</span>
+    </div>
+    <div class="chart-canvas-wrapper">
+      <canvas #geralDonationChart id="geralDonationChart"></canvas>
+      <div class="chart-center-stat">
+        <span class="stat-number">100%</span>
+        <span class="stat-desc">Auditado</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráfico 2: Social e Missionário -->
+  <div class="chart-card">
+    <div class="chart-card-header">
+      <h3>Alocação Social e Missionária</h3>
+      <span class="chart-badge badge-destaque">55% do Total</span>
+    </div>
+    <div class="chart-canvas-wrapper">
+      <canvas #socialProjectsChart id="socialProjectsChart"></canvas>
+      <div class="chart-center-stat">
+        <span class="stat-number">55%</span>
+        <span class="stat-desc">Impacto</span>
+      </div>
+    </div>
   </div>
 </div>
 
-<h4>Detalhamento dos 55% para Projetos Sociais e Missionários:</h4>
-<p>
-  Esta parcela é cuidadosamente alocada para maximizar o alcance e a eficácia do nosso trabalho e de
-  parceiros:
-</p>
+<div class="details-section-header">
+  <h4>Detalhamento dos 55% para Ações Sociais e Missionárias</h4>
+  <p>Cada recurso é cuidadosamente alocado para maximizar a eficácia do ministério:</p>
+</div>
 
 <div class="donation-details-cards-container">
-  <div class="detail-card top-border border-color-destaque">
-    <h5>Missão Global</h5>
-    <p>
-      <strong>20%</strong> - Apoio a missionários que levam a mensagem transformadora a diversas
-      partes do mundo.
-    </p>
+  <div class="detail-card">
+    <div class="detail-header">
+      <h5>Missão Global</h5>
+      <span class="percentage-pill">20%</span>
+    </div>
+    <div class="mini-progress-bar">
+      <div class="progress-fill fill-laranja" style="width: 36.4%"></div>
+    </div>
+    <p>Apoio a missionários dedicados que levam a mensagem bíblica a diversas regiões do mundo.</p>
   </div>
-  <div class="detail-card top-border border-color-destaque">
-    <h5>Projetos Sociais (ADRA)</h5>
-    <p>
-      <strong>20%</strong> - Contribuição para iniciativas que oferecem assistência social e
-      desenvolvimento comunitário a pessoas em situação de vulnerabilidade.
-    </p>
-  </div>
-  <div class="detail-card top-border border-color-destaque">
-    <h5>Dízimo</h5>
-    <p>
-      <strong>10%</strong> - Contribuição que suporta a estrutura eclesiástica e os esforços
-      evangelísticos mais amplos da igreja.
-    </p>
-  </div>
-  <div class="detail-card top-border border-color-destaque">
-    <h5>Oferta (IASD)</h5>
-    <p>
-      <strong>5%</strong> - Destinado a subsidiar diversas outras áreas de atuação e ministérios da
-      Igreja Adventista do Sétimo Dia (IASD).
-    </p>
-  </div>
-</div>
 
-<div class="charts-container">
-  <div class="chart-block">
-    <h3>Distribuição em Projetos Sociais e Missionários</h3>
-    <canvas #socialProjectsChart id="socialProjectsChart"></canvas>
+  <div class="detail-card">
+    <div class="detail-header">
+      <h5>Projetos Sociais (ADRA)</h5>
+      <span class="percentage-pill">20%</span>
+    </div>
+    <div class="mini-progress-bar">
+      <div class="progress-fill fill-ambar" style="width: 36.4%"></div>
+    </div>
+    <p>Assistência comunitária e humanitária a famílias em situação de vulnerabilidade.</p>
+  </div>
+
+  <div class="detail-card">
+    <div class="detail-header">
+      <h5>Dízimo</h5>
+      <span class="percentage-pill pill-destaque">10%</span>
+    </div>
+    <div class="mini-progress-bar">
+      <div class="progress-fill fill-destaque" style="width: 18.2%"></div>
+    </div>
+    <p>Contribuição bíblica que suporta a estrutura ministerial e pastoral mais ampla.</p>
+  </div>
+
+  <div class="detail-card">
+    <div class="detail-header">
+      <h5>Oferta (IASD)</h5>
+      <span class="percentage-pill pill-bordo">5%</span>
+    </div>
+    <div class="mini-progress-bar">
+      <div class="progress-fill fill-bordo" style="width: 9.1%"></div>
+    </div>
+    <p>Subsidia frentes de atuação e projetos da Igreja Adventista do Sétimo Dia.</p>
   </div>
 </div>
