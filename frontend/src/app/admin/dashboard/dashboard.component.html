@@ -380,7 +380,7 @@
               [routerLink]="['/admin/edit', curr.id]"
               class="inline-flex items-center gap-1.5 font-semibold text-orange-600 hover:text-orange-700 min-h-[32px]"
             >
-              <span>{{ curr.resources?.length ? 'Gerenciar materiais' : 'Adicionar materiais' }}</span>
+              <span>{{ curr.resources.length ? 'Gerenciar materiais' : 'Adicionar materiais' }}</span>
               <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
             </a>
           } @else {
@@ -570,7 +570,7 @@
                             <lucide-icon name="video" [size]="12"></lucide-icon> Vídeo
                           </span>
                         }
-                        @if (bundle.resources?.length) {
+                        @if (bundle.resources.length) {
                           <span class="inline-flex items-center gap-1 text-zinc-500" title="Possui materiais de apoio">
                             <lucide-icon name="file" [size]="12"></lucide-icon> {{ bundle.resources.length }} mat.
                           </span>
@@ -690,7 +690,7 @@
                       <lucide-icon name="video" [size]="13"></lucide-icon> Vídeo
                     </span>
                   }
-                  @if (bundle.resources?.length) {
+                  @if (bundle.resources.length) {
                     <span class="inline-flex items-center gap-1 text-zinc-600">
                       <lucide-icon name="file" [size]="13"></lucide-icon> {{ bundle.resources.length }} materiais
                     </span>
