@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { LucideAngularModule, Library, BookOpen } from 'lucide-angular';
+import { LucideAngularModule, Library, BookOpen, Play, PlayCircle, ArrowLeft, ArrowRight, RefreshCw, AlertCircle } from 'lucide-angular';
 import { of } from 'rxjs';
 
 import { BundleList } from './bundle-list';
@@ -12,7 +12,19 @@ describe('BundleList', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BundleList, LucideAngularModule.pick({ Library, BookOpen })],
+      imports: [
+        BundleList,
+        LucideAngularModule.pick({
+          Library,
+          BookOpen,
+          Play,
+          PlayCircle,
+          ArrowLeft,
+          ArrowRight,
+          RefreshCw,
+          AlertCircle,
+        }),
+      ],
       providers: [
         provideRouter([]),
         {

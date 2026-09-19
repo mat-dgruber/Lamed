@@ -1,346 +1,448 @@
 <div class="min-h-screen bg-zinc-50 pb-20 pt-10">
-  <!-- Loading State -->
+  <!-- Loading State (Shimmer Skeleton) -->
   @if (loading()) {
-    <div class="flex h-96 items-center justify-center">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
-    </div>
-  }
-
-  @if (bundle(); as bundle) {
-    <div class="container px-4 pt-6">
-      <!-- Header -->
-      <div class="mb-6">
-        <h1 class="text-3xl font-bold text-zinc-900 sm:text-4xl mb-4">
-          {{ bundle.title }}
-        </h1>
-
-        <div class="flex flex-wrap items-center gap-3">
-          <span
-            class="inline-flex items-center gap-1.5 rounded-full bg-orange-50 border border-orange-200 px-3 py-1 text-xs font-semibold text-orange-800 shadow-sm"
-          >
-            <lucide-icon [name]="'book-open'" [size]="14" class="text-orange-600"></lucide-icon>
-            Lição {{ bundle.week_number }}
-          </span>
-
-          @if (bundle.author) {
-            <div class="inline-flex items-center gap-2 rounded-full bg-white border border-zinc-200/80 px-3.5 py-1 text-xs font-medium text-zinc-700 shadow-sm">
-              <div class="flex h-5 w-5 items-center justify-center rounded-full bg-orange-100 text-orange-700 font-bold text-[10px]">
-                <lucide-icon [name]="'user'" [size]="12"></lucide-icon>
-              </div>
-              <span>Por <strong class="font-bold text-zinc-900">{{ bundle.author }}</strong></span>
-            </div>
-          }
-
-          @if (bundle.published_at) {
-            <span class="text-xs text-zinc-500 flex items-center gap-1.5">
-              <lucide-icon [name]="'calendar'" [size]="13"></lucide-icon>
-              Publicado em {{ bundle.published_at | date: 'longDate' }}
-            </span>
-          }
+    <div class="container px-4 pt-6 max-w-7xl mx-auto space-y-8 animate-pulse" aria-busy="true" aria-label="Carregando lição...">
+      <!-- Header Skeleton -->
+      <div class="space-y-4 max-w-3xl">
+        <div class="h-4 w-48 bg-zinc-200 rounded"></div>
+        <div class="h-10 w-4/5 bg-zinc-300 rounded-xl"></div>
+        <div class="flex items-center gap-3">
+          <div class="h-6 w-24 bg-orange-100 rounded-full"></div>
+          <div class="h-6 w-32 bg-zinc-200 rounded-full"></div>
         </div>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Main Content (Video) -->
 
+      <!-- Content Grid Skeleton -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2 space-y-8">
-          <!-- Video Player -->
-          <div
-            class="aspect-video w-full overflow-hidden rounded-xl bg-black shadow-lg ring-1 ring-zinc-900/10"
+          <div class="aspect-video w-full bg-zinc-300 rounded-2xl"></div>
+          <div class="h-96 w-full bg-white rounded-2xl border border-zinc-200 p-6 space-y-4">
+            <div class="h-6 w-48 bg-zinc-200 rounded"></div>
+            <div class="h-4 w-full bg-zinc-100 rounded"></div>
+            <div class="h-4 w-5/6 bg-zinc-100 rounded"></div>
+            <div class="h-4 w-4/6 bg-zinc-100 rounded"></div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-1 space-y-6">
+          <div class="bg-white rounded-2xl p-6 border border-zinc-200 space-y-4">
+            <div class="h-6 w-36 bg-zinc-200 rounded"></div>
+            <div class="h-16 w-full bg-zinc-100 rounded-xl"></div>
+            <div class="h-16 w-full bg-zinc-100 rounded-xl"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else if (hasError()) {
+    <!-- Error State with Retry -->
+    <div class="container px-4 pt-16 max-w-md mx-auto text-center">
+      <div class="bg-white rounded-3xl p-8 border border-zinc-200/80 shadow-sm space-y-4">
+        <div class="bg-rose-50 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto text-rose-600">
+          <lucide-icon name="alert-circle" [size]="32"></lucide-icon>
+        </div>
+        <h2 class="text-xl font-bold text-zinc-900">Estudo não encontrado</h2>
+        <p class="text-sm text-zinc-600 leading-relaxed">
+          Não foi possível carregar os detalhes deste material. O link pode estar incorreto ou temporariamente indisponível.
+        </p>
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            routerLink="/materiais-extras"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-orange-600 text-white min-h-[44px] px-5 py-2.5 text-sm font-semibold shadow-sm hover:bg-orange-500 transition-all active:scale-95"
           >
-            @if (safeVideoUrl) {
-              <iframe
-                [src]="safeVideoUrl"
-                class="h-full w-full border-0"
-                allowfullscreen
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              >
-              </iframe>
-            } @else {
-              <div class="flex h-full items-center justify-center text-zinc-500">
-                Vídeo não disponível
+            <lucide-icon name="arrow-left" [size]="16"></lucide-icon>
+            Ver Todas as Lições
+          </a>
+        </div>
+      </div>
+    </div>
+  } @else {
+    @if (bundle(); as bundle) {
+      <div class="container px-4 pt-6 max-w-7xl mx-auto">
+        <!-- Breadcrumbs Navigation -->
+        <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-4" aria-label="Navegação estrutural">
+          <a routerLink="/" class="hover:text-orange-600 transition-colors">Início</a>
+          <lucide-icon name="chevron-right" [size]="13" class="text-zinc-400"></lucide-icon>
+          <a routerLink="/materiais-extras" class="hover:text-orange-600 transition-colors">Materiais Extras</a>
+          <lucide-icon name="chevron-right" [size]="13" class="text-zinc-400"></lucide-icon>
+          <span class="text-zinc-900 font-semibold truncate max-w-[180px] sm:max-w-xs">Lição {{ bundle.week_number }}</span>
+        </nav>
+
+        <!-- Header -->
+        <div class="mb-6">
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-zinc-900 mb-4 tracking-tight leading-snug">
+            {{ bundle.title }}
+          </h1>
+
+          <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+            <span
+              class="inline-flex items-center gap-1.5 rounded-full bg-orange-50 border border-orange-200/80 px-3 py-1 text-xs font-semibold text-orange-800 shadow-sm"
+            >
+              <lucide-icon [name]="'book-open'" [size]="13" class="text-orange-600"></lucide-icon>
+              Lição {{ bundle.week_number }}
+            </span>
+
+            @if (bundle.author) {
+              <div class="inline-flex items-center gap-2 rounded-full bg-white border border-zinc-200/80 px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm">
+                <div class="flex h-5 w-5 items-center justify-center rounded-full bg-orange-100 text-orange-700 font-bold text-[10px]">
+                  <lucide-icon [name]="'user'" [size]="12"></lucide-icon>
+                </div>
+                <span>Por <strong class="font-bold text-zinc-900">{{ bundle.author }}</strong></span>
               </div>
             }
-          </div>
 
-          <!-- Guia de Estudos / Artigo Integrado Direto na Página -->
+            @if (bundle.published_at) {
+              <span class="text-xs text-zinc-500 flex items-center gap-1.5">
+                <lucide-icon [name]="'calendar'" [size]="13"></lucide-icon>
+                Publicado em {{ bundle.published_at | date: 'longDate' }}
+              </span>
+            }
+          </div>
+        </div>
+
+        <!-- Mobile Quick-Navigation Pills (Thumb Zone & Ergonomics) -->
+        <div class="flex lg:hidden flex-wrap items-center gap-2 mb-6" aria-label="Acesso rápido às seções">
+          <button
+            type="button"
+            (click)="scrollToSection('materiais-apoio')"
+            class="inline-flex items-center gap-1.5 rounded-xl bg-orange-50 border border-orange-200/80 px-3.5 py-2 text-xs font-semibold text-orange-800 shadow-sm active:scale-95 transition-all cursor-pointer"
+          >
+            <lucide-icon name="download" [size]="14" class="text-orange-600"></lucide-icon>
+            Material de Apoio ({{ bundle.resources.length }})
+          </button>
           @if (safeArticleUrl || safeArticleContent) {
-            <div class="bg-white rounded-2xl shadow-sm ring-1 ring-zinc-200/80 border-t-4 border-orange-500 overflow-hidden">
-              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 border-b border-zinc-100 bg-white">
-                <div class="flex items-center gap-3">
-                  <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-orange-600">
-                    <lucide-icon [name]="'book-open'" [size]="24"></lucide-icon>
+            <button
+              type="button"
+              (click)="scrollToSection('guia-estudos')"
+              class="inline-flex items-center gap-1.5 rounded-xl bg-white border border-zinc-200 px-3.5 py-2 text-xs font-semibold text-zinc-700 shadow-sm active:scale-95 transition-all cursor-pointer"
+            >
+              <lucide-icon name="book-open" [size]="14" class="text-zinc-500"></lucide-icon>
+              Guia de Estudos
+            </button>
+          }
+          @if (relatedVideos().length > 0) {
+            <button
+              type="button"
+              (click)="scrollToSection('videos-curtos')"
+              class="inline-flex items-center gap-1.5 rounded-xl bg-white border border-zinc-200 px-3.5 py-2 text-xs font-semibold text-zinc-700 shadow-sm active:scale-95 transition-all cursor-pointer"
+            >
+              <lucide-icon name="play-circle" [size]="14" class="text-amber-500"></lucide-icon>
+              Vídeos ({{ relatedVideos().length }})
+            </button>
+          }
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Main Content (Video & Article) -->
+          <div class="lg:col-span-2 space-y-8">
+            <!-- Video Player -->
+            <div
+              class="aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg ring-1 ring-zinc-900/10"
+            >
+              @if (safeVideoUrl) {
+                <iframe
+                  [src]="safeVideoUrl"
+                  class="h-full w-full border-0"
+                  allowfullscreen
+                  title="Vídeo da Lição"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                >
+                </iframe>
+              } @else {
+                <div class="flex h-full items-center justify-center text-zinc-500">
+                  Vídeo não disponível
+                </div>
+              }
+            </div>
+
+            <!-- Guia de Estudos / Artigo Integrado Direto na Página -->
+            @if (safeArticleUrl || safeArticleContent) {
+              <div id="guia-estudos" class="bg-white rounded-2xl shadow-sm ring-1 ring-zinc-200/80 border-t-4 border-orange-500 overflow-hidden">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 sm:p-6 border-b border-zinc-100 bg-white">
+                  <div class="flex items-center gap-3">
+                    <div class="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-orange-600">
+                      <lucide-icon [name]="'book-open'" [size]="22"></lucide-icon>
+                    </div>
+                    <div>
+                      <h2 class="text-lg sm:text-xl font-bold text-zinc-900">Guia de Estudos & Artigo</h2>
+                      <p class="text-xs text-zinc-500">Leitura completa de apoio à lição semanal</p>
+                    </div>
+                  </div>
+                  
+                  <button
+                    (click)="setReadingMode(true)"
+                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-orange-50 border border-orange-200 px-4 py-2.5 text-xs font-semibold text-orange-700 hover:bg-orange-600 hover:text-white hover:border-transparent transition-all duration-200 shadow-sm shrink-0 active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
+                  >
+                    <lucide-icon [name]="'book-open'" [size]="15"></lucide-icon>
+                    <span>Modo Tela Cheia</span>
+                  </button>
+                </div>
+
+                <!-- Conteúdo embutido na própria página -->
+                <div>
+                  @if (safeArticleContent) {
+                    <article class="prose prose-orange max-w-none text-zinc-800 leading-relaxed p-6 sm:p-8">
+                      <div [innerHTML]="safeArticleContent"></div>
+                    </article>
+                  } @else if (safeArticleUrl) {
+                    <div class="w-full h-[750px] overflow-hidden bg-white">
+                      <iframe [src]="safeArticleUrl" class="w-full h-full border-0" title="Artigo da Lição"></iframe>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- Vídeos Curtos e Relacionados -->
+            @if (relatedVideos().length > 0) {
+              <div id="videos-curtos" class="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-zinc-200/80 border-t-4 border-amber-500 space-y-6">
+                <div class="flex items-center gap-3 border-b border-zinc-100 pb-4">
+                  <div class="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+                    <lucide-icon [name]="'play-circle'" [size]="22"></lucide-icon>
                   </div>
                   <div>
-                    <h2 class="text-xl font-bold text-zinc-900">Guia de Estudos & Artigo</h2>
-                    <p class="text-xs text-zinc-500">Leitura completa de apoio à lição semanal</p>
+                    <h2 class="text-lg sm:text-xl font-bold text-zinc-900">Vídeos Curtos & Relacionados</h2>
+                    <p class="text-xs text-zinc-500">Shorts, cortes e conteúdos complementares</p>
                   </div>
                 </div>
-                
-                <button
-                  (click)="setReadingMode(true)"
-                  class="inline-flex items-center gap-2 rounded-xl bg-orange-50 border border-orange-200 px-4 py-2.5 text-xs font-semibold text-orange-700 hover:bg-orange-600 hover:text-white hover:border-transparent transition-all duration-200 shadow-sm shrink-0"
-                >
-                  <lucide-icon [name]="'book-open'" [size]="16"></lucide-icon>
-                  Modo Tela Cheia
-                </button>
-              </div>
 
-              <!-- Conteúdo embutido na própria página -->
-              <div>
-                @if (safeArticleContent) {
-                  <article class="prose prose-orange max-w-none text-zinc-800 leading-relaxed p-6 sm:p-8">
-                    <div [innerHTML]="safeArticleContent"></div>
-                  </article>
-                } @else if (safeArticleUrl) {
-                  <div class="w-full h-[750px] overflow-hidden bg-white">
-                    <iframe [src]="safeArticleUrl" class="w-full h-full border-0" title="Artigo da Lição"></iframe>
-                  </div>
-                }
-              </div>
-            </div>
-          }
-
-          <!-- Vídeos Curtos e Relacionados -->
-          @if (relatedVideos().length > 0) {
-            <div class="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-zinc-200/80 border-t-4 border-amber-500 space-y-6">
-              <div class="flex items-center gap-3 border-b border-zinc-100 pb-4">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
-                  <lucide-icon [name]="'play-circle'" [size]="24"></lucide-icon>
-                </div>
-                <div>
-                  <h2 class="text-xl font-bold text-zinc-900">Vídeos Curtos & Relacionados</h2>
-                  <p class="text-xs text-zinc-500">Shorts, cortes e conteúdos complementares</p>
-                </div>
-              </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                @for (rv of relatedVideos(); track $index) {
-                  <div class="flex flex-col items-center w-full">
-                    @if (rv.safeEmbedUrl) {
-                      <div
-                        [class.aspect-\[9\/16\]]="rv.isShort"
-                        [class.max-w-\[260px\]]="rv.isShort"
-                        [class.aspect-video]="!rv.isShort"
-                        class="w-full overflow-hidden rounded-2xl bg-black shadow-md ring-1 ring-zinc-900/10"
-                      >
-                        <iframe
-                          [src]="rv.safeEmbedUrl"
-                          class="h-full w-full border-0"
-                          allowfullscreen
-                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                          title="Vídeo relacionado"
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  @for (rv of relatedVideos(); track $index) {
+                    <div class="flex flex-col items-center w-full">
+                      @if (rv.safeEmbedUrl) {
+                        <div
+                          [class.aspect-\[9\/16\]]="rv.isShort"
+                          [class.max-w-\[260px\]]="rv.isShort"
+                          [class.aspect-video]="!rv.isShort"
+                          class="w-full overflow-hidden rounded-2xl bg-black shadow-md ring-1 ring-zinc-900/10"
                         >
-                        </iframe>
-                      </div>
-                    } @else {
-                      <a
-                        [href]="rv.url"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="w-full flex items-center justify-center gap-2 p-4 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-orange-500 text-xs font-bold text-zinc-800 transition-colors"
-                      >
-                        <lucide-icon [name]="'external-link'" [size]="16"></lucide-icon>
-                        Assistir Vídeo Complementar
-                      </a>
-                    }
-                  </div>
-                }
-              </div>
-            </div>
-          }
-        </div>
-
-        <!-- Sidebar (Resources & Meta) -->
-        <div class="lg:col-span-1 space-y-6">
-          <!-- Download Card -->
-          <div class="bg-white rounded-xl p-6 shadow-sm ring-1 ring-zinc-200">
-            <div class="flex items-center justify-between mb-4 gap-2">
-              <h3 class="font-semibold text-lg flex items-center gap-2">
-                <lucide-icon [name]="'download'" [size]="20"></lucide-icon>
-                Material de Apoio
-              </h3>
-            </div>
-
-            <div class="space-y-3">
-              @for (res of bundle.resources; track res.title) {
-                <div
-                  class="group flex items-start gap-3 rounded-lg border border-zinc-100 p-3 transition-colors hover:bg-zinc-50 hover:border-orange-200"
-                >
-                  <div
-                    class="relative flex h-10 w-10 shrink-0 items-center justify-center rounded bg-orange-50 text-orange-600"
-                  >
-                    <lucide-icon [name]="getIcon(res.type)" [size]="20"></lucide-icon>
-                  </div>
-                  <div class="min-w-0 flex-1">
-                    <p class="font-medium text-sm text-zinc-900 group-hover:text-orange-600">
-                      {{ res.title }}
-                    </p>
-                    <p class="text-xs text-zinc-500 uppercase">{{ res.type }}</p>
-                  </div>
-                  <a
-                    [href]="res.url"
-                    target="_blank"
-                    class="flex h-8 w-8 items-center justify-center rounded-full text-zinc-400 hover:bg-orange-100 hover:text-orange-600"
-                  >
-                    <lucide-icon [name]="'download-cloud'" [size]="16"></lucide-icon>
-                  </a>
+                          <iframe
+                            [src]="rv.safeEmbedUrl"
+                            class="h-full w-full border-0"
+                            allowfullscreen
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            title="Vídeo relacionado"
+                          >
+                          </iframe>
+                        </div>
+                      } @else {
+                        <a
+                          [href]="rv.url"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="w-full flex items-center justify-center gap-2 p-4 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-orange-500 text-xs font-bold text-zinc-800 transition-colors"
+                        >
+                          <lucide-icon [name]="'external-link'" [size]="16"></lucide-icon>
+                          Assistir Vídeo Complementar
+                        </a>
+                      }
+                    </div>
+                  }
                 </div>
-              }
-
-              @if (bundle.resources.length === 0) {
-                <div class="text-sm text-zinc-500 italic">Nenhum material extra disponível.</div>
-              }
-            </div>
-          </div>
-
-          <!-- Card Seja Membro do Canal (Apoio ao Ministério) -->
-          <div class="bg-gradient-to-br from-zinc-900 via-zinc-900 to-orange-950 rounded-2xl p-6 text-white shadow-md ring-1 ring-zinc-800 relative overflow-hidden group">
-            <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-orange-600/10 rounded-full blur-2xl group-hover:bg-orange-600/20 transition-all duration-500"></div>
-            
-            <div class="flex items-center gap-2 mb-3">
-              <span class="inline-flex items-center gap-1 rounded-full bg-orange-500/20 border border-orange-500/30 px-2.5 py-0.5 text-[11px] font-bold text-orange-400 uppercase tracking-wider">
-                <lucide-icon name="heart" [size]="12" class="fill-orange-400"></lucide-icon>
-                Apoie o Lamed
-              </span>
-            </div>
-
-            <h4 class="font-bold text-lg text-white mb-2 leading-snug">
-              Seja Membro do Nosso Canal
-            </h4>
-
-            <p class="text-xs text-zinc-300 mb-5 leading-relaxed">
-              Ajude-nos a continuar produzindo guias de estudo e vídeos semanais com uma pequena contribuição mensal no YouTube.
-            </p>
-
-            <a
-              href="https://www.youtube.com/channel/UC2PYvVmcJBLt9ymvBpnXO9A/join"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 py-3 px-4 text-xs font-bold text-white shadow-lg shadow-orange-950/40 transition-all duration-300 active:scale-[0.98]"
-            >
-              <lucide-icon name="youtube" [size]="16"></lucide-icon>
-              Seja Membro no YouTube
-              <lucide-icon name="external-link" [size]="14" class="opacity-80"></lucide-icon>
-            </a>
-          </div>
-
-          <!-- Share Card -->
-          <div class="bg-gradient-to-br from-orange-50/60 to-amber-50/30 rounded-2xl p-6 border border-orange-100 shadow-sm">
-            <h4 class="font-bold text-zinc-800 text-base mb-1">Compartilhar Estudo</h4>
-            <p class="text-xs text-zinc-500 mb-4">Ajude a espalhar a palavra compartilhando este estudo.</p>
-            
-            <!-- Copiar Link com Feedback Visual Premium -->
-            <button
-              (click)="copyLink()"
-              [class.bg-emerald-50]="linkCopied()"
-              [class.border-emerald-200]="linkCopied()"
-              [class.text-emerald-700]="linkCopied()"
-              [class.bg-orange-600]="!linkCopied()"
-              [class.border-transparent]="!linkCopied()"
-              [class.text-white]="!linkCopied()"
-              [class.hover:bg-orange-500]="!linkCopied()"
-              class="w-full flex items-center justify-center gap-2 rounded-xl border py-3 text-sm font-semibold shadow-sm transition-all duration-300 active:scale-[0.98] mb-4"
-            >
-              @if (linkCopied()) {
-                <lucide-icon name="check-circle" [size]="16" class="text-emerald-600 animate-pulse"></lucide-icon>
-                Link Copiado!
-              } @else {
-                <lucide-icon name="link" [size]="16"></lucide-icon>
-                Copiar Link
-              }
-            </button>
-            
-            <!-- Botões de Redes Sociais no Estilo Premium -->
-            <div class="flex items-center gap-3">
-              <!-- WhatsApp -->
-              <a
-                [href]="getShareUrl('whatsapp')"
-                target="_blank"
-                class="flex h-12 flex-1 items-center justify-center rounded-xl bg-white border border-zinc-200 text-zinc-600 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600 hover:shadow-md hover:shadow-emerald-50 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
-                title="Compartilhar no WhatsApp"
-              >
-                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.454 5.709 1.455h.008c6.56 0 11.89-5.335 11.893-11.893a11.821 11.825 0 00-3.48-8.413"/>
-                </svg>
-              </a>
-              
-              <!-- Telegram -->
-              <a
-                [href]="getShareUrl('telegram')"
-                target="_blank"
-                class="flex h-12 flex-1 items-center justify-center rounded-xl bg-white border border-zinc-200 text-zinc-600 hover:bg-sky-50 hover:border-sky-200 hover:text-sky-500 hover:shadow-md hover:shadow-sky-50 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
-                title="Compartilhar no Telegram"
-              >
-                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.62.15-.15 2.7-2.46 2.75-2.68.01-.03.01-.14-.06-.2-.07-.06-.17-.04-.25-.02-.11.02-1.87 1.18-5.28 3.48-.5.35-.95.52-1.35.5-.45-.02-1.31-.26-1.95-.47-.78-.25-1.4-.4-1.35-.85.03-.24.35-.48.97-.73 3.8-1.65 6.35-2.73 7.64-3.25 3.63-1.48 4.38-1.74 4.87-1.75.11 0 .35.03.5.16.13.1.17.24.18.35.01.07.01.21 0 .33z"/>
-                </svg>
-              </a>
-              
-              <!-- Facebook -->
-              <a
-                [href]="getShareUrl('facebook')"
-                target="_blank"
-                class="flex h-12 flex-1 items-center justify-center rounded-xl bg-white border border-zinc-200 text-zinc-600 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 hover:shadow-md hover:shadow-blue-50 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
-                title="Compartilhar no Facebook"
-              >
-                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <!-- Fullscreen Reading Modal -->
-      @if (readingModeActive()) {
-        <div class="fixed inset-0 z-50 flex flex-col bg-zinc-50 overflow-hidden">
-          <!-- Header -->
-          <header class="flex items-center justify-between border-b border-zinc-200 bg-white px-6 py-4 shadow-sm">
-            <div class="flex items-center gap-3">
-              <button
-                (click)="setReadingMode(false)"
-                class="flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 transition-colors"
-                aria-label="Fechar"
-              >
-                <lucide-icon [name]="'arrow-left'" [size]="20"></lucide-icon>
-              </button>
-              <div>
-                <span class="text-xs font-semibold uppercase tracking-wider text-orange-600">Lição {{ bundle.week_number }}</span>
-                <h2 class="text-base font-bold text-zinc-900 sm:text-lg max-w-xs sm:max-w-md md:max-w-xl truncate">{{ bundle.title }}</h2>
-              </div>
-            </div>
-            <button
-              (click)="setReadingMode(false)"
-              class="flex h-10 w-10 items-center justify-center rounded-full text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 transition-colors"
-              aria-label="Fechar"
-            >
-              <lucide-icon [name]="'x'" [size]="20"></lucide-icon>
-            </button>
-          </header>
-
-          <!-- Content Area -->
-          <div class="flex-1 overflow-y-auto px-4 py-8 sm:px-6">
-            @if (safeArticleContent) {
-              <!-- Native HTML Reader -->
-              <article class="prose prose-orange max-w-3xl mx-auto bg-white rounded-2xl p-6 sm:p-12 shadow-sm ring-1 ring-zinc-900/5">
-                <div [innerHTML]="safeArticleContent"></div>
-              </article>
-            } @else if (safeArticleUrl) {
-              <!-- Fullscreen Iframe Fallback -->
-              <div class="h-full w-full max-w-6xl mx-auto bg-white rounded-2xl overflow-hidden shadow-sm ring-1 ring-zinc-900/5">
-                <iframe [src]="safeArticleUrl" class="h-full w-full border-0" title="Artigo do Estudo"></iframe>
-              </div>
-            } @else {
-              <div class="flex h-full items-center justify-center text-zinc-500">
-                Artigo não disponível.
               </div>
             }
           </div>
+
+          <!-- Sidebar (Resources & Meta) -->
+          <div class="lg:col-span-1 space-y-6">
+            <!-- Download Card (Material de Apoio) -->
+            <div id="materiais-apoio" class="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-zinc-200/80 scroll-mt-20">
+              <div class="flex items-center justify-between mb-4 gap-2">
+                <h3 class="font-bold text-lg text-zinc-900 flex items-center gap-2">
+                  <lucide-icon [name]="'download'" [size]="20" class="text-orange-600"></lucide-icon>
+                  Material de Apoio
+                </h3>
+                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-orange-50 border border-orange-200/70 text-orange-800">
+                  {{ bundle.resources.length }} {{ bundle.resources.length === 1 ? 'item' : 'itens' }}
+                </span>
+              </div>
+
+              <div class="space-y-3">
+                @for (res of bundle.resources; track res.title) {
+                  <div
+                    class="group flex items-center gap-3 rounded-xl border border-zinc-100 p-3 transition-colors hover:bg-zinc-50 hover:border-orange-200"
+                  >
+                    <div
+                      class="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-orange-600"
+                    >
+                      <lucide-icon [name]="getIcon(res.type)" [size]="20"></lucide-icon>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <p class="font-semibold text-sm text-zinc-900 group-hover:text-orange-600 truncate transition-colors">
+                        {{ res.title }}
+                      </p>
+                      <p class="text-[11px] text-zinc-500 uppercase tracking-wide font-medium">{{ res.type }}</p>
+                    </div>
+                    <a
+                      [href]="res.url"
+                      target="_blank"
+                      [attr.aria-label]="'Baixar ' + res.title"
+                      class="flex h-10 w-10 min-w-[40px] min-h-[40px] items-center justify-center rounded-xl text-zinc-500 hover:bg-orange-600 hover:text-white transition-all duration-200 active:scale-95 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
+                    >
+                      <lucide-icon [name]="'download-cloud'" [size]="18"></lucide-icon>
+                    </a>
+                  </div>
+                }
+
+                @if (bundle.resources.length === 0) {
+                  <div class="text-sm text-zinc-500 italic py-2 text-center">Nenhum material extra disponível para esta lição.</div>
+                }
+              </div>
+            </div>
+
+            <!-- Card Seja Membro do Canal (Apoio ao Ministério) -->
+            <div class="bg-gradient-to-br from-zinc-900 via-zinc-900 to-orange-950 rounded-2xl p-6 text-white shadow-md ring-1 ring-zinc-800 relative overflow-hidden group">
+              <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-orange-600/10 rounded-full blur-2xl group-hover:bg-orange-600/20 transition-all duration-500"></div>
+              
+              <div class="flex items-center gap-2 mb-3">
+                <span class="inline-flex items-center gap-1 rounded-full bg-orange-500/20 border border-orange-500/30 px-2.5 py-0.5 text-[11px] font-bold text-orange-400 uppercase tracking-wider">
+                  <lucide-icon name="heart" [size]="12" class="fill-orange-400"></lucide-icon>
+                  Apoie o Lamed
+                </span>
+              </div>
+
+              <h4 class="font-bold text-lg text-white mb-2 leading-snug">
+                Seja Membro do Nosso Canal
+              </h4>
+
+              <p class="text-xs text-zinc-300 mb-5 leading-relaxed">
+                Ajude-nos a continuar produzindo guias de estudo e vídeos semanais com uma pequena contribuição mensal no YouTube.
+              </p>
+
+              <a
+                href="https://www.youtube.com/channel/UC2PYvVmcJBLt9ymvBpnXO9A/join"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 py-3.5 px-4 text-xs font-bold text-white shadow-lg shadow-orange-950/40 transition-all duration-300 active:scale-[0.98] cursor-pointer"
+              >
+                <lucide-icon name="youtube" [size]="16"></lucide-icon>
+                <span>Seja Membro no YouTube</span>
+                <lucide-icon name="external-link" [size]="14" class="opacity-80"></lucide-icon>
+              </a>
+            </div>
+
+            <!-- Share Card -->
+            <div class="bg-gradient-to-br from-orange-50/60 to-amber-50/30 rounded-2xl p-6 border border-orange-100 shadow-sm">
+              <h4 class="font-bold text-zinc-900 text-base mb-1">Compartilhar Estudo</h4>
+              <p class="text-xs text-zinc-500 mb-4">Espalhe a Palavra compartilhando este estudo com amigos e grupos.</p>
+              
+              <!-- Copiar Link com Feedback Visual Premium -->
+              <button
+                (click)="copyLink()"
+                [class.bg-emerald-50]="linkCopied()"
+                [class.border-emerald-200]="linkCopied()"
+                [class.text-emerald-700]="linkCopied()"
+                [class.bg-orange-600]="!linkCopied()"
+                [class.border-transparent]="!linkCopied()"
+                [class.text-white]="!linkCopied()"
+                [class.hover:bg-orange-500]="!linkCopied()"
+                class="w-full min-h-[44px] flex items-center justify-center gap-2 rounded-xl border py-3 text-sm font-semibold shadow-sm transition-all duration-300 active:scale-[0.98] mb-4 cursor-pointer focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
+              >
+                @if (linkCopied()) {
+                  <lucide-icon name="check-circle" [size]="16" class="text-emerald-600 animate-pulse"></lucide-icon>
+                  <span>Link Copiado com Sucesso!</span>
+                } @else {
+                  <lucide-icon name="link" [size]="16"></lucide-icon>
+                  <span>Copiar Link do Estudo</span>
+                }
+              </button>
+              
+              <!-- Botões de Redes Sociais no Estilo Premium -->
+              <div class="flex items-center gap-3">
+                <!-- WhatsApp -->
+                <a
+                  [href]="getShareUrl('whatsapp')"
+                  target="_blank"
+                  class="flex h-12 min-h-[44px] flex-1 items-center justify-center rounded-xl bg-white border border-zinc-200 text-zinc-600 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600 hover:shadow-md hover:shadow-emerald-50 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+                  title="Compartilhar no WhatsApp"
+                  aria-label="Compartilhar no WhatsApp"
+                >
+                  <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.454 5.709 1.455h.008c6.56 0 11.89-5.335 11.893-11.893a11.821 11.825 0 00-3.48-8.413"/>
+                  </svg>
+                </a>
+                
+                <!-- Telegram -->
+                <a
+                  [href]="getShareUrl('telegram')"
+                  target="_blank"
+                  class="flex h-12 min-h-[44px] flex-1 items-center justify-center rounded-xl bg-white border border-zinc-200 text-zinc-600 hover:bg-sky-50 hover:border-sky-200 hover:text-sky-500 hover:shadow-md hover:shadow-sky-50 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+                  title="Compartilhar no Telegram"
+                  aria-label="Compartilhar no Telegram"
+                >
+                  <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.62.15-.15 2.7-2.46 2.75-2.68.01-.03.01-.14-.06-.2-.07-.06-.17-.04-.25-.02-.11.02-1.87 1.18-5.28 3.48-.5.35-.95.52-1.35.5-.45-.02-1.31-.26-1.95-.47-.78-.25-1.4-.4-1.35-.85.03-.24.35-.48.97-.73 3.8-1.65 6.35-2.73 7.64-3.25 3.63-1.48 4.38-1.74 4.87-1.75.11 0 .35.03.5.16.13.1.17.24.18.35.01.07.01.21 0 .33z"/>
+                  </svg>
+                </a>
+                
+                <!-- Facebook -->
+                <a
+                  [href]="getShareUrl('facebook')"
+                  target="_blank"
+                  class="flex h-12 min-h-[44px] flex-1 items-center justify-center rounded-xl bg-white border border-zinc-200 text-zinc-600 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 hover:shadow-md hover:shadow-blue-50 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+                  title="Compartilhar no Facebook"
+                  aria-label="Compartilhar no Facebook"
+                >
+                  <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-      }
-    </div>
+
+        <!-- Fullscreen Reading Modal (Accessible + Keyboard Escape Support) -->
+        @if (readingModeActive()) {
+          <div class="fixed inset-0 z-50 flex flex-col bg-zinc-50 overflow-hidden" role="dialog" aria-modal="true" aria-label="Leitor em tela cheia">
+            <!-- Header -->
+            <header class="flex items-center justify-between border-b border-zinc-200 bg-white px-4 sm:px-6 py-3.5 shadow-sm">
+              <div class="flex items-center gap-3">
+                <button
+                  (click)="setReadingMode(false)"
+                  class="flex h-10 w-10 min-w-[40px] min-h-[40px] items-center justify-center rounded-xl text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 transition-colors focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none cursor-pointer"
+                  aria-label="Voltar para a página do estudo"
+                >
+                  <lucide-icon [name]="'arrow-left'" [size]="20"></lucide-icon>
+                </button>
+                <div>
+                  <span class="text-xs font-semibold uppercase tracking-wider text-orange-600">Lição {{ bundle.week_number }}</span>
+                  <h2 class="text-sm font-bold text-zinc-900 sm:text-base max-w-xs sm:max-w-md md:max-w-xl truncate">{{ bundle.title }}</h2>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button
+                  (click)="setReadingMode(false)"
+                  class="inline-flex items-center justify-center gap-1.5 h-10 px-3 rounded-xl text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 transition-colors focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none cursor-pointer text-xs font-medium"
+                  aria-label="Fechar modo leitura (Esc)"
+                >
+                  <span class="hidden sm:inline-block text-[11px] text-zinc-600 bg-zinc-100 border border-zinc-200 rounded px-1.5 py-0.5 font-mono">Esc</span>
+                  <lucide-icon [name]="'x'" [size]="18"></lucide-icon>
+                </button>
+              </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="flex-1 overflow-y-auto px-4 py-8 sm:px-6">
+              @if (safeArticleContent) {
+                <!-- Native HTML Reader -->
+                <article class="prose prose-orange max-w-3xl mx-auto bg-white rounded-2xl p-6 sm:p-12 shadow-sm ring-1 ring-zinc-900/5">
+                  <div [innerHTML]="safeArticleContent"></div>
+                </article>
+              } @else if (safeArticleUrl) {
+                <!-- Fullscreen Iframe Fallback -->
+                <div class="h-full w-full max-w-6xl mx-auto bg-white rounded-2xl overflow-hidden shadow-sm ring-1 ring-zinc-900/5">
+                  <iframe [src]="safeArticleUrl" class="h-full w-full border-0" title="Artigo do Estudo"></iframe>
+                </div>
+              } @else {
+                <div class="flex h-full items-center justify-center text-zinc-500">
+                  Artigo não disponível.
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
   }
 </div>

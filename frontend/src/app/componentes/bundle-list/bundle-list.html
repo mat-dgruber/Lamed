@@ -10,8 +10,61 @@
 
 <div class="container mx-auto px-4 py-8 -mt-8 relative z-10">
   @if (loading()) {
-    <div class="flex h-96 items-center justify-center">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
+    <!-- Shimmer Skeleton Loader (CLS Zero) -->
+    <div class="space-y-12 animate-pulse" aria-busy="true" aria-label="Carregando estudos...">
+      <!-- Hero Skeleton (Page 1) -->
+      @if (currentPage() === 1) {
+        <div class="grid gap-6 sm:gap-8 lg:grid-cols-5 items-center bg-white rounded-3xl p-4 sm:p-6 md:p-8 shadow-md border border-zinc-100">
+          <div class="lg:col-span-3 aspect-video bg-zinc-200 rounded-2xl"></div>
+          <div class="lg:col-span-2 space-y-4">
+            <div class="h-6 w-36 bg-orange-100/70 rounded-full"></div>
+            <div class="h-9 w-4/5 bg-zinc-200 rounded-xl"></div>
+            <div class="space-y-2">
+              <div class="h-4 w-full bg-zinc-100 rounded"></div>
+              <div class="h-4 w-5/6 bg-zinc-100 rounded"></div>
+              <div class="h-4 w-2/3 bg-zinc-100 rounded"></div>
+            </div>
+            <div class="py-2.5 border-y border-zinc-100 space-y-2">
+              <div class="h-3.5 w-32 bg-zinc-100 rounded"></div>
+              <div class="flex gap-2">
+                <div class="h-7 w-28 bg-zinc-100 rounded-lg"></div>
+                <div class="h-7 w-32 bg-zinc-100 rounded-lg"></div>
+              </div>
+            </div>
+            <div class="h-12 w-52 bg-orange-200/80 rounded-xl pt-2"></div>
+          </div>
+        </div>
+      }
+
+      <!-- Grid Cards Skeleton -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        @for (item of [1, 2, 3, 4, 5, 6, 7, 8]; track item) {
+          <div class="rounded-2xl bg-white border border-zinc-200/70 overflow-hidden shadow-sm p-4 space-y-3">
+            <div class="aspect-video bg-zinc-200 rounded-xl"></div>
+            <div class="h-4 w-24 bg-orange-100/70 rounded-full"></div>
+            <div class="h-5 w-full bg-zinc-200 rounded-lg"></div>
+            <div class="h-4 w-3/4 bg-zinc-100 rounded"></div>
+          </div>
+        }
+      </div>
+    </div>
+  } @else if (hasError()) {
+    <!-- Error State with Retry -->
+    <div class="mt-8 flex flex-col items-center justify-center py-16 px-4 bg-white rounded-3xl border border-zinc-200/80 shadow-sm text-center max-w-xl mx-auto">
+      <div class="bg-rose-50 p-5 rounded-full mb-4 text-rose-600">
+        <lucide-icon name="alert-circle" [size]="40"></lucide-icon>
+      </div>
+      <h3 class="text-xl font-bold text-zinc-900 mb-2">Não foi possível carregar os estudos</h3>
+      <p class="text-sm text-zinc-600 mb-6 max-w-md">
+        Ocorreu uma instabilidade ao conectar com nossos servidores. Por favor, tente recarregar os materiais.
+      </p>
+      <button
+        (click)="loadPage()"
+        class="inline-flex items-center justify-center gap-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white min-h-[44px] px-6 py-2.5 text-sm font-semibold shadow-sm transition-all duration-200 active:scale-95 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
+      >
+        <lucide-icon name="refresh-cw" [size]="16"></lucide-icon>
+        Tentar Novamente
+      </button>
     </div>
   } @else {
     @if (bundles(); as list) {
@@ -19,33 +72,64 @@
         <!-- Latest Bundle Hero Card (Only on Page 1) -->
         @if (currentPage() === 1) {
           <div
-            class="mb-12 sm:mb-16 grid gap-6 sm:gap-8 lg:grid-cols-5 items-center bg-white rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl border border-zinc-100"
+            class="mb-12 sm:mb-16 grid gap-6 sm:gap-8 lg:grid-cols-5 items-center bg-white rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl border border-zinc-100 hover:border-orange-100 transition-colors"
           >
+            <!-- Hero Video: Facade with Thumbnail by default, loads iframe on play -->
             <div
-              class="lg:col-span-3 aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg ring-1 ring-zinc-900/10"
+              class="lg:col-span-3 aspect-video w-full overflow-hidden rounded-2xl bg-zinc-950 shadow-lg ring-1 ring-zinc-900/10 relative group"
             >
-              <iframe
-                [src]="getSafeUrl(list[0].video_id)"
-                title="Video em Destaque"
-                loading="lazy"
-                class="h-full w-full"
-                frameborder="0"
-                allow="
-                  accelerometer;
-                  autoplay;
-                  clipboard-write;
-                  encrypted-media;
-                  gyroscope;
-                  picture-in-picture;
-                "
-                allowfullscreen
-              >
-              </iframe>
+              @if (playHeroVideo()) {
+                <iframe
+                  [src]="getSafeUrl(list[0].video_id)"
+                  title="Vídeo em Destaque da Lição"
+                  loading="lazy"
+                  class="h-full w-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                >
+                </iframe>
+              } @else {
+                <div class="relative h-full w-full cursor-pointer overflow-hidden" (click)="startHeroVideo()">
+                  <img
+                    [src]="list[0].thumbnail_url | googleDriveImage"
+                    [alt]="'Capa do Estudo ' + list[0].title"
+                    class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    (error)="onHeroImageError($event)"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent"></div>
+                  
+                  <button
+                    type="button"
+                    aria-label="Assistir ao vídeo em destaque"
+                    class="absolute inset-0 flex items-center justify-center cursor-pointer group/btn"
+                  >
+                    <div class="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-orange-600 text-white shadow-2xl shadow-orange-950/60 ring-4 ring-white/30 transition-all duration-300 group-hover/btn:scale-110 group-hover/btn:bg-orange-500">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        class="w-7 h-7 sm:w-9 sm:h-9 text-white ml-1"
+                        aria-hidden="true"
+                      >
+                        <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                      </svg>
+                    </div>
+                  </button>
+
+                  <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+                      <lucide-icon name="play-circle" [size]="14" class="text-orange-400"></lucide-icon>
+                      Assistir Introdução
+                    </span>
+                  </div>
+                </div>
+              }
             </div>
+
             <div class="lg:col-span-2 space-y-4">
               <div class="flex flex-wrap items-center gap-2">
                 <span
-                  class="inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-xs sm:text-sm font-medium text-orange-800"
+                  class="inline-flex items-center rounded-full bg-orange-50 border border-orange-200/80 px-3 py-1 text-xs sm:text-sm font-semibold text-orange-800"
                 >
                   Destaque da Lição #{{ list[0].week_number }}
                 </span>
@@ -58,30 +142,88 @@
                 {{ list[0].title }}
               </h2>
 
-              <p class="text-sm sm:text-base md:text-lg text-zinc-600 leading-relaxed line-clamp-3">
+              <p class="text-sm sm:text-base text-zinc-600 leading-relaxed line-clamp-3">
                 {{ list[0].description }}
               </p>
 
-              <div class="pt-2 sm:pt-4">
+              <!-- Inclusões / Quantidade de Materiais e Recursos -->
+              <div class="py-3 border-y border-zinc-100 space-y-2.5 my-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-500 flex items-center gap-1.5">
+                    <lucide-icon name="sparkles" [size]="13" class="text-orange-500 shrink-0"></lucide-icon>
+                    Conteúdo Deste Estudo
+                  </span>
+                  @if (list[0].resources && list[0].resources.length > 0) {
+                    <span class="text-xs font-semibold text-orange-700 bg-orange-50 px-2.5 py-0.5 rounded-full border border-orange-200/60">
+                      {{ list[0].resources.length }} {{ list[0].resources.length === 1 ? 'material' : 'materiais' }}
+                    </span>
+                  }
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                  @if (list[0].resources && list[0].resources.length > 0) {
+                    <div class="inline-flex items-center gap-1.5 rounded-lg bg-orange-50/90 border border-orange-200/80 px-2.5 py-1 text-xs font-semibold text-orange-900">
+                      <lucide-icon name="download" [size]="13" class="text-orange-600 shrink-0"></lucide-icon>
+                      <span>{{ list[0].resources.length }} {{ list[0].resources.length === 1 ? 'Material para Download' : 'Materiais para Download' }}</span>
+                    </div>
+                  }
+
+                  @if (list[0].article_content || list[0].article_url) {
+                    <div class="inline-flex items-center gap-1.5 rounded-lg bg-amber-50/90 border border-amber-200/80 px-2.5 py-1 text-xs font-semibold text-amber-900">
+                      <lucide-icon name="file-text" [size]="13" class="text-amber-600 shrink-0"></lucide-icon>
+                      <span>Guia de Estudos &amp; Artigo</span>
+                    </div>
+                  }
+
+                  @if (list[0].video_id) {
+                    <div class="inline-flex items-center gap-1.5 rounded-lg bg-zinc-100 border border-zinc-200/80 px-2.5 py-1 text-xs font-semibold text-zinc-800">
+                      <lucide-icon name="play-circle" [size]="13" class="text-orange-600 shrink-0"></lucide-icon>
+                      <span>Vídeo Principal</span>
+                    </div>
+                  }
+
+                  @if (list[0].related_video_urls && list[0].related_video_urls.length > 0) {
+                    <div class="inline-flex items-center gap-1.5 rounded-lg bg-zinc-100 border border-zinc-200/80 px-2.5 py-1 text-xs font-semibold text-zinc-800">
+                      <lucide-icon name="video" [size]="13" class="text-zinc-600 shrink-0"></lucide-icon>
+                      <span>+{{ list[0].related_video_urls.length }} {{ list[0].related_video_urls.length === 1 ? 'Vídeo Complementar' : 'Vídeos Complementares' }}</span>
+                    </div>
+                  }
+                </div>
+
+                @if (getDistinctResourceTypes(list[0]).length > 0) {
+                  <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                    <span class="text-[11px] text-zinc-500 font-medium">Arquivos:</span>
+                    @for (rtype of getDistinctResourceTypes(list[0]); track rtype) {
+                      <span class="inline-flex items-center rounded-md bg-zinc-100 border border-zinc-200/70 px-2 py-0.5 text-[11px] font-semibold text-zinc-700">
+                        {{ rtype }}
+                      </span>
+                    }
+                  </div>
+                }
+              </div>
+
+              <!-- CTA Button with robust hover, pure white text & fluid interaction -->
+              <div class="pt-2 sm:pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <a
                   [routerLink]="['/bundle', list[0].id]"
-                  class="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all"
+                  class="hero-cta-btn group/btn inline-flex items-center justify-center gap-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 px-6 py-3.5 text-sm sm:text-base font-semibold !text-white hover:!text-white !no-underline hover:!no-underline shadow-md shadow-orange-950/20 hover:shadow-lg hover:shadow-orange-700/25 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 cursor-pointer"
                 >
-                  <lucide-icon name="book-open" [size]="20"></lucide-icon>
-                  Acessar Material Completo
+                  <lucide-icon name="book-open" [size]="18" class="!text-white shrink-0 transition-transform duration-200 group-hover/btn:scale-110"></lucide-icon>
+                  <span class="!text-white font-semibold tracking-tight">Acessar Estudo Completo</span>
+                  <lucide-icon name="arrow-right" [size]="16" class="!text-white shrink-0 transition-transform duration-200 group-hover/btn:translate-x-1"></lucide-icon>
                 </a>
               </div>
             </div>
           </div>
 
-          <!-- Separator -->
-          <div class="relative mb-12">
+          <!-- Section Separator -->
+          <div class="relative mb-10 sm:mb-12">
             <div class="absolute inset-0 flex items-center" aria-hidden="true">
               <div class="w-full border-t border-zinc-200"></div>
             </div>
             <div class="relative flex justify-center">
               <span
-                class="bg-zinc-50 px-3 text-base font-semibold leading-6 text-zinc-900 uppercase tracking-wider"
+                class="bg-zinc-50 px-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-zinc-700"
               >
                 Estudos Anteriores
               </span>
@@ -99,42 +241,57 @@
           }
         </div>
 
-        <!-- Pagination Controls -->
-        <div class="mt-12 flex items-center justify-between border-t border-zinc-200 pt-6">
-          <div class="flex flex-1 justify-between items-center">
+        <!-- Pagination Controls (Accessible & Mobile Touch Targets >= 44px) -->
+        <nav
+          class="mt-12 flex items-center justify-between border-t border-zinc-200 pt-6"
+          aria-label="Paginação de estudos"
+        >
+          <div class="flex flex-1 justify-between items-center gap-4">
             <button
               (click)="prevPage()"
               [disabled]="currentPage() === 1"
-              class="relative inline-flex items-center rounded-xl border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 disabled:opacity-50 transition-colors cursor-pointer"
+              aria-label="Ir para a página anterior"
+              class="relative inline-flex items-center justify-center gap-2 rounded-xl border border-zinc-300 bg-white min-h-[44px] px-5 py-2.5 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
             >
-              &larr; Anterior
+              <lucide-icon name="arrow-left" [size]="16"></lucide-icon>
+              <span>Anterior</span>
             </button>
-            <span class="text-sm text-zinc-700 font-medium">
-              Página {{ currentPage() }}
+
+            <span class="text-xs sm:text-sm text-zinc-600 font-medium px-3 py-1.5 rounded-lg bg-zinc-100/80">
+              Página <strong class="font-bold text-zinc-900">{{ currentPage() }}</strong>
             </span>
+
             <button
               (click)="nextPage()"
               [disabled]="!hasNextPage()"
-              class="relative inline-flex items-center rounded-xl border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 disabled:opacity-50 transition-colors cursor-pointer"
+              aria-label="Ir para a próxima página"
+              class="relative inline-flex items-center justify-center gap-2 rounded-xl border border-zinc-300 bg-white min-h-[44px] px-5 py-2.5 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:outline-none"
             >
-              Próximo &rarr;
+              <span>Próximo</span>
+              <lucide-icon name="arrow-right" [size]="16"></lucide-icon>
             </button>
           </div>
-        </div>
+        </nav>
       }
 
       @if (list.length === 0) {
         <div
-          class="mt-12 flex flex-col items-center justify-center py-20 bg-white rounded-3xl border border-zinc-100 shadow-sm text-center"
+          class="mt-12 flex flex-col items-center justify-center py-20 px-4 bg-white rounded-3xl border border-zinc-100 shadow-sm text-center max-w-lg mx-auto"
         >
-          <div class="bg-orange-50 p-6 rounded-full mb-6">
-            <lucide-icon name="library" class="text-orange-500" [size]="48"></lucide-icon>
+          <div class="bg-orange-50 p-6 rounded-full mb-5 text-orange-500">
+            <lucide-icon name="library" [size]="44"></lucide-icon>
           </div>
           <h3 class="text-xl font-bold text-zinc-900 mb-2">Nenhum estudo encontrado</h3>
-          <p class="text-zinc-500 max-w-md px-4">
-            Nossas trilhas estão sendo preparadas. Volte em breve para conferir os novos materiais de
-            estudo bíblico.
+          <p class="text-sm text-zinc-500 mb-6">
+            Novos materiais de estudo bíblico estão sendo preparados. Volte em breve ou tente recarregar a lista.
           </p>
+          <button
+            (click)="loadPage()"
+            class="inline-flex items-center gap-2 rounded-xl border border-zinc-300 bg-white min-h-[44px] px-5 py-2 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 transition-colors cursor-pointer"
+          >
+            <lucide-icon name="refresh-cw" [size]="15"></lucide-icon>
+            Recarregar
+          </button>
         </div>
       }
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, DestroyRef } from '@angular/core';
+import { Component, OnInit, inject, signal, DestroyRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
@@ -22,7 +22,7 @@ export interface RelatedVideo {
 @Component({
   selector: 'app-bundle-detail',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, LucideAngularModule, RouterLink],
   templateUrl: './bundle-detail.component.html',
   styleUrl: './bundle-detail.component.scss',
 })
@@ -37,6 +37,7 @@ export class BundleDetailComponent implements OnInit {
 
   bundle = signal<Bundle | null>(null);
   loading = signal<boolean>(true);
+  hasError = signal<boolean>(false);
 
   // Usability & Reading Signals
   readingModeActive = signal<boolean>(false);
@@ -80,8 +81,25 @@ export class BundleDetailComponent implements OnInit {
       });
   }
 
+  @HostListener('window:keydown.escape')
+  handleEscapeKey() {
+    if (this.readingModeActive()) {
+      this.setReadingMode(false);
+    }
+  }
+
+  scrollToSection(sectionId: string) {
+    if (typeof document !== 'undefined') {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }
+
   loadBundle(id: string) {
     this.loading.set(true);
+    this.hasError.set(false);
     this.bundleService.getBundleById(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -195,6 +213,7 @@ export class BundleDetailComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error fetching bundle:', err);
+          this.hasError.set(true);
           this.loading.set(false);
         },
       });

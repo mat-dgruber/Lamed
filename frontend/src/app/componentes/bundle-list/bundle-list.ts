@@ -5,13 +5,26 @@ import { RouterLink } from '@angular/router';
 import { BundleCardComponent } from '../shared/bundle-card/bundle-card.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { BundleService, Bundle } from '../../services/bundle.service';
+import { GoogleDriveImagePipe } from '../../pipes/google-drive-image.pipe';
 
 @Component({
   selector: 'app-bundle-list',
   standalone: true,
-  imports: [CommonModule, BundleCardComponent, LucideAngularModule, RouterLink],
+  imports: [CommonModule, BundleCardComponent, LucideAngularModule, RouterLink, GoogleDriveImagePipe],
   templateUrl: './bundle-list.html',
-  styles: []
+  styles: [`
+    :host a.hero-cta-btn,
+    :host a.hero-cta-btn:hover,
+    :host a.hero-cta-btn:focus,
+    :host a.hero-cta-btn:active {
+      color: #ffffff !important;
+      text-decoration: none !important;
+    }
+    :host a.hero-cta-btn * {
+      color: inherit !important;
+      text-decoration: none !important;
+    }
+  `]
 })
 export class BundleList {
   private bundleService = inject(BundleService);
@@ -19,6 +32,8 @@ export class BundleList {
 
   bundles = signal<Bundle[]>([]);
   loading = signal<boolean>(true);
+  hasError = signal<boolean>(false);
+  playHeroVideo = signal<boolean>(false);
 
   currentPage = signal<number>(1);
   pageHistory = signal<string[]>([]); // stack of startAfterIds
@@ -32,6 +47,8 @@ export class BundleList {
 
   loadPage() {
     this.loading.set(true);
+    this.hasError.set(false);
+    this.playHeroVideo.set(false);
     const startAfterId = this.currentPage() > 1 ? this.pageHistory()[this.currentPage() - 2] : undefined;
     
     // Page 1 has 1 hero + 8 grid items = 9 total. Subsequent pages have 8 grid items.
@@ -51,9 +68,19 @@ export class BundleList {
       },
       error: (err) => {
         console.error('Error fetching bundles page:', err);
+        this.hasError.set(true);
         this.loading.set(false);
       }
     });
+  }
+
+  startHeroVideo() {
+    this.playHeroVideo.set(true);
+  }
+
+  onHeroImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/Imagens/Fundo_Lamed-total.png';
   }
 
   nextPage() {
@@ -74,9 +101,34 @@ export class BundleList {
     this.loadPage();
   }
 
+  getDistinctResourceTypes(bundle: Bundle | undefined): string[] {
+    if (!bundle || !bundle.resources || bundle.resources.length === 0) return [];
+    const typeLabels: Record<string, string> = {
+      pdf: 'PDF',
+      pptx: 'Slides',
+      slides: 'Slides',
+      mapa_mental: 'Mapa Mental',
+      infografico: 'Infográfico',
+      infographic: 'Infográfico',
+      doc: 'Documento',
+      audio: 'Áudio',
+      video: 'Vídeo',
+      guia: 'Guia'
+    };
+    const types = new Set<string>();
+    for (const r of bundle.resources) {
+      if (r.type && typeLabels[r.type]) {
+        types.add(typeLabels[r.type]);
+      } else if (r.type) {
+        types.add(r.type.toUpperCase());
+      }
+    }
+    return Array.from(types);
+  }
+
   getSafeUrl(videoId: string | undefined): SafeResourceUrl | null {
     if (!videoId) return null;
-    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
   }
 }

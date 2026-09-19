@@ -6,7 +6,7 @@ import { AnalyticsService } from '../../core/services/analytics.service';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { LucideAngularModule, Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2, X, Check, CheckCircle, Heart, Youtube, ExternalLink } from 'lucide-angular';
+import { LucideAngularModule, Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, ChevronRight, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2, X, Check, CheckCircle, Heart, Youtube, ExternalLink } from 'lucide-angular';
 
 describe('BundleDetailComponent', () => {
   let component: BundleDetailComponent;
@@ -44,7 +44,7 @@ describe('BundleDetailComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        LucideAngularModule.pick({ Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2, X, Check, CheckCircle, Heart, Youtube, ExternalLink }),
+        LucideAngularModule.pick({ Menu, ArrowLeft, Calendar, User, FileQuestion, ChevronUp, ChevronDown, ChevronRight, Search, Lock, Mail, Key, Loader2, RefreshCw, Plus, LayoutList, AlertCircle, BookOpen, Library, Download, DownloadCloud, Map, Image, Monitor, Book, FileText, Headphones, File, PlayCircle, Link, Inbox, Tag, Star, Pencil, Trash2, X, Check, CheckCircle, Heart, Youtube, ExternalLink }),
         BundleDetailComponent
       ],
       providers: [
