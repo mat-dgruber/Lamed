@@ -1,0 +1,175 @@
+@if (bibleService.isOpen()) {
+  <div
+    class="bible-drawer-backdrop"
+    (click)="onBackdropClick($event)"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="bible-drawer-title"
+  >
+    <div class="bible-drawer-panel" (click)="$event.stopPropagation()">
+      <!-- Mobile Drag Handle Indicator -->
+      <div class="drawer-drag-handle sm:hidden" aria-hidden="true">
+        <span class="handle-bar"></span>
+      </div>
+
+      <!-- Header -->
+      <header class="drawer-header">
+        <div class="header-left">
+          <div class="icon-badge">
+            <lucide-icon name="book-open" [size]="18"></lucide-icon>
+          </div>
+          <div>
+            @if (bibleService.activePassage(); as passage) {
+              <h3 id="bible-drawer-title" class="drawer-title">
+                {{ passage.reference }}
+              </h3>
+              <p class="drawer-subtitle">
+                {{ passage.book }}, Capítulo {{ passage.chapter }}
+              </p>
+            } @else {
+              <h3 id="bible-drawer-title" class="drawer-title">Texto Bíblico</h3>
+              <p class="drawer-subtitle">Consulta de Passagem</p>
+            }
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <!-- Translation Switcher -->
+          <div class="version-pills" role="group" aria-label="Versão da Bíblia">
+            <button
+              type="button"
+              class="pill-btn"
+              [class.active]="bibleService.selectedVersion() === 'nvi'"
+              (click)="bibleService.switchVersion('nvi')"
+              title="Nova Versão Internacional"
+            >
+              NVI
+            </button>
+            <button
+              type="button"
+              class="pill-btn"
+              [class.active]="bibleService.selectedVersion() === 'aa'"
+              (click)="bibleService.switchVersion('aa')"
+              title="Almeida Atualizada"
+            >
+              AA
+            </button>
+          </div>
+
+          <!-- Close Button -->
+          <button
+            type="button"
+            class="btn-close"
+            (click)="bibleService.closeDrawer()"
+            aria-label="Fechar leitor bíblico"
+          >
+            <lucide-icon name="x" [size]="20"></lucide-icon>
+          </button>
+        </div>
+      </header>
+
+      <!-- View Mode Tabs (Versículo vs Capítulo Inteiro) -->
+      @if (bibleService.activePassage(); as passage) {
+        <div class="view-mode-bar">
+          <button
+            type="button"
+            class="tab-btn"
+            [class.active]="bibleService.viewMode() === 'verse'"
+            (click)="bibleService.setViewMode('verse')"
+          >
+            <lucide-icon name="bookmark" [size]="14"></lucide-icon>
+            <span>Passagem Citada</span>
+          </button>
+          <button
+            type="button"
+            class="tab-btn"
+            [class.active]="bibleService.viewMode() === 'chapter'"
+            (click)="bibleService.setViewMode('chapter')"
+          >
+            <lucide-icon name="book" [size]="14"></lucide-icon>
+            <span>Capítulo {{ passage.chapter }} Completo</span>
+          </button>
+        </div>
+      }
+
+      <!-- Main Content Body -->
+      <div class="drawer-body">
+        <!-- Loading Skeleton -->
+        @if (bibleService.loading() || (bibleService.viewMode() === 'chapter' && bibleService.loadingChapter())) {
+          <div class="skeleton-wrapper" aria-busy="true" aria-label="Carregando versículo...">
+            <div class="skeleton-line w-3/4"></div>
+            <div class="skeleton-line w-full"></div>
+            <div class="skeleton-line w-5/6"></div>
+            <div class="skeleton-line w-2/3"></div>
+          </div>
+        } @else if (bibleService.hasError()) {
+          <!-- Error State -->
+          <div class="error-container">
+            <div class="error-icon">
+              <lucide-icon name="alert-circle" [size]="28"></lucide-icon>
+            </div>
+            <h4 class="error-title">Passagem Indisponível</h4>
+            <p class="error-desc">{{ bibleService.errorMessage() }}</p>
+          </div>
+        } @else {
+          <!-- Verse Focused Mode -->
+          @if (bibleService.viewMode() === 'verse') {
+            @if (bibleService.activePassage(); as passage) {
+              <div class="verse-focus-view">
+                <blockquote class="bible-scripture-quote">
+                  @for (v of passage.verses; track v.number) {
+                    <span class="verse-inline-block">
+                      <sup class="verse-num">{{ v.number }}</sup>
+                      <span class="verse-text">{{ v.text }}</span>
+                    </span>
+                  }
+                </blockquote>
+
+                <div class="scripture-meta-footer">
+                  <span class="meta-tag">— {{ passage.reference }} ({{ passage.version }})</span>
+                </div>
+              </div>
+            }
+          } @else {
+            <!-- Full Chapter Mode -->
+            @if (bibleService.chapterPassage(); as ch) {
+              <div class="chapter-view">
+                <div class="chapter-intro">
+                  <h4>{{ ch.book }} {{ ch.chapter }}</h4>
+                  <span class="chapter-badge">{{ ch.total_verses }} versículos</span>
+                </div>
+
+                <div class="chapter-stream">
+                  @for (v of ch.verses; track v.number) {
+                    <p
+                      class="chapter-verse-row"
+                      [class.highlighted-verse]="isTargetVerse(v.number)"
+                    >
+                      <sup class="verse-num">{{ v.number }}</sup>
+                      <span class="verse-text">{{ v.text }}</span>
+                    </p>
+                  }
+                </div>
+              </div>
+            }
+          }
+        }
+      </div>
+
+      <!-- Drawer Footer Actions -->
+      @if (bibleService.activePassage()) {
+        <footer class="drawer-footer">
+          <button
+            type="button"
+            class="btn-copy"
+            (click)="bibleService.copyPassage()"
+            [class.copied]="bibleService.copied()"
+          >
+            <lucide-icon [name]="bibleService.copied() ? 'check' : 'copy'" [size]="16"></lucide-icon>
+            <span>{{ bibleService.copied() ? 'Copiado para a área de transferência!' : 'Copiar com Referência' }}</span>
+          </button>
+        </footer>
+      }
+    </div>
+  </div>
+}

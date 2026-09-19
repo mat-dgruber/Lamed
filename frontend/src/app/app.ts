@@ -3,12 +3,13 @@ import { RouterOutlet, Router, NavigationEnd, ActivatedRoute } from '@angular/ro
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Header } from './componentes/shared/header/header';
 import { Footer } from './componentes/shared/footer/footer';
+import { BibleDrawerComponent } from './componentes/shared/bible-drawer/bible-drawer.component';
 import { SeoService } from './core/services/seo.service';
 import { AnalyticsService } from './core/services/analytics.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer],
+  imports: [RouterOutlet, Header, Footer, BibleDrawerComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

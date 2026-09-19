@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { App } from './app';
 import { SeoService } from './core/services/seo.service';
@@ -11,7 +13,9 @@ describe('App', () => {
       imports: [App],
       providers: [
         provideRouter([]),
-        { provide: SeoService, useValue: { setSearch: () => {} } },
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: SeoService, useValue: { setSearch: () => {}, updateMetaTags: () => {}, setNoindex: () => {} } },
         { provide: AnalyticsService, useValue: {} },
       ],
     }).compileComponents();

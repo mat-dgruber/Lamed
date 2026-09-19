@@ -1,0 +1,417 @@
+.bible-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  animation: fadeIn 0.2s ease-out;
+
+  @media (max-width: 640px) {
+    align-items: flex-end;
+  }
+}
+
+.bible-drawer-panel {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 28px rgba(0, 0, 0, 0.12);
+  border-left: 1px solid rgba(228, 228, 231, 0.8);
+  animation: slideInRight 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+
+  @media (max-width: 640px) {
+    max-width: 100%;
+    max-height: 85vh;
+    border-left: none;
+    border-top: 1px solid rgba(228, 228, 231, 0.9);
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.16);
+    animation: slideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* Mobile Drag Bar */
+.drawer-drag-handle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 4px;
+
+  .handle-bar {
+    width: 36px;
+    height: 4px;
+    background: #d4d4d8;
+    border-radius: 9999px;
+  }
+}
+
+/* Header */
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f4f4f5;
+  background: #ffffff;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .icon-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: #fef3c7;
+      color: #b45309;
+      flex-shrink: 0;
+    }
+
+    .drawer-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #18181b;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .drawer-subtitle {
+      font-size: 0.75rem;
+      color: #71717a;
+      margin: 2px 0 0;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+/* Version Pills */
+.version-pills {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 10px;
+  background: #f4f4f5;
+
+  .pill-btn {
+    border: none;
+    background: transparent;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #71717a;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      color: #18181b;
+    }
+
+    &.active {
+      background: #ffffff;
+      color: #ea580c;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+
+.btn-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid #e4e4e7;
+  background: transparent;
+  color: #71717a;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: #f4f4f5;
+    color: #18181b;
+  }
+}
+
+/* View Mode Bar */
+.view-mode-bar {
+  display: flex;
+  padding: 8px 16px;
+  background: #fafafa;
+  border-bottom: 1px solid #f4f4f5;
+  gap: 8px;
+
+  .tab-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #71717a;
+    background: #ffffff;
+    border: 1px solid #e4e4e7;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      color: #18181b;
+      border-color: #d4d4d8;
+    }
+
+    &.active {
+      background: #fff7ed;
+      color: #c2410c;
+      border-color: #fdba74;
+      box-shadow: 0 1px 2px rgba(234, 88, 12, 0.06);
+    }
+  }
+}
+
+/* Body */
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Skeleton Loading */
+.skeleton-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 10px 0;
+
+  .skeleton-line {
+    height: 18px;
+    background: linear-gradient(90deg, #f4f4f5 25%, #e4e4e7 50%, #f4f4f5 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 6px;
+
+    &.w-full { width: 100%; }
+    &.w-3\/4 { width: 75%; }
+    &.w-5\/6 { width: 83%; }
+    &.w-2\/3 { width: 66%; }
+  }
+}
+
+/* Verse Focus View */
+.verse-focus-view {
+  .bible-scripture-quote {
+    margin: 0;
+    padding: 0;
+    font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
+    font-size: 1.1875rem;
+    line-height: 1.85;
+    color: #27272a;
+    letter-spacing: 0.01em;
+
+    .verse-inline-block {
+      display: inline;
+      margin-right: 4px;
+    }
+
+    .verse-num {
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #d97706;
+      margin-right: 3px;
+      vertical-align: super;
+      user-select: none;
+    }
+
+    .verse-text {
+      font-style: normal;
+    }
+  }
+
+  .scripture-meta-footer {
+    margin-top: 24px;
+    padding-top: 14px;
+    border-top: 1px dashed #e4e4e7;
+    display: flex;
+    justify-content: flex-end;
+
+    .meta-tag {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #ea580c;
+    }
+  }
+}
+
+/* Chapter Stream View */
+.chapter-view {
+  .chapter-intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f4f4f5;
+
+    h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #18181b;
+      margin: 0;
+    }
+
+    .chapter-badge {
+      font-size: 0.75rem;
+      color: #71717a;
+      background: #f4f4f5;
+      padding: 3px 8px;
+      border-radius: 9999px;
+    }
+  }
+
+  .chapter-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .chapter-verse-row {
+      margin: 0;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
+      font-size: 1.0625rem;
+      line-height: 1.75;
+      color: #3f3f46;
+      transition: background 0.15s ease;
+
+      .verse-num {
+        font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #d97706;
+        margin-right: 6px;
+        vertical-align: baseline;
+      }
+
+      &.highlighted-verse {
+        background: #fffbeb;
+        border-left: 3px solid #d97706;
+        color: #18181b;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+/* Error State */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 16px;
+
+  .error-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: #fef2f2;
+    color: #dc2626;
+    margin-bottom: 14px;
+  }
+
+  .error-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #18181b;
+    margin: 0 0 6px;
+  }
+
+  .error-desc {
+    font-size: 0.8125rem;
+    color: #71717a;
+    max-width: 280px;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+/* Footer */
+.drawer-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #f4f4f5;
+  background: #fafafa;
+
+  .btn-copy {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #ea580c;
+    background: #ffffff;
+    border: 1px solid #fed7aa;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(234, 88, 12, 0.05);
+
+    &:hover {
+      background: #ea580c;
+      color: #ffffff;
+      border-color: #ea580c;
+    }
+
+    &.copied {
+      background: #16a34a;
+      color: #ffffff;
+      border-color: #16a34a;
+    }
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
