@@ -107,7 +107,10 @@
             <div class="search-status-bar">
               <span class="status-pill">
                 <lucide-icon name="sparkles" [size]="14"></lucide-icon>
-                Busca inteligente: <strong>{{ baseArticles().length }}</strong> artigo(s) encontrado(s) por relevância
+                <span>
+                  <strong>{{ baseArticles().length }}</strong>
+                  {{ baseArticles().length === 1 ? 'artigo encontrado' : 'artigos encontrados' }}
+                </span>
               </span>
             </div>
           }
