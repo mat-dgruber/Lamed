@@ -50,8 +50,11 @@ graph TD
 | `frontend/src/app/componentes/shared/header/header.html` | Apresentação / UI | Transição fluida do backdrop via classe `.open` e harmonização do botão Apoie |
 | `frontend/src/app/componentes/shared/header/header.scss` | Apresentação / UI | Curvas de aceleração cúbica (`cubic-bezier`), remoção de corte por `display:none` e padding seguro do iPhone |
 | `frontend/src/app/componentes/shared/footer/footer.scss` | Apresentação / UI | Elevação do botão `#back-to-top` acima da barra inferior no mobile |
-| `frontend/src/app/app.scss` | Apresentação / Estilos | Regra global garantindo elevação segura de `#back-to-top` e padding no layout principal |
+| `frontend/src/app/app.scss` | Apresentação / Estilos | Regra global garantindo elevação segura de `#back-to-top`, padding e link skip-to-main |
+| `frontend/src/app/app.html` | Apresentação / Raiz | Adição do skip-link acessível para bypass WCAG 2.2 AA |
+| `frontend/src/app/componentes/shared/header/header.ts` | Apresentação / Logic | Inserção de divisores MARK: e docstrings TSDoc padronizadas |
 | `frontend/src/app/admin/dashboard/dashboard.component.html` | Apresentação / Admin | Substituição de `resources?.length` por `resources.length` eliminando warnings NG8107 |
+| `docs/specs/mobile-navigation-architecture.md` | Especificação Técnica | Documento canônico da arquitetura de navegação responsiva |
 
 ---
 
@@ -74,9 +77,19 @@ graph TD
 - **Arquivos envolvidos:**
   - `frontend/src/app/admin/dashboard/dashboard.component.html`
 
+### `docs(navigation): documentar arquitetura de navegacao mobile e adicionar skip-link acessivel`
+- **Hash:** `a4c7c7f`
+- **Razão da alteração:** Estruturação arquitetural de documentação inline (MARK: e TSDoc), criação da especificação técnica canônica e conformidade com critérios WCAG de bypass blocks.
+- **Comportamento atual:** Código padronizado com divisores para IDE, especificação salva em `docs/specs/` e link de pular para o conteúdo principal integrado.
+- **Arquivos envolvidos:**
+  - `frontend/src/app/componentes/shared/header/header.ts`
+  - `frontend/src/app/app.html`
+  - `frontend/src/app/app.scss`
+  - `docs/specs/mobile-navigation-architecture.md`
+
 ---
 
 ## 5. Dívida Técnica & Próximos Passos
 
-- [ ] Executar auditoria com o script `ux_audit.py` e `accessibility_checker.py` nas demais páginas públicas no viewport mobile.
-- [ ] Avaliar implementação de gestos de arraste para baixo (*swipe-to-dismiss*) na gaveta Bottom Sheet móvel.
+- [ ] Tratar pendências pontuais de `alt` text em imagens das páginas `home.html`, `sobre.html` e `videos.html` identificadas pelo `ux_audit.py`.
+- [ ] Avaliar gestos nativos de arrasto (*swipe gesture*) para fechar a Bottom Sheet no mobile.
