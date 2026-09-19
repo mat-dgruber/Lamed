@@ -79,6 +79,8 @@ import {
   ChevronRight,
   Instagram,
   VideoOff,
+  SendHorizontal,
+  MessageSquare,
 } from 'lucide-angular';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -176,6 +178,8 @@ export const appConfig: ApplicationConfig = {
         ChevronRight,
         Instagram,
         VideoOff,
+        SendHorizontal,
+        MessageSquare,
       }),
     ),
     { provide: LOCALE_ID, useValue: 'pt-BR' },
