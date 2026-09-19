@@ -5,7 +5,7 @@ import {
   HostListener,
   Input,
   Output,
-  inject
+  signal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, X } from 'lucide-angular';
@@ -24,6 +24,8 @@ export class TeamModalComponent {
   @Output() readonly closed = new EventEmitter<void>();
 
   readonly icons = { X } as const;
+  readonly isClosing = signal(false);
+  hasImageError = false;
 
   @HostListener('document:keydown.escape')
   onEscape(): void {
@@ -31,10 +33,12 @@ export class TeamModalComponent {
   }
 
   close(): void {
-    this.closed.emit();
+    if (this.isClosing()) return;
+    this.isClosing.set(true);
+    setTimeout(() => {
+      this.closed.emit();
+    }, 250);
   }
-
-  hasImageError = false;
 
   onImageError(): void {
     this.hasImageError = true;

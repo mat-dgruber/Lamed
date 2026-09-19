@@ -1,8 +1,10 @@
 <main class="site-main sobre-page">
   <section id="hero" class="hero-section">
     <div class="container">
-      <h1>Conheça o LAMED</h1>
-      <p>Entenda nossa história, missão e o que nos move.</p>
+      <div class="hero-text">
+        <h1 class="hero-main-title">Conheça o LAMED</h1>
+        <p class="hero-subtitle">Entenda nossa história, missão e o que nos move.</p>
+      </div>
     </div>
   </section>
 
@@ -31,7 +33,7 @@
         <em>"os preguiçosos que não trabalham no sábado e não comem bacon"?</em>
       </p>
       <div class="history-content-wrapper">
-        <div class="expandable-content" [class.expanded]="isHistoryExpanded()">
+        <div id="history-content" class="expandable-content" [class.expanded]="isHistoryExpanded()">
           <p>
             Tudo isso me dava nos nervos, mas eu me mantinha na minha, fazendo minha parte para a
             minha salvação e deixando o restante de lado. Até que, aos 15 anos, na saída da
@@ -39,9 +41,9 @@
               >Abra um canal no YouTube</em
             >". Sim, eu sei, todo adolescente pensa nisso uma hora ou outra! Mas dessa vez foi
             diferente. O canal tinha que ser para espalhar a mensagem de salvação. A ideia
-            martelava sem parar. Corri para uns amigos e perguntei: "<em
-              >"Se eu abrir um canal sobre isso e aquilo, você assistiria?</em
-            >". Para variar, meus amigos foram sinceros e a maioria disse que
+            martelava sem parar. Corri para uns amigos e perguntei: <em
+              >"Se eu abrir um canal sobre isso e aquilo, você assistiria?"</em
+            >. Para variar, meus amigos foram sinceros e a maioria disse que
             <strong>não</strong>. Mas, no meu coração, isso só serviu de gás para ter certeza de
             que eu tinha que ir em frente. Consegui reconhecer a voz de Deus nesse chamado. Não
             sabia como nem onde começar, e o pior: eu era <strong>MUITO</strong> tímido!
@@ -125,16 +127,18 @@
           </p>
         </div>
       </div>
-      <button
-        id="read-more-history"
-        class="btn-secondary"
-        type="button"
-        (click)="toggleHistory()"
-        [attr.aria-expanded]="isHistoryExpanded()"
-        aria-controls="history"
-      >
-        {{ isHistoryExpanded() ? 'Ler menos' : 'Ler mais' }}
-      </button>
+      <div class="history-actions">
+        <button
+          id="read-more-history"
+          class="btn-secondary"
+          type="button"
+          (click)="toggleHistory()"
+          [attr.aria-expanded]="isHistoryExpanded()"
+          aria-controls="history-content"
+        >
+          {{ isHistoryExpanded() ? 'Ler menos' : 'Ler mais' }}
+        </button>
+      </div>
     </div>
   </section>
 
@@ -175,7 +179,7 @@
             ></lucide-icon>
           </div>
           <div class="lamed-symbolism-text">
-            <h5>Elevação e Aspiração</h5>
+            <h4>Elevação e Aspiração</h4>
             <p>
               Sendo a única letra que se estende acima da linha de base, aponta para a busca
               espiritual, crescimento e o desejo de elevar o pensamento. Alguns a veem como um
@@ -188,7 +192,7 @@
             <lucide-icon class="lucide-heart" [img]="icons.Heart" size="48"></lucide-icon>
           </div>
           <div class="lamed-symbolism-text">
-            <h5>Coração (Lev - לֵב)</h5>
+            <h4>Coração (Lev - לֵב)</h4>
             <p>
               Algumas interpretações ligam Lamed ao coração, sugerindo que o aprendizado e a
               sabedoria residem nele, ou que a mente deve guiar o coração.
@@ -204,7 +208,7 @@
             ></lucide-icon>
           </div>
           <div class="lamed-symbolism-text">
-            <h5>Prefixo "Para" (לְ־)</h5>
+            <h4>Prefixo "Para" (לְ־)</h4>
             <p>
               Frequentemente usada como prefixo, indica direção, propósito e finalidade (ex:
               "le-shalom" - para a paz).
@@ -220,7 +224,7 @@
             ></lucide-icon>
           </div>
           <div class="lamed-symbolism-text">
-            <h5>Aguilhão/Cajado de Pastor</h5>
+            <h4>Aguilhão/Cajado de Pastor</h4>
             <p>
               Historicamente, sua forma lembra um aguilhão, usado para guiar. Traz a ideia de
               direção na vida, apontando para o caminho certo. Conecta-se à autoridade para
@@ -262,7 +266,7 @@
           <p>
             Nossa meta é ser uma referência em conteúdo bíblico de qualidade em língua portuguesa,
             ajudando pessoas a se conectarem com a Bíblia de maneira significativa, nutrindo os
-            mebros da igreja e alcançando os de fora, levando salvação para as pessoas.
+            membros da igreja e alcançando os de fora, levando salvação para as pessoas.
           </p>
         </div>
       </div>
@@ -311,7 +315,7 @@
                 <div class="card-back">
                   <h4>{{ member.name }}</h4>
                   <p class="team-member-verse">{{ member.verse }}</p>
-                  <p class="team-member-hint">Clique novamente para ver bio</p>
+                  <p class="team-member-hint">Toque ou clique para ver bio completa</p>
                 </div>
               </div>
             </div>
@@ -319,6 +323,7 @@
         </div>
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
+        <div class="swiper-pagination"></div>
       </div>
     </div>
   </section>

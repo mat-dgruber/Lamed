@@ -5,18 +5,26 @@
   position: fixed;
   inset: 0;
   background: var(--modal-overlay, rgba(0, 0, 0, 0.8));
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1.25rem;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s;
 }
 
 .modal.is-open {
   opacity: 1;
   pointer-events: auto;
+  animation: modal-overlay-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal.is-closing {
+  animation: modal-overlay-out 0.25s ease-in forwards;
+  pointer-events: none;
 }
 
 .modal-overlay {
@@ -31,14 +39,17 @@
 .modal-content {
   background: var(--surface-color, #fff);
   color: var(--text-color);
-  padding: 2rem;
+  padding: 2.25rem 2rem;
   border-radius: 1.5rem;
   width: 100%;
-  max-width: 600px;
+  max-width: 620px;
   max-height: 85vh;
   overflow-y: auto;
   position: relative;
   z-index: 2001;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  animation: modal-card-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -130,4 +141,58 @@
 /* High contrast */
 :root[data-theme='hc'] .modal-content {
   border: 2px solid currentColor;
+}
+
+.modal.is-closing .modal-content {
+  animation: modal-card-out 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes modal-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-card-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modal-card-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.94) translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal.is-open,
+  .modal.is-closing,
+  .modal-content,
+  .modal.is-closing .modal-content {
+    animation: none !important;
+    transform: none !important;
+  }
 }

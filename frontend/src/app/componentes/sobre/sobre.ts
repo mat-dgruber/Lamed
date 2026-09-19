@@ -16,7 +16,7 @@ import { SeoService } from '../../core/services/seo.service';
 import { LucideAngularModule, TrendingUp, Heart, MoveRight, SignpostBig } from 'lucide-angular';
 import { TeamModalComponent } from '../shared/team-modal/team-modal.component';
 import Swiper, { type Swiper as SwiperInstance } from 'swiper';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 
 export interface TeamMember {
   readonly id: number;
@@ -172,12 +172,19 @@ export class Sobre implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.swiperContainer) return;
     this.swiperInstance = new Swiper(this.swiperContainer.nativeElement, {
-      modules: [Navigation],
+      modules: [Navigation, Pagination],
       loop: false,
       rewind: true,
       slidesPerView: 1,
-      spaceBetween: 10,
-      breakpoints: { 768: { slidesPerView: 3, spaceBetween: 30 } },
+      spaceBetween: 16,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+      breakpoints: {
+        640: { slidesPerView: 2, spaceBetween: 20 },
+        1024: { slidesPerView: 3, spaceBetween: 30 }
+      },
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev'

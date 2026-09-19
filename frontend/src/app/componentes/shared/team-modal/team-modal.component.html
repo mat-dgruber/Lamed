@@ -1,5 +1,6 @@
 <div
   class="modal is-open"
+  [class.is-closing]="isClosing()"
   role="dialog"
   aria-modal="true"
   [attr.aria-label]="'Biografia de ' + member.name"
