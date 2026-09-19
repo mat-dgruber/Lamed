@@ -1,7 +1,36 @@
-.site-main {
-  flex: 1;
+// MARK: - Accessibility Bypass Link
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 20px;
+  z-index: 2000;
+  padding: 12px 18px;
+  background-color: var(--color-destaque, #940312);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition: top 0.2s ease;
+
+  &:focus {
+    top: 20px;
+    outline: 3px solid var(--color-principal, #f8941b);
+    outline-offset: 2px;
+  }
 }
 
+// MARK: - Main Layout Container
+.site-main {
+  flex: 1;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// MARK: - Mobile Responsive Adjustments
 @media (max-width: 768px) {
   .site-main {
     /* Espaçamento ergonômico para que a Bottom Navigation Bar não sobreponha botões ou rodapé */

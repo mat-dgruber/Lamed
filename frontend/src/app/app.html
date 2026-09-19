@@ -1,8 +1,10 @@
+<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
 @if (!isEmbedded()) {
   <app-header></app-header>
 }
 
-<main class="site-main">
+<main id="main-content" class="site-main" tabindex="-1">
   <router-outlet></router-outlet>
 </main>
 
