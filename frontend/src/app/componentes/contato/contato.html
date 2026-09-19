@@ -1,68 +1,310 @@
-<div class="contact-form-container">
-  <h2>Entre em Contato</h2>
-
-  @if (submissionSuccess) {
-    <div class="submission-success-card" role="alert" aria-live="polite">
-      <div class="success-icon-wrapper">
-        <lucide-icon name="check-circle-2" [size]="48" class="text-emerald-600"></lucide-icon>
+<main class="site-main contato-page">
+  <!-- HERO SECTION -->
+  <section id="hero" class="hero-section" aria-labelledby="contato-hero-title">
+    <div class="container">
+      <div class="hero-text">
+        <h1 id="contato-hero-title" class="hero-main-title">Fale Conosco</h1>
+        <p class="hero-subtitle">
+          Tem dúvidas sobre os estudos, sugestões para novos temas ou deseja compartilhar um pedido de oração?
+          Nossa equipe está à disposição para te ouvir.
+        </p>
       </div>
-      <h3>Mensagem Enviada com Sucesso!</h3>
-      <p>
-        Agradecemos o seu contato com o <strong>Lamed</strong>. Nossa equipe recebeu sua mensagem e
-        responderá pelo e-mail informado (habitualmente em até <strong>48 horas úteis</strong>).
-      </p>
-      <button type="button" class="btn-secondary mt-6" (click)="resetFormState()">
-        Enviar outra mensagem
-      </button>
     </div>
-  } @else {
-    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" formControlName="nome" placeholder="Seu nome completo" />
-        @if (contactForm.get('nome')?.invalid && contactForm.get('nome')?.touched) {
-          <div class="error-message">O nome é obrigatório.</div>
-        }
-      </div>
+  </section>
 
-      <div class="form-group">
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" formControlName="email" placeholder="seuemail@exemplo.com" />
-        @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
-          <div class="error-message">
-            @if (contactForm.get('email')?.errors?.['required']) {
-              <div>O e-mail é obrigatório.</div>
+  <!-- CONTENT SECTION: GRID 2 COLUNAS -->
+  <section class="content-section" id="contato-conteudo">
+    <div class="container">
+      <div class="contact-layout-grid">
+
+        <!-- COLUNA LATERAL: CANAIS, ACOLHIMENTO E FAQ -->
+        <aside class="contact-info-column" aria-label="Informações de Atendimento e FAQ">
+
+          <!-- Card de Atendimento e SLA -->
+          <article class="info-card channels-card">
+            <div class="card-header">
+              <div class="icon-badge">
+                <lucide-icon name="mail" [size]="24" aria-hidden="true"></lucide-icon>
+              </div>
+              <div>
+                <h2>Atendimento Direto</h2>
+                <p class="card-subtitle">Canais oficiais de comunicação</p>
+              </div>
+            </div>
+
+            <div class="sla-badge" role="status">
+              <lucide-icon name="clock" [size]="18" aria-hidden="true"></lucide-icon>
+              <span><strong>Tempo de resposta:</strong> Habitualmente em até 48 horas úteis</span>
+            </div>
+
+            <ul class="channels-list">
+              <li>
+                <a href="https://youtube.com/@LamedOficial" target="_blank" rel="noopener noreferrer" class="channel-link" aria-label="Canal oficial do Lamed no YouTube (abre em nova aba)">
+                  <div class="channel-icon yt-icon">
+                    <lucide-icon name="youtube" [size]="20" aria-hidden="true"></lucide-icon>
+                  </div>
+                  <div class="channel-info">
+                    <span class="channel-name">YouTube</span>
+                    <span class="channel-desc">Vídeos semanais e comunidade</span>
+                  </div>
+                  <lucide-icon name="external-link" [size]="16" class="link-arrow" aria-hidden="true"></lucide-icon>
+                </a>
+              </li>
+
+              <li>
+                <a href="https://instagram.com/lamed.oficial" target="_blank" rel="noopener noreferrer" class="channel-link" aria-label="Perfil do Lamed no Instagram (abre em nova aba)">
+                  <div class="channel-icon ig-icon">
+                    <lucide-icon name="instagram" [size]="20" aria-hidden="true"></lucide-icon>
+                  </div>
+                  <div class="channel-info">
+                    <span class="channel-name">Instagram</span>
+                    <span class="channel-desc">Bastidores, avisos e reflexões</span>
+                  </div>
+                  <lucide-icon name="external-link" [size]="16" class="link-arrow" aria-hidden="true"></lucide-icon>
+                </a>
+              </li>
+            </ul>
+          </article>
+
+          <!-- Card de Pedidos de Oração -->
+          <article class="info-card prayer-card">
+            <div class="card-header">
+              <div class="icon-badge prayer-badge">
+                <lucide-icon name="heart" [size]="24" aria-hidden="true"></lucide-icon>
+              </div>
+              <div>
+                <h2>Pedidos de Oração</h2>
+                <p class="card-subtitle">Você não está sozinho</p>
+              </div>
+            </div>
+            <p class="card-text">
+              Acreditamos no poder transformador da oração e da comunhão em Cristo. Cada pedido enviado com o assunto
+              <strong>"Pedido de oração"</strong> é recebido com sigilo, carinho e colocado nas orações diárias da nossa equipe.
+            </p>
+          </article>
+
+          <!-- Card de FAQ Rápida -->
+          <article class="info-card faq-card">
+            <div class="card-header">
+              <div class="icon-badge faq-badge">
+                <lucide-icon name="file-question" [size]="24" aria-hidden="true"></lucide-icon>
+              </div>
+              <div>
+                <h2>Dúvidas Frequentes</h2>
+                <p class="card-subtitle">Respostas rápidas para as perguntas mais comuns</p>
+              </div>
+            </div>
+
+            <div class="faq-accordion" role="region" aria-label="Perguntas Frequentes">
+              @for (item of faqItems; track $index) {
+                <div class="faq-item" [class.is-open]="item.expanded">
+                  <button
+                    type="button"
+                    class="faq-question-btn"
+                    (click)="toggleFaq($index)"
+                    [attr.aria-expanded]="item.expanded"
+                    [attr.aria-controls]="'faq-answer-' + $index"
+                  >
+                    <span>{{ item.pergunta }}</span>
+                    <lucide-icon
+                      [name]="item.expanded ? 'chevron-up' : 'chevron-down'"
+                      [size]="18"
+                      class="faq-chevron"
+                      aria-hidden="true"
+                    ></lucide-icon>
+                  </button>
+                  @if (item.expanded) {
+                    <div [id]="'faq-answer-' + $index" class="faq-answer-content" role="region">
+                      <p>{{ item.resposta }}</p>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </article>
+
+        </aside>
+
+        <!-- COLUNA PRINCIPAL: FORMULÁRIO DE CONTATO -->
+        <section class="contact-form-column" aria-labelledby="form-heading">
+          <div class="contact-card">
+
+            @if (submissionSuccess) {
+              <!-- ESTADO DE SUCESSO TRIUNFANTE -->
+              <div class="submission-success-card" role="alert" aria-live="polite">
+                <div class="success-icon-wrapper">
+                  <lucide-icon name="check-circle-2" [size]="52" class="text-emerald-600" aria-hidden="true"></lucide-icon>
+                </div>
+                <h2 class="success-title">Mensagem Enviada com Sucesso!</h2>
+                <p class="success-text">
+                  Agradecemos seu contato com o <strong>Lamed</strong>. Sua mensagem já foi registrada em nosso sistema e
+                  será respondida pelo e-mail informado (habitualmente em até <strong>48 horas úteis</strong>).
+                </p>
+                <div class="success-actions">
+                  <button type="button" class="btn-nova-mensagem" (click)="resetFormState()">
+                    <lucide-icon name="mail" [size]="18" aria-hidden="true"></lucide-icon>
+                    <span>Enviar outra mensagem</span>
+                  </button>
+                  <a routerLink="/" class="btn-voltar-home">
+                    <span>Voltar para a Página Inicial</span>
+                  </a>
+                </div>
+              </div>
+            } @else {
+              <!-- FORMULÁRIO DE CONTATO ATIVO -->
+              <header class="form-card-header">
+                <h2 id="form-heading">Envie sua Mensagem</h2>
+                <p class="form-intro">
+                  Preencha os campos abaixo. Responderemos o mais breve possível diretamente em sua caixa de entrada.
+                </p>
+              </header>
+
+              <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate class="contact-form">
+
+                <!-- Campo Nome -->
+                <div class="form-group" [class.has-error]="contactForm.get('nome')?.invalid && contactForm.get('nome')?.touched">
+                  <label for="nome">
+                    Nome Completo <span class="required" aria-hidden="true">*</span>
+                  </label>
+                  <div class="input-wrapper">
+                    <input
+                      type="text"
+                      id="nome"
+                      formControlName="nome"
+                      placeholder="Ex: Matheus Gruber"
+                      autocomplete="name"
+                      [attr.aria-invalid]="contactForm.get('nome')?.invalid && contactForm.get('nome')?.touched"
+                      aria-describedby="nome-error"
+                    />
+                  </div>
+                  @if (contactForm.get('nome')?.invalid && contactForm.get('nome')?.touched) {
+                    <div id="nome-error" class="error-message" role="alert">
+                      Por favor, informe seu nome completo (mínimo de 2 caracteres).
+                    </div>
+                  }
+                </div>
+
+                <!-- Campo E-mail -->
+                <div class="form-group" [class.has-error]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                  <label for="email">
+                    Seu E-mail <span class="required" aria-hidden="true">*</span>
+                  </label>
+                  <div class="input-wrapper">
+                    <input
+                      type="email"
+                      id="email"
+                      formControlName="email"
+                      placeholder="exemplo@seuemail.com"
+                      autocomplete="email"
+                      [attr.aria-invalid]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+                      aria-describedby="email-error"
+                    />
+                  </div>
+                  @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
+                    <div id="email-error" class="error-message" role="alert">
+                      @if (contactForm.get('email')?.errors?.['required']) {
+                        O e-mail é obrigatório para que possamos te responder.
+                      }
+                      @if (contactForm.get('email')?.errors?.['email']) {
+                        Por favor, insira um endereço de e-mail válido (ex: seu.nome@dominio.com).
+                      }
+                    </div>
+                  }
+                </div>
+
+                <!-- Campo Motivo / Assunto -->
+                <div class="form-group" [class.has-error]="contactForm.get('assunto')?.invalid && contactForm.get('assunto')?.touched">
+                  <label for="assunto">
+                    Motivo do Contato <span class="required" aria-hidden="true">*</span>
+                  </label>
+                  <div class="select-wrapper">
+                    <select
+                      id="assunto"
+                      formControlName="assunto"
+                      [attr.aria-invalid]="contactForm.get('assunto')?.invalid && contactForm.get('assunto')?.touched"
+                      aria-describedby="assunto-error"
+                    >
+                      <option value="" disabled selected>Selecione um assunto...</option>
+                      @for (opcao of assuntos; track opcao) {
+                        <option [value]="opcao">{{ opcao }}</option>
+                      }
+                    </select>
+                    <lucide-icon name="chevron-down" [size]="18" class="select-chevron" aria-hidden="true"></lucide-icon>
+                  </div>
+                  @if (contactForm.get('assunto')?.invalid && contactForm.get('assunto')?.touched) {
+                    <div id="assunto-error" class="error-message" role="alert">
+                      Por favor, selecione o motivo do seu contato.
+                    </div>
+                  }
+                </div>
+
+                <!-- Campo Mensagem -->
+                <div class="form-group" [class.has-error]="contactForm.get('mensagem')?.invalid && contactForm.get('mensagem')?.touched">
+                  <div class="label-row">
+                    <label for="mensagem">
+                      Sua Mensagem <span class="required" aria-hidden="true">*</span>
+                    </label>
+                    <span class="char-count" [class.is-valid]="mensagemLength >= 10">
+                      {{ mensagemLength }} caracteres @if (mensagemLength < 10) { (mínimo 10) }
+                    </span>
+                  </div>
+                  <div class="textarea-wrapper">
+                    <textarea
+                      id="mensagem"
+                      formControlName="mensagem"
+                      rows="6"
+                      placeholder="Como podemos te ajudar? Descreva sua dúvida, sugestão ou pedido com os detalhes que achar relevantes..."
+                      [attr.aria-invalid]="contactForm.get('mensagem')?.invalid && contactForm.get('mensagem')?.touched"
+                      aria-describedby="mensagem-error"
+                    ></textarea>
+                  </div>
+                  @if (contactForm.get('mensagem')?.invalid && contactForm.get('mensagem')?.touched) {
+                    <div id="mensagem-error" class="error-message" role="alert">
+                      A mensagem é obrigatória e deve conter pelo menos 10 caracteres.
+                    </div>
+                  }
+                </div>
+
+                <!-- Aviso de Privacidade / Dados Protegidos -->
+                <div class="privacy-note">
+                  <lucide-icon name="info" [size]="18" class="privacy-icon" aria-hidden="true"></lucide-icon>
+                  <span>
+                    Seus dados são tratados com total sigilo e utilizados exclusivamente para responder à sua mensagem.
+                    Não realizamos envio de spam ou compartilhamento com terceiros.
+                  </span>
+                </div>
+
+                <!-- Botão de Submissão -->
+                <button
+                  type="submit"
+                  class="submit-button"
+                  [disabled]="contactForm.invalid || isSubmitting"
+                  [attr.aria-busy]="isSubmitting"
+                >
+                  @if (isSubmitting) {
+                    <lucide-icon name="loader-2" [size]="20" class="spin-icon" aria-hidden="true"></lucide-icon>
+                    <span>Enviando mensagem...</span>
+                  } @else {
+                    <lucide-icon name="send-horizontal" [size]="20" aria-hidden="true"></lucide-icon>
+                    <span>Enviar Mensagem</span>
+                  }
+                </button>
+
+                <!-- Feedback de Erro -->
+                @if (submissionError) {
+                  <div class="submission-error-alert" role="alert">
+                    <lucide-icon name="alert-circle" [size]="22" aria-hidden="true"></lucide-icon>
+                    <span>{{ submissionMessage }}</span>
+                  </div>
+                }
+
+              </form>
             }
-            @if (contactForm.get('email')?.errors?.['email']) {
-              <div>Por favor, insira um e-mail válido.</div>
-            }
+
           </div>
-        }
+        </section>
+
       </div>
-
-      <div class="form-group">
-        <label for="mensagem">Mensagem:</label>
-        <textarea
-          id="mensagem"
-          formControlName="mensagem"
-          rows="5"
-          placeholder="Como podemos te ajudar?"
-        ></textarea>
-        @if (contactForm.get('mensagem')?.invalid && contactForm.get('mensagem')?.touched) {
-          <div class="error-message">A mensagem é obrigatória.</div>
-        }
-      </div>
-
-      <button type="submit" [disabled]="contactForm.invalid || isSubmitting">
-        {{ isSubmitting ? 'Enviando...' : 'Enviar Mensagem' }}
-      </button>
-
-      @if (submissionError) {
-        <div class="submission-error-alert" role="alert">
-          <lucide-icon name="alert-circle" [size]="20"></lucide-icon>
-          <span>{{ submissionMessage }}</span>
-        </div>
-      }
-    </form>
-  }
-</div>
+    </div>
+  </section>
+</main>
