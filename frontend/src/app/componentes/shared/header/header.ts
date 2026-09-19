@@ -98,9 +98,23 @@ export class Header implements OnInit {
   onWindowScroll() {
     const currentScrollY = window.scrollY;
     
-    // Simple logic: Hide if scrolled down past threshold, show if at top
-    // The original logic was: > threshold -> hidden. else -> visible.
-    this.isHeaderHidden.set(currentScrollY > this.scrollThreshold);
+    // Sempre visível próximo ao topo da página ou se o menu mobile estiver aberto
+    if (currentScrollY <= 25 || this.isMenuOpen()) {
+      this.isHeaderHidden.set(false);
+      this.lastScrollY = currentScrollY;
+      return;
+    }
+
+    const delta = currentScrollY - this.lastScrollY;
+
+    // Rolando para cima com intenção: exibe o cabeçalho de volta imediatamente
+    if (delta < -6) {
+      this.isHeaderHidden.set(false);
+    }
+    // Rolando para baixo além do threshold: oculta suavemente para liberar espaço de leitura
+    else if (delta > 6 && currentScrollY > this.scrollThreshold) {
+      this.isHeaderHidden.set(true);
+    }
     
     this.lastScrollY = currentScrollY;
   }

@@ -1,24 +1,26 @@
 /* Header principal */
 .site-header,
 .cabecalho {
+  position: sticky;
+  top: 0;
   background-color: #ffffff; /* White background for header */
   padding-top: 15px;
   padding-bottom: 15px;
   margin-bottom: -30px; /* Space below header */
   border-top: 1px solid #e7e7e7; /* Subtle border at the top */
   border-bottom: 1px solid #e7e7e7; /* Subtle border */
-  box-shadow: 0 20px 14px rgba(0, 0, 0, 0.308);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
   z-index: 1000; /* Ensure it stays above other content */
-  transition: opacity 0.5s, visibility 0s linear 0s;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  transform: translateY(0);
 }
 
 .site-header.is-hidden {
+  transform: translateY(-100%);
   opacity: 0;
-  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.5s, visibility 0.5s linear 0.5s;
 }
 
 /* Container do header */
