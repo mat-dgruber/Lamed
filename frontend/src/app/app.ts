@@ -49,28 +49,22 @@ export class App implements OnInit {
         });
       }
 
+      // Garante que ao mudar de página sempre volte ao topo
+      if (typeof window !== 'undefined' && !window.location.hash) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      }
+
       // Noindex opt-in via route data
       this.seoService.setNoindex(!!data['noindex']);
     });
   }
 
   private checkEmbedded() {
-    // Debugging embedded state
-    // Check router URL, window location, and iframe context
-    const inIframe = (() => {
-      try {
-        return window.self !== window.top;
-      } catch (e) {
-        return true;
-      }
-    })();
-
+    // Modo embutido deve ser ativado apenas se explicitamente solicitado via query param
     const routerHasEmbedded = this.router.url.includes('embedded=true');
-    const windowHasEmbedded = window.location.search.includes('embedded=true');
+    const windowHasEmbedded = typeof window !== 'undefined' && window.location.search.includes('embedded=true');
 
-    const isEmbeddedUrl = routerHasEmbedded || 
-                          windowHasEmbedded ||
-                          inIframe;
+    const isEmbeddedUrl = routerHasEmbedded || windowHasEmbedded;
                           
     this.isEmbedded.set(!!isEmbeddedUrl);
   }
