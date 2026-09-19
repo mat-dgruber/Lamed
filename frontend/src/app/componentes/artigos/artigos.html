@@ -29,6 +29,10 @@
                 <h3>
                   <a [routerLink]="['/article', latest.id]">{{ latest.title }}</a>
                 </h3>
+                <p class="article-meta-grid text-sm text-zinc-600 mb-2">
+                  Por: {{ latest.author || 'Lamed' }} •
+                  {{ latest.published_at | date: 'dd/MM/yyyy' }}
+                </p>
                 <p>{{ latest.summary }}</p>
               </div>
             </article>
@@ -36,11 +40,12 @@
         }
 
         <section id="search-section" class="search-section">
-          <div class="search-container">
+          <div class="search-container" role="search" aria-label="Pesquisar artigos">
             <input
-              type="text"
+              type="search"
               id="search-input"
               placeholder="Pesquisar artigos por título ou palavra-chave..."
+              aria-label="Pesquisar artigos por título ou palavra-chave"
               [formControl]="searchControl"
             />
             <button id="search-button" aria-label="Pesquisar">
