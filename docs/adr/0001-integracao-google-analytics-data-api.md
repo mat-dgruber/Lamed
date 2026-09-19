@@ -81,4 +81,6 @@ graph LR
 - **Desenvolvimento Desacoplado:** O mock automático permite que desenvolvedores criem componentes de UI mesmo sem acesso à conta de produção do GA4.
 
 ### Mitigações e Desafios Gerenciados
-- As chamadas externas ao GA4 adicionam latência de ~200-500ms na primeira requisição; uma camada de cache em memória com TTL de 5 minutos pode ser avaliada para otimização futura.
+- **Mitigação de Latência e Quotas (Implementada):** Implementada a classe thread-safe `SimpleMemoryCache` com TTL padrão de 300 segundos (5 minutos) para todas as consultas do Google Analytics (`overview`, `realtime`, `top-content`, `traffic-sources`), reduzindo o tempo de resposta subsequente de ~300ms para <1ms e prevenindo exaustão de quotas diárias da API do Google.
+- Suporte a `refresh=true` para desvio manual sob demanda e endpoint `POST /admin/analytics/cache/clear` para expurgação imediata.
+

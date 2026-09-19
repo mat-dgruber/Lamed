@@ -17,14 +17,9 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
-    // Verifica permissão de Admin
-    // Requer Custom Claim 'admin' ou UID hardcoded
+    // Verifica permissão de Admin via Custom Claim 'admin'
     function isAdmin() {
-      return isAuthenticated() && (
-        request.auth.token.get('admin', false) == true ||
-        // ⚠️ SUBSTITUA PELO SEU UID DE ADMIN REAL ⚠️
-        request.auth.uid == "SEU_UID_AQUI" 
-      );
+      return isAuthenticated() && request.auth.token.get('admin', false) == true;
     }
 
     // -------------------------------------------------------------------------

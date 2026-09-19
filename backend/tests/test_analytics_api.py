@@ -52,3 +52,44 @@ class TestAnalyticsApi(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertIsInstance(data, list)
+
+    def test_analytics_cache_hit_and_clear(self):
+        from services.analytics_service import analytics_service, SimpleMemoryCache
+
+        # Limpa cache inicial
+        analytics_service.clear_cache()
+        self.assertEqual(analytics_service._cache.size(), 0)
+
+        # Primeira chamada popula o cache
+        res1 = self.client.get("/admin/analytics/overview?days=7")
+        self.assertEqual(res1.status_code, 200)
+        self.assertGreater(analytics_service._cache.size(), 0)
+
+        # Segunda chamada busca do cache
+        res2 = self.client.get("/admin/analytics/overview?days=7")
+        self.assertEqual(res2.status_code, 200)
+        self.assertEqual(res1.json(), res2.json())
+
+        # Chamada com refresh=True força reprocessamento
+        res3 = self.client.get("/admin/analytics/overview?days=7&refresh=true")
+        self.assertEqual(res3.status_code, 200)
+
+        # Endpoint de limpeza de cache
+        clear_res = self.client.post("/admin/analytics/cache/clear")
+        self.assertEqual(clear_res.status_code, 200)
+        self.assertIn("limpo com sucesso", clear_res.json().get("message", ""))
+        self.assertEqual(analytics_service._cache.size(), 0)
+
+    def test_simple_memory_cache_ttl_expiration(self):
+        import time
+        from services.analytics_service import SimpleMemoryCache
+
+        cache = SimpleMemoryCache(default_ttl_seconds=1)
+        cache.set("foo", "bar", ttl_seconds=1)
+        self.assertEqual(cache.get("foo"), "bar")
+
+        # Aguarda expirar TTL
+        time.sleep(1.1)
+        self.assertIsNone(cache.get("foo"))
+        self.assertEqual(cache.size(), 0)
+

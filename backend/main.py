@@ -106,7 +106,12 @@ def trigger_check_pending_bundle(x_sync_token: str = Header(None)):
     Called by GitHub Actions Cron or Cloud Scheduler.
     """
     expected = os.getenv("SYNC_TOKEN")
-    if expected and not hmac.compare_digest(x_sync_token or "", expected):
+    if not expected:
+        raise HTTPException(
+            status_code=503,
+            detail="check-pending-bundle disabled: SYNC_TOKEN environment variable is not configured",
+        )
+    if not hmac.compare_digest(x_sync_token or "", expected):
         raise HTTPException(status_code=403, detail="Invalid sync token")
 
     from scripts.check_pending_bundle_email import check_and_notify_pending_bundle

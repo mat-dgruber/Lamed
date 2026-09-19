@@ -1,15 +1,57 @@
 import os
+import time
+import threading
 import logging
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime, timezone
 
 logger = logging.getLogger(__name__)
 
+# MARK: - In-Memory Cache
+class SimpleMemoryCache:
+    """Thread-safe in-memory cache com TTL em segundos."""
+
+    def __init__(self, default_ttl_seconds: int = 300):
+        self._cache: Dict[str, Tuple[Any, float]] = {}
+        self._lock = threading.Lock()
+        self.default_ttl = default_ttl_seconds
+
+    def get(self, key: str) -> Optional[Any]:
+        with self._lock:
+            entry = self._cache.get(key)
+            if not entry:
+                return None
+            val, expire_at = entry
+            if time.time() > expire_at:
+                del self._cache[key]
+                return None
+            return val
+
+    def set(self, key: str, value: Any, ttl_seconds: Optional[int] = None) -> None:
+        ttl = ttl_seconds if ttl_seconds is not None else self.default_ttl
+        expire_at = time.time() + ttl
+        with self._lock:
+            self._cache[key] = (value, expire_at)
+
+    def clear(self) -> None:
+        with self._lock:
+            self._cache.clear()
+
+    def size(self) -> int:
+        with self._lock:
+            return len(self._cache)
+
+# MARK: - Analytics Service
 class AnalyticsService:
-    def __init__(self):
+    def __init__(self, default_ttl_seconds: int = 300):
         self.property_id = os.getenv("GA_PROPERTY_ID", "").strip()
         self._client = None
         self._client_initialized = False
+        self._cache = SimpleMemoryCache(default_ttl_seconds=default_ttl_seconds)
+
+    def clear_cache(self) -> None:
+        """Esvazia todo o cache em memória."""
+        self._cache.clear()
 
     def _get_client(self):
         if self._client_initialized:
@@ -35,9 +77,15 @@ class AnalyticsService:
     def is_configured(self) -> bool:
         return bool(self.property_id and self._get_client() is not None)
 
-    def get_overview(self, days: int = 30) -> Dict[str, Any]:
+    def get_overview(self, days: int = 30, force_refresh: bool = False) -> Dict[str, Any]:
+        cache_key = f"overview:{days}"
+        if not force_refresh:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached
+
         if not self.is_configured():
-            return {
+            mock_data = {
                 "configured": False,
                 "property_id": self.property_id,
                 "message": "Google Analytics Data API não configurada. Configure a variável GA_PROPERTY_ID no backend.",
@@ -55,6 +103,8 @@ class AnalyticsService:
                     "bounce_rate": 38.5,
                 }
             }
+            self._cache.set(cache_key, mock_data)
+            return mock_data
 
         try:
             from google.analytics.data_v1beta.types import (
@@ -99,7 +149,7 @@ class AnalyticsService:
             avg_duration = round(float(curr_row[3].value)) if len(curr_row) > 3 else 0
             bounce_rate = round(float(curr_row[4].value) * 100, 1) if len(curr_row) > 4 else 0.0
 
-            return {
+            result = {
                 "configured": True,
                 "property_id": self.property_id,
                 "summary": {
@@ -116,6 +166,8 @@ class AnalyticsService:
                     "bounce_rate": bounce_rate,
                 }
             }
+            self._cache.set(cache_key, result)
+            return result
         except Exception as e:
             logger.error("Error fetching GA overview: %s", e)
             return {
@@ -131,9 +183,15 @@ class AnalyticsService:
                 }
             }
 
-    def get_realtime(self) -> Dict[str, Any]:
+    def get_realtime(self, force_refresh: bool = False) -> Dict[str, Any]:
+        cache_key = "realtime"
+        if not force_refresh:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached
+
         if not self.is_configured():
-            return {
+            mock_data = {
                 "configured": False,
                 "active_users_now": 7,
                 "top_active_pages": [
@@ -142,6 +200,8 @@ class AnalyticsService:
                     {"path": "/videos", "users": 2},
                 ]
             }
+            self._cache.set(cache_key, mock_data)
+            return mock_data
 
         try:
             from google.analytics.data_v1beta.types import (
@@ -167,11 +227,13 @@ class AnalyticsService:
                     "users": users
                 })
 
-            return {
+            result = {
                 "configured": True,
                 "active_users_now": total_now,
                 "top_active_pages": pages[:5]
             }
+            self._cache.set(cache_key, result)
+            return result
         except Exception as e:
             logger.error("Error fetching realtime analytics: %s", e)
             return {
@@ -181,15 +243,23 @@ class AnalyticsService:
                 "top_active_pages": []
             }
 
-    def get_top_content(self, limit: int = 10, days: int = 30) -> List[Dict[str, Any]]:
+    def get_top_content(self, limit: int = 10, days: int = 30, force_refresh: bool = False) -> List[Dict[str, Any]]:
+        cache_key = f"top_content:{limit}:{days}"
+        if not force_refresh:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached
+
         if not self.is_configured():
-            return [
+            mock_data = [
                 {"path": "/artigos/a-promessa-da-alianca", "title": "A Promessa da Aliança e a Fé de Abraão", "views": 2450, "users": 1820},
                 {"path": "/videos", "title": "Estudos Bíblicos e Vídeos Expositivos", "views": 1940, "users": 1410},
                 {"path": "/", "title": "Lamed — Página Inicial", "views": 1880, "users": 1390},
                 {"path": "/artigos", "title": "Artigos Teológicos e Doutrinários", "views": 1320, "users": 980},
                 {"path": "/sobre", "title": "Sobre o Ministério Lamed", "views": 840, "users": 650},
             ]
+            self._cache.set(cache_key, mock_data)
+            return mock_data
 
         try:
             from google.analytics.data_v1beta.types import (
@@ -226,19 +296,28 @@ class AnalyticsService:
                     "views": int(row.metric_values[0].value),
                     "users": int(row.metric_values[1].value),
                 })
+            self._cache.set(cache_key, result)
             return result
         except Exception as e:
             logger.error("Error fetching top content: %s", e)
             return []
 
-    def get_traffic_sources(self, days: int = 30) -> List[Dict[str, Any]]:
+    def get_traffic_sources(self, days: int = 30, force_refresh: bool = False) -> List[Dict[str, Any]]:
+        cache_key = f"traffic_sources:{days}"
+        if not force_refresh:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached
+
         if not self.is_configured():
-            return [
+            mock_data = [
                 {"source": "Google Busca Orgânica", "sessions": 1420, "percentage": 49.1},
                 {"source": "YouTube (Canal Lamed)", "sessions": 830, "percentage": 28.7},
                 {"source": "Acesso Direto", "sessions": 410, "percentage": 14.2},
                 {"source": "Redes Sociais & Links", "sessions": 230, "percentage": 8.0},
             ]
+            self._cache.set(cache_key, mock_data)
+            return mock_data
 
         try:
             from google.analytics.data_v1beta.types import (
@@ -271,6 +350,7 @@ class AnalyticsService:
                     "sessions": sessions,
                     "percentage": pct
                 })
+            self._cache.set(cache_key, result)
             return result
         except Exception as e:
             logger.error("Error fetching traffic sources: %s", e)
