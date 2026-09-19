@@ -1,5 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import {
+  LucideAngularModule,
+  Check,
+  Tv,
+  ExternalLink,
+  Heart,
+  Video,
+  Share2,
+  CheckCircle2,
+  ShieldCheck,
+} from 'lucide-angular';
 import { Apoie } from './apoie';
 import { SeoService } from '../../core/services/seo.service';
 
@@ -9,7 +20,19 @@ describe('Apoie', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Apoie],
+      imports: [
+        Apoie,
+        LucideAngularModule.pick({
+          Check,
+          Tv,
+          ExternalLink,
+          Heart,
+          Video,
+          Share2,
+          CheckCircle2,
+          ShieldCheck,
+        }),
+      ],
       providers: [
         provideRouter([]),
         {
