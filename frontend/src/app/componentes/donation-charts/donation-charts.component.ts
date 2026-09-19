@@ -142,13 +142,14 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
             labels: {
               font: {
                 family: 'caecilia, sans-serif',
-                size: 13,
+                size: typeof window !== 'undefined' && window.innerWidth < 640 ? 11 : 13,
                 weight: 'bold'
               },
               color: '#3f3f46',
-              padding: 18,
+              padding: typeof window !== 'undefined' && window.innerWidth < 640 ? 10 : 16,
               usePointStyle: true,
-              pointStyle: 'circle'
+              pointStyle: 'circle',
+              boxWidth: typeof window !== 'undefined' && window.innerWidth < 640 ? 8 : 10
             }
           },
           tooltip: {
@@ -163,6 +164,7 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
     if (this.socialChart) {
       this.socialChart.destroy();
     }
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
     this.socialChart = new Chart(canvas, {
       type: 'doughnut',
       data: {
@@ -172,7 +174,7 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
           backgroundColor: ['#F8941B', '#E06A0B', '#940312', '#63020B'],
           hoverBackgroundColor: ['#e07e0c', '#c75806', '#7d020e', '#4c0107'],
           borderColor: '#ffffff',
-          borderWidth: 3,
+          borderWidth: isMobile ? 2 : 3,
           borderRadius: 5,
           spacing: 2,
           hoverOffset: 6
@@ -181,7 +183,7 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        cutout: '70%',
+        cutout: isMobile ? '66%' : '70%',
         animation: {
           duration: 1600,
           easing: 'easeOutQuart'
@@ -206,13 +208,14 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
             labels: {
               font: {
                 family: 'caecilia, sans-serif',
-                size: 13,
+                size: isMobile ? 11 : 13,
                 weight: 'bold'
               },
               color: '#3f3f46',
-              padding: 16,
+              padding: isMobile ? 8 : 16,
               usePointStyle: true,
-              pointStyle: 'circle'
+              pointStyle: 'circle',
+              boxWidth: isMobile ? 8 : 10
             }
           },
           tooltip: {

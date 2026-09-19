@@ -64,16 +64,20 @@
   position: relative;
   width: 100%;
   max-width: 320px;
-  height: 270px;
+  height: 280px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.chart-canvas-wrapper.wrapper-social {
+  height: 310px;
+}
+
 .chart-center-stat {
   position: absolute;
-  top: 36%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -85,6 +89,10 @@
   width: 140px;
   max-width: 80%;
   padding: 0 4px;
+}
+
+.chart-center-stat.stat-social {
+  top: 32%;
 }
 
 .stat-number {
@@ -248,12 +256,35 @@
     gap: 1.5rem;
   }
 
+  .chart-card {
+    padding: 1.75rem 1.25rem 1.5rem;
+    border-radius: 20px;
+  }
+
   .donation-details-cards-container {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 
   .chart-canvas-wrapper {
-    height: 250px;
+    height: 275px;
+    max-width: 290px;
+  }
+
+  .chart-canvas-wrapper.wrapper-social {
+    height: 320px;
+    max-width: 290px;
+  }
+
+  .chart-center-stat {
+    top: 35%;
+  }
+
+  .chart-center-stat.stat-social {
+    top: 30%;
+  }
+
+  .stat-number {
+    font-size: 1.7rem;
   }
 }

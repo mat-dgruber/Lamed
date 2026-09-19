@@ -20,9 +20,9 @@
       <h3>Alocação Social e Missionária</h3>
       <span class="chart-badge badge-destaque">55% do Total</span>
     </div>
-    <div class="chart-canvas-wrapper" (mouseleave)="resetSocialCenter()">
+    <div class="chart-canvas-wrapper wrapper-social" (mouseleave)="resetSocialCenter()">
       <canvas #socialProjectsChart id="socialProjectsChart"></canvas>
-      <div class="chart-center-stat" [attr.aria-label]="socialActiveValue + ' ' + socialActiveLabel">
+      <div class="chart-center-stat stat-social" [attr.aria-label]="socialActiveValue + ' ' + socialActiveLabel">
         <span class="stat-number" [style.color]="socialActiveColor">{{ socialActiveValue }}</span>
         <span class="stat-desc">{{ socialActiveLabel }}</span>
       </div>
