@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
 import { DonationChartsComponent } from '../../componentes/donation-charts/donation-charts.component';
 import { SeoService } from '../../core/services/seo.service';
 
@@ -9,7 +10,7 @@ type CopyStatus = 'idle' | 'copied' | 'error';
   selector: 'app-apoie',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DonationChartsComponent],
+  imports: [DonationChartsComponent, LucideAngularModule],
   templateUrl: './apoie.html',
   styleUrl: './apoie.scss'
 })

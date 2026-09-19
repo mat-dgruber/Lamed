@@ -27,4 +27,194 @@
   h2 + p {
       margin-bottom: 3em;
   }
+
+  /* SUPPORT FEATURED CARD (MEMBROS YOUTUBE) */
+  .support-featured-card {
+    background-color: #ffffff;
+    border: 2px solid var(--color-principal);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    max-width: 780px;
+    margin: 0 auto;
+    box-shadow: 0 10px 25px rgba(248, 148, 27, 0.08);
+    position: relative;
+    text-align: center;
+
+    .support-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--color-principal);
+      color: #ffffff;
+      padding: 0.35rem 1.25rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(248, 148, 27, 0.3);
+    }
+
+    h3 {
+      font-family: caecilia, sans-serif;
+      font-size: 1.85rem;
+      color: var(--text-color-headings);
+      margin-top: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .support-desc {
+      color: var(--text-color);
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+
+    .support-benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 520px;
+      margin: 0 auto 2rem;
+      text-align: left;
+
+      .benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.95rem;
+        color: var(--text-color);
+      }
+    }
+
+    .support-cta-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+
+      .support-subtext {
+        font-size: 0.825rem;
+        color: #71717a;
+      }
+    }
+  }
+
+  /* SUPPORT GRID */
+  .support-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 880px;
+    margin: 2.5rem auto 0;
+  }
+
+  .support-subcard {
+    background-color: #ffffff;
+    border: 1px solid #f4f4f5;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+
+    .support-subcard-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background-color: #fffaf2;
+      color: var(--color-destaque);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    h4 {
+      font-family: caecilia, sans-serif;
+      font-size: 1.35rem;
+      color: var(--text-color-headings);
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      color: var(--text-color);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    .valeu-img {
+      max-width: 220px;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .free-support-box {
+      background-color: #f8fafc;
+      border-radius: 12px;
+      padding: 0.85rem;
+      text-align: center;
+    }
+  }
+
+  /* TRANSPARENCY NOTE */
+  .transparency-note {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 880px;
+    margin: 2rem auto 0;
+  }
+
+  /* BUTTONS IN APOIE */
+  .btn-destaque {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.75rem;
+    border-radius: 50px;
+    background-color: var(--color-destaque);
+    color: #ffffff;
+    font-weight: bold;
+    font-family: caecilia, sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(148, 3, 18, 0.25);
+      opacity: 0.95;
+    }
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.75rem;
+    border-radius: 50px;
+    background-color: #ffffff;
+    border: 2px solid var(--main-color);
+    color: var(--main-color);
+    font-weight: bold;
+    font-family: caecilia, sans-serif;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      background-color: var(--main-color);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(248, 148, 27, 0.2);
+    }
+  }
 }

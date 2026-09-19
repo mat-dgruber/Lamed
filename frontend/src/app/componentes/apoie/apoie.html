@@ -35,66 +35,100 @@
   <section id="donation-options" class="content-section">
     <div class="container">
       <h2 class="text-center">Como Você Pode Contribuir</h2>
-      <p class="content-section-background-light-text">
-        Existem várias maneiras de apoiar o Lamed. No momento, ainda não estamos aceitando doações
-        via PIX ou TED, mas há outras formas de contribuir com nosso ministério.
+      <p class="text-center text-zinc-700 max-w-2xl mx-auto mb-10 text-lg">
+        Cada contribuição fortalece a missão de produzir e disponibilizar estudos bíblicos profundos,
+        acessíveis e transformadores para todos.
       </p>
-      <p class="content-section-background-light-text">
-        O simples fato de assistir e <strong><b>compartilhar</b></strong> nosso conteúdo no Youtube
-        nos ajuda a espalhar a mensagem e no financiamento do nosso ministério. Por isso, não se
-        esqueça de compartilhar com seus amigos, que com certeza se beneficiarão com as mensagens.
-      </p>
-      <p class="content-section-background-light-text">
-        Se você deseja apoiar nosso ministério de forma financeira, considere se tornar um membro do
-        nosso canal no YouTube. Com uma pequena contribuição mensal, você nos ajuda a continuar
-        produzindo conteúdo de qualidade e a alcançar mais pessoas com a mensagem da Bíblia.
-      </p>
-      <p class="content-section-background-light-text">
-        Para se tornar um membro, basta clicar no botão
-        <strong
-          ><b
-            ><a
-              href="https://www.youtube.com/channel/UC2PYvVmcJBLt9ymvBpnXO9A/join"
-              target="_blank"
-              rel="noopener noreferrer"
-              >"Seja Membro"</a
-            ></b
-          ></strong
-        >
-        abaixo do vídeo no nosso canal do YouTube. Sua contribuição mensal nos ajuda a cobrir os
-        custos de produção, edição e divulgação dos nossos vídeos, além de nos permitir investir em
-        novos projetos e iniciativas.
-      </p>
-      <p class="content-section-background-light-text">
-        Outra forma de nos apoiar financeiramente é através do
-        <strong><b>"Valeu demais!"</b></strong
-        >, também no Youtube.
-      </p>
-      <p class="content-section-background-light-text">
-        Com o <strong><b>"Valeu demais!"</b></strong
-        >, você pode fazer uma doação única para o nosso canal, ajudando-nos a continuar produzindo
-        conteúdo de qualidade e a alcançar mais pessoas com a mensagem da Bíblia.
-      </p>
-      <p class="content-section-background-light-text">
-        Para fazer uma doação, basta clicar no botão <strong><b>"Valeu demais!"</b></strong> abaixo
-        do vídeo no nosso canal do YouTube. Sua contribuição, por menor que seja, faz toda a
-        diferença e nos motiva a continuar produzindo conteúdo que edifica e transforma vidas.
-      </p>
-      <div class="valeu-video">
-        <img src="assets/Imagens/valeu.png" alt="Demonstração do botão Valeu Demais no YouTube" class="valeu-img" />
+
+      <!-- CARD DESTAQUE: MEMBRO YOUTUBE -->
+      <div class="support-featured-card">
+        <div class="support-badge">Principal Forma de Apoio</div>
+        <h3>Torne-se Membro no YouTube</h3>
+        <p class="support-desc">
+          Sua contribuição mensal recorrente garante a sustentabilidade de novas produções, gravações,
+          edições de vídeos e materiais didáticos semanais para todo o público.
+        </p>
+        <div class="support-benefits">
+          <div class="benefit-item">
+            <lucide-icon name="check" [size]="18" class="text-emerald-600"></lucide-icon>
+            <span>Apoio direto à produção de estudos bíblicos semanais</span>
+          </div>
+          <div class="benefit-item">
+            <lucide-icon name="check" [size]="18" class="text-emerald-600"></lucide-icon>
+            <span>Selos e recursos exclusivos de membros no YouTube</span>
+          </div>
+          <div class="benefit-item">
+            <lucide-icon name="check" [size]="18" class="text-emerald-600"></lucide-icon>
+            <span>Cancele ou altere o plano a qualquer momento</span>
+          </div>
+        </div>
+        <div class="support-cta-box">
+          <a
+            href="https://www.youtube.com/channel/UC2PYvVmcJBLt9ymvBpnXO9A/join"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-destaque inline-flex items-center gap-2"
+          >
+            <lucide-icon name="tv" [size]="20"></lucide-icon>
+            Tornar-me Membro no YouTube
+            <lucide-icon name="external-link" [size]="16"></lucide-icon>
+          </a>
+          <span class="support-subtext">Processado diretamente e com segurança pelo Google / YouTube</span>
+        </div>
       </div>
 
-      <h4 class="text-center">
-        <strong
-          ><b
-            >Seja um membro do nosso canal e ajude-nos a continuar espalhando a mensagem da
-            Bíblia!</b
-          ></strong
-        >
-      </h4>
+      <!-- FORMAS COMPLEMENTARES -->
+      <div class="support-grid mt-10">
+        <div class="support-subcard">
+          <div class="support-subcard-icon">
+            <lucide-icon name="heart" [size]="28"></lucide-icon>
+          </div>
+          <h4>"Valeu Demais" nos Vídeos</h4>
+          <p>
+            Deseja apoiar com uma contribuição única e avulsa? Clique no botão <strong>"Valeu"</strong>
+            abaixo de qualquer um dos nossos vídeos no YouTube e escolha o valor desejado.
+          </p>
+          <div class="valeu-video mt-4">
+            <img
+              src="assets/Imagens/valeu.png"
+              alt="Demonstração do botão Valeu Demais no YouTube"
+              class="valeu-img rounded-xl shadow-sm border border-zinc-200"
+              loading="lazy"
+            />
+          </div>
+        </div>
 
-      <div class="container">
-        <button (click)="navigateToSobre()" class="btn-primary-apoio">Sobre Nós</button>
+        <div class="support-subcard">
+          <div class="support-subcard-icon">
+            <lucide-icon name="share-2" [size]="28"></lucide-icon>
+          </div>
+          <h4>Compartilhar Gratuitamente</h4>
+          <p>
+            O simples fato de assistir aos vídeos completos, curtir, se inscrever e compartilhar nossos
+            estudos com seus amigos e igreja expande imensamente o impacto da mensagem sem nenhum custo.
+          </p>
+          <div class="free-support-box mt-4">
+            <p class="text-sm font-semibold text-zinc-700">
+              Compartilhe com quem precisa estudar a Bíblia com profundidade!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- AVISO DE TRANSPARÊNCIA E SEGURANÇA -->
+      <div class="transparency-note mt-10">
+        <lucide-icon name="shield-check" [size]="22" class="text-zinc-600 flex-shrink-0"></lucide-icon>
+        <p class="text-sm text-zinc-600 m-0">
+          <strong>Segurança e Transparência:</strong> Atualmente, todas as doações financeiras do Lamed são
+          processadas de forma segura e auditável pelo ecossistema do YouTube. Não operamos cobranças avulsas
+          por PIX ou transferências bancárias.
+        </p>
+      </div>
+
+      <div class="text-center mt-12">
+        <button (click)="navigateToSobre()" class="btn-secondary inline-flex items-center gap-2">
+          Conheça Mais Sobre o Lamed
+        </button>
       </div>
     </div>
   </section>
