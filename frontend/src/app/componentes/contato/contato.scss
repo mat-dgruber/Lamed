@@ -105,3 +105,84 @@ button:disabled {
     padding-top: 0.5rem;
   }
 }
+
+/* SUBMISSION FEEDBACK STATES */
+.submission-success-card {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  animation: fadeIn 0.4s ease-out;
+
+  .success-icon-wrapper {
+    display: inline-flex;
+    padding: 1rem;
+    border-radius: 50%;
+    background-color: #ecfdf5;
+    color: #059669;
+    margin-bottom: 0.5rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-family: caecilia, sans-serif;
+    color: var(--text-color-headings);
+    margin: 0;
+  }
+
+  p {
+    color: var(--text-color);
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto;
+    font-size: 1rem;
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    padding: 0.75rem 1.75rem;
+    border-radius: 50px;
+    background-color: #ffffff;
+    border: 2px solid var(--main-color);
+    color: var(--main-color);
+    font-weight: bold;
+    cursor: pointer;
+    font-family: caecilia, sans-serif;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+    width: auto;
+
+    &:hover {
+      background-color: var(--main-color);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+.submission-error-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  font-size: 0.925rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
