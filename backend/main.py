@@ -5,7 +5,7 @@ from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from config import settings
-from routes import bundles, admin, articles, videos, seo, analytics
+from routes import bundles, admin, articles, videos, seo, analytics, bible
 from api.dependencies import is_storage_configured
 
 logger = logging.getLogger("uvicorn.error")
@@ -76,6 +76,7 @@ app.include_router(articles.router, prefix="/articles", tags=["articles"])
 app.include_router(videos.router, prefix="/videos", tags=["videos"])
 app.include_router(analytics.router, tags=["analytics"])
 app.include_router(seo.router, tags=["seo"])
+app.include_router(bible.router, prefix="/bible", tags=["bible"])
 
 @app.post("/api/sync-videos", tags=["system"])
 def trigger_video_sync(x_sync_token: str = Header(None)):
