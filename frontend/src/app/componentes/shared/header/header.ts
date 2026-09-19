@@ -1,13 +1,13 @@
 import { Component, HostListener, OnInit, ViewChild, ElementRef, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd, RouterLink } from '@angular/router';
+import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, LucideAngularModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive, LucideAngularModule],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
@@ -16,10 +16,12 @@ export class Header implements OnInit {
   public isHeaderHidden = signal(false);
   public isMenuOpen = signal(false);
   public isDropdownOpen = signal(false);
+  public isBottomSheetOpen = signal(false);
+  public isAccordionOpen = signal(false);
 
   private scrollThreshold = 400;
   private lastScrollY = 0;
-  private dropdownTimer: any;
+  private dropdownTimer: ReturnType<typeof setTimeout> | undefined;
   private router = inject(Router);
 
   @ViewChild('dropdown') dropdownRef!: ElementRef;
@@ -36,9 +38,47 @@ export class Header implements OnInit {
 
   public toggleDropdown(event: MouseEvent): void {
     event.stopPropagation();
-    const isMobile = window.innerWidth < 768;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     if (isMobile) {
       this.isDropdownOpen.update(v => !v);
+    }
+  }
+
+  public openBottomSheet(focusMaterials: boolean = false): void {
+    this.isBottomSheetOpen.set(true);
+    if (focusMaterials) {
+      this.isAccordionOpen.set(true);
+    }
+    this.toggleBodyScroll(true);
+  }
+
+  public closeBottomSheet(): void {
+    this.isBottomSheetOpen.set(false);
+    this.toggleBodyScroll(false);
+  }
+
+  public toggleBottomSheet(): void {
+    if (this.isBottomSheetOpen()) {
+      this.closeBottomSheet();
+    } else {
+      this.openBottomSheet(false);
+    }
+  }
+
+  public toggleAccordion(): void {
+    this.isAccordionOpen.update(v => !v);
+  }
+
+  @HostListener('window:keydown.escape')
+  public onEscapePressed(): void {
+    if (this.isBottomSheetOpen()) {
+      this.closeBottomSheet();
+    }
+  }
+
+  private toggleBodyScroll(lock: boolean): void {
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = lock ? 'hidden' : '';
     }
   }
 
@@ -74,6 +114,8 @@ export class Header implements OnInit {
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       this.setScrollThreshold(event.urlAfterRedirects);
+      this.closeBottomSheet();
+      this.closeMenu();
     });
     this.setScrollThreshold(this.router.url);
   }
@@ -96,10 +138,11 @@ export class Header implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
+    if (typeof window === 'undefined') return;
     const currentScrollY = window.scrollY;
     
-    // Sempre visível próximo ao topo da página ou se o menu mobile estiver aberto
-    if (currentScrollY <= 25 || this.isMenuOpen()) {
+    // Sempre visível próximo ao topo da página ou se algum menu estiver aberto
+    if (currentScrollY <= 25 || this.isMenuOpen() || this.isBottomSheetOpen()) {
       this.isHeaderHidden.set(false);
       this.lastScrollY = currentScrollY;
       return;

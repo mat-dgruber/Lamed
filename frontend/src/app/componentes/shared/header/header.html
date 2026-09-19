@@ -8,15 +8,23 @@
           class="logo-img"
           loading="eager"
           fetchpriority="high"
-          width="50"
-          height="50"
+          width="46"
+          height="46"
         />
         <span class="logo-text">LAMED</span>
       </a>
     </div>
-    <nav class="main-nav" [ngClass]="{ active: isMenuOpen() }">
-      <ul>
-        <li><a routerLink="/" (click)="toggleMenu()">Início</a></li>
+
+    <!-- Desktop Navigation (oculto no mobile via CSS) -->
+    <nav class="main-nav desktop-nav" aria-label="Navegação Principal">
+      <ul class="desktop-menu-list">
+        <li>
+          <a
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >Início</a>
+        </li>
         <li class="dropdown" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" #dropdown>
           <a
             href="/materiais-extras"
@@ -26,25 +34,303 @@
             aria-haspopup="true"
             [attr.aria-expanded]="isDropdownOpen()"
             aria-controls="materiais-dropdown"
-          >Materiais</a>
+          >
+            <span>Materiais</span>
+            <lucide-icon name="chevron-down" class="dropdown-chevron"></lucide-icon>
+          </a>
           <ul id="materiais-dropdown" class="dropdown-menu" [ngClass]="{ show: isDropdownOpen() }" #dropdownMenu role="menu">
             <li><a routerLink="/videos" (click)="closeMenu()">Vídeos</a></li>
             <li><a routerLink="/artigos" (click)="closeMenu()">Artigos</a></li>
             <li><a routerLink="/materiais-extras" (click)="closeMenu()">Trilhas</a></li>
           </ul>
         </li>
-        <li><a routerLink="/apoie" (click)="toggleMenu()">Apoie</a></li>
-        <li><a routerLink="/sobre" (click)="toggleMenu()">Sobre</a></li>
-        <li><a routerLink="/contato" (click)="toggleMenu()">Contato</a></li>
+        <li><a routerLink="/apoie" routerLinkActive="active">Apoie</a></li>
+        <li><a routerLink="/sobre" routerLinkActive="active">Sobre</a></li>
+        <li><a routerLink="/contato" routerLinkActive="active">Contato</a></li>
       </ul>
     </nav>
-    <button
-      class="menu-toggle"
-      (click)="toggleMenu()"
-      aria-label="Abrir menu"
-      [attr.aria-expanded]="isMenuOpen()"
-    >
-      <lucide-icon name="menu"></lucide-icon>
-    </button>
   </div>
 </header>
+
+<!-- Mobile Bottom Navigation Bar (Fixed na base em telas <= 768px) -->
+<nav class="mobile-bottom-nav" aria-label="Barra de Navegação Móvel">
+  <div class="bottom-nav-inner">
+    <!-- Início -->
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="bottom-nav-item"
+      (click)="closeBottomSheet()"
+    >
+      <lucide-icon name="home" class="nav-icon"></lucide-icon>
+      <span class="nav-label">Início</span>
+    </a>
+
+    <!-- Materiais (Abre Bottom Sheet focado no catálogo) -->
+    <button
+      type="button"
+      class="bottom-nav-item"
+      [class.active]="isBottomSheetOpen() && isAccordionOpen()"
+      (click)="openBottomSheet(true)"
+      aria-label="Ver materiais de estudo"
+    >
+      <lucide-icon name="book-open" class="nav-icon"></lucide-icon>
+      <span class="nav-label">Materiais</span>
+    </button>
+
+    <!-- Apoie (Destaque Heroico na barra) -->
+    <a
+      routerLink="/apoie"
+      routerLinkActive="active"
+      class="bottom-nav-item apoie-item"
+      (click)="closeBottomSheet()"
+    >
+      <div class="apoie-icon-badge">
+        <lucide-icon name="heart" class="nav-icon"></lucide-icon>
+      </div>
+      <span class="nav-label">Apoie</span>
+    </a>
+
+    <!-- Menu / Mais (Abre Bottom Sheet Completa) -->
+    <button
+      type="button"
+      class="bottom-nav-item"
+      [class.active]="isBottomSheetOpen() && !isAccordionOpen()"
+      (click)="toggleBottomSheet()"
+      [attr.aria-expanded]="isBottomSheetOpen()"
+      aria-label="Abrir menu de opções"
+    >
+      <lucide-icon [name]="isBottomSheetOpen() ? 'x' : 'menu'" class="nav-icon"></lucide-icon>
+      <span class="nav-label">Menu</span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Bottom Sheet Backdrop -->
+@if (isBottomSheetOpen()) {
+  <div
+    class="bottom-sheet-backdrop"
+    (click)="closeBottomSheet()"
+    role="presentation"
+    aria-hidden="true"
+  ></div>
+}
+
+<!-- Mobile Bottom Sheet Drawer -->
+<div
+  class="mobile-bottom-sheet"
+  [class.open]="isBottomSheetOpen()"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu principal de navegação"
+>
+  <!-- Barra de Puxar / Pull Handle -->
+  <div class="sheet-handle-bar" (click)="closeBottomSheet()" aria-hidden="true">
+    <span class="sheet-handle"></span>
+  </div>
+
+  <!-- Cabeçalho da Gaveta -->
+  <div class="sheet-header">
+    <div class="sheet-brand">
+      <img
+        src="/assets/Imagens/lamed-logo.png"
+        alt="Logo Lamed"
+        class="sheet-logo-img"
+        width="36"
+        height="36"
+      />
+      <div class="sheet-brand-text">
+        <span class="sheet-title">LAMED</span>
+        <span class="sheet-subtitle">Plataforma de Estudos Bíblicos</span>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="sheet-close-btn"
+      (click)="closeBottomSheet()"
+      aria-label="Fechar menu"
+    >
+      <lucide-icon name="x"></lucide-icon>
+    </button>
+  </div>
+
+  <!-- Conteúdo Rolável da Gaveta -->
+  <div class="sheet-content">
+    <nav class="sheet-nav" aria-label="Navegação da gaveta">
+      <ul class="sheet-nav-list">
+        <!-- Início -->
+        <li class="sheet-nav-item">
+          <a
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="sheet-nav-link"
+            (click)="closeBottomSheet()"
+          >
+            <span class="sheet-link-left">
+              <lucide-icon name="home" class="sheet-link-icon"></lucide-icon>
+              <span class="sheet-link-text">Início</span>
+            </span>
+            <lucide-icon name="chevron-right" class="sheet-chevron-icon"></lucide-icon>
+          </a>
+        </li>
+
+        <!-- Accordion Materiais -->
+        <li class="sheet-nav-item accordion-item" [class.expanded]="isAccordionOpen()">
+          <button
+            type="button"
+            class="sheet-nav-link accordion-toggle"
+            (click)="toggleAccordion()"
+            [attr.aria-expanded]="isAccordionOpen()"
+            aria-controls="sheet-materiais-list"
+          >
+            <span class="sheet-link-left">
+              <lucide-icon name="book-open" class="sheet-link-icon"></lucide-icon>
+              <span class="sheet-link-text">Materiais de Estudo</span>
+            </span>
+            <lucide-icon name="chevron-down" class="accordion-chevron"></lucide-icon>
+          </button>
+
+          <div
+            id="sheet-materiais-list"
+            class="accordion-content"
+            [class.show]="isAccordionOpen()"
+            role="region"
+            aria-label="Submenu de materiais"
+          >
+            <ul class="sub-links-list">
+              <li>
+                <a
+                  routerLink="/videos"
+                  routerLinkActive="active"
+                  class="sub-nav-link"
+                  (click)="closeBottomSheet()"
+                >
+                  <div class="sub-link-icon-wrap">
+                    <lucide-icon name="video" class="sub-link-icon"></lucide-icon>
+                  </div>
+                  <div class="sub-link-info">
+                    <span class="sub-link-title">Vídeos</span>
+                    <span class="sub-link-desc">Estudos e reflexões em vídeo</span>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a
+                  routerLink="/artigos"
+                  routerLinkActive="active"
+                  class="sub-nav-link"
+                  (click)="closeBottomSheet()"
+                >
+                  <div class="sub-link-icon-wrap">
+                    <lucide-icon name="file-text" class="sub-link-icon"></lucide-icon>
+                  </div>
+                  <div class="sub-link-info">
+                    <span class="sub-link-title">Artigos</span>
+                    <span class="sub-link-desc">Textos, análises e teologia</span>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a
+                  routerLink="/materiais-extras"
+                  routerLinkActive="active"
+                  class="sub-nav-link"
+                  (click)="closeBottomSheet()"
+                >
+                  <div class="sub-link-icon-wrap">
+                    <lucide-icon name="map" class="sub-link-icon"></lucide-icon>
+                  </div>
+                  <div class="sub-link-info">
+                    <span class="sub-link-title">Trilhas de Estudo</span>
+                    <span class="sub-link-desc">Materiais complementares e guias</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <!-- Sobre -->
+        <li class="sheet-nav-item">
+          <a
+            routerLink="/sobre"
+            routerLinkActive="active"
+            class="sheet-nav-link"
+            (click)="closeBottomSheet()"
+          >
+            <span class="sheet-link-left">
+              <lucide-icon name="info" class="sheet-link-icon"></lucide-icon>
+              <span class="sheet-link-text">Sobre o Lamed</span>
+            </span>
+            <lucide-icon name="chevron-right" class="sheet-chevron-icon"></lucide-icon>
+          </a>
+        </li>
+
+        <!-- Contato -->
+        <li class="sheet-nav-item">
+          <a
+            routerLink="/contato"
+            routerLinkActive="active"
+            class="sheet-nav-link"
+            (click)="closeBottomSheet()"
+          >
+            <span class="sheet-link-left">
+              <lucide-icon name="mail" class="sheet-link-icon"></lucide-icon>
+              <span class="sheet-link-text">Fale Conosco</span>
+            </span>
+            <lucide-icon name="chevron-right" class="sheet-chevron-icon"></lucide-icon>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Card CTA de Apoio -->
+    <div class="sheet-cta-card">
+      <div class="cta-card-content">
+        <div class="cta-header">
+          <span class="cta-badge">Apoie a Missão</span>
+          <div class="cta-icon-pill">
+            <lucide-icon name="heart" class="cta-icon"></lucide-icon>
+          </div>
+        </div>
+        <p class="cta-text">Ajude a manter nossos estudos e conteúdos bíblicos acessíveis para todos.</p>
+        <a
+          routerLink="/apoie"
+          class="cta-button"
+          (click)="closeBottomSheet()"
+        >
+          Quero Apoiar o Projeto
+        </a>
+      </div>
+    </div>
+
+    <!-- Redes Sociais no Rodapé -->
+    <div class="sheet-social-footer">
+      <span class="social-label">Conecte-se com o Lamed</span>
+      <div class="social-buttons">
+        <a
+          href="https://www.youtube.com/@Lamed148"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-link-btn youtube"
+          aria-label="Canal do YouTube do Lamed"
+        >
+          <lucide-icon name="youtube"></lucide-icon>
+          <span>YouTube</span>
+        </a>
+        <a
+          href="https://www.instagram.com/lamed148/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-link-btn instagram"
+          aria-label="Instagram do Lamed"
+        >
+          <lucide-icon name="instagram"></lucide-icon>
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

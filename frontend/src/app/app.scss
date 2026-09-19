@@ -1,0 +1,10 @@
+.site-main {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .site-main {
+    /* Espaçamento ergonômico para que a Bottom Navigation Bar não sobreponha botões ou rodapé */
+    padding-bottom: calc(74px + env(safe-area-inset-bottom, 12px));
+  }
+}
