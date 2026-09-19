@@ -48,6 +48,7 @@ import {
   FileText,
   Headphones,
   File,
+  Play,
   PlayCircle,
   Link,
   Inbox,
@@ -76,6 +77,8 @@ import {
   Clock,
   ArrowRight,
   ChevronRight,
+  Instagram,
+  VideoOff,
 } from 'lucide-angular';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -142,6 +145,7 @@ export const appConfig: ApplicationConfig = {
         FileText,
         Headphones,
         File,
+        Play,
         PlayCircle,
         Link,
         Inbox,
@@ -170,6 +174,8 @@ export const appConfig: ApplicationConfig = {
         Clock,
         ArrowRight,
         ChevronRight,
+        Instagram,
+        VideoOff,
       }),
     ),
     { provide: LOCALE_ID, useValue: 'pt-BR' },

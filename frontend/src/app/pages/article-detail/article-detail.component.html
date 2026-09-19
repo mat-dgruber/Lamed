@@ -1,109 +1,205 @@
-<div [class.min-h-screen]="!isEmbedded()" [class.bg-zinc-50]="!isEmbedded()" [class.pb-20]="!isEmbedded()" [class.p-0]="isEmbedded()">
+<div class="article-detail-page" [class.embedded-view]="isEmbedded()">
+  <!-- Reading Progress Bar -->
+  @if (!isEmbedded()) {
+    <div class="reading-progress-bar" [style.width.%]="readingProgress()" aria-hidden="true"></div>
+  }
+
   <!-- Loading State -->
   @if (loading()) {
-    <div class="flex h-96 items-center justify-center">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+    <div class="detail-loading-state" aria-live="polite">
+      <div class="loading-spinner"></div>
+      <p>Carregando artigo...</p>
     </div>
   }
 
   @if (article(); as loadedArticle) {
-    <div [class.container]="!isEmbedded()" [class.mx-auto]="!isEmbedded()" [class.px-0]="isEmbedded()" [class.sm:px-4]="!isEmbedded()" [class.pt-0]="true" [class.sm:pt-6]="!isEmbedded()" [class.max-w-4xl]="!isEmbedded()" [class.w-full]="isEmbedded()">
+    <div class="detail-container">
+      <!-- Navegação Superior Prominente (Voltar para Artigos) -->
+      @if (!isEmbedded()) {
+        <nav class="detail-breadcrumbs" aria-label="Navegação">
+          <a routerLink="/artigos" class="btn-top-back" aria-label="Voltar para todos os artigos">
+            <div class="back-icon-circle">
+              <lucide-icon name="arrow-left" [size]="18"></lucide-icon>
+            </div>
+            <span>Voltar para todos os artigos</span>
+          </a>
+        </nav>
+      }
 
-
-      <!-- Article Container -->
-      <div [class.bg-white]="true" [class.rounded-none]="isEmbedded()" [class.sm:rounded-2xl]="!isEmbedded()" [class.shadow-none]="isEmbedded()" [class.sm:shadow-sm]="!isEmbedded()" [class.ring-0]="isEmbedded()" [class.sm:ring-1]="!isEmbedded()" class="ring-zinc-200 overflow-hidden w-full">
+      <!-- Main Article Card -->
+      <article class="article-card-main">
         <!-- Banner Image (16:9 Aspect Ratio) -->
         @if (loadedArticle.cover_image) {
-          <div class="relative aspect-video w-full overflow-hidden rounded-none sm:rounded-t-2xl">
+          <div class="article-cover-banner">
             <img
               [src]="loadedArticle.cover_image | googleDriveImage"
               [alt]="loadedArticle.title"
-              class="h-full w-full object-cover"
+              class="cover-img"
               (error)="onImageError($event)"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="cover-gradient-overlay" aria-hidden="true"></div>
           </div>
         }
 
-        <!-- Content Wrapper -->
-        <div [class.p-5]="!isEmbedded()" [class.sm:p-8]="!isEmbedded()" [class.md:p-12]="!isEmbedded()" [class.p-4]="isEmbedded()" [class.sm:p-6]="isEmbedded()">
-          <!-- Header -->
-          <div class="mb-8">
-            <div class="flex flex-wrap items-center gap-3 mb-4 text-sm">
-              <span
-                class="inline-flex items-center rounded-full bg-orange-100 px-2.5 py-0.5 font-medium text-orange-800"
-              >
-                Artigo
-              </span>
+        <!-- Content Area -->
+        <div class="article-inner-body">
+          <!-- Article Header -->
+          <header class="article-header">
+            <div class="article-meta-tags-row">
+              @if (loadedArticle.tags && loadedArticle.tags.length > 0) {
+                <span class="tag-pill-highlight">{{ loadedArticle.tags[0] }}</span>
+              } @else {
+                <span class="tag-pill-highlight">Artigo</span>
+              }
+
               @if (loadedArticle.published_at) {
-                <span class="text-zinc-500 flex items-center gap-1">
-                  <lucide-icon [name]="'calendar'" [size]="14"></lucide-icon>
-                  {{ toDate(loadedArticle.published_at) | date: 'longDate' }}
+                <span class="meta-item">
+                  <lucide-icon name="calendar" [size]="14"></lucide-icon>
+                  <time [attr.datetime]="loadedArticle.published_at">
+                    {{ toDate(loadedArticle.published_at) | date: 'longDate' }}
+                  </time>
                 </span>
               }
+
               @if (loadedArticle.author) {
-                <span class="text-zinc-500 flex items-center gap-1">
-                  <lucide-icon [name]="'user'" [size]="14"></lucide-icon>
+                <span class="meta-item">
+                  <lucide-icon name="user" [size]="14"></lucide-icon>
                   {{ loadedArticle.author }}
                 </span>
               }
 
+              <span class="meta-item reading-estimate">
+                <lucide-icon name="clock" [size]="14"></lucide-icon>
+                {{ readingTime() }} min de leitura
+              </span>
             </div>
 
-            <h1 class="text-3xl md:text-4xl font-bold text-zinc-900 leading-tight mb-4">
+            <h1 class="article-headline">
               {{ loadedArticle.title }}
             </h1>
 
             @if (loadedArticle.subtitle) {
-              <p class="text-xl text-zinc-700 font-medium mb-4">
+              <p class="article-subheadline">
                 {{ loadedArticle.subtitle }}
               </p>
             }
 
             @if (loadedArticle.summary) {
-              <p
-                class="text-lg text-zinc-600 leading-relaxed italic border-l-4 border-orange-500 pl-4"
-              >
-                {{ loadedArticle.summary }}
-              </p>
+              <div class="article-lead-box">
+                <p>{{ loadedArticle.summary }}</p>
+              </div>
             }
-          </div>
 
-          <!-- Divider -->
-          <hr class="border-zinc-100 mb-8" />
+            <!-- Social Share Bar Superior -->
+            @if (!isEmbedded()) {
+              <div class="share-actions-row">
+                <span class="share-label">Compartilhar:</span>
+                <button
+                  type="button"
+                  (click)="shareWhatsApp()"
+                  class="btn-share-social whatsapp"
+                  title="Compartilhar no WhatsApp"
+                  aria-label="Compartilhar no WhatsApp"
+                >
+                  <lucide-icon name="share-2" [size]="16"></lucide-icon>
+                  <span>WhatsApp</span>
+                </button>
+                <button
+                  type="button"
+                  (click)="shareArticle()"
+                  class="btn-share-social"
+                  [class.copied]="shareCopied()"
+                  title="Copiar link do artigo"
+                  aria-label="Copiar link do artigo"
+                >
+                  <lucide-icon [name]="shareCopied() ? 'check' : 'link'" [size]="16"></lucide-icon>
+                  <span>{{ shareCopied() ? 'Link Copiado!' : 'Copiar Link' }}</span>
+                </button>
+              </div>
+            }
+          </header>
 
-          <!-- HTML Content -->
-          <div class="prose prose-lg prose-orange max-w-none article-content">
+          <hr class="article-separator" />
+
+          <!-- HTML Content / Rich Text -->
+          <div class="article-rich-text article-content">
             <div [innerHTML]="safeContent"></div>
           </div>
-        </div>
-      </div>
 
-      <!-- Floating Back Button -->
-      @if (!isEmbedded()) {
-        <a
-          routerLink="/artigos"
-          class="floating-back-button"
-          id="back-to-articles-button"
-          title="Voltar para Artigos"
-          [class.visible]="isButtonVisible()"
-        >
-          <lucide-icon [name]="'arrow-left'" [size]="24"></lucide-icon>
-          <span class="button-text-artigos">Voltar para Artigos</span>
-        </a>
+          <!-- Tags de Rodapé do Artigo -->
+          @if (loadedArticle.tags && loadedArticle.tags.length > 1) {
+            <footer class="article-footer-tags">
+              <span class="footer-tags-label">Tags relacionadas:</span>
+              <div class="tags-list">
+                @for (tag of loadedArticle.tags; track tag) {
+                  <span class="footer-tag-item">{{ tag }}</span>
+                }
+              </div>
+            </footer>
+          }
+
+          <!-- Box de Compartilhamento & Engajamento Final -->
+          @if (!isEmbedded()) {
+            <div class="engagement-callout">
+              <div class="callout-icon">
+                <lucide-icon name="heart" [size]="24"></lucide-icon>
+              </div>
+              <div class="callout-body">
+                <h4>Gostou deste estudo bíblico?</h4>
+                <p>Compartilhe esta reflexão com sua família, amigos ou grupos de estudo da igreja.</p>
+              </div>
+              <button type="button" (click)="shareWhatsApp()" class="btn-callout-share">
+                <lucide-icon name="share-2" [size]="16"></lucide-icon>
+                <span>Compartilhar agora</span>
+              </button>
+            </div>
+          }
+        </div>
+      </article>
+
+      <!-- Seção Continue Lendo (Peak-End Rule: Elimina beco sem saída) -->
+      @if (!isEmbedded() && relatedArticles().length > 0) {
+        <section class="related-articles-section" aria-label="Artigos recomendados">
+          <div class="related-header">
+            <h3>Continue explorando</h3>
+            <a routerLink="/artigos" class="see-all-link">
+              <span>Ver todos os artigos</span>
+              <lucide-icon name="arrow-right" [size]="16"></lucide-icon>
+            </a>
+          </div>
+
+          <div class="related-cards-grid">
+            @for (rel of relatedArticles(); track rel.id) {
+              <a [routerLink]="['/article', rel.id]" class="related-card-item">
+                <div class="related-card-thumb">
+                  @if (rel.cover_image) {
+                    <img [src]="rel.cover_image | googleDriveImage" [alt]="rel.title" loading="lazy" />
+                  }
+                </div>
+                <div class="related-card-info">
+                  <h4>{{ rel.title }}</h4>
+                  <span class="related-date">{{ rel.published_at | date: 'dd/MM/yyyy' }}</span>
+                </div>
+              </a>
+            }
+          </div>
+        </section>
       }
     </div>
   }
 
   <!-- Not Found State -->
   @if (!loading() && !article()) {
-    <div class="flex h-96 flex-col items-center justify-center text-center px-4">
-      <lucide-icon [name]="'file-question'" [size]="48" class="text-zinc-400 mb-4"></lucide-icon>
-      <h3 class="text-lg font-medium text-zinc-900 dark:text-white">Artigo não encontrado</h3>
-      <p class="text-zinc-500 mt-2">
-        O artigo que você procura pode ter sido removido ou não existe.
-      </p>
-      <a routerLink="/artigos" class="mt-6 btn-primary">Voltar para Artigos</a>
+    <div class="detail-not-found">
+      <div class="not-found-icon">
+        <lucide-icon name="file-question" [size]="48"></lucide-icon>
+      </div>
+      <h2>Artigo não encontrado</h2>
+      <p>O artigo que você está procurando não existe, foi arquivado ou o link está incorreto.</p>
+      <a routerLink="/artigos" class="btn-return-articles">
+        <lucide-icon name="arrow-left" [size]="18"></lucide-icon>
+        <span>Voltar para Artigos</span>
+      </a>
     </div>
   }
 </div>

@@ -1,201 +1,246 @@
 <div class="artigos-page">
   <section class="content-section">
     <div class="container">
-      <h1>Artigos Bíblicos</h1>
-      <p>
-        Explore nossos artigos para um estudo aprofundado da Bíblia, com reflexões sobre teologia e
-        vida cristã.
-      </p>
+      <header class="artigos-header text-center">
+        <h1>Artigos Bíblicos</h1>
+        <p class="hero-description">
+          Explore nossos artigos para um estudo aprofundado da Bíblia, com reflexões sobre teologia,
+          saúde e vida cristã.
+        </p>
+      </header>
 
       @if (articles() !== undefined) {
-        @if (latestArticle(); as latest) {
-          <section id="destaque">
-            <h2>Último artigo em destaque</h2>
-            <article>
-              <div class="last-article">
-                @if (latest.cover_image) {
-                  <div class="article-banner-image aspect-video w-full overflow-hidden rounded-t-xl sm:rounded-t-2xl">
-                    <a [routerLink]="['/article', latest.id]" class="block w-full h-full">
-                      <img
-                        [src]="latest.cover_image | googleDriveImage"
-                        [alt]="latest.title"
-                        loading="lazy"
-                        (error)="onImageError($event)"
-                        class="h-full w-full object-cover"
-                      />
-                    </a>
-                  </div>
-                }
+        <!-- Artigo em Destaque (Ocultado durante a pesquisa para focar nos resultados) -->
+        @if (!isSearching() && latestArticle(); as latest) {
+          <section id="destaque" aria-label="Artigo em destaque">
+            <div class="section-title-row">
+              <h2>Último artigo em destaque</h2>
+              <span class="destaque-badge">Novidade</span>
+            </div>
+            <article class="last-article">
+              @if (latest.cover_image) {
+                <div class="article-banner-image">
+                  <a [routerLink]="['/article', latest.id]" class="banner-link" [attr.aria-label]="'Ler artigo: ' + latest.title">
+                    <img
+                      [src]="latest.cover_image | googleDriveImage"
+                      [alt]="latest.title"
+                      loading="lazy"
+                      (error)="onImageError($event)"
+                      class="banner-img"
+                    />
+                  </a>
+                </div>
+              }
+              <div class="destaque-content">
+                <div class="destaque-meta-row">
+                  @if (latest.tags && latest.tags.length > 0) {
+                    <span class="category-pill">{{ latest.tags[0] }}</span>
+                  }
+                  <span class="meta-item author">Por: {{ latest.author || 'Lamed' }}</span>
+                  <span class="meta-sep">•</span>
+                  <span class="meta-item date">{{ latest.published_at | date: 'dd/MM/yyyy' }}</span>
+                  <span class="meta-sep">•</span>
+                  <span class="meta-item reading-time">
+                    <lucide-icon name="clock" [size]="13"></lucide-icon>
+                    {{ getReadingTime(latest) }} min de leitura
+                  </span>
+                </div>
                 <h3>
                   <a [routerLink]="['/article', latest.id]">{{ latest.title }}</a>
                 </h3>
-                <p class="article-meta-grid text-sm text-zinc-600 mb-2">
-                  Por: {{ latest.author || 'Lamed' }} •
-                  {{ latest.published_at | date: 'dd/MM/yyyy' }}
-                </p>
-                <p>{{ latest.summary }}</p>
+                <p class="destaque-summary">{{ latest.summary }}</p>
+                <div class="destaque-action">
+                  <a [routerLink]="['/article', latest.id]" class="btn-read-destaque">
+                    <span>Ler artigo completo</span>
+                    <lucide-icon name="arrow-right" [size]="16"></lucide-icon>
+                  </a>
+                </div>
               </div>
             </article>
           </section>
         }
 
-        <section id="search-section" class="search-section">
-          <div class="search-container" role="search" aria-label="Pesquisar artigos">
+        <!-- Seção de Busca Inteligente com Chips de Temas -->
+        <section id="search-section" class="search-section" aria-label="Busca de artigos">
+          <div class="search-container" role="search">
+            <span class="search-leading-icon" aria-hidden="true">
+              <lucide-icon name="search" [size]="20"></lucide-icon>
+            </span>
             <input
               type="search"
               id="search-input"
-              placeholder="Pesquisar artigos por título ou palavra-chave..."
-              aria-label="Pesquisar artigos por título ou palavra-chave"
+              placeholder="Pesquisar por tema, título ou palavras-chave..."
+              aria-label="Pesquisar artigos por tema, título ou palavras-chave"
               [formControl]="searchControl"
             />
-            <button id="search-button" aria-label="Pesquisar">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-search"
+            @if (isSearching()) {
+              <button
+                type="button"
+                id="clear-search-button"
+                class="search-clear-btn"
+                aria-label="Limpar pesquisa"
+                (click)="clearSearch()"
               >
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.3-4.3" />
-              </svg>
-            </button>
+                <lucide-icon name="x" [size]="18"></lucide-icon>
+              </button>
+            }
           </div>
+
+          <!-- Chips de Descoberta Rápida por Tema -->
+          <div class="search-chips-container" aria-label="Temas populares">
+            <span class="chips-label">Temas populares:</span>
+            <div class="chips-list">
+              @for (tag of popularTags; track tag) {
+                <button
+                  type="button"
+                  class="tag-chip"
+                  [class.active]="activeTag() === tag"
+                  (click)="filterByTag(tag)"
+                >
+                  {{ tag }}
+                </button>
+              }
+            </div>
+          </div>
+
+          @if (isSearching()) {
+            <div class="search-status-bar">
+              <span class="status-pill">
+                <lucide-icon name="sparkles" [size]="14"></lucide-icon>
+                Busca inteligente: <strong>{{ baseArticles().length }}</strong> artigo(s) encontrado(s) por relevância
+              </span>
+            </div>
+          }
         </section>
 
-        <section id="lista-artigos">
-          <h2>Mais artigos</h2>
+        <!-- Grid Unificado de Artigos -->
+        <section id="lista-artigos" aria-label="Listagem de artigos">
+          <div class="section-title-row">
+            <h2>{{ isSearching() ? 'Resultados da pesquisa' : 'Mais artigos' }}</h2>
+            @if (!isSearching() && baseArticles().length > 0) {
+              <span class="total-articles-badge">{{ baseArticles().length }} artigos disponíveis</span>
+            }
+          </div>
+
           <div class="articles-grid">
-            @for (article of initialArticles(); track article.id) {
-              <div class="article-card">
-                <a [routerLink]="['/article', article.id]" class="article-card-link">
-                  @if (article.cover_image) {
-                    <div class="h-48 w-full overflow-hidden rounded-[25px]">
+            @for (article of visibleArticles(); track article.id) {
+              <article class="article-card">
+                <a [routerLink]="['/article', article.id]" class="article-card-link" [attr.aria-label]="'Ler artigo: ' + article.title">
+                  <div class="article-card-thumb">
+                    @if (article.cover_image) {
                       <img
                         [src]="article.cover_image | googleDriveImage"
                         [alt]="article.title"
-                        class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                        loading="lazy"
+                        class="thumb-img"
                         (error)="onImageError($event)"
                       />
-                    </div>
-                  }
+                    }
+                    @if (article.tags && article.tags.length > 0) {
+                      <span class="card-tag-badge">{{ article.tags[0] }}</span>
+                    }
+                  </div>
                   <div class="article-card-content">
+                    <div class="card-meta-row">
+                      <span class="meta-author">{{ article.author || 'Lamed' }}</span>
+                      <span class="meta-sep">•</span>
+                      <span class="meta-date">{{ article.published_at | date: 'dd/MM/yyyy' }}</span>
+                      <span class="meta-sep">•</span>
+                      <span class="meta-reading">
+                        <lucide-icon name="clock" [size]="12"></lucide-icon>
+                        {{ getReadingTime(article) }} min
+                      </span>
+                    </div>
                     <h4>{{ article.title }}</h4>
-                    <p class="article-meta-grid">
-                      Por: {{ article.author || 'Lamed' }}<br />
-                      <span class="text-sm text-gray-500">{{
-                        article.published_at | date: 'dd/MM/yyyy'
-                      }}</span>
-                    </p>
                     <p class="article-desc-grid">
-                      {{ article.summary | slice: 0 : 100
-                      }}{{ article.summary && article.summary.length > 100 ? '...' : '' }}
+                      {{ article.summary | slice: 0 : 110 }}{{ article.summary && article.summary.length > 110 ? '...' : '' }}
                     </p>
+                    <div class="card-action-row">
+                      <span class="read-more-text">Ler artigo</span>
+                      <lucide-icon name="arrow-right" [size]="16" class="arrow-icon"></lucide-icon>
+                    </div>
                   </div>
                 </a>
-              </div>
+              </article>
             } @empty {
-              <div *ngIf="!latestArticle()" class="col-span-3 text-center py-8 text-gray-500">
-                Nenhum artigo encontrado.
+              <div class="empty-search-state">
+                <div class="empty-icon-wrap">
+                  <lucide-icon name="search" [size]="36"></lucide-icon>
+                </div>
+                @if (isSearching()) {
+                  <h3>Nenhum artigo encontrado para "{{ searchTerm() }}"</h3>
+                  <p>Tente buscar por sinônimos ou selecione um dos temas sugeridos abaixo.</p>
+                  <div class="empty-chips-row">
+                    @for (tag of popularTags; track tag) {
+                      <button type="button" class="tag-chip" (click)="filterByTag(tag)">
+                        {{ tag }}
+                      </button>
+                    }
+                  </div>
+                  <button type="button" (click)="clearSearch()" class="btn-clear-empty">
+                    Limpar pesquisa
+                  </button>
+                } @else {
+                  <h3>Nenhum artigo disponível no momento</h3>
+                  <p>Novos artigos estão sendo preparados. Volte em breve!</p>
+                }
               </div>
             }
           </div>
 
-          @if (remainingArticles().length > 0) {
+          <!-- Controle de Paginação / Carregar Mais -->
+          @if (hasMoreArticles()) {
             <div class="show-more-container">
-              <button (click)="toggleShowAll()" class="btn-show-more">
-                {{
-                  showAll()
-                    ? 'Ver menos artigos'
-                    : 'Ver mais artigos (' + remainingArticles().length + ')'
-                }}
-                <lucide-icon
-                  [name]="showAll() ? 'chevron-up' : 'chevron-down'"
-                  [size]="20"
-                ></lucide-icon>
+              <button (click)="toggleShowAll()" class="btn-show-more" type="button">
+                <span>Ver mais artigos ({{ remainingCount() }})</span>
+                <lucide-icon name="chevron-down" [size]="18"></lucide-icon>
               </button>
             </div>
-
-            @if (showAll()) {
-              <div class="articles-grid">
-                @for (article of remainingArticles(); track article.id) {
-                  <div class="article-card">
-                    <a [routerLink]="['/article', article.id]" class="article-card-link">
-                      @if (article.cover_image) {
-                        <div class="h-48 w-full overflow-hidden rounded-[25px]">
-                          <img
-                            [src]="article.cover_image | googleDriveImage"
-                            [alt]="article.title"
-                            class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                            (error)="onImageError($event)"
-                          />
-                        </div>
-                      }
-                      <div class="article-card-content">
-                        <h4>{{ article.title }}</h4>
-                        <p class="article-meta-grid">
-                          Por: {{ article.author || 'Lamed' }}<br />
-                          <span class="text-sm text-gray-500">{{
-                            article.published_at | date: 'dd/MM/yyyy'
-                          }}</span>
-                        </p>
-                        <p class="article-desc-grid">
-                          {{ article.summary | slice: 0 : 100
-                          }}{{ article.summary && article.summary.length > 100 ? '...' : '' }}
-                        </p>
-                      </div>
-                    </a>
-                  </div>
-                }
-              </div>
-            }
+          } @else if (showAll() && !isSearching() && baseArticles().length > 6) {
+            <div class="show-more-container">
+              <button (click)="toggleShowAll()" class="btn-show-more btn-show-less" type="button">
+                <span>Ver menos artigos</span>
+                <lucide-icon name="chevron-up" [size]="18"></lucide-icon>
+              </button>
+            </div>
           }
         </section>
       } @else {
-        <!-- Skeleton Loading State -->
-        <div class="animate-pulse">
-          <!-- Latest Article Skeleton -->
-          <section id="destaque-skeleton" class="mb-12">
-            <div class="h-8 w-64 bg-zinc-200 rounded mb-6"></div>
-            <div
-              class="bg-white rounded-[25px] overflow-hidden shadow-sm border border-zinc-100 p-6"
-            >
-              <div class="h-64 w-full bg-zinc-200 rounded-[25px] mb-6"></div>
-              <div class="h-8 w-3/4 bg-zinc-200 rounded mb-4"></div>
-              <div class="space-y-2">
-                <div class="h-4 w-full bg-zinc-200 rounded"></div>
-                <div class="h-4 w-5/6 bg-zinc-200 rounded"></div>
+        <!-- Skeleton Loading State com layout proporcional exato -->
+        <div class="skeleton-wrapper animate-pulse" aria-hidden="true">
+          <!-- Destaque Skeleton -->
+          <div class="destaque-skeleton">
+            <div class="h-6 w-48 bg-zinc-200 rounded mb-4"></div>
+            <div class="skeleton-hero-card">
+              <div class="skeleton-img"></div>
+              <div class="skeleton-hero-body">
+                <div class="h-4 w-32 bg-zinc-200 rounded mb-3"></div>
+                <div class="h-8 w-3/4 bg-zinc-200 rounded mb-3"></div>
+                <div class="h-4 w-full bg-zinc-200 rounded mb-2"></div>
+                <div class="h-4 w-4/5 bg-zinc-200 rounded mb-4"></div>
+                <div class="h-10 w-36 bg-zinc-200 rounded-full"></div>
               </div>
             </div>
-          </section>
+          </div>
 
           <!-- Search Skeleton -->
-          <section class="mb-12">
-            <div class="h-12 w-full max-w-2xl mx-auto bg-zinc-200 rounded-full"></div>
-          </section>
+          <div class="h-12 w-full max-w-xl mx-auto bg-zinc-200 rounded-full mb-10"></div>
 
           <!-- Grid Skeleton -->
-          <section>
-            <div class="h-8 w-48 bg-zinc-200 rounded mb-6"></div>
-            <div class="articles-grid">
-              @for (i of [1, 2, 3, 4, 5, 6]; track i) {
-                <div class="article-card bg-white p-4 rounded-[25px] border border-zinc-100 h-96">
-                  <div class="h-48 w-full bg-zinc-200 rounded-[25px] mb-4"></div>
-                  <div class="h-6 w-3/4 bg-zinc-200 rounded mb-2"></div>
-                  <div class="h-4 w-1/2 bg-zinc-200 rounded mb-4"></div>
-                  <div class="space-y-2">
-                    <div class="h-4 w-full bg-zinc-200 rounded"></div>
-                    <div class="h-4 w-full bg-zinc-200 rounded"></div>
-                  </div>
+          <div class="articles-grid">
+            @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+              <div class="skeleton-article-card">
+                <div class="skeleton-card-thumb"></div>
+                <div class="skeleton-card-content">
+                  <div class="h-3 w-28 bg-zinc-200 rounded mb-2"></div>
+                  <div class="h-5 w-3/4 bg-zinc-200 rounded mb-3"></div>
+                  <div class="h-3 w-full bg-zinc-200 rounded mb-1"></div>
+                  <div class="h-3 w-4/5 bg-zinc-200 rounded mb-4"></div>
+                  <div class="h-3 w-20 bg-zinc-200 rounded"></div>
                 </div>
-              }
-            </div>
-          </section>
+              </div>
+            }
+          </div>
         </div>
       }
     </div>
