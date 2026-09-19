@@ -1,172 +1,383 @@
-<section id="hero" class="hero-section">
-  <div class="container">
-    @if (showHeroText1()) {
-      <div id="hero-text-1" [style.opacity]="heroText1Opacity()" class="hero-text">
-        <h1 class="hero-main-title">Bem-vindo ao LAMED</h1>
-        <p class="hero-subtitle">Onde você estuda a Bíblia de um jeito diferenciado.</p>
-      </div>
-    }
-    @if (showHeroText2()) {
-      <div id="hero-text-2" [style.opacity]="heroText2Opacity()" class="hero-text">
+<main class="site-main home-page">
+  <!-- 1. Hero Section -->
+  <section id="hero" class="hero-section" aria-label="Apresentação do Lamed">
+    <div class="container">
+      <div class="hero-text">
         <h1 class="hero-main-title">Estude a Bíblia de um jeito diferenciado</h1>
         <p class="hero-subtitle">
-          O Lamed é o seu portal para um estudo bíblico aprofundado e transformador.<br class="hidden sm:inline" />
-          Explore nossos vídeos, artigos e materiais de estudo.
+          O Lamed é o seu portal para um estudo bíblico aprofundado, exegético e transformador.<br class="hidden sm:inline" />
+          Explore guias de estudo semanais, artigos teológicos e exposições em vídeo.
         </p>
         <div class="hero-ctas">
-          <a routerLink="/materiais-extras" class="btn-hero-primary">
-            <lucide-icon name="book-open" [size]="20"></lucide-icon>
+          <a routerLink="/materiais-extras" class="btn-hero-primary" aria-label="Ver lição e materiais de estudo desta semana">
+            <lucide-icon name="book-open" [size]="20" aria-hidden="true"></lucide-icon>
             <span>Ver Lição desta Semana</span>
           </a>
-          <a routerLink="/artigos" class="btn-hero-secondary">
-            <lucide-icon name="file-text" [size]="20"></lucide-icon>
+          <a routerLink="/artigos" class="btn-hero-secondary" aria-label="Explorar acervo de artigos teológicos">
+            <lucide-icon name="file-text" [size]="20" aria-hidden="true"></lucide-icon>
             <span>Explorar Artigos</span>
           </a>
         </div>
       </div>
-    }
-  </div>
-</section>
+    </div>
+  </section>
 
-<section id="call-to-action-study" class="content-section">
-  <div class="container">
-    <h2>Explore Nossos Materiais de Estudo</h2>
-    <p class="mb-8">
-      Descubra uma variedade de recursos para aprofundar seu conhecimento bíblico, incluindo guias
-      de estudo semanais, artigos e vídeos.
-    </p>
-    @if (latestBundle(); as bundle) {
-      <div class="mt-8">
-        <div
-          class="grid gap-6 sm:gap-8 lg:grid-cols-5 items-center bg-white rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl border border-zinc-100"
-        >
-          <div
-            class="lg:col-span-3 aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg ring-1 ring-zinc-900/10"
-          >
-            @if (featuredVideoUrl()) {
-              <iframe
-                [src]="featuredVideoUrl()"
-                title="Video em Destaque"
-                loading="lazy"
-                class="h-full w-full"
-                frameborder="0"
-                allow="
-                  accelerometer;
-                  autoplay;
-                  clipboard-write;
-                  encrypted-media;
-                  gyroscope;
-                  picture-in-picture;
-                "
-                allowfullscreen
-              >
-              </iframe>
-            }
+  <!-- 2. Tríade de Pilares -->
+  <section id="pilares" class="pillars-section" aria-label="Pilares de Conteúdo do Lamed">
+    <div class="container">
+      <div class="pillars-grid">
+        <!-- Pilar 1: Lições -->
+        <a routerLink="/materiais-extras" class="pillar-card group" aria-label="Acessar Guia de Estudos e Lições Semanais">
+          <div class="pillar-icon-box bg-orange-50 text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+            <lucide-icon name="book-open" [size]="26" aria-hidden="true"></lucide-icon>
           </div>
-          <div class="lg:col-span-2 space-y-4">
-            <div class="flex flex-wrap items-center gap-2">
-              <span
-                class="inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-xs sm:text-sm font-medium text-orange-800"
-              >
-                Destaque da Lição #{{ bundle.week_number }}
-              </span>
-              @if (bundle.published_at) {
-                <span class="text-xs sm:text-sm text-zinc-500">
-                  {{ bundle.published_at | date: 'longDate' }}
-                </span>
+          <div class="pillar-content">
+            <span class="pillar-tag">Semanal</span>
+            <h3 class="pillar-title">Lições & Estudos</h3>
+            <p class="pillar-desc">Guias comentados, esboços em PDF, slides e mapas mentais para enriquecer seu estudo semanal.</p>
+            <span class="pillar-link">
+              <span>Acessar materiais</span>
+              <lucide-icon name="arrow-right" [size]="15" aria-hidden="true" class="group-hover:translate-x-1 transition-transform"></lucide-icon>
+            </span>
+          </div>
+        </a>
+
+        <!-- Pilar 2: Artigos -->
+        <a routerLink="/artigos" class="pillar-card group" aria-label="Acessar Artigos Teológicos e Reflexões">
+          <div class="pillar-icon-box bg-amber-50 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+            <lucide-icon name="file-text" [size]="26" aria-hidden="true"></lucide-icon>
+          </div>
+          <div class="pillar-content">
+            <span class="pillar-tag">Exegese & Fé</span>
+            <h3 class="pillar-title">Artigos Teológicos</h3>
+            <p class="pillar-desc">Textos aprofundados sobre história cristã, doutrinas bíblicas e reflexões práticas para o dia a dia.</p>
+            <span class="pillar-link">
+              <span>Ler artigos</span>
+              <lucide-icon name="arrow-right" [size]="15" aria-hidden="true" class="group-hover:translate-x-1 transition-transform"></lucide-icon>
+            </span>
+          </div>
+        </a>
+
+        <!-- Pilar 3: Vídeos -->
+        <a routerLink="/videos" class="pillar-card group" aria-label="Assistir Vídeos e Estudos Audiovisuais">
+          <div class="pillar-icon-box bg-red-50 text-red-600 group-hover:bg-red-600 group-hover:text-white transition-colors">
+            <lucide-icon name="video" [size]="26" aria-hidden="true"></lucide-icon>
+          </div>
+          <div class="pillar-content">
+            <span class="pillar-tag">Audiovisual</span>
+            <h3 class="pillar-title">Vídeos & Aulas</h3>
+            <p class="pillar-desc">Estudos versículo a versículo, transmissões ao vivo e cortes dinâmicos em nosso canal do YouTube.</p>
+            <span class="pillar-link">
+              <span>Assistir vídeos</span>
+              <lucide-icon name="arrow-right" [size]="15" aria-hidden="true" class="group-hover:translate-x-1 transition-transform"></lucide-icon>
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Destaque da Lição Semanal -->
+  <section id="estudo-semanal" class="content-section study-featured-section" aria-label="Lição em Destaque da Semana">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-kicker">Guia de Estudos</span>
+        <h2 class="section-title">Lição em Destaque da Semana</h2>
+        <p class="section-desc">
+          Acompanhe o conteúdo da lição bíblica atual, com materiais completos de apoio e exposição temática.
+        </p>
+      </div>
+
+      @if (latestBundle(); as bundle) {
+        <div class="bundle-featured-card">
+          <div class="grid gap-6 lg:gap-8 lg:grid-cols-5 items-center">
+            <!-- Player de Vídeo -->
+            <div class="lg:col-span-3 aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg ring-1 ring-zinc-900/10">
+              @if (featuredVideoUrl()) {
+                <iframe
+                  [src]="featuredVideoUrl()"
+                  title="Vídeo em Destaque - {{ bundle.title }}"
+                  loading="lazy"
+                  class="h-full w-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
               }
             </div>
 
-            <h2 class="text-xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 leading-snug sm:leading-tight">
-              {{ bundle.title }}
-            </h2>
+            <!-- Informações da Lição -->
+            <div class="lg:col-span-2 space-y-4">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-xs sm:text-sm font-semibold text-orange-800">
+                  Lição Semanal #{{ bundle.week_number }}
+                </span>
+                @if (bundle.published_at) {
+                  <span class="inline-flex items-center gap-1 text-xs sm:text-sm text-zinc-500 font-medium">
+                    <lucide-icon name="calendar" [size]="14" aria-hidden="true"></lucide-icon>
+                    {{ bundle.published_at | date: 'dd/MM/yyyy' }}
+                  </span>
+                }
+              </div>
 
-            @if (bundle.description) {
-              <p class="text-sm sm:text-base md:text-lg text-zinc-600 leading-relaxed line-clamp-3">
-                {{ bundle.description }}
-              </p>
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-zinc-900 leading-snug">
+                {{ bundle.title }}
+              </h3>
+
+              @if (bundle.description) {
+                <p class="text-sm sm:text-base text-zinc-600 leading-relaxed line-clamp-3">
+                  {{ bundle.description }}
+                </p>
+              }
+
+              <!-- Badges de recursos disponíveis -->
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                @if (bundle.resources && bundle.resources.length > 0) {
+                  <span class="inline-flex items-center gap-1.5 rounded-lg bg-zinc-100 border border-zinc-200/80 px-2.5 py-1 text-xs font-semibold text-zinc-700">
+                    <lucide-icon name="download-cloud" [size]="13" aria-hidden="true"></lucide-icon>
+                    <span>{{ bundle.resources.length }} {{ bundle.resources.length === 1 ? 'Material em PDF/Slides' : 'Materiais de Apoio' }}</span>
+                  </span>
+                }
+                @if (bundle.related_video_urls && bundle.related_video_urls.length > 0) {
+                  <span class="inline-flex items-center gap-1.5 rounded-lg bg-zinc-100 border border-zinc-200/80 px-2.5 py-1 text-xs font-semibold text-zinc-700">
+                    <lucide-icon name="video" [size]="13" aria-hidden="true"></lucide-icon>
+                    <span>+{{ bundle.related_video_urls.length }} {{ bundle.related_video_urls.length === 1 ? 'Vídeo Complementar' : 'Vídeos Complementares' }}</span>
+                  </span>
+                }
+              </div>
+
+              <!-- CTA para acessar a lição -->
+              <div class="pt-2 sm:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <a
+                  [routerLink]="['/bundle', bundle.id]"
+                  class="btn-bundle-action"
+                  aria-label="Acessar estudo completo da lição {{ bundle.title }}"
+                >
+                  <lucide-icon name="book-open" [size]="18" aria-hidden="true" class="!text-white shrink-0"></lucide-icon>
+                  <span>Acessar Estudo Completo</span>
+                  <lucide-icon name="arrow-right" [size]="16" aria-hidden="true" class="!text-white shrink-0"></lucide-icon>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      } @else if (latestBundle() === undefined) {
+        <!-- Skeleton Loading State -->
+        <div class="bundle-featured-card animate-pulse">
+          <div class="grid gap-8 lg:grid-cols-5 items-center">
+            <div class="lg:col-span-3 aspect-video w-full rounded-2xl bg-zinc-200"></div>
+            <div class="lg:col-span-2 space-y-4">
+              <div class="flex items-center gap-2">
+                <div class="h-6 w-32 rounded-full bg-zinc-200"></div>
+                <div class="h-4 w-24 rounded bg-zinc-200"></div>
+              </div>
+              <div class="h-9 w-3/4 rounded-lg bg-zinc-200"></div>
+              <div class="space-y-2">
+                <div class="h-4 w-full rounded bg-zinc-200"></div>
+                <div class="h-4 w-5/6 rounded bg-zinc-200"></div>
+              </div>
+              <div class="pt-3">
+                <div class="h-12 w-48 rounded-xl bg-zinc-200"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <div class="section-footer-cta">
+        <a routerLink="/materiais-extras" class="btn-link-all">
+          <span>Ver todo o acervo de lições anteriores</span>
+          <lucide-icon name="arrow-right" [size]="16" aria-hidden="true"></lucide-icon>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Vitrine de Artigos Recentes -->
+  <section id="artigos-recentes" class="content-section articles-section" aria-label="Artigos e Reflexões Teológicas Recentes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-kicker">Acervo Teológico</span>
+        <h2 class="section-title">Últimos Artigos & Reflexões</h2>
+        <p class="section-desc">
+          Textos aprofundados para alimentar sua fé, estudo da história bíblica e aplicação cristã contemporânea.
+        </p>
+      </div>
+
+      @if (latestArticles(); as articles) {
+        @if (articles.length > 0) {
+          <div class="articles-grid">
+            @for (article of articles; track article.id) {
+              <article class="article-card group">
+                <div class="article-image-box">
+                  <img
+                    [src]="(article.cover_image | googleDriveImage) || '/placeholder-image.webp'"
+                    [alt]="article.title"
+                    loading="lazy"
+                    class="article-img"
+                  />
+                  @if (article.tags && article.tags.length > 0) {
+                    <span class="article-tag-badge">
+                      {{ article.tags[0] }}
+                    </span>
+                  }
+                </div>
+
+                <div class="article-body">
+                  <div class="article-meta">
+                    @if (article.published_at) {
+                      <span class="article-date">
+                        <lucide-icon name="calendar" [size]="13" aria-hidden="true"></lucide-icon>
+                        {{ article.published_at | date: 'dd/MM/yyyy' }}
+                      </span>
+                    }
+                    @if (article.author) {
+                      <span class="article-author">
+                        <lucide-icon name="user" [size]="13" aria-hidden="true"></lucide-icon>
+                        {{ article.author }}
+                      </span>
+                    }
+                  </div>
+
+                  <h3 class="article-title">
+                    <a [routerLink]="['/article', article.id]">
+                      {{ article.title }}
+                    </a>
+                  </h3>
+
+                  <p class="article-summary">
+                    {{ article.summary }}
+                  </p>
+
+                  <div class="article-action">
+                    <a [routerLink]="['/article', article.id]" class="article-read-btn" [attr.aria-label]="'Ler artigo: ' + article.title">
+                      <span>Ler Artigo</span>
+                      <lucide-icon name="arrow-right" [size]="15" aria-hidden="true" class="group-hover:translate-x-1 transition-transform"></lucide-icon>
+                    </a>
+                  </div>
+                </div>
+              </article>
             }
+          </div>
 
-            <div class="pt-2 sm:pt-4">
+          <div class="section-footer-cta">
+            <a routerLink="/artigos" class="btn-outline-primary" aria-label="Ver todos os artigos do acervo">
+              <span>Explorar Todos os Artigos</span>
+              <lucide-icon name="arrow-right" [size]="16" aria-hidden="true"></lucide-icon>
+            </a>
+          </div>
+        }
+      } @else if (latestArticles() === undefined) {
+        <!-- Skeleton Artigos -->
+        <div class="articles-grid animate-pulse">
+          @for (i of [1, 2, 3]; track i) {
+            <div class="rounded-2xl border border-zinc-200 bg-white p-4 space-y-3">
+              <div class="aspect-video w-full rounded-xl bg-zinc-200"></div>
+              <div class="h-4 w-1/3 rounded bg-zinc-200"></div>
+              <div class="h-6 w-3/4 rounded bg-zinc-200"></div>
+              <div class="h-4 w-full rounded bg-zinc-200"></div>
+              <div class="h-4 w-2/3 rounded bg-zinc-200"></div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- 5. Seção de Apoio / Comunidade (Harmonizada com a nova página Apoie) -->
+  <section id="apoie-missao" class="support-section" aria-label="Apoie o Ministério Lamed">
+    <div class="container">
+      <div class="support-card">
+        <div class="support-header">
+          <div class="inline-flex items-center gap-1.5 rounded-full bg-orange-100 px-3 py-1 text-xs sm:text-sm font-bold text-orange-800 mb-3">
+            <lucide-icon name="heart" [size]="14" aria-hidden="true" class="text-orange-600"></lucide-icon>
+            <span>Associação Sem Fins Lucrativos</span>
+          </div>
+          <h2 class="support-title">Apoie Nossa Missão e Faça Parte</h2>
+          <p class="support-subtitle">
+            O Lamed é mantido pela generosidade e dedicação de pessoas que valorizam o estudo bíblico profundo, sério e acessível.
+            Sua contribuição sustenta a produção de pesquisas exegéticas, edição e distribuição gratuita.
+          </p>
+        </div>
+
+        <div class="support-actions-grid">
+          <!-- Opção 1: Membros YouTube -->
+          <div class="support-action-box bg-white">
+            <div class="support-action-icon bg-red-50 text-red-600">
+              <lucide-icon name="youtube" [size]="26" aria-hidden="true"></lucide-icon>
+            </div>
+            <div class="support-action-info">
+              <span class="support-pill bg-red-100 text-red-800">Apoio Recorrente</span>
+              <h3 class="support-action-title">Membros no YouTube</h3>
+              <p class="support-action-desc">
+                Apoie com pequenos valores mensais com a segurança da plataforma do Google e ajude a manter novos estudos no ar.
+              </p>
               <a
-                [routerLink]="['/bundle', bundle.id]"
-                class="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 transition-all"
+                href="https://www.youtube.com/channel/UC2PYvVmcJBLt9ymvBpnXO9A/join"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-yt-support"
+                aria-label="Tornar-se membro do canal Lamed no YouTube (abre em nova aba)"
               >
-                <lucide-icon name="book-open" [size]="20"></lucide-icon>
-                Acessar Material Completo
+                <lucide-icon name="youtube" [size]="18" aria-hidden="true"></lucide-icon>
+                <span>Ser Membro do Canal</span>
+                <lucide-icon name="external-link" [size]="14" aria-hidden="true"></lucide-icon>
+              </a>
+            </div>
+          </div>
+
+          <!-- Opção 2: Conhecer Todas as Formas -->
+          <div class="support-action-box bg-white">
+            <div class="support-action-icon bg-orange-50 text-orange-600">
+              <lucide-icon name="compass" [size]="26" aria-hidden="true"></lucide-icon>
+            </div>
+            <div class="support-action-info">
+              <span class="support-pill bg-orange-100 text-orange-800">Transparência Total</span>
+              <h3 class="support-action-title">Todas as Formas de Apoio</h3>
+              <p class="support-action-desc">
+                Descubra como apoiar gratuitamente compartilhando, conheça nossos projetos futuros e saiba mais sobre nossa prestação de contas.
+              </p>
+              <a
+                routerLink="/apoie"
+                class="btn-details-support"
+                aria-label="Conhecer todas as formas de apoio ao Lamed"
+              >
+                <lucide-icon name="heart" [size]="18" aria-hidden="true"></lucide-icon>
+                <span>Conhecer Opções de Apoio</span>
+                <lucide-icon name="arrow-right" [size]="16" aria-hidden="true"></lucide-icon>
               </a>
             </div>
           </div>
         </div>
       </div>
-    } @else if (latestBundle() === undefined) {
-      <!-- Skeleton Loading State -->
-      <div class="container mt-8 animate-pulse">
-        <div
-          class="grid gap-8 lg:grid-cols-5 items-center bg-white rounded-3xl p-6 shadow-xl border border-zinc-100"
-        >
-          <!-- Video Skeleton -->
-          <div
-            class="lg:col-span-3 aspect-video w-full overflow-hidden rounded-2xl bg-zinc-200"
-          ></div>
+    </div>
+  </section>
 
-          <!-- Content Skeleton -->
-          <div class="lg:col-span-2 space-y-4">
-            <div class="flex items-center gap-2">
-              <!-- Tag Skeleton -->
-              <div class="h-6 w-32 rounded-full bg-zinc-200"></div>
-              <!-- Date Skeleton -->
-              <div class="h-4 w-24 rounded bg-zinc-200"></div>
-            </div>
-
-            <!-- Title Skeleton -->
-            <div class="h-10 w-3/4 rounded-lg bg-zinc-200"></div>
-
-            <!-- Description Skeleton -->
-            <div class="space-y-2">
-              <div class="h-4 w-full rounded bg-zinc-200"></div>
-              <div class="h-4 w-full rounded bg-zinc-200"></div>
-              <div class="h-4 w-2/3 rounded bg-zinc-200"></div>
-            </div>
-
-            <!-- Button Skeleton -->
-            <div class="pt-4">
-              <div class="h-12 w-48 rounded-xl bg-zinc-200"></div>
-            </div>
+  <!-- 6. Sobre Nós / A Essência do Lamed -->
+  <section id="sobre-essencia" class="content-section about-essence-section" aria-label="Sobre a Essência do Lamed">
+    <div class="container">
+      <div class="about-essence-wrapper">
+        <div class="about-hebrew-badge" aria-hidden="true">ל</div>
+        <div class="about-essence-content">
+          <span class="section-kicker">Identidade & Propósito</span>
+          <h2 class="about-title">O Que Significa LAMED?</h2>
+          <p class="about-text-lead">
+            Na tradição hebraica, a letra <strong>Lamed (ל)</strong> carrega o duplo significado de <em>"aprender"</em> e <em>"ensinar"</em>.
+          </p>
+          <p class="about-text-body">
+            É a única letra do alfabeto hebraico cuja forma se eleva acima da linha de base de todas as outras, apontando para o alto — simbolizando a aspiração de elevar a mente e o coração ao Criador por meio da sabedoria das Escrituras.
+          </p>
+          <div class="about-ctas">
+            <a routerLink="/sobre" class="btn-about-primary" aria-label="Conhecer a história e equipe do Lamed">
+              <span>Nossa História & Equipe</span>
+              <lucide-icon name="arrow-right" [size]="16" aria-hidden="true"></lucide-icon>
+            </a>
+            <a routerLink="/contato" class="btn-about-secondary" aria-label="Entrar em contato com o Lamed">
+              <lucide-icon name="mail" [size]="16" aria-hidden="true"></lucide-icon>
+              <span>Fale Conosco</span>
+            </a>
           </div>
         </div>
       </div>
-    }
-
-    <div class="text-center">
-      <!-- Route adjusted to main bundle list -->
-      <a routerLink="/guia-de-estudos" class="btn-primary-apoio">Acessar o Guia de Estudos</a>
     </div>
-  </div>
-</section>
-
-<section id="call-to-action-donate" class="content-section background-light">
-  <div class="container">
-    <h2>Apoie Nossa Missão</h2>
-    <p>
-      O Lamed é uma associação sem fins lucrativos dedicada a compartilhar o conhecimento bíblico de
-      forma acessível e transformadora.
-    </p>
-    <div class="text-center">
-      <a routerLink="/apoie" class="btn-secondary">Fazer uma Doação</a>
-    </div>
-  </div>
-</section>
-
-<section id="about-short" class="content-section">
-  <div class="container">
-    <h2>Sobre Nós</h2>
-    <p>
-      Nossa missão é equipar e inspirar pessoas a experimentar a Bíblia, promovendo transformação
-      pessoal e comunitária através do estudo das Escrituras.
-    </p>
-    <div class="text-center">
-      <a routerLink="/sobre" class="btn-destaque">Saiba Mais</a>
-    </div>
-  </div>
-</section>
+  </section>
+</main>
