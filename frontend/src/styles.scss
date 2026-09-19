@@ -261,7 +261,12 @@ img {
   background-size: cover; /* Cover the entire section */
   background-attachment: scroll; /* fixed quebra iOS Safari e causa repaints no Android */
   background-color: #2c1e10; /* Fallback color, dark brown from palette */
-  height: 280px; /* Fixed height for hero section */
+  min-height: 480px; /* Dynamic min-height for hero with CTAs */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 1rem 6rem;
   background-position: center center;
   background-repeat: no-repeat;
   color: #ffffff; /* Ensure text is readable */
@@ -282,7 +287,7 @@ img {
   bottom: 0;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
-  background-color: rgba(31, 19, 5, 0.363); /* Dark brown overlay, derived from palette */
+  background: linear-gradient(180deg, rgba(31, 19, 5, 0.25) 0%, rgba(31, 19, 5, 0.55) 100%); /* Improved contrast gradient */
   z-index: 1;
 }
 
@@ -290,58 +295,21 @@ img {
   /* Ensure content is above the overlay */
   position: relative;
   z-index: 2;
+  width: 100%;
+  max-width: 960px;
 }
+
 @media screen and (max-width: 600px) {
   .hero-section {
-    height: 200px; /* Adjust height for smaller screens */
-    padding: 0 10px; /* Add some horizontal padding */
-  }
-
-  .hero-section h1 {
-    font-size: 2em; /* Adjust font size for smaller screens */
-    margin-top: 120px; /* Push title down for better visual balance */
-  }
-
-  .hero-section p {
-    font-size: 1em; /* Adjust font size for smaller screens */
+    min-height: 440px;
+    padding: 3.5rem 1rem 4.5rem;
   }
 }
 
 @media screen and (min-width: 601px) and (max-width: 1024px) {
   .hero-section {
-    height: 250px; /* Adjust height for medium screens */
-    padding: 0 20px; /* Add some horizontal padding */
-  }
-
-  .hero-section h1 {
-    font-size: 2.5em; /* Adjust font size for medium screens */
-    margin-top: 60px; /* Push title down for better visual balance */
-  }
-
-  .hero-section p {
-    font-size: 1.1em; /* Adjust font size for medium screens */
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0; /* Remove padding on mobile */
-  }
-
-  .hero-section .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-@media (min-width: 769px) {
-  .hero-section {
-    padding: 80px 0; /* Increased padding for better visual with background */
+    min-height: 460px;
+    padding: 4rem 1.5rem 5rem;
   }
 }
 

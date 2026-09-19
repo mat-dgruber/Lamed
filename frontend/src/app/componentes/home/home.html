@@ -2,25 +2,25 @@
   <div class="container">
     @if (showHeroText1()) {
       <div id="hero-text-1" [style.opacity]="heroText1Opacity()" class="hero-text">
-        <h1>Bem-vindo ao LAMED</h1>
-        <p>Onde você estuda a Bíblia de um jeito diferenciado.</p>
+        <h1 class="hero-main-title">Bem-vindo ao LAMED</h1>
+        <p class="hero-subtitle">Onde você estuda a Bíblia de um jeito diferenciado.</p>
       </div>
     }
     @if (showHeroText2()) {
       <div id="hero-text-2" [style.opacity]="heroText2Opacity()" class="hero-text">
-        <p class="hero-title font-bold text-3xl sm:text-4xl">Estude a Bíblia de um jeito diferenciado</p>
-        <p>
-          O Lamed é o seu portal para um estudo bíblico aprofundado e transformador.<br />Explore
-          nossos vídeos, artigos e materiais de estudo.
+        <h1 class="hero-main-title">Estude a Bíblia de um jeito diferenciado</h1>
+        <p class="hero-subtitle">
+          O Lamed é o seu portal para um estudo bíblico aprofundado e transformador.<br class="hidden sm:inline" />
+          Explore nossos vídeos, artigos e materiais de estudo.
         </p>
         <div class="hero-ctas">
-          <a routerLink="/materiais-extras" class="btn-destaque inline-flex items-center gap-2">
-            <lucide-icon name="book-open" [size]="18"></lucide-icon>
-            Ver Lição desta Semana
+          <a routerLink="/materiais-extras" class="btn-hero-primary">
+            <lucide-icon name="book-open" [size]="20"></lucide-icon>
+            <span>Ver Lição desta Semana</span>
           </a>
-          <a routerLink="/artigos" class="btn-secondary inline-flex items-center gap-2">
-            <lucide-icon name="file-text" [size]="18"></lucide-icon>
-            Explorar Artigos
+          <a routerLink="/artigos" class="btn-hero-secondary">
+            <lucide-icon name="file-text" [size]="20"></lucide-icon>
+            <span>Explorar Artigos</span>
           </a>
         </div>
       </div>
