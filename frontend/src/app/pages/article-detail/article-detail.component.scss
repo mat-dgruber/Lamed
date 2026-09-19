@@ -254,6 +254,18 @@
       transform: translateY(-1px);
     }
 
+    &.bible-btn {
+      background-color: #fffbeb;
+      border-color: #fde68a;
+      color: #b45309;
+
+      &:hover {
+        background-color: #fef3c7;
+        color: #92400e;
+        border-color: #fcd34d;
+      }
+    }
+
     &.whatsapp {
       background-color: #f0fdf4;
       border-color: #bbf7d0;
@@ -269,6 +281,31 @@
       border-color: #059669;
       color: #ffffff;
     }
+  }
+}
+
+:host ::ng-deep .lamed-bible-ref {
+  cursor: pointer;
+  color: #c2410c;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: #fdba74;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  border-radius: 4px;
+  padding: 0 4px;
+  transition: all 0.15s ease-in-out;
+  display: inline-block;
+
+  &:hover {
+    background-color: #ffedd5;
+    color: #9a3412;
+    text-decoration-color: #ea580c;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 }
 

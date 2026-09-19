@@ -96,6 +96,16 @@
                 <span class="share-label">Compartilhar:</span>
                 <button
                   type="button"
+                  (click)="openQuickBible('João 3:16')"
+                  class="btn-share-social bible-btn"
+                  title="Consultar Passagem Bíblica"
+                  aria-label="Consultar Bíblia"
+                >
+                  <lucide-icon name="book-open" [size]="16"></lucide-icon>
+                  <span>Bíblia</span>
+                </button>
+                <button
+                  type="button"
                   (click)="shareWhatsApp()"
                   class="btn-share-social whatsapp"
                   title="Compartilhar no WhatsApp"
@@ -123,7 +133,7 @@
 
           <!-- HTML Content / Rich Text -->
           <div class="article-rich-text article-content">
-            <div [innerHTML]="safeContent"></div>
+            <div [innerHTML]="safeContent" (click)="onArticleClick($event)"></div>
           </div>
 
           <!-- Tags de Rodapé do Artigo -->

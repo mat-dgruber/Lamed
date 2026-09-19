@@ -8,6 +8,8 @@ import { Timestamp } from '@angular/fire/firestore';
 import { SeoService } from '../../core/services/seo.service';
 import { AnalyticsService } from '../../core/services/analytics.service';
 import { GoogleDriveImagePipe, convertGoogleDriveUrl } from '../../pipes/google-drive-image.pipe';
+import { BibleService } from '../../core/services/bible.service';
+import { linkifyScriptures } from '../../core/utils/bible-reference.utils';
 
 @Component({
   selector: 'app-article-detail',
@@ -22,6 +24,7 @@ export class ArticleDetailComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
   private seoService = inject(SeoService);
   private analyticsService = inject(AnalyticsService);
+  bibleService = inject(BibleService);
 
   article = signal<Article | undefined>(undefined);
   relatedArticles = signal<Article[]>([]);
@@ -79,7 +82,7 @@ export class ArticleDetailComponent implements OnInit {
       next: (data: Article) => {
         this.article.set(data);
         if (data?.content) {
-          const processedHtml = this.processDriveImagesInHtml(data.content);
+          const processedHtml = linkifyScriptures(this.processDriveImagesInHtml(data.content));
           this.safeContent = this.sanitizer.bypassSecurityTrustHtml(processedHtml);
         }
 
@@ -212,5 +215,20 @@ export class ArticleDetailComponent implements OnInit {
       }
       return match;
     });
+  }
+
+  onArticleClick(event: MouseEvent): void {
+    const target = (event.target as HTMLElement).closest('.lamed-bible-ref') as HTMLElement | null;
+    if (target) {
+      event.preventDefault();
+      const ref = target.getAttribute('data-bible-ref');
+      if (ref) {
+        this.bibleService.openVerse(ref);
+      }
+    }
+  }
+
+  openQuickBible(ref = 'João 3:16'): void {
+    this.bibleService.openVerse(ref);
   }
 }

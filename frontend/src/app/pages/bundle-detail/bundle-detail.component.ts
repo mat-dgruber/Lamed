@@ -11,6 +11,8 @@ import { SeoService } from '../../core/services/seo.service';
 import { AnalyticsService } from '../../core/services/analytics.service';
 import { GoogleDriveImagePipe } from '../../pipes/google-drive-image.pipe';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BibleService } from '../../core/services/bible.service';
+import { linkifyScriptures } from '../../core/utils/bible-reference.utils';
 
 export interface RelatedVideo {
   url: string;
@@ -34,6 +36,7 @@ export class BundleDetailComponent implements OnInit {
   private analyticsService = inject(AnalyticsService);
   private http = inject(HttpClient);
   private destroyRef = inject(DestroyRef);
+  bibleService = inject(BibleService);
 
   bundle = signal<Bundle | null>(null);
   loading = signal<boolean>(true);
@@ -143,7 +146,8 @@ export class BundleDetailComponent implements OnInit {
             }
           }
           if (data.article_content) {
-            this.safeArticleContent = this.sanitizer.bypassSecurityTrustHtml(data.article_content);
+            const linked = linkifyScriptures(data.article_content);
+            this.safeArticleContent = this.sanitizer.bypassSecurityTrustHtml(linked);
           }
 
           if (data.related_video_urls && data.related_video_urls.length > 0) {
@@ -405,5 +409,20 @@ Sua generosidade é o que nos move. Obrigado por fazer parte desta missão!`;
       default:
         return '';
     }
+  }
+
+  onArticleClick(event: MouseEvent): void {
+    const target = (event.target as HTMLElement).closest('.lamed-bible-ref') as HTMLElement | null;
+    if (target) {
+      event.preventDefault();
+      const ref = target.getAttribute('data-bible-ref');
+      if (ref) {
+        this.bibleService.openVerse(ref);
+      }
+    }
+  }
+
+  openQuickBible(ref = 'João 3:16'): void {
+    this.bibleService.openVerse(ref);
   }
 }
