@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Videos } from './videos';
 import { VideosService } from '../../services/videos.service';
 import { of } from 'rxjs';
-import { LucideAngularModule, Video, Smartphone, Youtube, ExternalLink } from 'lucide-angular';
+import { LucideAngularModule, Video, Smartphone, Youtube, ExternalLink, Instagram, VideoOff, Calendar } from 'lucide-angular';
 
 describe('Videos', () => {
   let component: Videos;
@@ -14,7 +14,7 @@ describe('Videos', () => {
     videosServiceSpy.getVideos.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
-      imports: [Videos, LucideAngularModule.pick({ Video, Smartphone, Youtube, ExternalLink })],
+      imports: [Videos, LucideAngularModule.pick({ Video, Smartphone, Youtube, ExternalLink, Instagram, VideoOff, Calendar })],
       providers: [
         { provide: VideosService, useValue: videosServiceSpy }
       ]
@@ -53,6 +53,17 @@ describe('Videos', () => {
 
     expect(component.activeTab()).toBe('long');
     expect(videosServiceSpy.getVideos).toHaveBeenCalledWith(false);
+  });
+
+  it('should refresh videos for current active tab', () => {
+    videosServiceSpy.getVideos.calls.reset();
+    component.refreshVideos();
+    expect(videosServiceSpy.getVideos).toHaveBeenCalledWith(false);
+
+    component.setTab('shorts');
+    videosServiceSpy.getVideos.calls.reset();
+    component.refreshVideos();
+    expect(videosServiceSpy.getVideos).toHaveBeenCalledWith(true);
   });
 });
 

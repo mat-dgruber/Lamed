@@ -8,111 +8,164 @@
         Explore nossa coleção completa de vídeos de estudos e conteúdos curtos para sua lição.
       </p>
 
-      <!-- Tab Buttons -->
-      <div class="flex justify-center items-center gap-2 sm:gap-4 mb-8 max-w-md mx-auto">
+      <!-- Tab Buttons with WCAG tablist semantics -->
+      <div
+        role="tablist"
+        aria-label="Categorias de Vídeos"
+        class="flex justify-center items-center gap-2 sm:gap-4 mb-8 max-w-md mx-auto"
+      >
         <button
           type="button"
+          role="tab"
+          id="tab-long"
+          aria-controls="youtube-videos-container"
+          [attr.aria-selected]="activeTab() === 'long'"
           (click)="setTab('long')"
           [class]="
             activeTab() === 'long'
-              ? 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 shadow-md bg-orange-600 text-white flex items-center justify-center gap-2 cursor-pointer'
-              : 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 flex items-center justify-center gap-2 cursor-pointer'
+              ? 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 shadow-md bg-orange-600 text-white flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:ring-offset-2'
+              : 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2'
           "
         >
-          <lucide-icon name="video" [size]="18"></lucide-icon>
+          <lucide-icon name="video" [size]="18" aria-hidden="true"></lucide-icon>
           Estudos Bíblicos
         </button>
         <button
           type="button"
+          role="tab"
+          id="tab-shorts"
+          aria-controls="youtube-videos-container"
+          [attr.aria-selected]="activeTab() === 'shorts'"
           (click)="setTab('shorts')"
           [class]="
             activeTab() === 'shorts'
-              ? 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 shadow-md bg-orange-600 text-white flex items-center justify-center gap-2 cursor-pointer'
-              : 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 flex items-center justify-center gap-2 cursor-pointer'
+              ? 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 shadow-md bg-orange-600 text-white flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:ring-offset-2'
+              : 'flex-1 sm:flex-initial px-5 sm:px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-200 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2'
           "
         >
-          <lucide-icon name="smartphone" [size]="18"></lucide-icon>
+          <lucide-icon name="smartphone" [size]="18" aria-hidden="true"></lucide-icon>
           Shorts & Cortes
         </button>
       </div>
 
       @if (videos$ | async; as videos) {
-        <div
-          id="youtube-videos-container"
-          [class]="
-            activeTab() === 'shorts'
-              ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto'
-              : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto'
-          "
-        >
-          @for (video of videos; track video.id.videoId; let i = $index) {
-            <div
-              class="bg-white rounded-2xl border border-zinc-200 shadow-md overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg flex flex-col"
-              [class.col-span-1]="true"
-              [class.md:col-span-2]="activeTab() === 'long' && i === 0"
-              [class.lg:col-span-2]="activeTab() === 'long' && i === 0"
-              [class.max-w-\[280px\]]="activeTab() === 'shorts'"
-              [class.mx-auto]="activeTab() === 'shorts'"
-              [class.w-full]="activeTab() === 'shorts'"
-            >
-              @if (isPlaying(video.id.videoId)) {
-                <iframe
-                  [src]="getSafeUrl(video.id.videoId)"
-                  [title]="video.snippet.title"
-                  [class]="activeTab() === 'shorts' ? 'aspect-[9/16] w-full' : 'aspect-video w-full'"
-                  frameborder="0"
-                  allow="
-                    accelerometer;
-                    autoplay;
-                    clipboard-write;
-                    encrypted-media;
-                    gyroscope;
-                    picture-in-picture;
-                    web-share;
-                  "
-                  allowfullscreen
-                >
-                </iframe>
-              } @else {
-                <div
-                  class="video-thumbnail-container relative overflow-hidden bg-black cursor-pointer group"
-                  [class]="activeTab() === 'shorts' ? 'aspect-[9/16] w-full' : 'aspect-video w-full'"
-                  (click)="playVideo(video.id.videoId)"
-                  (keydown.enter)="playVideo(video.id.videoId)"
-                  tabindex="0"
-                  role="button"
-                  [attr.aria-label]="'Assistir ' + video.snippet.title"
-                >
-                  <img
-                    [src]="getThumbnailUrl(video.id.videoId, video.snippet.thumbnails.high.url)"
-                    [alt]="video.snippet.title"
-                    (error)="onThumbnailError($event, video.id.videoId)"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
-                    loading="lazy"
-                  />
-                  <div class="play-button-overlay absolute inset-0 flex items-center justify-center">
-                    <div class="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-500 transition-all duration-300">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                      </svg>
+        @if (videos.length > 0) {
+          <div
+            id="youtube-videos-container"
+            role="tabpanel"
+            [attr.aria-labelledby]="activeTab() === 'long' ? 'tab-long' : 'tab-shorts'"
+            [class]="
+              activeTab() === 'shorts'
+                ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto'
+                : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto'
+            "
+          >
+            @for (video of videos; track video.id.videoId; let i = $index) {
+              <div
+                class="bg-white rounded-2xl border border-zinc-200/80 shadow-xs hover:shadow-md transition-all duration-200 hover:-translate-y-1 flex flex-col overflow-hidden"
+                [class.max-w-\[280px\]]="activeTab() === 'shorts'"
+                [class.mx-auto]="activeTab() === 'shorts'"
+                [class.w-full]="activeTab() === 'shorts'"
+              >
+                @if (isPlaying(video.id.videoId)) {
+                  <iframe
+                    [src]="getSafeUrl(video.id.videoId)"
+                    [title]="video.snippet.title"
+                    [class]="activeTab() === 'shorts' ? 'aspect-[9/16] w-full' : 'aspect-video w-full'"
+                    frameborder="0"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
+                    allowfullscreen
+                  >
+                  </iframe>
+                } @else {
+                  <div
+                    class="video-thumbnail-container relative overflow-hidden bg-black cursor-pointer group"
+                    [class]="activeTab() === 'shorts' ? 'aspect-[9/16] w-full' : 'aspect-video w-full'"
+                    (click)="playVideo(video.id.videoId)"
+                    (keydown.enter)="playVideo(video.id.videoId)"
+                    (keydown.space)="$event.preventDefault(); playVideo(video.id.videoId)"
+                    tabindex="0"
+                    role="button"
+                    [attr.aria-label]="'Assistir ' + video.snippet.title"
+                  >
+                    @if (i === 0 && activeTab() === 'long') {
+                      <span class="absolute top-3 left-3 bg-orange-600 text-white text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md z-10 pointer-events-none">
+                        Mais Recente
+                      </span>
+                    }
+                    <img
+                      [src]="getThumbnailUrl(video.id.videoId, video.snippet.thumbnails.high.url)"
+                      [alt]="video.snippet.title"
+                      (error)="onThumbnailError($event, video.id.videoId)"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
+                      loading="lazy"
+                    />
+                    <div class="play-button-overlay absolute inset-0 flex items-center justify-center">
+                      <div class="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-500 transition-all duration-300">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                      </div>
                     </div>
                   </div>
+                }
+                <div class="p-4 flex-1 flex flex-col justify-between gap-2">
+                  <p class="font-bold text-zinc-900 text-sm leading-snug line-clamp-2">
+                    {{ video.snippet.title }}
+                  </p>
+                  @if (video.snippet.publishedAt) {
+                    <div class="flex items-center gap-1.5 text-xs text-zinc-500 font-medium pt-1">
+                      <lucide-icon name="calendar" [size]="13" aria-hidden="true"></lucide-icon>
+                      <span>{{ video.snippet.publishedAt | date:'dd/MM/yyyy' }}</span>
+                    </div>
+                  }
                 </div>
-              }
-              <div class="p-4 flex-1 flex flex-col justify-between">
-                <p class="font-bold text-zinc-900 text-sm leading-snug line-clamp-2">
-                  {{ video.snippet.title }}
-                </p>
               </div>
+            }
+          </div>
+        } @else {
+          <!-- Empty State -->
+          <div class="text-center py-16 px-6 max-w-md mx-auto bg-white rounded-2xl border border-zinc-200/80 shadow-xs">
+            <div class="h-14 w-14 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <lucide-icon name="video-off" [size]="28" aria-hidden="true"></lucide-icon>
             </div>
-          }
-        </div>
+            <h3 class="text-lg font-bold text-zinc-900 mb-2">Nenhum vídeo encontrado</h3>
+            <p class="text-sm text-zinc-600 mb-6 leading-relaxed">
+              Não há conteúdos disponíveis nesta categoria no momento. Tente alternar para outra categoria ou recarregar a lista.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+              <button
+                type="button"
+                (click)="setTab(activeTab() === 'long' ? 'shorts' : 'long')"
+                class="px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm bg-orange-600 hover:bg-orange-500 text-white shadow-sm transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:ring-offset-2"
+              >
+                Ver {{ activeTab() === 'long' ? 'Shorts & Cortes' : 'Estudos Bíblicos' }}
+              </button>
+              <button
+                type="button"
+                (click)="refreshVideos()"
+                class="px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
+              >
+                Recarregar
+              </button>
+            </div>
+          </div>
+        }
       } @else {
         <!-- Skeleton Loading State -->
         <div
@@ -142,34 +195,37 @@
         </div>
       }
 
-      <!-- YouTube, Instagram, and TikTok Buttons -->
+      <!-- Social Channels Buttons -->
       <div class="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mt-12 w-full max-w-2xl mx-auto px-2">
         <a
           href="https://www.youtube.com/channel/UC2PYvVmcJBLt9ymvBpnXO9A/join"
           target="_blank"
           rel="noopener noreferrer"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-xs sm:text-sm bg-red-600 hover:bg-red-500 text-white shadow-md transition-colors"
+          aria-label="Siga o canal Lamed no YouTube (abre em nova aba)"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-xs sm:text-sm bg-red-600 hover:bg-red-500 text-white shadow-md hover:shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 cursor-pointer"
         >
+          <lucide-icon name="youtube" [size]="18" aria-hidden="true"></lucide-icon>
           Siga-nos no YouTube
-          <lucide-icon name="youtube" [size]="18"></lucide-icon>
         </a>
         <a
           href="https://www.instagram.com/lamed148/"
           target="_blank"
           rel="noopener noreferrer"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-xs sm:text-sm bg-zinc-900 hover:bg-zinc-800 text-white shadow-md transition-colors"
+          aria-label="Siga o perfil do Lamed no Instagram (abre em nova aba)"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-xs sm:text-sm bg-zinc-900 hover:bg-zinc-800 text-white shadow-md hover:shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 cursor-pointer"
         >
+          <lucide-icon name="instagram" [size]="18" aria-hidden="true"></lucide-icon>
           Siga-nos no Instagram
-          <lucide-icon name="external-link" [size]="18"></lucide-icon>
         </a>
         <a
           href="https://www.tiktok.com/@lamed148"
           target="_blank"
           rel="noopener noreferrer"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-xs sm:text-sm bg-zinc-900 hover:bg-zinc-800 text-white shadow-md transition-colors"
+          aria-label="Siga o Lamed no TikTok (abre em nova aba)"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-xs sm:text-sm bg-zinc-900 hover:bg-zinc-800 text-white shadow-md hover:shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 cursor-pointer"
         >
+          <lucide-icon name="external-link" [size]="18" aria-hidden="true"></lucide-icon>
           Siga-nos no TikTok
-          <lucide-icon name="external-link" [size]="18"></lucide-icon>
         </a>
       </div>
     </div>
