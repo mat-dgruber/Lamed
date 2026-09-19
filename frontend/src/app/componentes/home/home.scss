@@ -44,6 +44,7 @@
 .hero-section {
   position: relative;
   width: 100%;
+  min-height: 480px;
   padding: clamp(3.25rem, 6vw, 4.5rem) 1rem clamp(2.75rem, 5vw, 3.75rem);
   background-image: url('/assets/Imagens/Fundo_Lamed.png');
   background-size: cover;
@@ -60,6 +61,11 @@
   // Manter a imagem clara e luminosa, com overlay sutil para legibilidade
   &::before {
     background-color: rgba(20, 10, 5, 0.15) !important;
+  }
+
+  @media (max-width: 768px) {
+    min-height: 520px;
+    padding: 5.5rem 1.25rem 3.5rem;
   }
 }
 
@@ -80,6 +86,12 @@
   margin: 0 auto 1.25rem;
   text-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
   letter-spacing: -0.015em;
+
+  @media (max-width: 768px) {
+    font-size: clamp(1.85rem, 6.2vw, 2.35rem);
+    line-height: 1.25;
+    margin-bottom: 1.15rem;
+  }
 }
 
 .hero-subtitle {
@@ -90,6 +102,13 @@
   max-width: 740px;
   margin: 0 auto 2.25rem;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+
+  @media (max-width: 768px) {
+    font-size: clamp(1rem, 3.8vw, 1.125rem);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+  }
 }
 
 .hero-ctas {
@@ -98,6 +117,13 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    gap: 0.85rem;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+  }
 }
 
 .btn-hero-primary,
@@ -108,8 +134,10 @@
   border-radius: 50px;
   font-size: 1rem;
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     width: 100%;
+    min-height: 52px;
+    padding: 0.85rem 1.5rem;
   }
 }
 
@@ -564,6 +592,16 @@
 .support-section {
   padding: 4.5rem 1rem;
   background-color: #fffaf2;
+
+  @media (max-width: 768px) {
+    padding: 3.5rem 0.5rem;
+
+    .container {
+      padding-left: 10px;
+      padding-right: 10px;
+      max-width: 100%;
+    }
+  }
 }
 
 .support-card {
@@ -572,9 +610,16 @@
   border: 1px solid rgba(248, 148, 27, 0.25);
   box-shadow: 0 10px 32px rgba(44, 30, 16, 0.06);
   padding: 2.25rem 1.5rem;
+  box-sizing: border-box;
 
   @media (min-width: 768px) {
     padding: 3rem 2.5rem;
+  }
+
+  @media (max-width: 767px) {
+    padding: 2.5rem 1.25rem;
+    border-radius: 1.5rem;
+    width: 100%;
   }
 }
 
@@ -582,6 +627,11 @@
   text-align: center;
   max-width: 720px;
   margin: 0 auto 2.5rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+  }
 }
 
 .support-title {
@@ -590,6 +640,11 @@
   font-weight: 800;
   color: #18181b;
   margin: 0 0 0.85rem;
+
+  @media (max-width: 768px) {
+    font-size: clamp(1.6rem, 5.5vw, 2.1rem);
+    line-height: 1.25;
+  }
 }
 
 .support-subtitle {
@@ -597,6 +652,12 @@
   color: #52525b;
   line-height: 1.6;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 100%;
+  }
 }
 
 .support-actions-grid {
@@ -606,6 +667,11 @@
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 767px) {
+    gap: 1.25rem;
+    width: 100%;
   }
 }
 
@@ -619,6 +685,13 @@
   align-items: center;
   text-align: center;
   justify-content: space-between;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.25rem;
+    width: 100%;
+    border-radius: 1.25rem;
+  }
 }
 
 .support-action-icon {
@@ -658,6 +731,10 @@
   color: #18181b;
   text-align: center;
   margin: 0 0 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.35rem;
+  }
 }
 
 .support-action-desc {
@@ -667,6 +744,13 @@
   text-align: center;
   max-width: 360px;
   margin: 0 auto 1.5rem;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
 }
 
 .btn-yt-support,
@@ -680,6 +764,14 @@
   padding: 0.75rem 1.5rem;
   border-radius: 0.75rem;
   font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    width: 100%;
+    min-height: 52px;
+    font-size: 0.95rem;
+    border-radius: 0.85rem;
+  }
 }
 
 .btn-yt-support {
@@ -720,6 +812,16 @@
    -------------------------------------------------------------------------- */
 .about-essence-section {
   background-color: #ffffff;
+
+  @media (max-width: 768px) {
+    padding: 3.5rem 0.5rem;
+
+    .container {
+      padding-left: 10px;
+      padding-right: 10px;
+      max-width: 100%;
+    }
+  }
 }
 
 .about-essence-wrapper {
@@ -733,6 +835,14 @@
   text-align: center;
   max-width: 860px;
   margin: 0 auto;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 2.75rem 1.25rem;
+    border-radius: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 .about-hebrew-badge {
@@ -752,10 +862,12 @@
   margin: 0 auto 1.75rem;
   flex-shrink: 0;
 
-  @media (max-width: 640px) {
-    width: 80px;
-    height: 80px;
+  @media (max-width: 768px) {
+    width: 76px;
+    height: 76px;
     font-size: 2.75rem;
+    margin-bottom: 1.25rem;
+    border-radius: 1.25rem;
   }
 }
 
@@ -774,6 +886,12 @@
   color: #18181b;
   text-align: center;
   margin: 0 0 1rem;
+
+  @media (max-width: 768px) {
+    font-size: clamp(1.6rem, 5.5vw, 2.1rem);
+    line-height: 1.25;
+    margin-bottom: 1rem;
+  }
 }
 
 .about-text-lead {
@@ -784,6 +902,13 @@
   text-align: center;
   max-width: 680px;
   margin: 0 auto 0.75rem;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
 }
 
 .about-text-body {
@@ -793,6 +918,13 @@
   text-align: center;
   max-width: 680px;
   margin: 0 auto 2rem;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 2rem;
+  }
 }
 
 .about-ctas {
@@ -801,6 +933,12 @@
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
 }
 
 .btn-about-primary,
@@ -812,9 +950,11 @@
   font-size: 0.925rem;
   min-width: 220px;
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     width: 100%;
     min-width: 0;
+    min-height: 52px;
+    font-size: 0.95rem;
   }
 }
 
