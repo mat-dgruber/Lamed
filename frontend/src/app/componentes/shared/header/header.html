@@ -79,16 +79,14 @@
       <span class="nav-label">Materiais</span>
     </button>
 
-    <!-- Apoie (Destaque Heroico na barra) -->
+    <!-- Apoie (Harmônico e Alinhado) -->
     <a
       routerLink="/apoie"
       routerLinkActive="active"
       class="bottom-nav-item apoie-item"
       (click)="closeBottomSheet()"
     >
-      <div class="apoie-icon-badge">
-        <lucide-icon name="heart" class="nav-icon"></lucide-icon>
-      </div>
+      <lucide-icon name="heart" class="nav-icon apoie-icon"></lucide-icon>
       <span class="nav-label">Apoie</span>
     </a>
 
@@ -108,14 +106,13 @@
 </nav>
 
 <!-- Mobile Bottom Sheet Backdrop -->
-@if (isBottomSheetOpen()) {
-  <div
-    class="bottom-sheet-backdrop"
-    (click)="closeBottomSheet()"
-    role="presentation"
-    aria-hidden="true"
-  ></div>
-}
+<div
+  class="bottom-sheet-backdrop"
+  [class.open]="isBottomSheetOpen()"
+  (click)="closeBottomSheet()"
+  role="presentation"
+  aria-hidden="true"
+></div>
 
 <!-- Mobile Bottom Sheet Drawer -->
 <div

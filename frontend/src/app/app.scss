@@ -5,6 +5,14 @@
 @media (max-width: 768px) {
   .site-main {
     /* Espaçamento ergonômico para que a Bottom Navigation Bar não sobreponha botões ou rodapé */
-    padding-bottom: calc(74px + env(safe-area-inset-bottom, 12px));
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 14px));
+  }
+
+  #back-to-top {
+    /* Eleva o botão voltar ao topo no mobile acima da barra de navegação inferior */
+    bottom: calc(78px + env(safe-area-inset-bottom, 14px)) !important;
+    right: 16px !important;
+    width: 44px !important;
+    height: 44px !important;
   }
 }

@@ -38,14 +38,14 @@
 
 #back-to-top {
   position: fixed;
-  bottom: 20px;
+  bottom: 24px;
   right: 20px;
   background-color: var(--color-destaque);
   color: white;
   border: none;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,12 +53,20 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(100px);
-  transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
-  z-index: 1000;
+  transition: opacity 0.3s, visibility 0.3s, transform 0.3s, bottom 0.3s ease;
+  z-index: 950;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 768px) {
+    bottom: calc(78px + env(safe-area-inset-bottom, 14px));
+    right: 16px;
+    width: 44px;
+    height: 44px;
+  }
 }
 
 #back-to-top.show {
-  opacity: 0.5;
+  opacity: 0.85;
   visibility: visible;
   transform: translateY(0);
 }
