@@ -1,269 +1,1053 @@
-<!-- Hero Section -->
-<div class="hero-section">
-  <div class="container mx-auto px-6">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+<!-- Admin Dashboard Header / Hero -->
+<header class="hero-section relative overflow-hidden" role="banner">
+  <div class="container mx-auto px-4 sm:px-6 py-10 md:py-14">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
       <div>
-        <h1 class="text-3xl font-bold text-white">Gerenciar Bundles</h1>
-        <p class="mt-2 text-lg opacity-90 text-white">
-          Crie, edite e publique seus conteúdos semanais.
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white text-xs font-semibold uppercase tracking-wider mb-3 border border-white/20">
+          <lucide-icon name="sparkles" [size]="14"></lucide-icon>
+          Painel de Controle & Analytics
+        </div>
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
+          Gerenciador de Bundles
+        </h1>
+        <p class="mt-2 text-sm sm:text-base text-white/90 max-w-xl">
+          Crie, edite e monitore os pacotes de estudo semanais, artigos e audiência do ministério.
         </p>
       </div>
-      <div class="flex flex-wrap items-center gap-3">
+
+      <!-- Quick Action Navigation Bar -->
+      <nav class="flex flex-wrap items-center gap-2.5 sm:gap-3" aria-label="Navegação rápida do painel">
+        <button
+          (click)="openAnalyticsModal()"
+          class="flex items-center justify-center gap-2 min-h-[44px] px-4 sm:px-5 py-2.5 rounded-xl bg-orange-500/30 hover:bg-orange-500/40 backdrop-blur-md text-white text-sm font-semibold border border-orange-400/30 transition-all active:scale-95 shadow-sm cursor-pointer"
+          title="Ver métricas de tráfego do Google Analytics"
+        >
+          <lucide-icon name="compass" [size]="18"></lucide-icon>
+          <span>Analytics</span>
+        </button>
+
         <a
           routerLink="/admin/articles"
-          class="flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-6 py-2.5 text-sm font-semibold text-white hover:bg-white/20 transition-colors border border-white/20"
+          class="flex items-center justify-center gap-2 min-h-[44px] px-4 sm:px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-sm font-semibold border border-white/20 transition-all active:scale-95 shadow-sm"
+          title="Ir para Gerenciamento de Artigos"
         >
-          <lucide-icon [name]="'file-text'" [size]="18"></lucide-icon>
-          Artigos
+          <lucide-icon name="file-text" [size]="18"></lucide-icon>
+          <span>Artigos</span>
         </a>
+
         <a
           routerLink="/admin/videos"
-          class="flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-6 py-2.5 text-sm font-semibold text-white hover:bg-white/20 transition-colors border border-white/20"
+          class="flex items-center justify-center gap-2 min-h-[44px] px-4 sm:px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-sm font-semibold border border-white/20 transition-all active:scale-95 shadow-sm"
+          title="Ir para Gerenciamento de Vídeos"
         >
-          <lucide-icon [name]="'video'" [size]="18"></lucide-icon>
-          Vídeos
+          <lucide-icon name="video" [size]="18"></lucide-icon>
+          <span>Vídeos</span>
         </a>
+
         <button
           (click)="syncVideos()"
           [disabled]="isSyncing"
-          class="flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-6 py-2.5 text-sm font-semibold text-white hover:bg-white/20 transition-colors disabled:opacity-50 border border-white/20"
+          class="flex items-center justify-center gap-2 min-h-[44px] px-4 sm:px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-sm font-semibold border border-white/20 transition-all disabled:opacity-50 active:scale-95 shadow-sm cursor-pointer"
+          title="Sincronizar vídeos do canal do YouTube"
         >
           <lucide-icon
-            [name]="'refresh-cw'"
+            name="refresh-cw"
             [class.animate-spin]="isSyncing"
             [size]="18"
           ></lucide-icon>
-          {{ isSyncing ? 'Sincronizando...' : 'Sincronizar' }}
+          <span>{{ isSyncing ? 'Sincronizando...' : 'Sincronizar' }}</span>
         </button>
+
         <a
           routerLink="/admin/new"
-          class="flex items-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-bold text-orange-600 hover:bg-orange-50 transition-colors shadow-lg"
+          class="flex items-center justify-center gap-2 min-h-[44px] px-5 sm:px-6 py-2.5 rounded-xl bg-white text-orange-600 hover:bg-orange-50 text-sm font-bold transition-all active:scale-95 shadow-lg"
+          title="Criar novo bundle semanal"
         >
-          <lucide-icon [name]="'plus'" [size]="18"></lucide-icon>
-          Novo Bundle
+          <lucide-icon name="plus" [size]="18"></lucide-icon>
+          <span>Novo Bundle</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="container mx-auto px-4 sm:px-6 py-8 -mt-6 sm:-mt-8 relative z-10 max-w-7xl">
+
+  <!-- GOOGLE ANALYTICS AUDIENCE STRIP (30 Dias + Tempo Real) -->
+  <section class="mb-8 p-5 sm:p-6 rounded-3xl bg-white border border-zinc-200 shadow-sm" aria-labelledby="analytics-strip-title">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-100 pb-4 mb-5">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 flex-shrink-0">
+          <lucide-icon name="compass" [size]="22"></lucide-icon>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 id="analytics-strip-title" class="text-lg font-bold text-zinc-900">
+              Desempenho & Google Analytics
+            </h2>
+            @if (analyticsOverview()?.configured) {
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-50 text-green-700 border border-green-200">
+                GA4 Conectado
+              </span>
+            } @else {
+              <button
+                (click)="openAnalyticsSetup()"
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 transition-colors cursor-pointer"
+                title="Clique para ver instruções de conexão"
+              >
+                Modo Preview / Conectar
+              </button>
+            }
+          </div>
+          <p class="text-xs text-zinc-500">Métricas de audiência dos últimos 30 dias sincronizadas</p>
+        </div>
+      </div>
+
+      <!-- Realtime badge & actions -->
+      <div class="flex flex-wrap items-center gap-2.5">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-zinc-900 text-white shadow-xs">
+          <span class="h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>
+          <span>{{ realtimeAnalytics()?.active_users_now || 0 }} visitantes online</span>
+        </div>
+
+        <button
+          (click)="openAnalyticsModal()"
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-orange-50 hover:bg-orange-100 text-orange-700 text-xs font-bold transition-colors border border-orange-100 cursor-pointer min-h-[36px]"
+        >
+          <span>Ver Ranking & Tráfego</span>
+          <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+        </button>
+
+        <a
+          href="https://analytics.google.com/analytics/web/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-zinc-500 hover:text-zinc-800 text-xs font-semibold hover:bg-zinc-100 transition-colors min-h-[36px]"
+          title="Abrir console completo do Google Analytics"
+        >
+          <lucide-icon name="external-link" [size]="14"></lucide-icon>
+          <span class="hidden sm:inline">GA4 Console</span>
         </a>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="container mx-auto px-6 py-8 -mt-8 relative z-10">
-  <!-- Checklist Inteligente da Semana -->
-  <div class="mb-8 p-6 rounded-3xl bg-white border border-zinc-200 shadow-xl">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-100 pb-4 mb-4">
-      <div class="flex items-center gap-3">
-        <div class="h-10 w-10 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600">
-          <lucide-icon name="check-square" [size]="22"></lucide-icon>
+    <!-- Analytics 4 KPI Grid -->
+    @if (analyticsOverview()?.summary; as s) {
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <!-- 1. Unique Visitors -->
+        <div class="p-4 rounded-2xl bg-zinc-50/80 border border-zinc-100 flex flex-col justify-between">
+          <div class="flex items-center justify-between text-zinc-500 mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider">Visitantes Únicos</span>
+            <lucide-icon name="user" [size]="16"></lucide-icon>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-black text-zinc-900 tabular-nums">{{ s.active_users | number }}</span>
+            @if (s.active_users_growth) {
+              <span
+                class="text-xs font-bold tabular-nums"
+                [ngClass]="s.active_users_growth >= 0 ? 'text-green-700' : 'text-red-600'"
+              >
+                {{ s.active_users_growth >= 0 ? '+' : '' }}{{ s.active_users_growth }}%
+              </span>
+            }
+          </div>
+          <p class="text-[11px] text-zinc-400 mt-1">Usuários ativos (30 dias)</p>
         </div>
-        <div>
-          <h2 class="text-lg font-bold text-zinc-900">Checklist do Bundle da Semana {{ getCurrentWeekNumber() }}</h2>
-          <p class="text-xs text-zinc-500">Acompanhe a preparação e publicação do conteúdo semanal</p>
+
+        <!-- 2. Total Sessions -->
+        <div class="p-4 rounded-2xl bg-zinc-50/80 border border-zinc-100 flex flex-col justify-between">
+          <div class="flex items-center justify-between text-zinc-500 mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider">Sessões</span>
+            <lucide-icon name="refresh-cw" [size]="16"></lucide-icon>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-black text-zinc-900 tabular-nums">{{ s.sessions | number }}</span>
+            @if (s.sessions_growth) {
+              <span
+                class="text-xs font-bold tabular-nums"
+                [ngClass]="s.sessions_growth >= 0 ? 'text-green-700' : 'text-red-600'"
+              >
+                {{ s.sessions_growth >= 0 ? '+' : '' }}{{ s.sessions_growth }}%
+              </span>
+            }
+          </div>
+          <p class="text-[11px] text-zinc-400 mt-1">Visitas registradas</p>
         </div>
+
+        <!-- 3. Screen/Page Views -->
+        <div class="p-4 rounded-2xl bg-zinc-50/80 border border-zinc-100 flex flex-col justify-between">
+          <div class="flex items-center justify-between text-zinc-500 mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider">Visualizações</span>
+            <lucide-icon name="book-open" [size]="16"></lucide-icon>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-black text-zinc-900 tabular-nums">{{ s.page_views | number }}</span>
+            @if (s.page_views_growth) {
+              <span
+                class="text-xs font-bold tabular-nums"
+                [ngClass]="s.page_views_growth >= 0 ? 'text-green-700' : 'text-red-600'"
+              >
+                {{ s.page_views_growth >= 0 ? '+' : '' }}{{ s.page_views_growth }}%
+              </span>
+            }
+          </div>
+          <p class="text-[11px] text-zinc-400 mt-1">Páginas e artigos lidos</p>
+        </div>
+
+        <!-- 4. Avg Duration & Bounce -->
+        <div class="p-4 rounded-2xl bg-zinc-50/80 border border-zinc-100 flex flex-col justify-between">
+          <div class="flex items-center justify-between text-zinc-500 mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider">Tempo Médio</span>
+            <lucide-icon name="clock" [size]="16"></lucide-icon>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-black text-zinc-900 tabular-nums">
+              {{ formatDuration(s.avg_duration_seconds) }}
+            </span>
+          </div>
+          <p class="text-[11px] text-zinc-400 mt-1">Rejeição: {{ s.bounce_rate }}%</p>
+        </div>
+      </div>
+    }
+  </section>
+
+  <!-- KPIs Metrics Bar (Conteúdo do Lamed) -->
+  <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6" aria-label="Métricas do sistema">
+    <!-- Total Bundles -->
+    <div class="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm flex items-center gap-3.5 hover:border-zinc-300 transition-colors">
+      <div class="h-11 w-11 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center flex-shrink-0">
+        <lucide-icon name="book-open" [size]="22"></lucide-icon>
       </div>
       <div>
-        @if (currentWeekBundle && currentWeekBundle.is_active) {
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-green-50 text-green-700 ring-1 ring-green-600/20">
-            <span class="h-2 w-2 rounded-full bg-green-600 animate-pulse"></span>
-            Bundle da Semana No Ar
+        <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Total na Página</p>
+        <p class="text-xl sm:text-2xl font-black text-zinc-900 tabular-nums">{{ stats().total }}</p>
+      </div>
+    </div>
+
+    <!-- Active Bundles -->
+    <div class="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm flex items-center gap-3.5 hover:border-zinc-300 transition-colors">
+      <div class="h-11 w-11 rounded-xl bg-green-50 text-green-700 flex items-center justify-center flex-shrink-0">
+        <lucide-icon name="check-circle-2" [size]="22"></lucide-icon>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wider">No Ar (Ativos)</p>
+        <p class="text-xl sm:text-2xl font-black text-green-700 tabular-nums">{{ stats().active }}</p>
+      </div>
+    </div>
+
+    <!-- Draft Bundles -->
+    <div class="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm flex items-center gap-3.5 hover:border-zinc-300 transition-colors">
+      <div class="h-11 w-11 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0">
+        <lucide-icon name="clock" [size]="22"></lucide-icon>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Em Rascunho</p>
+        <p class="text-xl sm:text-2xl font-black text-amber-700 tabular-nums">{{ stats().draft }}</p>
+      </div>
+    </div>
+
+    <!-- Week Readiness -->
+    <div class="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm flex items-center gap-3.5 hover:border-zinc-300 transition-colors">
+      <div class="h-11 w-11 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center flex-shrink-0">
+        <lucide-icon name="check-square" [size]="22"></lucide-icon>
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between gap-1">
+          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wider truncate">Semana {{ getCurrentWeekNumber() }}</p>
+          <span class="text-xs font-bold tabular-nums" [ngClass]="stats().readinessScore === 100 ? 'text-green-700' : 'text-amber-700'">
+            {{ stats().readinessScore }}%
           </span>
+        </div>
+        <!-- Progress bar -->
+        <div class="w-full bg-zinc-100 rounded-full h-2 mt-1.5 overflow-hidden">
+          <div
+            class="h-full rounded-full transition-all duration-500 ease-out"
+            [ngClass]="stats().readinessScore === 100 ? 'bg-green-600' : 'bg-orange-500'"
+            [style.width.%]="stats().readinessScore"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Checklist Inteligente da Semana Atual -->
+  <section class="mb-8 p-5 sm:p-6 rounded-3xl bg-white border border-zinc-200 shadow-sm" aria-labelledby="checklist-title">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-100 pb-4 mb-5">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 flex-shrink-0">
+          <lucide-icon name="check-square" [size]="20"></lucide-icon>
+        </div>
+        <div>
+          <h2 id="checklist-title" class="text-lg font-bold text-zinc-900">
+            Checklist de Publicação — Semana {{ getCurrentWeekNumber() }}
+          </h2>
+          <p class="text-xs text-zinc-500">Acompanhe a preparação e liberação do material semanal</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 self-start sm:self-auto">
+        @if (currentWeekBundle(); as curr) {
+          <button
+            (click)="toggleStatus(curr)"
+            [disabled]="togglingStatusId() === curr.id"
+            class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer min-h-[36px]"
+            [ngClass]="
+              curr.is_active
+                ? 'bg-green-50 text-green-700 hover:bg-green-100 ring-1 ring-green-600/30'
+                : 'bg-amber-50 text-amber-800 hover:bg-amber-100 ring-1 ring-amber-600/30'
+            "
+            title="Clique para alternar o status do bundle no ar"
+          >
+            <span
+              class="h-2 w-2 rounded-full"
+              [ngClass]="curr.is_active ? 'bg-green-600 animate-pulse' : 'bg-amber-500'"
+            ></span>
+            <span>{{ curr.is_active ? 'Bundle Ativo no Site' : 'Rascunho (Pendente)' }}</span>
+            <lucide-icon name="refresh-cw" [size]="12" [class.animate-spin]="togglingStatusId() === curr.id"></lucide-icon>
+          </button>
         } @else {
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 ring-1 ring-amber-600/20">
-            <span class="h-2 w-2 rounded-full bg-amber-500"></span>
-            Publicação Pendente
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-zinc-100 text-zinc-600 ring-1 ring-zinc-300">
+            Sem bundle cadastrado para a semana
           </span>
         }
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
-      <div class="p-4 rounded-2xl bg-zinc-50 border border-zinc-100 flex items-start gap-3">
-        <div class="mt-0.5">
-          @if (currentWeekBundle?.video_id) {
-            <lucide-icon name="check-circle-2" class="text-green-600" [size]="18"></lucide-icon>
-          } @else {
-            <lucide-icon name="circle" class="text-zinc-300" [size]="18"></lucide-icon>
-          }
+    <!-- 4 Checklist Items with Contextual Action Links -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-xs">
+      <!-- 1. Video -->
+      <div class="p-4 rounded-2xl bg-zinc-50/80 border border-zinc-100 flex flex-col justify-between gap-3">
+        <div class="flex items-start gap-3">
+          <div class="mt-0.5">
+            @if (currentWeekBundle()?.video_id) {
+              <lucide-icon name="check-circle-2" class="text-green-600" [size]="18"></lucide-icon>
+            } @else {
+              <lucide-icon name="circle" class="text-zinc-300" [size]="18"></lucide-icon>
+            }
+          </div>
+          <div>
+            <p class="font-bold text-zinc-900">Vídeo do YouTube</p>
+            <p class="text-zinc-500 mt-0.5">
+              {{ currentWeekBundle()?.video_id ? 'Vídeo principal vinculado' : 'Nenhum vídeo atribuído' }}
+            </p>
+          </div>
         </div>
-        <div>
-          <p class="font-bold text-zinc-900">Vídeo do YouTube</p>
-          <p class="text-zinc-500 mt-0.5">{{ currentWeekBundle?.video_id ? 'Vídeo principal vinculado' : 'Pendente inclusão' }}</p>
+        <div class="pt-2 border-t border-zinc-200/60">
+          @if (currentWeekBundle(); as curr) {
+            <a
+              [routerLink]="['/admin/edit', curr.id]"
+              class="inline-flex items-center gap-1.5 font-semibold text-orange-600 hover:text-orange-700 min-h-[32px]"
+            >
+              <span>{{ curr.video_id ? 'Alterar vídeo' : 'Vincular vídeo' }}</span>
+              <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+            </a>
+          } @else {
+            <a
+              routerLink="/admin/new"
+              class="inline-flex items-center gap-1.5 font-semibold text-orange-600 hover:text-orange-700 min-h-[32px]"
+            >
+              <span>Criar bundle</span>
+              <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+            </a>
+          }
         </div>
       </div>
 
-      <div class="p-4 rounded-2xl bg-zinc-50 border border-zinc-100 flex items-start gap-3">
-        <div class="mt-0.5">
-          @if (currentWeekBundle?.resources && currentWeekBundle!.resources.length > 0) {
-            <lucide-icon name="check-circle-2" class="text-green-600" [size]="18"></lucide-icon>
-          } @else {
-            <lucide-icon name="circle" class="text-zinc-300" [size]="18"></lucide-icon>
-          }
+      <!-- 2. Materials -->
+      <div class="p-4 rounded-2xl bg-zinc-50/80 border border-zinc-100 flex flex-col justify-between gap-3">
+        <div class="flex items-start gap-3">
+          <div class="mt-0.5">
+            @if (currentWeekBundle()?.resources && currentWeekBundle()!.resources.length > 0) {
+              <lucide-icon name="check-circle-2" class="text-green-600" [size]="18"></lucide-icon>
+            } @else {
+              <lucide-icon name="circle" class="text-zinc-300" [size]="18"></lucide-icon>
+            }
+          </div>
+          <div>
+            <p class="font-bold text-zinc-900">Materiais de Apoio</p>
+            <p class="text-zinc-500 mt-0.5">
+              {{
+                currentWeekBundle()?.resources?.length
+                  ? currentWeekBundle()!.resources.length + ' material(is) anexado(s)'
+                  : 'Pendente anexar arquivos'
+              }}
+            </p>
+          </div>
         </div>
-        <div>
-          <p class="font-bold text-zinc-900">Materiais de Apoio</p>
-          <p class="text-zinc-500 mt-0.5">
-            {{ currentWeekBundle?.resources?.length ? currentWeekBundle!.resources.length + ' materiais anexados' : 'Pendente links' }}
-          </p>
+        <div class="pt-2 border-t border-zinc-200/60">
+          @if (currentWeekBundle(); as curr) {
+            <a
+              [routerLink]="['/admin/edit', curr.id]"
+              class="inline-flex items-center gap-1.5 font-semibold text-orange-600 hover:text-orange-700 min-h-[32px]"
+            >
+              <span>{{ curr.resources?.length ? 'Gerenciar materiais' : 'Adicionar materiais' }}</span>
+              <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+            </a>
+          } @else {
+            <span class="text-zinc-400">Crie o bundle primeiro</span>
+          }
         </div>
       </div>
 
-      <div class="p-4 rounded-2xl bg-zinc-50 border border-zinc-100 flex items-start gap-3">
-        <div class="mt-0.5">
-          @if (currentWeekBundle?.is_active) {
-            <lucide-icon name="check-circle-2" class="text-green-600" [size]="18"></lucide-icon>
-          } @else {
-            <lucide-icon name="circle" class="text-zinc-300" [size]="18"></lucide-icon>
-          }
+      <!-- 3. Site Publication -->
+      <div class="p-4 rounded-2xl bg-zinc-50/80 border border-zinc-100 flex flex-col justify-between gap-3">
+        <div class="flex items-start gap-3">
+          <div class="mt-0.5">
+            @if (currentWeekBundle()?.is_active) {
+              <lucide-icon name="check-circle-2" class="text-green-600" [size]="18"></lucide-icon>
+            } @else {
+              <lucide-icon name="circle" class="text-zinc-300" [size]="18"></lucide-icon>
+            }
+          </div>
+          <div>
+            <p class="font-bold text-zinc-900">Publicação no Site</p>
+            <p class="text-zinc-500 mt-0.5">
+              {{ currentWeekBundle()?.is_active ? 'Disponível publicamente' : 'Em modo rascunho' }}
+            </p>
+          </div>
         </div>
-        <div>
-          <p class="font-bold text-zinc-900">Publicação no Site</p>
-          <p class="text-zinc-500 mt-0.5">{{ currentWeekBundle?.is_active ? 'Bundle Ativo' : 'Pendente Ativação' }}</p>
+        <div class="pt-2 border-t border-zinc-200/60">
+          @if (currentWeekBundle(); as curr) {
+            <button
+              (click)="toggleStatus(curr)"
+              [disabled]="togglingStatusId() === curr.id"
+              class="inline-flex items-center gap-1.5 font-semibold text-orange-600 hover:text-orange-700 min-h-[32px] cursor-pointer"
+            >
+              <span>{{ curr.is_active ? 'Desativar publicação' : 'Publicar agora' }}</span>
+              <lucide-icon name="refresh-cw" [size]="14" [class.animate-spin]="togglingStatusId() === curr.id"></lucide-icon>
+            </button>
+          } @else {
+            <span class="text-zinc-400">Sem bundle ativo</span>
+          }
         </div>
       </div>
 
-      <div class="p-4 rounded-2xl bg-orange-50/50 border border-orange-100 flex items-start gap-3">
-        <div class="mt-0.5">
-          @if (currentWeekBundle?.article_url || currentWeekBundle?.article_content) {
-            <lucide-icon name="check-circle-2" class="text-orange-600" [size]="18"></lucide-icon>
-          } @else {
-            <lucide-icon name="info" class="text-orange-400" [size]="18"></lucide-icon>
-          }
+      <!-- 4. Article -->
+      <div class="p-4 rounded-2xl bg-orange-50/40 border border-orange-100 flex flex-col justify-between gap-3">
+        <div class="flex items-start gap-3">
+          <div class="mt-0.5">
+            @if (currentWeekBundle()?.article_url || currentWeekBundle()?.article_content) {
+              <lucide-icon name="check-circle-2" class="text-orange-600" [size]="18"></lucide-icon>
+            } @else {
+              <lucide-icon name="info" class="text-orange-400" [size]="18"></lucide-icon>
+            }
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <p class="font-bold text-zinc-900">Artigo da Lição</p>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 bg-orange-100 text-orange-800 rounded">Opcional</span>
+            </div>
+            <p class="text-zinc-500 mt-0.5">
+              {{
+                currentWeekBundle()?.article_url || currentWeekBundle()?.article_content
+                  ? 'Artigo vinculado com sucesso'
+                  : 'Recomendado para engajamento'
+              }}
+            </p>
+          </div>
         </div>
-        <div>
-          <p class="font-bold text-zinc-900 flex items-center gap-1">
-            Artigo da Lição
-            <span class="text-[10px] font-normal px-1.5 py-0.2 bg-orange-100 text-orange-800 rounded">Recomendado</span>
-          </p>
-          <p class="text-zinc-500 mt-0.5">
-            {{ (currentWeekBundle?.article_url || currentWeekBundle?.article_content) ? 'Artigo anexado' : 'Opcional (não impede envio)' }}
-          </p>
+        <div class="pt-2 border-t border-orange-200/60 flex items-center justify-between">
+          <a
+            routerLink="/admin/articles"
+            class="inline-flex items-center gap-1.5 font-semibold text-orange-600 hover:text-orange-700 min-h-[32px]"
+          >
+            <span>Ver artigos</span>
+            <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+          </a>
+          <a
+            routerLink="/admin/articles/new"
+            class="inline-flex items-center gap-1 font-semibold text-zinc-500 hover:text-zinc-800 min-h-[32px]"
+            title="Criar novo artigo"
+          >
+            <lucide-icon name="plus" [size]="14"></lucide-icon>
+            <span>Criar</span>
+          </a>
         </div>
       </div>
     </div>
-  </div>
-  <!-- List -->
-  <div class="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-xl">
-    <table class="w-full text-left text-sm text-zinc-500">
-      <thead class="bg-zinc-50 text-zinc-900 border-b border-zinc-100">
-        <tr>
-          <th scope="col" class="px-6 py-4 font-bold">Título</th>
-          <th scope="col" class="px-6 py-4 font-bold">Semana</th>
-          <th scope="col" class="px-6 py-4 font-bold">Data</th>
-          <th scope="col" class="px-6 py-4 font-bold">Status</th>
-          <th scope="col" class="px-6 py-4 font-bold text-right">Ações</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-zinc-100">
-        @if (loading()) {
-          <!-- Loading State -->
-          <tr>
-            <td colspan="5" class="px-6 py-12 text-center text-zinc-500">
-              <div class="flex items-center justify-center gap-2">
-                <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-orange-600"></div>
-                Carregando trilhas...
-              </div>
-            </td>
-          </tr>
-        } @else {
-          @if (bundles(); as list) {
+  </section>
+
+  <!-- Controls / Filter Bar -->
+  <section class="mb-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-white p-3.5 sm:p-4 rounded-2xl border border-zinc-200 shadow-sm" aria-label="Filtros e busca">
+    <!-- Search Bar -->
+    <div class="relative flex-1 max-w-md">
+      <lucide-icon name="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" [size]="18"></lucide-icon>
+      <input
+        type="text"
+        [ngModel]="searchTerm()"
+        (ngModelChange)="searchTerm.set($event)"
+        placeholder="Buscar por título, semana (#) ou descrição..."
+        class="w-full pl-10 pr-9 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-sm font-medium text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all min-h-[44px]"
+      />
+      @if (searchTerm()) {
+        <button
+          (click)="clearSearch()"
+          class="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-zinc-400 hover:text-zinc-600 rounded-lg hover:bg-zinc-200/50 transition-colors"
+          title="Limpar busca"
+        >
+          <lucide-icon name="x" [size]="16"></lucide-icon>
+        </button>
+      }
+    </div>
+
+    <!-- Status Filter Segmented Control -->
+    <div class="flex items-center bg-zinc-100/80 p-1 rounded-xl text-xs font-semibold self-start sm:self-auto" role="group" aria-label="Filtrar por status">
+      <button
+        (click)="setStatusFilter('all')"
+        [class]="statusFilter() === 'all' ? 'bg-white text-zinc-900 shadow-sm' : 'text-zinc-600 hover:text-zinc-900'"
+        class="px-3.5 py-2 rounded-lg transition-all cursor-pointer min-h-[36px]"
+      >
+        Todos ({{ bundles().length }})
+      </button>
+
+      <button
+        (click)="setStatusFilter('active')"
+        [class]="statusFilter() === 'active' ? 'bg-white text-green-800 shadow-sm' : 'text-zinc-600 hover:text-zinc-900'"
+        class="px-3.5 py-2 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 min-h-[36px]"
+      >
+        <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+        Publicados
+      </button>
+
+      <button
+        (click)="setStatusFilter('draft')"
+        [class]="statusFilter() === 'draft' ? 'bg-white text-amber-800 shadow-sm' : 'text-zinc-600 hover:text-zinc-900'"
+        class="px-3.5 py-2 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 min-h-[36px]"
+      >
+        <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+        Rascunhos
+      </button>
+    </div>
+  </section>
+
+  <!-- List Section -->
+  <div class="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
+    @if (loading()) {
+      <!-- Loading State -->
+      <div class="p-12 text-center text-zinc-500">
+        <div class="flex flex-col items-center justify-center gap-3">
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+          <p class="text-sm font-medium">Carregando bundles semanais...</p>
+        </div>
+      </div>
+    } @else {
+      @if (filteredBundles(); as list) {
+        @if (list.length > 0) {
+          <!-- DESKTOP VIEW: Data Table (Hidden on small screens) -->
+          <div class="hidden md:block overflow-x-auto">
+            <table class="w-full text-left text-sm text-zinc-600">
+              <thead class="bg-zinc-50/80 text-zinc-900 border-b border-zinc-100 text-xs uppercase font-bold tracking-wider">
+                <tr>
+                  <th scope="col" class="px-6 py-4">Semana</th>
+                  <th scope="col" class="px-6 py-4">Título & Conteúdo</th>
+                  <th scope="col" class="px-6 py-4">Data</th>
+                  <th scope="col" class="px-6 py-4">Status</th>
+                  <th scope="col" class="px-6 py-4 text-right">Ações</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-zinc-100">
+                @for (bundle of list; track bundle.id) {
+                  <tr class="group hover:bg-zinc-50/70 transition-colors">
+                    <!-- Week Number -->
+                    <td class="px-6 py-4 font-black text-zinc-900 tabular-nums">
+                      <span class="inline-flex items-center justify-center px-2.5 py-1 rounded-lg bg-orange-50 text-orange-700 font-black text-xs border border-orange-100">
+                        #{{ bundle.week_number }}
+                      </span>
+                    </td>
+
+                    <!-- Title & Details -->
+                    <td class="px-6 py-4 font-medium text-zinc-900 max-w-md">
+                      <p class="font-bold text-zinc-900 line-clamp-1 group-hover:text-orange-600 transition-colors">
+                        {{ bundle.title }}
+                      </p>
+                      <p class="text-xs font-normal text-zinc-500 line-clamp-1 mt-0.5">
+                        {{ bundle.description || 'Sem descrição cadastrada' }}
+                      </p>
+                      <!-- Attached Content Badges -->
+                      <div class="flex items-center gap-2 mt-1.5 text-[11px] text-zinc-400">
+                        @if (bundle.video_id) {
+                          <span class="inline-flex items-center gap-1 text-zinc-500" title="Possui vídeo vinculado">
+                            <lucide-icon name="video" [size]="12"></lucide-icon> Vídeo
+                          </span>
+                        }
+                        @if (bundle.resources?.length) {
+                          <span class="inline-flex items-center gap-1 text-zinc-500" title="Possui materiais de apoio">
+                            <lucide-icon name="file" [size]="12"></lucide-icon> {{ bundle.resources.length }} mat.
+                          </span>
+                        }
+                        @if (bundle.article_url || bundle.article_content) {
+                          <span class="inline-flex items-center gap-1 text-orange-600 font-medium" title="Possui artigo vinculado">
+                            <lucide-icon name="file-text" [size]="12"></lucide-icon> Artigo
+                          </span>
+                        }
+                      </div>
+                    </td>
+
+                    <!-- Date -->
+                    <td class="px-6 py-4 tabular-nums text-xs text-zinc-500 whitespace-nowrap">
+                      {{ bundle.published_at | date: 'dd/MM/yyyy' }}
+                    </td>
+
+                    <!-- Status with Direct 1-Click Toggle -->
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <button
+                        (click)="toggleStatus(bundle)"
+                        [disabled]="togglingStatusId() === bundle.id"
+                        class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all cursor-pointer min-h-[32px]"
+                        [ngClass]="
+                          bundle.is_active
+                            ? 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100'
+                            : 'bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100'
+                        "
+                        title="Clique para alternar entre Publicado e Rascunho"
+                      >
+                        <span
+                          class="h-1.5 w-1.5 rounded-full"
+                          [ngClass]="bundle.is_active ? 'bg-green-600 animate-pulse' : 'bg-amber-500'"
+                        ></span>
+                        <span>{{ bundle.is_active ? 'Publicado' : 'Rascunho' }}</span>
+                        @if (togglingStatusId() === bundle.id) {
+                          <lucide-icon name="refresh-cw" [size]="12" class="animate-spin"></lucide-icon>
+                        }
+                      </button>
+                    </td>
+
+                    <!-- Actions -->
+                    <td class="px-6 py-4 text-right whitespace-nowrap">
+                      <div class="flex items-center justify-end gap-2">
+                        <a
+                          [routerLink]="['/admin/edit', bundle.id]"
+                          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-700 bg-blue-50/80 hover:bg-blue-100 border border-blue-100 transition-colors min-h-[36px]"
+                          title="Editar bundle"
+                        >
+                          <lucide-icon name="pencil" [size]="14"></lucide-icon>
+                          <span>Editar</span>
+                        </a>
+
+                        <button
+                          (click)="confirmDelete(bundle)"
+                          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-red-700 bg-red-50/80 hover:bg-red-100 border border-red-100 transition-colors min-h-[36px] cursor-pointer"
+                          title="Excluir bundle"
+                        >
+                          <lucide-icon name="trash-2" [size]="14"></lucide-icon>
+                          <span>Excluir</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <!-- MOBILE VIEW: Touch Cards (< 768px) -->
+          <div class="block md:hidden divide-y divide-zinc-100">
             @for (bundle of list; track bundle.id) {
-              <tr class="group hover:bg-zinc-50 transition-colors">
-                <td class="px-6 py-4 font-medium text-zinc-900">
-                  {{ bundle.title }}
-                  <div class="text-xs font-normal text-zinc-500">
-                    {{ bundle.description | slice: 0 : 50 }}...
+              <div class="p-4 flex flex-col gap-3 hover:bg-zinc-50/50 transition-colors">
+                <!-- Card Header: Week + Status + Date -->
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-lg bg-orange-50 text-orange-700 font-black text-xs border border-orange-100 tabular-nums">
+                      #{{ bundle.week_number }}
+                    </span>
+                    <button
+                      (click)="toggleStatus(bundle)"
+                      [disabled]="togglingStatusId() === bundle.id"
+                      class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border transition-all cursor-pointer min-h-[28px]"
+                      [ngClass]="
+                        bundle.is_active
+                          ? 'bg-green-50 text-green-700 border-green-200'
+                          : 'bg-amber-50 text-amber-800 border-amber-200'
+                      "
+                    >
+                      <span
+                        class="h-1.5 w-1.5 rounded-full"
+                        [ngClass]="bundle.is_active ? 'bg-green-600' : 'bg-amber-500'"
+                      ></span>
+                      <span>{{ bundle.is_active ? 'Publicado' : 'Rascunho' }}</span>
+                    </button>
                   </div>
-                </td>
-                <td class="px-6 py-4">#{{ bundle.week_number }}</td>
-                <td class="px-6 py-4">
-                  {{ bundle.published_at | date: 'dd/MM/yyyy' }}
-                </td>
-                <td class="px-6 py-4">
-                  <span
-                    class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset"
-                    [ngClass]="
-                      bundle.is_active
-                        ? 'bg-green-50 text-green-700 ring-green-600/20'
-                        : 'bg-yellow-50 text-yellow-800 ring-yellow-600/20'
-                    "
-                  >
-                    {{ bundle.is_active ? 'Publicado' : 'Rascunho' }}
+
+                  <span class="text-[11px] text-zinc-400 tabular-nums">
+                    {{ bundle.published_at | date: 'dd/MM/yyyy' }}
                   </span>
-                </td>
-                <td class="px-6 py-4 text-right flex justify-end items-center gap-4">
+                </div>
+
+                <!-- Card Body: Title + Description -->
+                <div>
+                  <h3 class="font-bold text-zinc-900 text-sm leading-snug">
+                    {{ bundle.title }}
+                  </h3>
+                  <p class="text-xs text-zinc-500 line-clamp-2 mt-1">
+                    {{ bundle.description || 'Sem descrição cadastrada.' }}
+                  </p>
+                </div>
+
+                <!-- Attached metadata icons -->
+                <div class="flex flex-wrap items-center gap-3 text-xs text-zinc-400 pt-1">
+                  @if (bundle.video_id) {
+                    <span class="inline-flex items-center gap-1 text-zinc-600">
+                      <lucide-icon name="video" [size]="13"></lucide-icon> Vídeo
+                    </span>
+                  }
+                  @if (bundle.resources?.length) {
+                    <span class="inline-flex items-center gap-1 text-zinc-600">
+                      <lucide-icon name="file" [size]="13"></lucide-icon> {{ bundle.resources.length }} materiais
+                    </span>
+                  }
+                  @if (bundle.article_url || bundle.article_content) {
+                    <span class="inline-flex items-center gap-1 text-orange-600 font-medium">
+                      <lucide-icon name="file-text" [size]="13"></lucide-icon> Artigo
+                    </span>
+                  }
+                </div>
+
+                <!-- Card Footer / Actions (Thumb Zone: min 44px touch targets) -->
+                <div class="grid grid-cols-2 gap-2 pt-2 border-t border-zinc-100 mt-1">
                   <a
                     [routerLink]="['/admin/edit', bundle.id]"
-                    class="text-blue-600 hover:text-blue-500 font-medium flex items-center gap-1"
+                    class="flex items-center justify-center gap-1.5 min-h-[44px] rounded-xl bg-blue-50 text-blue-700 text-xs font-bold border border-blue-100 hover:bg-blue-100 transition-colors active:scale-98"
                   >
                     <lucide-icon name="pencil" [size]="16"></lucide-icon>
-                    Editar
+                    <span>Editar</span>
                   </a>
+
                   <button
-                    (click)="deleteBundle(bundle.id)"
-                    class="text-red-600 hover:text-red-500 font-medium flex items-center gap-1"
-                    title="Excluir"
+                    (click)="confirmDelete(bundle)"
+                    class="flex items-center justify-center gap-1.5 min-h-[44px] rounded-xl bg-red-50 text-red-700 text-xs font-bold border border-red-100 hover:bg-red-100 transition-colors active:scale-98 cursor-pointer"
                   >
                     <lucide-icon name="trash-2" [size]="16"></lucide-icon>
-                    Excluir
+                    <span>Excluir</span>
                   </button>
-                </td>
-              </tr>
+                </div>
+              </div>
             }
-
-            @if (list.length === 0) {
-              <tr>
-                <td colspan="5" class="p-0 border-none">
-                  <div class="flex flex-col items-center justify-center py-20 text-center">
-                    <div class="bg-orange-50 p-6 rounded-full mb-6">
-                      <lucide-icon
-                        name="layout-list"
-                        class="text-orange-500"
-                        [size]="48"
-                      ></lucide-icon>
-                    </div>
-                    <h3 class="text-xl font-bold text-zinc-900 mb-2">Nenhum bundle encontrado</h3>
-                    <p class="text-zinc-500 max-w-md px-4 mb-6">
-                      Comece sincronizando seus vídeos do YouTube ou crie um novo bundle manualmente.
-                    </p>
-                    <a
-                      routerLink="/admin/new"
-                      class="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-sm font-semibold text-white hover:bg-orange-500 transition-colors"
-                    >
-                      Criar Primeiro Bundle
-                    </a>
-                  </div>
-                </td>
-              </tr>
-            }
-          } @else {
-            <tr>
-              <td colspan="5" class="px-6 py-4 text-center text-zinc-500">Nenhum dado disponível.</td>
-            </tr>
-          }
+          </div>
+        } @else {
+          <!-- Empty State after Search/Filter -->
+          <div class="flex flex-col items-center justify-center py-16 px-4 text-center">
+            <div class="h-16 w-16 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center mb-4">
+              <lucide-icon name="search" [size]="32"></lucide-icon>
+            </div>
+            <h3 class="text-lg font-bold text-zinc-900 mb-1">Nenhum bundle encontrado</h3>
+            <p class="text-sm text-zinc-500 max-w-sm mb-6">
+              Nenhum pacote corresponde aos filtros ou termo de busca "{{ searchTerm() }}".
+            </p>
+            <button
+              (click)="clearSearch(); setStatusFilter('all')"
+              class="inline-flex items-center gap-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 px-5 py-2.5 text-xs font-bold transition-all min-h-[44px] cursor-pointer"
+            >
+              <lucide-icon name="x" [size]="16"></lucide-icon>
+              <span>Limpar Filtros</span>
+            </button>
+          </div>
         }
-      </tbody>
-    </table>
+      }
+    }
 
     <!-- Pagination Footer -->
-    <div class="bg-zinc-50 border-t border-zinc-100 px-6 py-4 flex items-center justify-between">
+    <div class="bg-zinc-50/80 border-t border-zinc-100 px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between gap-4">
       <div class="flex flex-1 justify-between items-center">
         <button
           (click)="prevPage()"
           [disabled]="currentPage() === 1 || loading()"
-          class="relative inline-flex items-center rounded-xl border border-zinc-300 bg-white px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 disabled:opacity-50 transition-colors cursor-pointer"
+          class="inline-flex items-center gap-1.5 rounded-xl border border-zinc-300 bg-white px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 disabled:opacity-40 transition-colors cursor-pointer min-h-[40px]"
         >
-          &larr; Anterior
+          <lucide-icon name="arrow-left" [size]="14"></lucide-icon>
+          <span>Anterior</span>
         </button>
-        <span class="text-xs text-zinc-500 font-medium">
+
+        <span class="text-xs text-zinc-500 font-semibold tabular-nums">
           Página {{ currentPage() }}
         </span>
+
         <button
           (click)="nextPage()"
           [disabled]="!hasNextPage() || loading()"
-          class="relative inline-flex items-center rounded-xl border border-zinc-300 bg-white px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 disabled:opacity-50 transition-colors cursor-pointer"
+          class="inline-flex items-center gap-1.5 rounded-xl border border-zinc-300 bg-white px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 disabled:opacity-40 transition-colors cursor-pointer min-h-[40px]"
         >
-          Próximo &rarr;
+          <span>Próxima</span>
+          <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
         </button>
       </div>
     </div>
   </div>
-</div>
+</main>
+
+<!-- MODAL COMPLETO DE ANÁLISE DE AUDIÊNCIA (A11y Compliant) -->
+@if (analyticsModalOpen()) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm animate-fade-in"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="analytics-modal-title"
+  >
+    <div class="bg-white rounded-3xl border border-zinc-200 shadow-2xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto animate-scale-in">
+      <div class="flex items-center justify-between border-b border-zinc-100 pb-4 mb-5">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center">
+            <lucide-icon name="compass" [size]="22"></lucide-icon>
+          </div>
+          <div>
+            <h2 id="analytics-modal-title" class="text-lg font-black text-zinc-900">
+              Relatório de Audiência & Tráfego
+            </h2>
+            <p class="text-xs text-zinc-500">Dados consolidados do Google Analytics 4</p>
+          </div>
+        </div>
+        <button
+          (click)="closeAnalyticsModal()"
+          class="p-2 rounded-xl text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 transition-colors cursor-pointer"
+          title="Fechar"
+        >
+          <lucide-icon name="x" [size]="20"></lucide-icon>
+        </button>
+      </div>
+
+      <!-- Realtime Activity section -->
+      <div class="mb-6 p-4 rounded-2xl bg-zinc-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-green-400 animate-pulse"></span>
+            <span class="text-xs font-bold text-zinc-300 uppercase tracking-wider">Ao Vivo Agora</span>
+          </div>
+          <p class="text-2xl font-black mt-1">
+            {{ realtimeAnalytics()?.active_users_now || 0 }} leitores simultâneos
+          </p>
+        </div>
+        <div class="text-xs text-zinc-400">
+          <p class="font-semibold text-white mb-1">Páginas ativas agora:</p>
+          @for (p of realtimeAnalytics()?.top_active_pages; track p.path) {
+            <div class="flex items-center justify-between gap-3 text-zinc-300">
+              <span class="font-mono truncate max-w-[180px]">{{ p.path }}</span>
+              <span class="font-bold text-green-400">{{ p.users }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Traffic Sources Breakdown -->
+      <div class="mb-6">
+        <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-3">
+          Origem do Tráfego (Últimos 30 dias)
+        </h3>
+        <div class="space-y-2.5">
+          @for (source of trafficSources(); track source.source) {
+            <div class="p-3 rounded-xl bg-zinc-50 border border-zinc-100 flex flex-col gap-1.5">
+              <div class="flex items-center justify-between text-xs font-semibold">
+                <span class="text-zinc-800">{{ source.source }}</span>
+                <span class="text-zinc-500 tabular-nums">{{ source.sessions }} sessões ({{ source.percentage }}%)</span>
+              </div>
+              <div class="w-full bg-zinc-200/70 rounded-full h-2 overflow-hidden">
+                <div class="h-full rounded-full bg-orange-500" [style.width.%]="source.percentage"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Top Content Ranking -->
+      <div class="mb-6">
+        <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-3">
+          Conteúdos Mais Acessados
+        </h3>
+        <div class="rounded-2xl border border-zinc-200 overflow-hidden text-xs">
+          <table class="w-full text-left">
+            <thead class="bg-zinc-50 text-zinc-500 font-bold border-b border-zinc-200">
+              <tr>
+                <th class="px-4 py-2.5">Página / Artigo</th>
+                <th class="px-4 py-2.5 text-right">Views</th>
+                <th class="px-4 py-2.5 text-right">Leitores</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-100">
+              @for (item of topContent(); track item.path) {
+                <tr class="hover:bg-zinc-50 transition-colors">
+                  <td class="px-4 py-3">
+                    <p class="font-bold text-zinc-900 line-clamp-1">{{ item.title }}</p>
+                    <p class="font-mono text-[11px] text-zinc-400 mt-0.5 truncate">{{ item.path }}</p>
+                  </td>
+                  <td class="px-4 py-3 text-right font-bold text-zinc-900 tabular-nums">
+                    {{ item.views | number }}
+                  </td>
+                  <td class="px-4 py-3 text-right font-medium text-zinc-600 tabular-nums">
+                    {{ item.users | number }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex justify-end gap-3 pt-4 border-t border-zinc-100">
+        <button
+          (click)="closeAnalyticsModal()"
+          class="px-5 py-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-xs font-bold transition-colors min-h-[44px] cursor-pointer"
+        >
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- ASSISTENTE DE CONFIGURAÇÃO DO GOOGLE ANALYTICS -->
+@if (analyticsSetupOpen()) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm animate-fade-in"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="setup-modal-title"
+  >
+    <div class="bg-white rounded-3xl border border-zinc-200 shadow-2xl max-w-lg w-full p-6 animate-scale-in">
+      <div class="flex items-center justify-between border-b border-zinc-100 pb-4 mb-4">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
+            <lucide-icon name="info" [size]="22"></lucide-icon>
+          </div>
+          <div>
+            <h2 id="setup-modal-title" class="text-base font-bold text-zinc-900">
+              Vincular Google Analytics 4
+            </h2>
+            <p class="text-xs text-zinc-500">Instruções para conectar sua propriedade do GA4</p>
+          </div>
+        </div>
+        <button (click)="closeAnalyticsSetup()" class="p-2 text-zinc-400 hover:text-zinc-600" title="Fechar">
+          <lucide-icon name="x" [size]="18"></lucide-icon>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs text-zinc-600 mb-6">
+        <div class="p-3.5 rounded-2xl bg-zinc-50 border border-zinc-100">
+          <p class="font-bold text-zinc-900 mb-1">1. Obter o Property ID (Numérico)</p>
+          <p>
+            Acesse o <a href="https://analytics.google.com" target="_blank" class="text-orange-600 font-semibold underline">Google Analytics</a>, clique em <strong>Administrador (ícone de engrenagem)</strong> &rarr; <strong>Detalhes da Propriedade</strong> e copie o <strong>ID da Propriedade</strong> (ex: <code>421098765</code>).
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-zinc-50 border border-zinc-100">
+          <p class="font-bold text-zinc-900 mb-1">2. Permissão de Acesso</p>
+          <p>
+            Em <strong>Gerenciamento de Acesso à Propriedade</strong>, certifique-se de que a conta de serviço do Firebase/Google Cloud ou seu e-mail de administrador tenha papel de <strong>Leitor</strong>.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-zinc-50 border border-zinc-100">
+          <p class="font-bold text-zinc-900 mb-1">3. Definir a variável no Backend</p>
+          <p>
+            No arquivo <code>backend/.env</code> ou nas variáveis de ambiente do Cloud Run, adicione:
+          </p>
+          <code class="block bg-zinc-900 text-green-400 p-2.5 rounded-xl font-mono text-[11px] mt-1.5">
+            GA_PROPERTY_ID=SEU_NUMERO_DA_PROPRIEDADE
+          </code>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          (click)="closeAnalyticsSetup()"
+          class="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold transition-all min-h-[44px] cursor-pointer"
+        >
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- MODAL SEGURO DE CONFIRMAÇÃO DE EXCLUSÃO (A11y Compliant) -->
+@if (bundleToDelete(); as target) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/50 backdrop-blur-sm animate-fade-in"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="delete-dialog-title"
+    aria-describedby="delete-dialog-description"
+  >
+    <div class="bg-white rounded-3xl border border-zinc-200 shadow-2xl max-w-md w-full p-6 animate-scale-in">
+      <!-- Icon & Header -->
+      <div class="flex items-start gap-4 mb-4">
+        <div class="h-12 w-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center flex-shrink-0">
+          <lucide-icon name="alert-circle" [size]="26"></lucide-icon>
+        </div>
+        <div>
+          <h2 id="delete-dialog-title" class="text-lg font-black text-zinc-900">
+            Excluir Bundle #{{ target.week_number }}?
+          </h2>
+          <p id="delete-dialog-description" class="text-xs text-zinc-500 mt-1">
+            "{{ target.title }}"
+          </p>
+        </div>
+      </div>
+
+      <p class="text-sm text-zinc-600 mb-6 bg-zinc-50 p-3.5 rounded-2xl border border-zinc-100">
+        Esta ação remove o pacote de estudo semanal. Se desejar apenas ocultá-lo do público, você pode mantê-lo como <strong>Rascunho</strong>.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col gap-2.5">
+        <!-- Soft option: Set as draft -->
+        <button
+          (click)="setAsDraftFromModal()"
+          [disabled]="isDeleting()"
+          class="w-full flex items-center justify-center gap-2 min-h-[44px] rounded-xl bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200 text-xs font-bold transition-all disabled:opacity-50 cursor-pointer"
+        >
+          <lucide-icon name="clock" [size]="16"></lucide-icon>
+          <span>Apenas Desativar (Manter como Rascunho)</span>
+        </button>
+
+        <!-- Hard option: Permanent delete -->
+        <button
+          (click)="executeDelete()"
+          [disabled]="isDeleting()"
+          class="w-full flex items-center justify-center gap-2 min-h-[44px] rounded-xl bg-red-600 text-white hover:bg-red-700 text-xs font-bold transition-all disabled:opacity-50 shadow-md cursor-pointer"
+        >
+          @if (isDeleting()) {
+            <lucide-icon name="refresh-cw" [size]="16" class="animate-spin"></lucide-icon>
+            <span>Excluindo...</span>
+          } @else {
+            <lucide-icon name="trash-2" [size]="16"></lucide-icon>
+            <span>Excluir Permanentemente</span>
+          }
+        </button>
+
+        <!-- Cancel -->
+        <button
+          (click)="cancelDelete()"
+          [disabled]="isDeleting()"
+          class="w-full flex items-center justify-center min-h-[44px] rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-xs font-semibold transition-all cursor-pointer"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- TOAST FLUTUANTE DE FEEDBACK -->
+@if (toast(); as t) {
+  <aside
+    class="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl border text-sm font-semibold animate-slide-up"
+    [ngClass]="{
+      'bg-zinc-900 text-white border-zinc-800': t.type === 'info',
+      'bg-green-700 text-white border-green-600': t.type === 'success',
+      'bg-red-700 text-white border-red-600': t.type === 'error'
+    }"
+    role="status"
+    aria-live="polite"
+  >
+    @if (t.type === 'success') {
+      <lucide-icon name="check-circle-2" [size]="18"></lucide-icon>
+    } @else if (t.type === 'error') {
+      <lucide-icon name="alert-circle" [size]="18"></lucide-icon>
+    } @else {
+      <lucide-icon name="info" [size]="18"></lucide-icon>
+    }
+    <span>{{ t.message }}</span>
+    <button (click)="toast.set(null)" class="p-1 hover:opacity-80 transition-opacity ml-1" title="Fechar">
+      <lucide-icon name="x" [size]="14"></lucide-icon>
+    </button>
+  </aside>
+}

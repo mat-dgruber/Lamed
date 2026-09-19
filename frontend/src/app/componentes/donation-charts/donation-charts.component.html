@@ -5,11 +5,11 @@
       <h3>Distribuição Geral</h3>
       <span class="chart-badge">Visão Macro</span>
     </div>
-    <div class="chart-canvas-wrapper">
+    <div class="chart-canvas-wrapper" (mouseleave)="resetGeralCenter()">
       <canvas #geralDonationChart id="geralDonationChart"></canvas>
-      <div class="chart-center-stat">
-        <span class="stat-number">100%</span>
-        <span class="stat-desc">Auditado</span>
+      <div class="chart-center-stat" [attr.aria-label]="geralActiveValue + ' ' + geralActiveLabel">
+        <span class="stat-number" [style.color]="geralActiveColor">{{ geralActiveValue }}</span>
+        <span class="stat-desc">{{ geralActiveLabel }}</span>
       </div>
     </div>
   </div>
@@ -20,11 +20,11 @@
       <h3>Alocação Social e Missionária</h3>
       <span class="chart-badge badge-destaque">55% do Total</span>
     </div>
-    <div class="chart-canvas-wrapper">
+    <div class="chart-canvas-wrapper" (mouseleave)="resetSocialCenter()">
       <canvas #socialProjectsChart id="socialProjectsChart"></canvas>
-      <div class="chart-center-stat">
-        <span class="stat-number">55%</span>
-        <span class="stat-desc">Impacto</span>
+      <div class="chart-center-stat" [attr.aria-label]="socialActiveValue + ' ' + socialActiveLabel">
+        <span class="stat-number" [style.color]="socialActiveColor">{{ socialActiveValue }}</span>
+        <span class="stat-desc">{{ socialActiveLabel }}</span>
       </div>
     </div>
   </div>

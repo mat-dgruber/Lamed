@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 
 @Component({
@@ -16,8 +16,36 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
   private socialChart: Chart | undefined;
   private observer: IntersectionObserver | undefined;
 
-  constructor() {
+  // Dynamic center stats for Geral chart
+  geralActiveValue = '100%';
+  geralActiveLabel = 'Auditado';
+  geralActiveColor = 'var(--text-color-headings)';
+
+  // Dynamic center stats for Social chart
+  socialActiveValue = '55%';
+  socialActiveLabel = 'Impacto';
+  socialActiveColor = 'var(--text-color-headings)';
+
+  constructor(private cdr: ChangeDetectorRef) {
     Chart.register(...registerables);
+  }
+
+  resetGeralCenter(): void {
+    if (this.geralActiveValue !== '100%' || this.geralActiveLabel !== 'Auditado') {
+      this.geralActiveValue = '100%';
+      this.geralActiveLabel = 'Auditado';
+      this.geralActiveColor = 'var(--text-color-headings)';
+      this.cdr.detectChanges();
+    }
+  }
+
+  resetSocialCenter(): void {
+    if (this.socialActiveValue !== '55%' || this.socialActiveLabel !== 'Impacto') {
+      this.socialActiveValue = '55%';
+      this.socialActiveLabel = 'Impacto';
+      this.socialActiveColor = 'var(--text-color-headings)';
+      this.cdr.detectChanges();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -79,7 +107,8 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
           borderColor: '#ffffff',
           borderWidth: 3,
           borderRadius: 6,
-          spacing: 3
+          spacing: 3,
+          hoverOffset: 6
         }]
       },
       options: {
@@ -89,6 +118,23 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
         animation: {
           duration: 1400,
           easing: 'easeOutQuart'
+        },
+        onHover: (_, activeElements) => {
+          if (activeElements && activeElements.length > 0) {
+            const index = activeElements[0].index;
+            if (index === 0) {
+              this.geralActiveValue = '45%';
+              this.geralActiveLabel = 'Operação & Conteúdo';
+              this.geralActiveColor = '#F8941B';
+            } else if (index === 1) {
+              this.geralActiveValue = '55%';
+              this.geralActiveLabel = 'Sociais & Missionários';
+              this.geralActiveColor = '#940312';
+            }
+            this.cdr.detectChanges();
+          } else {
+            this.resetGeralCenter();
+          }
         },
         plugins: {
           legend: {
@@ -106,18 +152,7 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
             }
           },
           tooltip: {
-            backgroundColor: '#2c1e10',
-            bodyFont: { family: 'caecilia, sans-serif', size: 13, weight: 'bold' },
-            padding: { top: 8, bottom: 8, left: 12, right: 12 },
-            cornerRadius: 10,
-            displayColors: false,
-            caretPadding: 8,
-            callbacks: {
-              title: () => '',
-              label: function(context) {
-                return `${context.label}: ${context.parsed}%`;
-              }
-            }
+            enabled: false
           }
         }
       }
@@ -139,7 +174,8 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
           borderColor: '#ffffff',
           borderWidth: 3,
           borderRadius: 5,
-          spacing: 2
+          spacing: 2,
+          hoverOffset: 6
         }]
       },
       options: {
@@ -149,6 +185,20 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
         animation: {
           duration: 1600,
           easing: 'easeOutQuart'
+        },
+        onHover: (_, activeElements) => {
+          if (activeElements && activeElements.length > 0) {
+            const index = activeElements[0].index;
+            const values = ['20%', '20%', '10%', '5%'];
+            const labels = ['Missão Global', 'Projetos (ADRA)', 'Dízimo', 'Oferta (IASD)'];
+            const colors = ['#F8941B', '#E06A0B', '#940312', '#63020B'];
+            this.socialActiveValue = values[index];
+            this.socialActiveLabel = labels[index];
+            this.socialActiveColor = colors[index];
+            this.cdr.detectChanges();
+          } else {
+            this.resetSocialCenter();
+          }
         },
         plugins: {
           legend: {
@@ -166,18 +216,7 @@ export class DonationChartsComponent implements AfterViewInit, OnDestroy {
             }
           },
           tooltip: {
-            backgroundColor: '#2c1e10',
-            bodyFont: { family: 'caecilia, sans-serif', size: 13, weight: 'bold' },
-            padding: { top: 8, bottom: 8, left: 12, right: 12 },
-            cornerRadius: 10,
-            displayColors: false,
-            caretPadding: 8,
-            callbacks: {
-              title: () => '',
-              label: function(context) {
-                return `${context.label}: ${context.parsed}%`;
-              }
-            }
+            enabled: false
           }
         }
       }

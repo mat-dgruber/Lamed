@@ -82,11 +82,9 @@
   justify-content: center;
   pointer-events: none;
   text-align: center;
-  transition: opacity 0.2s ease;
-}
-
-.chart-canvas-wrapper:hover .chart-center-stat {
-  opacity: 0;
+  width: 140px;
+  max-width: 80%;
+  padding: 0 4px;
 }
 
 .stat-number {
@@ -95,16 +93,23 @@
   font-weight: 900;
   color: var(--text-color-headings);
   line-height: 1;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
   font-variant-numeric: tabular-nums;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .stat-desc {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: #71717a;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  line-height: 1.25;
+  transition: color 0.2s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* DETAILS SECTION */

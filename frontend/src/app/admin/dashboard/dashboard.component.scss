@@ -1,4 +1,84 @@
-// SCSS for Admin Dashboard Component
+// Admin Dashboard Component Styles
 .hero-section {
-  @apply bg-zinc-900 pt-28 pb-20;
+  background: linear-gradient(135deg, #18181b 0%, #27272a 60%, #1f1a14 100%);
+  padding-top: 7rem;
+  padding-bottom: 5rem;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(234, 88, 12, 0.15) 0%, rgba(234, 88, 12, 0) 70%);
+    pointer-events: none;
+    border-radius: 9999px;
+  }
+}
+
+// Modal and Toast Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+// Active button feedback
+.active\:scale-95:active {
+  transform: scale(0.96);
+}
+
+.active\:scale-98:active {
+  transform: scale(0.98);
+}
+
+// Accessibility: Respect user motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-slide-up,
+  .animate-spin,
+  .animate-pulse {
+    animation: none !important;
+    transition: none !important;
+  }
 }
