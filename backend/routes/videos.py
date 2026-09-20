@@ -64,8 +64,8 @@ def get_videos(
     """
     Returns a list of videos from the independent collection using cursor pagination.
     """
-    # Prevent DoS
-    limit = min(limit, 100)
+    # Prevent DoS / Unbounded queries
+    limit = max(1, min(limit, 100))
 
     try:
         query = db.collection(VIDEOS_COLLECTION)

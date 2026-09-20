@@ -32,6 +32,9 @@ def get_bundles(
         "week_number", direction=FirestoreQuery.DESCENDING
     )
     
+    # Clamp limit to [1, 100] to prevent unbounded memory consumption
+    limit = max(1, min(limit, 100))
+
     if start_after_id:
         last_doc = db.collection(BUNDLES_COLLECTION).document(start_after_id).get()
         if last_doc.exists:

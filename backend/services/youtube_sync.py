@@ -168,13 +168,58 @@ def sync_videos():
     synced_count = 0
     errors = 0
 
+    video_ids = [vid["id"] for vid in videos]
+
+    # Batch read existing videos in 1 single call to eliminate N+1 queries
+    video_refs = [
+        db.collection(VIDEOS_COLLECTION).document(vid_id)
+        for vid_id in video_ids
+    ]
+    existing_videos_map = {}
+    if hasattr(db, "get_all") and callable(getattr(db, "get_all")):
+        try:
+            snapshots = list(db.get_all(video_refs))
+            for snap in snapshots:
+                if getattr(snap, "exists", False):
+                    snap_id = getattr(snap, "id", None)
+                    if snap_id:
+                        existing_videos_map[snap_id] = snap
+        except Exception as e:
+            logger.warning(f"Batch db.get_all() lookup failed, will fallback to individual gets: {e}")
+
+    # Batch check which video_ids already have bundles created (chunks of up to 30 for Firestore 'in' filter)
+    existing_bundle_video_ids = set()
+    for i in range(0, len(video_ids), 30):
+        chunk = video_ids[i:i + 30]
+        if not chunk:
+            continue
+        try:
+            b_query = db.collection(BUNDLES_COLLECTION).where(
+                filter=FieldFilter("video_id", "in", chunk)
+            )
+            for b_doc in b_query.stream():
+                b_data = b_doc.to_dict()
+                if b_data and b_data.get("video_id"):
+                    existing_bundle_video_ids.add(b_data["video_id"])
+        except Exception as e:
+            logger.warning(f"Batch bundle query failed for chunk, will check individually: {e}")
+
     for vid in videos:
         try:
             video_id = vid["id"]
+            video_ref = db.collection(VIDEOS_COLLECTION).document(video_id)
 
             # 1. Save to VIDEOS Collection (Upsert)
-            video_ref = db.collection(VIDEOS_COLLECTION).document(video_id)
-            v_doc = video_ref.get()
+            if video_id in existing_videos_map:
+                v_doc = existing_videos_map[video_id]
+                doc_exists = True
+            elif existing_videos_map:
+                v_doc = None
+                doc_exists = False
+            else:
+                # Fallback if batch lookup was empty/unsupported
+                v_doc = video_ref.get()
+                doc_exists = getattr(v_doc, "exists", False)
 
             now = datetime.now(timezone.utc)
             video_data = {
@@ -197,7 +242,7 @@ def sync_videos():
                 "updated_at": now,
             }
 
-            if not v_doc.exists:
+            if not doc_exists:
                 video_data["created_at"] = now
                 video_ref.set(video_data)
                 logger.info(f"Created video: {vid['title']}")
@@ -206,15 +251,16 @@ def sync_videos():
                 logger.info(f"Updated video info: {vid['title']}")
 
             # 2. Check and Create Bundle (Draft)
-            # We check if a bundle already points to this video_id
-            bundle_query = (
-                db.collection(BUNDLES_COLLECTION)
-                .where(filter=FieldFilter("video_id", "==", video_id))
-                .limit(1)
-            )
-            bundle_docs = list(bundle_query.stream())
+            has_bundle = video_id in existing_bundle_video_ids
+            if not has_bundle and not existing_bundle_video_ids:
+                bundle_query = (
+                    db.collection(BUNDLES_COLLECTION)
+                    .where(filter=FieldFilter("video_id", "==", video_id))
+                    .limit(1)
+                )
+                has_bundle = len(list(bundle_query.stream())) > 0
 
-            if not bundle_docs:
+            if not has_bundle:
                 pub_date = video_data["published_at"]
 
                 new_bundle = {
@@ -240,13 +286,11 @@ def sync_videos():
                 }
 
                 db.collection(BUNDLES_COLLECTION).add(new_bundle)
+                existing_bundle_video_ids.add(video_id)
                 logger.info(f"Created draft bundle for video: {vid['title']}")
                 synced_count += 1
             else:
                 logger.debug(f"Bundle already exists for video {video_id}")
-                # Optional: Update existing bundle if needed
-                # doc = bundle_docs[0]
-                # doc.reference.update({"video_id": video_id})
 
         except Exception as e:
             logger.error(f"Failed to process video {vid['id']}: {e}")

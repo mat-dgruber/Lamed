@@ -77,12 +77,19 @@ class TestBundlesApi(unittest.TestCase):
             "created_at": "2026-06-18T10:00:00",
             "updated_at": "2026-06-18T10:00:00"
         }
-
         response = self.client.get("/bundles/test-id")
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(data["title"], "Test Bundle")
         self.assertEqual(data["id"], "test-id")
 
+    def test_get_bundles_clamps_limit_above_100(self):
+        self.mock_query.stream.return_value = []
+        response = self.client.get("/bundles/?limit=500")
+        self.assertEqual(response.status_code, 200)
+        # Verify query.limit was called with 100
+        self.mock_query.limit.assert_called_with(100)
+
 if __name__ == "__main__":
     unittest.main()
+

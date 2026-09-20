@@ -24,6 +24,9 @@ def get_articles(
     # Use server-side ordering (Requires Composite Index)
     query = query.order_by("published_at", direction=FirestoreQuery.DESCENDING)
     
+    # Clamp limit to [1, 100] to prevent unbounded memory consumption
+    limit = max(1, min(limit, 100))
+
     if start_after_id:
         last_doc = db.collection(ARTICLES_COLLECTION).document(start_after_id).get()
         if last_doc.exists:
