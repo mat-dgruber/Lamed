@@ -19,7 +19,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["ruff>=0.14.0", "import-linter>=2.3"]
+dev = ["ruff>=0.14.0", "import-linter>=2.15"]
 
 [tool.ruff.lint]
 extend-select = ["S", "E722", "BLE001", "S110", "C901"]
