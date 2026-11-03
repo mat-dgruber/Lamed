@@ -1,5 +1,5 @@
 # Etapa 1: Build
-FROM node:20-alpine AS development
+FROM node:26-alpine AS development
 
 # Definir o diretório de trabalho dentro do container
 WORKDIR /usr/src/app
