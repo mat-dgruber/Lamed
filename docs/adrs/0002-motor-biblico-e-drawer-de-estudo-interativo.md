@@ -10,6 +10,11 @@ Data       | Autor          | Descrição
 
 # ADR 0002: Motor Bíblico Local Server-Side e Drawer de Leitura Interativa nas Páginas de Estudo
 
+| Metadado | Detalhe |
+| :--- | :--- |
+| **Status** | **Implementada** (2026-09-19) |
+| **Decisores** | Equipe de engenharia Lamed |
+
 ## Status
 **Implementada** (2026-09-19)
 

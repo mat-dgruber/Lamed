@@ -10,6 +10,11 @@ Data       | Autor          | Descrição
 
 # ADR 0001: Integração Server-Side com Google Analytics Data API para o Painel Administrativo
 
+| Metadado | Detalhe |
+| :--- | :--- |
+| **Status** | **Implementada** (2026-09-19) |
+| **Decisores** | Equipe de engenharia Lamed |
+
 ## Status
 **Implementada** (2026-09-19)
 
