@@ -1,6 +1,7 @@
 @use 'swiper/css';
 @use 'swiper/css/navigation';
 @use 'swiper/css/pagination';
+@import './tokens.css';
 
 @tailwind base;
 @tailwind components;

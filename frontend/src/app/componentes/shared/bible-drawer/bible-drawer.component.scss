@@ -10,6 +10,12 @@
   align-items: stretch;
   animation: fadeIn 0.2s ease-out;
 
+  @media (prefers-reduced-transparency: reduce) {
+    background: #0f172a;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   @media (max-width: 640px) {
     align-items: flex-end;
   }

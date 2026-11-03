@@ -1,12 +1,18 @@
 @if (bibleService.isOpen()) {
-  <div
-    class="bible-drawer-backdrop"
-    (click)="onBackdropClick($event)"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="bible-drawer-title"
-  >
-    <div class="bible-drawer-panel" (click)="$event.stopPropagation()">
+  <div class="bible-drawer-backdrop">
+    <button
+      type="button"
+      class="absolute inset-0 h-full w-full cursor-default border-0 bg-transparent"
+      aria-label="Fechar leitor bíblico"
+      (click)="bibleService.closeDrawer()"
+    ></button>
+    <section
+      class="bible-drawer-panel relative z-10"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="bible-drawer-title"
+      tabindex="-1"
+    >
       <!-- Mobile Drag Handle Indicator -->
       <div class="drawer-drag-handle sm:hidden" aria-hidden="true">
         <span class="handle-bar"></span>
@@ -170,6 +176,12 @@
           </button>
         </footer>
       }
-    </div>
+    </section>
+    <button
+      type="button"
+      class="absolute inset-0 -z-10 h-full w-full cursor-default border-0 bg-transparent"
+      aria-label="Fechar leitor bíblico"
+      (click)="bibleService.closeDrawer()"
+    ></button>
   </div>
 }

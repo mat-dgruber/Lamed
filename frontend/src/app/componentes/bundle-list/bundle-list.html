@@ -89,33 +89,32 @@
                 >
                 </iframe>
               } @else {
-                <div class="relative h-full w-full cursor-pointer overflow-hidden" (click)="startHeroVideo()">
+                <div class="relative h-full w-full overflow-hidden">
+                  <button
+                    type="button"
+                    (click)="startHeroVideo()"
+                    aria-label="Assistir ao vídeo em destaque"
+                    class="absolute inset-0 z-10 flex items-center justify-center cursor-pointer group/btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                  >
+                    <span class="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-orange-600 text-white shadow-2xl shadow-orange-950/60 ring-4 ring-white/30 transition-all duration-300 group-hover/btn:scale-110 group-hover/btn:bg-orange-500">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        class="w-7 h-7 sm:w-9 sm:h-9 ml-1"
+                        aria-hidden="true"
+                      >
+                        <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                      </svg>
+                    </span>
+                  </button>
                   <img
                     [src]="list[0].thumbnail_url | googleDriveImage"
                     [alt]="'Capa do Estudo ' + list[0].title"
                     class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     (error)="onHeroImageError($event)"
                   />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent"></div>
-                  
-                  <button
-                    type="button"
-                    aria-label="Assistir ao vídeo em destaque"
-                    class="absolute inset-0 flex items-center justify-center cursor-pointer group/btn"
-                  >
-                    <div class="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-orange-600 text-white shadow-2xl shadow-orange-950/60 ring-4 ring-white/30 transition-all duration-300 group-hover/btn:scale-110 group-hover/btn:bg-orange-500">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        class="w-7 h-7 sm:w-9 sm:h-9 text-white ml-1"
-                        aria-hidden="true"
-                      >
-                        <polygon points="6 3 20 12 6 21 6 3"></polygon>
-                      </svg>
-                    </div>
-                  </button>
-
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent pointer-events-none"></div>
                   <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
                     <span class="inline-flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-xs font-medium text-white ring-1 ring-white/20">
                       <lucide-icon name="play-circle" [size]="14" class="text-orange-400"></lucide-icon>

@@ -133,7 +133,7 @@
 
           <!-- HTML Content / Rich Text -->
           <div class="article-rich-text article-content">
-            <div [innerHTML]="safeContent" (click)="onArticleClick($event)"></div>
+            <div [innerHTML]="safeContent" (click)="onArticleClick($event)" (keydown)="onArticleKeydown($event)" tabindex="0"></div>
           </div>
 
           <!-- Tags de Rodapé do Artigo -->

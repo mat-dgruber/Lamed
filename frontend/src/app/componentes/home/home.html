@@ -9,11 +9,11 @@
           Explore guias de estudo semanais, artigos teológicos e exposições em vídeo.
         </p>
         <div class="hero-ctas">
-          <a routerLink="/materiais-extras" class="btn-hero-primary" aria-label="Ver lição e materiais de estudo desta semana">
+          <a routerLink="/materiais-extras" class="btn-hero-primary">
             <lucide-icon name="book-open" [size]="20" aria-hidden="true"></lucide-icon>
             <span>Ver Lição desta Semana</span>
           </a>
-          <a routerLink="/artigos" class="btn-hero-secondary" aria-label="Explorar acervo de artigos teológicos">
+          <a routerLink="/artigos" class="btn-hero-secondary">
             <lucide-icon name="file-text" [size]="20" aria-hidden="true"></lucide-icon>
             <span>Explorar Artigos</span>
           </a>
@@ -27,7 +27,7 @@
     <div class="container">
       <div class="pillars-grid">
         <!-- Pilar 1: Lições -->
-        <a routerLink="/materiais-extras" class="pillar-card group" aria-label="Acessar Guia de Estudos e Lições Semanais">
+        <a routerLink="/materiais-extras" class="pillar-card group">
           <div class="pillar-icon-box bg-orange-50 text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
             <lucide-icon name="book-open" [size]="26" aria-hidden="true"></lucide-icon>
           </div>
@@ -43,7 +43,7 @@
         </a>
 
         <!-- Pilar 2: Artigos -->
-        <a routerLink="/artigos" class="pillar-card group" aria-label="Acessar Artigos Teológicos e Reflexões">
+        <a routerLink="/artigos" class="pillar-card group">
           <div class="pillar-icon-box bg-amber-50 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-colors">
             <lucide-icon name="file-text" [size]="26" aria-hidden="true"></lucide-icon>
           </div>
@@ -59,7 +59,7 @@
         </a>
 
         <!-- Pilar 3: Vídeos -->
-        <a routerLink="/videos" class="pillar-card group" aria-label="Assistir Vídeos e Estudos Audiovisuais">
+        <a routerLink="/videos" class="pillar-card group">
           <div class="pillar-icon-box bg-red-50 text-red-600 group-hover:bg-red-600 group-hover:text-white transition-colors">
             <lucide-icon name="video" [size]="26" aria-hidden="true"></lucide-icon>
           </div>
@@ -150,7 +150,6 @@
                 <a
                   [routerLink]="['/bundle', bundle.id]"
                   class="btn-bundle-action"
-                  aria-label="Acessar estudo completo da lição {{ bundle.title }}"
                 >
                   <lucide-icon name="book-open" [size]="18" aria-hidden="true" class="!text-white shrink-0"></lucide-icon>
                   <span>Acessar Estudo Completo</span>
@@ -316,7 +315,6 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 class="btn-yt-support"
-                aria-label="Tornar-se membro do canal Lamed no YouTube (abre em nova aba)"
               >
                 <lucide-icon name="youtube" [size]="18" aria-hidden="true"></lucide-icon>
                 <span>Ser Membro do Canal</span>
@@ -339,7 +337,6 @@
               <a
                 routerLink="/apoie"
                 class="btn-details-support"
-                aria-label="Conhecer todas as formas de apoio ao Lamed"
               >
                 <lucide-icon name="heart" [size]="18" aria-hidden="true"></lucide-icon>
                 <span>Conhecer Opções de Apoio</span>
@@ -367,11 +364,11 @@
             É a única letra do alfabeto hebraico cuja forma se eleva acima da linha de base de todas as outras, apontando para o alto — simbolizando a aspiração de elevar a mente e o coração ao Criador por meio da sabedoria das Escrituras.
           </p>
           <div class="about-ctas">
-            <a routerLink="/sobre" class="btn-about-primary" aria-label="Conhecer a história e equipe do Lamed">
+            <a routerLink="/sobre" class="btn-about-primary">
               <span>Nossa História & Equipe</span>
               <lucide-icon name="arrow-right" [size]="16" aria-hidden="true"></lucide-icon>
             </a>
-            <a routerLink="/contato" class="btn-about-secondary" aria-label="Entrar em contato com o Lamed">
+            <a routerLink="/contato" class="btn-about-secondary">
               <lucide-icon name="mail" [size]="16" aria-hidden="true"></lucide-icon>
               <span>Fale Conosco</span>
             </a>

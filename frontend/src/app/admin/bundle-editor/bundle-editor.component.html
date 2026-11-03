@@ -40,8 +40,9 @@
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="col-span-1 md:col-span-3">
-            <label class="block text-sm font-semibold text-zinc-700 mb-1">Título do Estudo</label>
+            <label for="bundle-title" class="block text-sm font-semibold text-zinc-700 mb-1">Título do Estudo</label>
             <input
+              id="bundle-title"
               type="text"
               [(ngModel)]="model.title"
               name="title"
@@ -51,8 +52,9 @@
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-zinc-700 mb-1">Semana (#)</label>
+            <label for="bundle-week" class="block text-sm font-semibold text-zinc-700 mb-1">Semana (#)</label>
             <input
+              id="bundle-week"
               type="number"
               [(ngModel)]="model.week_number"
               name="week_number"
@@ -61,8 +63,9 @@
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-zinc-700 mb-1">Autor</label>
+            <label for="bundle-author" class="block text-sm font-semibold text-zinc-700 mb-1">Autor</label>
             <input
+              id="bundle-author"
               type="text"
               [(ngModel)]="model.author"
               name="author"
@@ -71,8 +74,9 @@
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-zinc-700 mb-1">Data de Publicação</label>
+            <label for="bundle-published-date" class="block text-sm font-semibold text-zinc-700 mb-1">Data de Publicação</label>
             <input
+              id="bundle-published-date"
               type="date"
               [(ngModel)]="publishedDateStr"
               name="publishedDate"
@@ -81,8 +85,9 @@
           </div>
 
           <div class="col-span-1 md:col-span-3">
-            <label class="block text-sm font-semibold text-zinc-700 mb-1">Descrição Curta</label>
+            <label for="bundle-description" class="block text-sm font-semibold text-zinc-700 mb-1">Descrição Curta</label>
             <textarea
+              id="bundle-description"
               [(ngModel)]="model.description"
               name="description"
               rows="3"
@@ -101,12 +106,13 @@
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label class="block text-sm font-semibold text-zinc-700 mb-1">URL do YouTube</label>
+            <label for="bundle-video-url" class="block text-sm font-semibold text-zinc-700 mb-1">URL do YouTube</label>
             <div class="relative">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <lucide-icon name="monitor" class="text-zinc-400" [size]="16"></lucide-icon>
               </div>
               <input
+                id="bundle-video-url"
                 type="text"
                 [(ngModel)]="videoUrl"
                 name="videoUrl"
@@ -116,10 +122,11 @@
             </div>
           </div>
           <div>
-            <label class="block text-sm font-semibold text-zinc-700 mb-1"
+            <label for="bundle-thumbnail" class="block text-sm font-semibold text-zinc-700 mb-1"
               >Imagem de Capa (URL)</label
             >
             <input
+              id="bundle-thumbnail"
               type="text"
               [(ngModel)]="model.thumbnail_url"
               name="thumbnail"
@@ -138,7 +145,7 @@
 
         <!-- Article URL Input -->
         <div class="mb-6">
-          <label class="block text-sm font-semibold text-zinc-700 mb-1"
+          <label for="bundle-article-url" class="block text-sm font-semibold text-zinc-700 mb-1"
             >URL do Artigo (Para incorporar)</label
           >
           <div class="relative">
@@ -146,6 +153,7 @@
               <lucide-icon name="link" class="text-zinc-400" [size]="16"></lucide-icon>
             </div>
             <input
+              id="bundle-article-url"
               type="text"
               [(ngModel)]="model.article_url"
               name="articleUrl"
@@ -299,8 +307,9 @@
         <div class="bg-zinc-50 p-5 rounded-2xl border border-dashed border-zinc-300">
           <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
             <div class="md:col-span-4">
-              <label class="block text-xs font-bold text-zinc-500 uppercase mb-1">Título</label>
+              <label for="new-resource-title" class="block text-xs font-bold text-zinc-500 uppercase mb-1">Título</label>
               <input
+                id="new-resource-title"
                 type="text"
                 [(ngModel)]="newResource.title"
                 name="resTitle"
@@ -309,8 +318,9 @@
               />
             </div>
             <div class="md:col-span-3">
-              <label class="block text-xs font-bold text-zinc-500 uppercase mb-1">Tipo</label>
+              <label for="new-resource-type" class="block text-xs font-bold text-zinc-500 uppercase mb-1">Tipo</label>
               <select
+                id="new-resource-type"
                 [(ngModel)]="newResource.type"
                 name="resType"
                 class="block w-full rounded-lg border-zinc-200 px-3 py-2 text-sm focus:border-orange-500 focus:ring-orange-500 bg-white"
@@ -325,8 +335,9 @@
               </select>
             </div>
             <div class="md:col-span-4">
-              <label class="block text-xs font-bold text-zinc-500 uppercase mb-1">Link (URL)</label>
+              <label for="new-resource-url" class="block text-xs font-bold text-zinc-500 uppercase mb-1">Link (URL)</label>
               <input
+                id="new-resource-url"
                 type="text"
                 [(ngModel)]="newResource.url"
                 name="resUrl"

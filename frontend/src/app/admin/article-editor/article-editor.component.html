@@ -41,8 +41,9 @@
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="col-span-2">
-            <label class="block text-sm font-semibold text-zinc-700 mb-1">Título</label>
+            <label for="article-title" class="block text-sm font-semibold text-zinc-700 mb-1">Título</label>
             <input
+              id="article-title"
               type="text"
               [(ngModel)]="model.title"
               name="title"
@@ -53,10 +54,9 @@
           </div>
 
           <div class="col-span-2">
-            <label class="block text-sm font-semibold text-zinc-700 mb-1"
-              >Subtítulo (Opcional)</label
-            >
+            <label for="article-subtitle" class="block text-sm font-semibold text-zinc-700 mb-1">Subtítulo (Opcional)</label>
             <input
+              id="article-subtitle"
               type="text"
               [(ngModel)]="model.subtitle"
               name="subtitle"
@@ -66,8 +66,9 @@
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-zinc-700 mb-1">Autor</label>
+            <label for="article-author" class="block text-sm font-semibold text-zinc-700 mb-1">Autor</label>
             <input
+              id="article-author"
               type="text"
               [(ngModel)]="model.author"
               name="author"
@@ -79,10 +80,9 @@
           <div class="hidden md:block"></div>
 
           <div class="col-span-2">
-            <label class="block text-sm font-semibold text-zinc-700 mb-1"
-              >Resumo (Para cards)</label
-            >
+            <label for="article-summary" class="block text-sm font-semibold text-zinc-700 mb-1">Resumo (Para cards)</label>
             <textarea
+              id="article-summary"
               [(ngModel)]="model.summary"
               name="summary"
               rows="3"
@@ -102,13 +102,14 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           <div>
-            <label class="block text-sm font-semibold text-zinc-700 mb-1">URL da Imagem</label>
+            <label for="article-cover-image" class="block text-sm font-semibold text-zinc-700 mb-1">URL da Imagem</label>
             <div class="flex gap-2 mb-2">
               <div class="relative flex-grow">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <lucide-icon name="link" class="text-zinc-400" [size]="16"></lucide-icon>
                 </div>
                 <input
+                  id="article-cover-image"
                   type="text"
                   [(ngModel)]="model.cover_image"
                   (ngModelChange)="onCoverImageInput()"
@@ -123,13 +124,14 @@
             </p>
           </div>
           <div>
-            <label class="block text-sm font-semibold text-zinc-700 mb-1">Pré-visualização</label>
+            <p class="block text-sm font-semibold text-zinc-700 mb-1">Pré-visualização</p>
             <div
               class="aspect-video w-full rounded-xl border border-zinc-200 overflow-hidden bg-zinc-50 relative"
             >
               <img
                 [src]="(model.cover_image | googleDriveImage) || 'assets/Imagens/Fundo_Lamed.png'"
                 (error)="onImageError($event)"
+                alt="Pré-visualização da imagem de capa"
                 class="w-full h-full object-cover"
               />
               <div

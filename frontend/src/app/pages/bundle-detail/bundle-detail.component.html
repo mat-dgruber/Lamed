@@ -193,7 +193,7 @@
                 <div>
                   @if (safeArticleContent) {
                     <article class="prose prose-orange max-w-none text-zinc-800 leading-relaxed p-6 sm:p-8">
-                      <div [innerHTML]="safeArticleContent" (click)="onArticleClick($event)"></div>
+                      <div [innerHTML]="safeArticleContent" (click)="onArticleClick($event)" (keydown)="onArticleKeydown($event)" tabindex="0"></div>
                     </article>
                   } @else if (safeArticleUrl) {
                     <div class="w-full h-[750px] overflow-hidden bg-white">
@@ -439,7 +439,7 @@
               @if (safeArticleContent) {
                 <!-- Native HTML Reader -->
                 <article class="prose prose-orange max-w-3xl mx-auto bg-white rounded-2xl p-6 sm:p-12 shadow-sm ring-1 ring-zinc-900/5">
-                  <div [innerHTML]="safeArticleContent" (click)="onArticleClick($event)"></div>
+                  <div [innerHTML]="safeArticleContent" (click)="onArticleClick($event)" (keydown)="onArticleKeydown($event)" tabindex="0"></div>
                 </article>
               } @else if (safeArticleUrl) {
                 <!-- Fullscreen Iframe Fallback -->

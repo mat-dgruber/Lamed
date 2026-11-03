@@ -1,8 +1,3 @@
-/* ==========================================================================
-   Home Component Styles — Lamed
-   Adere estritamente aos tokens da marca (Caecilia, #F8941B, #940312, #FFFAF2)
-   Regras: WCAG 2.2 AA/AAA, Mobile-First (touch >= 48px), Anti-Purple Ban
-   ========================================================================== */
 
 /* --------------------------------------------------------------------------
    BASE COMPONENT BUTTONS & SHARED MICRO-INTERACTIONS
@@ -252,7 +247,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--color-principal);
+  color: var(--color-destaque);
   margin-bottom: 0.45rem;
 }
 
@@ -277,11 +272,10 @@
 .pillar-link {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
+  gap: 6px;
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--color-principal);
+  color: #940312;
 }
 
 /* --------------------------------------------------------------------------
@@ -311,7 +305,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--color-principal);
+  color: var(--color-destaque);
   margin-bottom: 0.5rem;
 }
 
@@ -479,6 +473,12 @@
   letter-spacing: 0.04em;
   padding: 0.25rem 0.65rem;
   border-radius: 9999px;
+
+  @media (prefers-reduced-transparency: reduce) {
+    background: #140a05;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 .article-body {

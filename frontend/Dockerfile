@@ -27,5 +27,8 @@ COPY . .
 # Expor a porta 4200 para desenvolvimento
 EXPOSE 4200
 
+# Healthcheck web development server
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 CMD wget -qO- http://localhost:4200/ || exit 1
+
 # Executar o servidor de desenvolvimento do Angular
 CMD ["ng", "serve", "--host", "0.0.0.0"]

@@ -412,13 +412,21 @@ Sua generosidade é o que nos move. Obrigado por fazer parte desta missão!`;
   }
 
   onArticleClick(event: MouseEvent): void {
-    const target = (event.target as HTMLElement).closest('.lamed-bible-ref') as HTMLElement | null;
-    if (target) {
+    this.activateBibleReference(event.target as HTMLElement, event);
+  }
+
+  onArticleKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.activateBibleReference(event.target as HTMLElement, event);
+    }
+  }
+
+  private activateBibleReference(target: HTMLElement, event: Event): void {
+    const reference = target.closest('.lamed-bible-ref');
+    const ref = reference?.getAttribute('data-bible-ref');
+    if (ref) {
       event.preventDefault();
-      const ref = target.getAttribute('data-bible-ref');
-      if (ref) {
-        this.bibleService.openVerse(ref);
-      }
+      this.bibleService.openVerse(ref);
     }
   }
 
