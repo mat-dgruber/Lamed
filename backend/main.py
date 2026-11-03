@@ -4,6 +4,7 @@ import logging
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from scalar_fastapi import Layout, Theme, get_scalar_api_reference
 from config import settings
 from routes import bundles, admin, articles, videos, seo, analytics, bible
 from api.dependencies import is_storage_configured
@@ -14,6 +15,22 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
+
+
+@app.get("/scalar", include_in_schema=False)
+async def scalar_docs():
+    return get_scalar_api_reference(
+        openapi_url=app.openapi_url,
+        title=f"{app.title} - Referência da API",
+        layout=Layout.MODERN,
+        theme=Theme.KEPLER,
+        show_sidebar=True,
+        persist_auth=True,
+        scalar_proxy_url=None,
+    )
+
+# RFC 9457 (application/problem+json) is the target for new API versions. Preserve
+# FastAPI's existing error envelope on current endpoints to avoid breaking clients.
 
 # CORS Configuration
 origins = [
@@ -54,19 +71,24 @@ def read_root():
 
 
 @app.get("/healthz", include_in_schema=False)
+@app.get("/livez", include_in_schema=False)
 def healthz():
     """Liveness probe — process is up."""
     return JSONResponse({"status": "ok"})
 
 
 @app.get("/readyz", include_in_schema=False)
+@app.get("/ready", include_in_schema=False)
 def readyz():
     """Readiness probe — Firestore reachable, Storage configured."""
-    from config import db  # local import to surface init errors loudly
-    storage_ok = is_storage_configured()
+    try:
+        storage_ok = is_storage_configured()
+    except Exception:
+        logger.exception("Readiness probe failed")
+        storage_ok = False
     status_code = 200 if storage_ok else 503
     return JSONResponse(
-        {"status": "ready" if storage_ok else "degraded", "storage": storage_ok},
+        {"status": "ready" if storage_ok else "not_ready"},
         status_code=status_code,
     )
 

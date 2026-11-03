@@ -1,0 +1,297 @@
+ai_guides_version: 2.9.0
+project: {}
+guides:
+  testing-backend:
+    version: 4
+    applied_at: '2026-11-03T06:58:50'
+    status: partial
+    heuristics:
+      TESTB-01: pass
+      TESTB-02: pass
+      TESTB-03: pass
+      TESTB-04: warn
+      TESTB-05: skip
+      TESTB-06: warn
+      TESTB-07: skip
+      TESTB-08: fail
+  1password-credentials:
+    version: 2
+    applied_at: '2026-11-03T06:58:38'
+    status: partial
+    heuristics:
+      OP-01: pass
+      OP-02: fail
+      OP-03: pass
+      OP-04: warn
+      OP-05: fail
+  ai-jail-sandbox:
+    version: 2
+    applied_at: '2026-11-03T06:58:39'
+    status: partial
+    heuristics:
+      JAIL-01: pass
+      JAIL-02: fail
+      JAIL-03: pass
+      JAIL-04: skip
+      JAIL-05: fail
+  notificacoes-openclaude:
+    version: 2
+    applied_at: '2026-11-03T06:58:39'
+    status: partial
+    heuristics:
+      NOTIF-01: pass
+      NOTIF-02: fail
+  mods-tui-observabilidade:
+    version: 1
+    applied_at: '2026-11-03T06:58:39'
+    status: partial
+    heuristics:
+      MODS-01: pass
+      MODS-02: fail
+      MODS-03: fail
+      MODS-04: fail
+      MODS-05: pass
+  orquestracao-ciclo-de-vida-skills:
+    version: 2
+    applied_at: '2026-11-03T06:58:39'
+    status: fail
+    heuristics:
+      LIFE-01: warn
+      LIFE-02: fail
+  domain-documentation-standards:
+    version: 2
+    applied_at: '2026-11-03T06:58:39'
+    status: fail
+    heuristics:
+      DOM-01: fail
+      DOM-02: fail
+      DOM-03: fail
+      DOM-04: fail
+  resiliencia-defensiva:
+    version: 6
+    applied_at: '2026-11-03T06:58:40'
+    status: partial
+    heuristics:
+      RESIL-01: fail
+      RESIL-02: pass
+      RESIL-03: pass
+      RESIL-04: pass
+      RESIL-05: fail
+      RESIL-06: pass
+  seguranca-zero-trust:
+    version: 4
+    applied_at: '2026-11-03T06:58:41'
+    status: partial
+    heuristics:
+      ZT-01: fail
+      ZT-02: skip
+      ZT-03: skip
+      ZT-04: fail
+      ZT-05: pass
+      ZT-06: pass
+      ZT-07: fail
+  data-table-ui-ux:
+    version: 2
+    applied_at: '2026-11-03T06:58:41'
+    status: fail
+    heuristics:
+      TABLE-01: fail
+      TABLE-02: skip
+      TABLE-03: fail
+  dashboard-anti-slop:
+    version: 2
+    applied_at: '2026-11-03T06:58:41'
+    status: fail
+    heuristics:
+      DASH-01: fail
+      DASH-02: fail
+  liquid-glass:
+    version: 2
+    applied_at: '2026-11-03T06:58:41'
+    status: fail
+    heuristics:
+      GLASS-01: fail
+      GLASS-02: skip
+      GLASS-03: fail
+  product-design-ciclo:
+    version: 2
+    applied_at: '2026-11-03T06:58:41'
+    status: fail
+    heuristics:
+      PD-01: fail
+      PD-02: fail
+  ux-cognicao-comportamental:
+    version: 2
+    applied_at: '2026-11-03T06:58:41'
+    status: fail
+    heuristics:
+      UX-01: fail
+      UX-02: fail
+  design-universal-acessibilidade:
+    version: 2
+    applied_at: '2026-11-03T06:58:42'
+    status: partial
+    heuristics:
+      UI-01: fail
+      UI-02: skip
+      UI-03: skip
+      UI-04: pass
+      UI-05: warn
+      UI-06: skip
+      UI-07: fail
+  harness-commit-memoria:
+    version: 7
+    applied_at: '2026-11-03T06:58:44'
+    status: partial
+    heuristics:
+      HARNESS-01: fail
+      HARNESS-02: fail
+      HARNESS-03: fail
+      HARNESS-04: fail
+      HARNESS-05: fail
+      HARNESS-06: fail
+      HARNESS-07: fail
+      HARNESS-08: fail
+      HARNESS-09: fail
+      HARNESS-10: pass
+      HARNESS-11: fail
+      HARNESS-12: pass
+      HARNESS-13: pass
+      HARNESS-15: pass
+      HARNESS-16: fail
+      HARNESS-14: fail
+  graph-engineering:
+    version: 4
+    applied_at: '2026-11-03T06:58:45'
+    status: partial
+    heuristics:
+      GRAPH-01: fail
+      GRAPH-02: fail
+      GRAPH-04: fail
+      GRAPH-05: fail
+      GRAPH-06: fail
+      GRAPH-07: pass
+      GRAPH-08: fail
+      GRAPH-09: fail
+  padrao-criacao-adrs:
+    version: 4
+    applied_at: '2026-11-03T06:58:46'
+    status: fail
+    heuristics:
+      ADR-01: fail
+      ADR-02: fail
+      ADR-03: fail
+      ADR-04: skip
+      ADR-05: fail
+      ADR-06: skip
+      ADR-07: fail
+      ADR-08: skip
+  arquitetura-clean-code:
+    version: 6
+    applied_at: '2026-11-03T06:58:46'
+    status: partial
+    heuristics:
+      ARCH-01: fail
+      ARCH-02: pass
+      ARCH-03: pass
+      ARCH-04: skip
+      ARCH-05: fail
+      ARCH-06: pass
+  system-design-distribuidos:
+    version: 2
+    applied_at: '2026-11-03T06:58:46'
+    status: fail
+    heuristics:
+      SYSD-01: fail
+      SYSD-02: fail
+      SYSD-03: fail
+  semver-versioning:
+    version: 2
+    applied_at: '2026-11-03T06:58:47'
+    status: partial
+    heuristics:
+      SEMVER-01: fail
+      SEMVER-02: pass
+      SEMVER-03: pass
+      SEMVER-04: fail
+  construcao-harness:
+    version: 4
+    applied_at: '2026-11-03T06:58:47'
+    status: partial
+    heuristics:
+      HN3-01: pass
+      HN3-02: pass
+      HN3-03: fail
+      HN3-04: fail
+      HN3-05: fail
+      HN3-06: skip
+      HN3-07: fail
+      HN3-08: warn
+      HN3-09: skip
+      HN3-10: fail
+      HN3-11: warn
+      HN3-12: fail
+  desenvolvimento-jogos:
+    version: 1
+    applied_at: '2026-11-03T06:58:47'
+    status: pass
+    heuristics:
+      GAME-01: pass
+      GAME-02: pass
+      GAME-03: pass
+  scalar-openapi:
+    version: 2
+    applied_at: '2026-11-03T06:58:48'
+    status: partial
+    heuristics:
+      SCALAR-01: pass
+      SCALAR-02: pass
+      SCALAR-03: warn
+      SCALAR-04: skip
+      SCALAR-05: fail
+      SCALAR-06: fail
+  desenvolvimento-mobile:
+    version: 1
+    applied_at: '2026-11-03T06:58:49'
+    status: pass
+    heuristics:
+      MOB-01: skip
+      MOB-02: pass
+      MOB-03: skip
+  product-management-ciclo:
+    version: 2
+    applied_at: '2026-11-03T06:58:49'
+    status: fail
+    heuristics:
+      PM-01: fail
+      PM-02: fail
+      PM-03: fail
+  testing-frontend:
+    version: 4
+    applied_at: '2026-11-03T06:58:52'
+    status: partial
+    heuristics:
+      TESTF-01: fail
+      TESTF-02: fail
+      TESTF-03: skip
+      TESTF-04: fail
+      TESTF-05: pass
+      TESTF-06: warn
+      TESTF-07: skip
+      TESTF-08: fail
+  testing-games:
+    version: 1
+    applied_at: '2026-11-03T06:58:52'
+    status: pass
+    heuristics:
+      TGAM-01: pass
+      TGAM-02: pass
+      TGAM-03: pass
+  testing-mobile:
+    version: 1
+    applied_at: '2026-11-03T06:58:53'
+    status: pass
+    heuristics:
+      TMOB-01: pass
+      TMOB-02: pass
+      TMOB-03: pass

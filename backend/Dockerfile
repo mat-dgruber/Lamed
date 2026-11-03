@@ -22,6 +22,9 @@ COPY . .
 ENV PORT=8080
 EXPOSE 8080
 
+# Healthcheck process-only liveness probe (no Firebase dependency)
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/livez', timeout=2)" || exit 1
+
 # Comando de execução usando o Uvicorn direto (já instalado pelo uv)
 # Bind na porta definida pela variável de ambiente $PORT
 CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080", "--proxy-headers", "--forwarded-allow-ips", "*"]

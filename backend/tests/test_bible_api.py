@@ -1,6 +1,7 @@
 import sys
 import os
 import unittest
+from unittest.mock import patch
 
 # Add backend root to sys.path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -74,6 +75,19 @@ class TestBibleApi(unittest.TestCase):
         self.assertEqual(data["start_verse"], 4)
         self.assertEqual(data["end_verse"], 7)
         self.assertTrue(data["is_range"])
+
+    def test_livez_and_readiness(self):
+        response = self.client.get("/livez")
+        self.assertEqual(response.status_code, 200)
+
+        with patch("main.is_storage_configured", return_value=False):
+            response = self.client.get("/readyz")
+        self.assertEqual(response.status_code, 503)
+        self.assertEqual(response.json(), {"status": "not_ready"})
+
+        with patch("main.is_storage_configured", return_value=True):
+            response = self.client.get("/readyz")
+        self.assertEqual(response.status_code, 200)
 
     def test_invalid_reference(self):
         response = self.client.get("/bible/verse", params={"ref": "LivroInexistente 99:99"})

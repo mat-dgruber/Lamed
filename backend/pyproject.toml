@@ -14,5 +14,49 @@ dependencies = [
     "isodate>=0.7.2",
     "pydantic>=2.12.5",
     "python-multipart>=0.0.21",
+    "scalar-fastapi>=1.8.0",
     "uvicorn>=0.40.0",
 ]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.14.0", "import-linter>=2.3"]
+
+[tool.ruff.lint]
+extend-select = ["S", "E722", "BLE001", "S110", "C901"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --strict-markers"
+markers = [
+    "unit: testes unitários",
+    "integration: testes de integração",
+    "e2e: testes ponta a ponta",
+]
+
+[tool.coverage.report]
+fail_under = 67
+show_missing = true
+
+[tool.coverage.run]
+source = ["."]
+omit = ["debug_endpoint.py", "get_index_link.py", "test_startup.py", "verify_all_articles.py"]
+
+[tool.importlinter]
+root_packages = ["routes", "services", "api"]
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "Application modules avoid web and infrastructure frameworks"
+type = "forbidden"
+source_modules = ["services"]
+forbidden_modules = ["fastapi", "django", "flask", "sqlalchemy", "requests", "httpx"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "pytest-cov>=7.1.0",
+    "pytest-xdist>=3.8.0",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
