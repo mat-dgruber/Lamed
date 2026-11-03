@@ -51,6 +51,8 @@ backend/certs/
 !angular.json
 !ng-package.json
 !nx.json
+!*.config.json
+!frontend/.stylelintrc.json
 !firebase.json
 !firestore.indexes.json
 !**/firestore.indexes.json
@@ -69,6 +71,15 @@ graphify-out/
 .openclaude/
 .remember/
 .superpowers/
+.claude/worktrees/
+
+# Test artifacts & ephemeral reports
+.coverage
+*.coverage
+htmlcov/
+playwright-report/
+test-results/
+/backend/frontend/
 
 # IDE / OS
 .DS_Store
@@ -76,3 +87,9 @@ Thumbs.db
 .vscode/
 .idea/
 /_BKP
+
+# ai-guides: memória privada local, team/ versionada
+.claude/memory/*
+!.claude/memory/team/
+.gemini/memory/*
+!.gemini/memory/team/

@@ -1,0 +1,9 @@
+- [Antigravity persona](antigravity-persona.md) — recurring Sênior Full-Stack reviewer role, triggered by "Atue como o Antigravity".
+- [Antigravity audit deliverable format](antigravity-deliverable-format.md) — strict 5-section output contract for page audits.
+- [Antigravity audit delivery style](antigravity-delivery-style.md) — self-locate files in repo; default `token-economy on` + `stoneage ultra` per audit.
+- [Required themes](lamed-themes.md) — Lamed supports 4 themes: Claro, Escuro, Capycro, Alto Contraste.
+- [Audit scope override](antigravity-audit-scope-override.md) — user can drop pillars mid-audit (e.g., tier/temas); surface drop in report, don't silently skip.
+- [Videos data flow](lamed-videos-data-flow.md) — Firestore VideoService → VideosService adapter → UI; videos.json is migration input only.
+- [YouTube sync disabled](lamed-youtube-workflow-disabled.md) — `.github/workflows/update-videos.yml` fully commented, manual migrations only.
+- [Pre-existing test failures 2026-06-18](project/lamed-preexisting-test-failures-2026-06-18.md) — 10 Karma specs broken before the Antigravity sprint; sweep brought suite to 39 SUCCESS / 0 FAILED. Baseline established.
+- [Lucide .pick() ban in standalone imports](lamed-lucide-angular-module-imports.md) — `LucideAngularModule.pick(...)` is ModuleWithProviders → NG2012 build fail; use bare module like `sobre.ts:36`.
