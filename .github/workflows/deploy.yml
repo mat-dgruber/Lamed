@@ -72,7 +72,7 @@ jobs:
           docker push "$IMAGE_LATEST"
 
       - name: Deploy to Cloud Run
-        uses: google-github-actions/deploy-cloudrun@v2
+        uses: google-github-actions/deploy-cloudrun@v3
         with:
           service: lamed-backend
           image: southamerica-east1-docker.pkg.dev/lamed-148/lamed-backend/lamed-backend:${{ github.sha }}
