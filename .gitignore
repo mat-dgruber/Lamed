@@ -58,6 +58,7 @@ backend/certs/
 !**/firestore.indexes.json
 !frontend/src/assets/**/*.json
 !frontend/public/assets/**/*.json
+!backend/data/bible/**/*.json
 
 # Large Media / Assets
 *.mp4
